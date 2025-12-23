@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=JetBrains+Mono:wght@400&display=swap');
+
+        :root {
+            --bg-color: #f8f5f2;
+            --sidebar-color: #ffffff;
+            --accent-color: #7c5c42;
+            --text-color: #2c2c2c;
+            --border-color: #eaddd0;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            width: 1920px;
+            height: 1080px;
+            background-color: var(--bg-color);
+            font-family: 'Inter', sans-serif;
+            color: var(--text-color);
+            display: flex;
+            overflow: hidden;
+        }
+
+        /* Sidebar Droite pour le Chat */
+        .chat-container {
+            width: 450px;
+            height: 100%;
+            background: var(--sidebar-color);
+            border-left: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .chat-header {
+            padding: 30px;
+            border-bottom: 1px solid var(--border-color);
+            font-family: 'JetBrains Mono', monospace;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 14px;
+            color: var(--accent-color);
+        }
+
+        /* Zone principale */
+        .main-view {
+            flex-grow: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        /* Cadre Webcam */
+        .webcam-box {
+            width: 800px;
+            height: 600px;
+            border: 1px solid var(--border-color);
+            background: rgba(255, 255, 255, 0.5);
+            position: relative;
+        }
+
+        .webcam-label {
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            background: var(--accent-color);
+            color: white;
+            padding: 4px 15px;
+            font-size: 11px;
+            font-family: 'JetBrains Mono', monospace;
+            text-transform: uppercase;
+        }
+
+        /* Stats en bas */
+        .stats-footer {
+            margin-top: auto;
+            display: flex;
+            gap: 20px;
+        }
+
+        .stat-item {
+            background: white;
+            border: 1px solid var(--border-color);
+            padding: 15px 25px;
+            min-width: 200px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-title {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #888;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-weight: 700;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-view">
+        <div class="webcam-box">
+            <div class="webcam-label">Live Camera</div>
+        </div>
+
+        <div class="stats-footer">
+            <div class="stat-item">
+                <span class="stat-title">Dernier Follow</span>
+                <span class="stat-value" id="most_recent_follower">...</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-title">Dernier Sub</span>
+                <span class="stat-value" id="most_recent_subscriber">...</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-title">Dernière Donation</span>
+                <span class="stat-value" id="most_recent_donator">...</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="chat-container">
+        <div class="chat-header">Discussion en direct</div>
+    </div>
+
+    <script>
+        const STREAMLABELS_PATH = './../../Streamlabels/';
+        const labels = [
+            { id: 'most_recent_follower', file: 'most_recent_follower.txt' },
+            { id: 'most_recent_subscriber', file: 'most_recent_subscriber.txt' },
+            { id: 'most_recent_donator', file: 'most_recent_donator.txt' }
+        ];
+
+        async function updateLabels() {
+            for (const label of labels) {
+                try {
+                    const response = await fetch(STREAMLABELS_PATH + label.file + '?t=' + Date.now());
+                    if (response.ok) {
+                        const text = await response.text();
+                        document.getElementById(label.id).textContent = text.trim() || '---';
+                    }
+                } catch (error) {}
+            }
+        }
+        setInterval(updateLabels, 30000);
+        updateLabels();
+    </script>
+</body>
+</html>

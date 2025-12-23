@@ -1,75 +1,56 @@
-# Guide d'utilisation des Alertes et Widgets
+# Guide d'utilisation du Pack OBS Multi-Scènes
 
-Ce projet contient des alertes Twitch (sans JS) et un widget de rappel de follow (avec JS) pour OBS.
+Ce projet est divisé en deux styles distincts : **Gaming** (Cyber-Néon) et **Job** (Professionnel/Nature/Café).
 
 ## Structure des dossiers
-- `alerts/` : Contient les fichiers HTML/CSS pour les alertes Twitch.
-- `widgets/` : Contient le widget de rappel de follow.
-- `overlays/` : Contient les cadres pour webcam et autres éléments fixes.
-- `assets/` : Dossier pour vos images ou sons personnalisés.
+- `Gaming/` : Alertes et Overlays style futuriste pour les sessions de jeu.
+- `Job/` : Alertes et Overlays sobres et élégants pour les sessions de développement Web.
+- `assets/` : Dossier pour vos ressources personnalisées.
+
+---
+
+## Pack JOB (Développement Web)
+Style minimaliste, couleurs café/nature, polices `Inter` et `JetBrains Mono`.
+
+### 1. Scènes d'Overlay (1920x1080)
+- **Starting** (`Job/overlays/starting.html`) : Ambiance "npm install" et café.
+- **Ending** (`Job/overlays/ending.html`) : Conclusion propre de la session.
+- **Pause** (`Job/overlays/pause.html`) : "Be Right Back" avec animation de respiration.
+- **Just Chatting** (`Job/overlays/just_chatting.html`) : Layout optimisé avec zone Webcam (800x600), Chat à droite, et Labels automatiques en bas.
+
+### 2. Alertes (Injectables dans Streamlabs/Elements)
+- **Follow** (`Job/alerts/follow.html`) : Animation fluide "New Connection".
+- **Sub** (`Job/alerts/sub.html`) : Style premium sombre et vert olive.
+- **Donation** (`Job/alerts/donation.html`) : Design épuré "Support Received".
+
+### 3. Webcam & Widgets
+- **Cadre Webcam** (`Job/overlays/webcam.html`) : Bordure minimaliste (594x445).
+- **Rappel Follow** (`Job/widgets/follow_reminder.html`) : Pop-in discrète toutes les 10 min.
+
+---
+
+## Pack GAMING (Cyber-Néon)
+Style dynamique Twitch Purple / Cyan Neon.
+
+### 1. Scènes d'Overlay
+- `Gaming/overlays/starting.html`, `ending.html`, `pause.html`, `just_chatting.html`.
+
+### 2. Alertes
+- `Gaming/alerts/follow.html`, `sub.html`, `donation.html`, `resub.html`, `first_sub.html`, `new_subscriber.html`.
+
+### 3. Webcam & Widgets
+- `Gaming/overlays/webcam_full.html` (avec labels intégrés).
+- `Gaming/widgets/follow_reminder.html`.
+
+---
 
 ## Installation dans OBS
 
-### 1. Scènes d'Overlay (`starting.html`, `ending.html`, `pause.html`)
-Ces fichiers sont conçus pour remplir tout l'écran (1920x1080).
-- **Starting Soon** (`starting.html`) : Pour le début du stream.
-- **Ending** (`ending.html`) : Pour la fin du stream avec animation de déconnexion.
-- **Pause** (`pause.html`) : Pour vos pauses (BRB), avec une animation de chargement.
+1. Ajoutez une source **Navigateur**.
+2. Cochez **Fichier local**.
+3. Sélectionnez le fichier `.html` désiré.
+4. Pour les scènes complètes, réglez la taille sur **1920x1080**.
+5. Pour les alertes, réglez la taille sur **800 x 400** (cela laisse de l'espace pour les animations de sortie et les ombres).
+6. Pour les labels (Just Chatting), assurez-vous que vos fichiers Streamlabels sont bien dans `C:\Workspace\Stream\Streamlabels\`.
 
-### 2. Overlay Just Chatting (`just_chatting.html`)
-Une scène complète pour discuter avec votre communauté.
-- **Zone Webcam** : Large espace sur la gauche.
-- **Zone Chat** : Colonne dédiée sur la droite.
-- **Labels intégrés** : Follow, Sub et Donation s'affichent en bas et se mettent à jour automatiquement.
-- **Configuration** : Ajoutez une source Navigateur (1920x1080) et placez votre webcam et votre chat derrière l'overlay.
-
-### 3. Overlay Webcam Complet (`webcam_full.html`)
-Un cadre animé avec 4 labels intégrés (2 au-dessus, 2 en dessous) et un espace vide au centre pour votre webcam.
-
-- Ajoutez une source **Navigateur** dans OBS.
-- Sélectionnez `overlays/webcam_full.html`.
-- Définissez la taille sur environ **800x650** (cela laisse de la place pour les labels autour de la webcam de 594x445).
-- Placez votre source Webcam au centre du cadre.
-- Les fichiers sont lus depuis `../../Streamlabels/`.
-
-### 2. Cadre Webcam Simple (`webcam.html`)
-Si vous voulez juste le cadre sans les labels intégrés.
-- Dimensions : **594x445**.
-
-### 3. Overlay Streamlabels Séparé (`streamlabels.html`)
-Un overlay discret pour afficher vos dernières statistiques (Follow, Sub, Donation).
-
-- Ajoutez une source **Navigateur** dans OBS.
-- Sélectionnez `overlays/streamlabels.html`.
-- Définissez la taille (ex: **800x150**).
-- **Important :** Pour que le widget puisse lire vos fichiers locaux, vous devez ajouter `--allow-file-access-from-files` aux raccourcis de lancement d'OBS ou utiliser un serveur local si OBS bloque l'accès direct.
-- Les fichiers sont lus depuis `C:\Workspace\Stream\Streamlabels\`.
-
-### 3. Alertes Twitch (Follow, Sub, Donation, Resub, First Sub)
-Les alertes sont conçues pour être utilisées avec des plateformes comme **Streamlabs** ou **Streamelements** qui permettent d'injecter du code HTML/CSS personnalisé.
-
-- **Follow** (`follow.html`) : Style Cyber-Néon.
-- **Sub** (`sub.html`) : Style Carte Elite (Légendaire).
-- **Donation** (`donation.html`) : Style Cash Drop (Pluie de billets).
-- **Premier Sub** (`first_sub.html`) : Style Galaxy/Elite Gold (Minimaliste et Prestigieux).
-- **Réabonnement** (`resub.html`) : Style Cyber-Holographique (Loyalty Update).
-- **Nouveau Sub Variant** (`new_subscriber.html`) : Style Synthwave/Cyberpunk Pro.
-
-- Copiez le contenu du fichier `.html` correspondant dans la section HTML/CSS de votre outil d'alerte.
-- Les fichiers utilisent des placeholders comme `{name}`, `{amount}`, `{months}` ou `{tier}` qui sont automatiquement remplacés par votre service d'alerte.
-- **Note :** Aucun JavaScript n'est utilisé dans ces fichiers, conformément à votre demande.
-
-### 2. Widget de Rappel de Follow
-Ce widget affiche une pop-in professionnelle toutes les 10 minutes pour encourager les spectateurs à vous suivre.
-
-- Dans OBS, ajoutez une nouvelle source **Navigateur**.
-- Cochez "Fichier local" et sélectionnez `widgets/follow_reminder.html`.
-- Définissez la taille sur **1920x1080** (ou la taille de votre canvas).
-- Le widget apparaîtra automatiquement en bas à droite de l'écran toutes les 10 minutes.
-
-## Personnalisation
-- **Couleurs :** Modifiez les variables CSS ou les couleurs hexadécimales dans les fichiers.
-- **Police :** Les polices utilisent Google Fonts (Montserrat et Poppins).
-- **Temps :** Pour changer l'intervalle du widget, modifiez `intervalTime` dans la balise `<script>` du fichier `follow_reminder.html`.
-
-Bon stream ! 🎮
+Bon stream ! ☕🎮

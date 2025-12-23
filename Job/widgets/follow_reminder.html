@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=JetBrains+Mono:wght@400&display=swap');
+
+        :root {
+            --accent-color: #7c5c42;
+            --bg-color: #ffffff;
+            --text-color: #2c2c2c;
+            --border-color: #eaddd0;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: transparent;
+            font-family: 'Inter', sans-serif;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.8) translateY(20px); opacity: 0; }
+            100% { transform: scale(1) translateY(0); opacity: 1; }
+        }
+
+        .reminder-container {
+            position: absolute;
+            bottom: 40px;
+            right: 40px;
+            display: none;
+            animation: popIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .reminder-box {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            padding: 20px 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            position: relative;
+        }
+
+        .icon {
+            font-size: 24px;
+            color: var(--accent-color);
+        }
+
+        .content {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #888;
+        }
+
+        .message {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-color);
+        }
+
+        .progress-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 2px;
+            background: var(--accent-color);
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="reminder-container" id="reminder">
+        <div class="reminder-box">
+            <div class="icon">☕</div>
+            <div class="content">
+                <span class="title">Dev Community</span>
+                <span class="message">N'oublie pas de Follow !</span>
+            </div>
+            <div class="progress-bar" id="progress"></div>
+        </div>
+    </div>
+
+    <script>
+        const reminder = document.getElementById('reminder');
+        const progressBar = document.getElementById('progress');
+        const displayDuration = 10000; // 10 secondes
+        const intervalTime = 600000;   // 10 minutes (600 000 ms)
+
+        function showReminder() {
+            reminder.style.display = 'block';
+            progressBar.style.width = '100%';
+            
+            let startTime = Date.now();
+            
+            const animate = () => {
+                let elapsed = Date.now() - startTime;
+                let remaining = Math.max(0, 100 - (elapsed / displayDuration * 100));
+                progressBar.style.width = remaining + '%';
+                
+                if (elapsed < displayDuration) {
+                    requestAnimationFrame(animate);
+                } else {
+                    reminder.style.display = 'none';
+                }
+            };
+            
+            requestAnimationFrame(animate);
+        }
+
+        setInterval(showReminder, intervalTime);
+        // Premier affichage après 30 secondes
+        setTimeout(showReminder, 30000);
+    </script>
+</body>
+</html>

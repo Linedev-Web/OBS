@@ -15,8 +15,8 @@
 
         .alert-container {
             position: relative;
-            width: 100vw;
-            height: 100vh;
+            width: 100%;
+            height: calc(100vh - 16px);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -72,11 +72,18 @@
 
         .alert-box {
             position: relative;
+            width: 600px;
+            min-height: 250px;
+            box-sizing: border-box;
             background: linear-gradient(180deg, #1a1a1a 0%, #000 100%);
             padding: 40px 80px;
             border: 2px solid #d4af37;
             border-radius: 0;
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             animation: boxEntrance 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards,
             goldGlow 4s infinite ease-in-out;
             z-index: 10;
@@ -167,15 +174,27 @@
 <body>
 <div class="alert-container">
     <div class="alert-box">
-        <div class="sparkle">✦</div>
-        <div class="sparkle">✦</div>
+        <div class="sparkle">
+            ✦
+        </div>
+        <div class="sparkle">
+            ✦
+        </div>
         <div class="line line-tl"></div>
         <div class="line line-br"></div>
 
-        <div class="title">New Elite</div>
-        <div class="name">{username}</div>
-        <div class="badge">{tenure} {sub_tier}</div>
-        <div class="welcome-text">{resub_message}</div>
+        <div class="title">
+            New Elite
+        </div>
+        <div class="name">
+            {username}
+        </div>
+        <div class="badge">
+            {tenure} {sub_tier}
+        </div>
+        <div class="welcome-text">
+            {resub_message}
+        </div>
     </div>
 </div>
 </body>

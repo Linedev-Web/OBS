@@ -15,8 +15,8 @@
 
         .alert-container {
             position: relative;
-            width: 100vw;
-            height: 100vh;
+            width: 100%;
+            height: calc(100vh - 16px);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -48,16 +48,22 @@
 
         .alert-box {
             position: relative;
+            width: 600px;
+            min-height: 250px;
+            box-sizing: border-box;
             background: rgba(10, 20, 30, 0.85);
             backdrop-filter: blur(12px);
             padding: 40px 60px;
             border: 2px solid rgba(0, 255, 242, 0.5);
             border-radius: 4px;
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             animation: containerEntrance 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards,
                        pulseGlow 3s infinite ease-in-out;
             overflow: hidden;
-            min-width: 450px;
         }
 
         /* Effet de balayage holographique */
@@ -173,27 +179,34 @@
     </style>
 </head>
 <body>
-    <div class="alert-container">
-        <div class="alert-box">
-            <div class="data-lines">
-                <span></span><span></span><span></span><span></span>
+<div class="alert-container">
+    <div class="alert-box">
+        <div class="data-lines">
+            <span></span><span></span><span></span><span></span>
+        </div>
+        <div class="content">
+            <div class="icon-shield">
+                🛡️
             </div>
-            <div class="content">
-                <div class="icon-shield">🛡️</div>
-                <div class="title">Loyalty Update</div>
-                <div class="name">{name}</div>
-                <div class="stats-container">
-                    <div class="stat-item">
-                        <span class="stat-value">{months}</span>
-                        <span class="stat-label">Months</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-value">{tier}</span>
-                        <span class="stat-label">Tier</span>
-                    </div>
+            <div class="title">
+                Loyalty Update
+            </div>
+            <div class="name">
+                {username}
+            </div>
+            <div class="stats-container">
+                <div class="stat-item">
+                    <span class="stat-value">{tenure}</span>
+                    <span class="stat-label">Months</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value">{sub_tier}</span>
+                    <span class="stat-label">Tier</span>
                 </div>
             </div>
+            <span class="stat-label">{resub_message}</span>
         </div>
     </div>
+</div>
 </body>
 </html>

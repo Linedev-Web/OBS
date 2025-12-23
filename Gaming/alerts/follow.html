@@ -15,8 +15,8 @@
 
         .alert-container {
             position: relative;
-            width: 100vw;
-            height: 100vh;
+            width: 100%;
+            height: calc(100vh - 16px);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -56,11 +56,18 @@
 
         .alert-box {
             position: relative;
+            width: 500px;
+            min-height: 200px;
+            box-sizing: border-box;
             background: rgba(10, 10, 10, 0.9);
             padding: 30px 60px;
             border-radius: 5px;
             border: 2px solid #9146ff;
             color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             animation: mainEntrance 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, 
                        neonPulse 2s infinite ease-in-out,
                        float 4s infinite ease-in-out;
@@ -123,20 +130,26 @@
     </style>
 </head>
 <body>
-    <div class="alert-container">
-        <div class="alert-box">
-            <div class="particles">
-                <span></span><span></span><span></span><span></span><span></span>
-            </div>
-            <div class="top-left corner"></div>
-            <div class="top-right corner"></div>
-            <div class="bottom-left corner"></div>
-            <div class="bottom-right corner"></div>
-            
-            <div class="icon">💜</div>
-            <div class="title">New Challenger</div>
-            <div class="name">{name}</div>
+<div class="alert-container">
+    <div class="alert-box">
+        <div class="particles">
+            <span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <div class="top-left corner"></div>
+        <div class="top-right corner"></div>
+        <div class="bottom-left corner"></div>
+        <div class="bottom-right corner"></div>
+
+        <div class="icon">
+            💜
+        </div>
+        <div class="title">
+            New Challenger
+        </div>
+        <div class="name">
+            {name}
         </div>
     </div>
+</div>
 </body>
 </html>

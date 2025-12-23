@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        :root {
+            --accent-color: #7c5c42;
+            --border-width: 2px;
+            --frame-width: 594px;
+            --frame-height: 445px;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: transparent;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .webcam-frame {
+            position: relative;
+            width: var(--frame-width);
+            height: var(--frame-height);
+            border: var(--border-width) solid rgba(124, 92, 66, 0.3);
+            box-sizing: border-box;
+        }
+
+        /* Coins subtils */
+        .corner {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            border: 3px solid var(--accent-color);
+        }
+
+        .top-left { top: -2px; left: -2px; border-right: none; border-bottom: none; }
+        .top-right { top: -2px; right: -2px; border-left: none; border-bottom: none; }
+        .bottom-left { bottom: -2px; left: -2px; border-right: none; border-top: none; }
+        .bottom-right { bottom: -2px; right: -2px; border-left: none; border-top: none; }
+
+        /* Animation de respiration lente sur la bordure */
+        @keyframes breathe {
+            0%, 100% { border-color: rgba(124, 92, 66, 0.2); }
+            50% { border-color: rgba(124, 92, 66, 0.5); }
+        }
+
+        .webcam-frame {
+            animation: breathe 4s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="webcam-frame">
+        <div class="corner top-left"></div>
+        <div class="corner top-right"></div>
+        <div class="corner bottom-left"></div>
+        <div class="corner bottom-right"></div>
+    </div>
+</body>
+</html>

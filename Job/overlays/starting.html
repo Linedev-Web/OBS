@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;700&family=JetBrains+Mono:wght@400&display=swap');
+
+        :root {
+            --bg-color: #f8f5f2;
+            --accent-color: #7c5c42;
+            --text-color: #2c2c2c;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            width: 1920px;
+            height: 1080px;
+            background-color: var(--bg-color);
+            font-family: 'Inter', sans-serif;
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Texture de papier subtile */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            opacity: 0.03;
+            background-image: url('https://www.transparenttextures.com/patterns/p6.png');
+            pointer-events: none;
+        }
+
+        .main-content {
+            text-align: center;
+            z-index: 10;
+        }
+
+        .title {
+            font-size: 80px;
+            font-weight: 300;
+            letter-spacing: 20px;
+            text-transform: uppercase;
+            margin: 0;
+            color: var(--accent-color);
+        }
+
+        .subtitle {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 18px;
+            letter-spacing: 5px;
+            margin-top: 20px;
+            opacity: 0.6;
+        }
+
+        /* Barre de chargement élégante */
+        .loading-bar {
+            width: 400px;
+            height: 1px;
+            background: rgba(124, 92, 66, 0.2);
+            margin: 50px auto;
+            position: relative;
+        }
+
+        .loading-bar::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0;
+            height: 100%;
+            width: 50px;
+            background: var(--accent-color);
+            animation: moveBar 2s infinite ease-in-out;
+        }
+
+        @keyframes moveBar {
+            0% { left: 0; width: 0; }
+            50% { left: 0; width: 100%; }
+            100% { left: 100%; width: 0; }
+        }
+
+        .details {
+            position: absolute;
+            bottom: 60px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            opacity: 0.4;
+            display: flex;
+            gap: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-content">
+        <h1 class="title">Starting</h1>
+        <div class="subtitle">Session de développement web</div>
+        <div class="loading-bar"></div>
+    </div>
+
+    <div class="details">
+        <span>> npm install</span>
+        <span>> warming up coffee</span>
+        <span>> checking stack overflow</span>
+    </div>
+</body>
+</html>
