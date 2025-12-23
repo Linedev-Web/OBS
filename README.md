@@ -25,6 +25,7 @@ Style minimaliste, couleurs café/nature, polices `Inter` et `JetBrains Mono`.
 
 ### 3. Webcam & Widgets
 - **Cadre Webcam** (`Job/overlays/webcam.html`) : Bordure minimaliste (594x445).
+- **Webcam Privacy (Blur)** (`Job/overlays/webcam_blur.html`) : Effet de flou pour protéger votre vie privée.
 - **Rappel Follow** (`Job/widgets/follow_reminder.html`) : Pop-in discrète toutes les 10 min.
 
 ---
@@ -40,6 +41,8 @@ Style dynamique Twitch Purple / Cyan Neon.
 
 ### 3. Webcam & Widgets
 - `Gaming/overlays/webcam_full.html` (avec labels intégrés).
+- `Gaming/overlays/webcam_full_blur.html` (version Privacy pour l'overlay complet).
+- **Webcam Privacy (Blur)** (`Gaming/overlays/webcam_blur.html`) : Effet de flou néon avec icône de verrou.
 - `Gaming/widgets/follow_reminder.html`.
 
 ---
@@ -50,7 +53,9 @@ Style dynamique Twitch Purple / Cyan Neon.
 2. Cochez **Fichier local**.
 3. Sélectionnez le fichier `.html` désiré.
 4. Pour les scènes complètes, réglez la taille sur **1920x1080**.
-5. Pour les alertes, réglez la taille sur **800 x 400** (cela laisse de l'espace pour les animations de sortie et les ombres).
-6. Pour les labels (Just Chatting), assurez-vous que vos fichiers Streamlabels sont bien dans `C:\Workspace\Stream\Streamlabels\`.
+5. Pour les alertes, réglez la taille sur **800 x 400**.
+6. **Astuce Privacy :** Pour l'effet de flou (`webcam_blur.html`), placez cette source **au-dessus** de votre webcam dans OBS. 
+    *Note technique :* Le CSS ne peut pas flouter directement une source vidéo OBS située en dessous. L'overlay utilise donc un fond quasi-opaque pour masquer totalement votre visage tout en restant esthétique. Vous pouvez l'afficher/masquer avec un raccourci clavier ou un Stream Deck.
+7. Pour les labels (Just Chatting), assurez-vous que vos fichiers Streamlabels sont bien dans `C:\Workspace\Stream\Streamlabels\`.
 
 Bon stream ! ☕🎮

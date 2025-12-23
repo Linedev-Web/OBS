@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&display=swap');
+
+        :root {
+            --primary-color: #9146ff; /* Twitch Purple */
+            --secondary-color: #00ffff; /* Cyan neon */
+            --border-width: 3px;
+            --frame-width: 594px;
+            --frame-height: 445px;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: transparent;
+            font-family: 'Orbitron', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .webcam-frame {
+            position: relative;
+            width: var(--frame-width);
+            height: var(--frame-height);
+            box-sizing: border-box;
+            overflow: hidden;
+            border-radius: 4px;
+        }
+
+        /* L'effet de flou qui s'applique sur ce qui est derrière */
+        .blur-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* Note: backdrop-filter ne peut pas flouter la source OBS située dessous. 
+               On utilise donc un fond sombre quasi-opaque pour masquer réellement. */
+            background: rgba(10, 10, 10, 0.98);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }
+
+        .privacy-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 10px var(--secondary-color));
+            animation: pulseIcon 2s infinite ease-in-out;
+        }
+
+        .privacy-text {
+            font-size: 18px;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: var(--secondary-color);
+            text-shadow: 0 0 10px var(--secondary-color);
+        }
+
+        @keyframes pulseIcon {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.1); opacity: 1; }
+        }
+
+        /* Bordure animée */
+        .border-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border: var(--border-width) solid transparent;
+            border-radius: 4px;
+            background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)) padding-box,
+                        conic-gradient(from var(--angle), var(--primary-color), var(--secondary-color), var(--primary-color)) border-box;
+            animation: rotate 4s linear infinite;
+            z-index: 10;
+        }
+
+        @property --angle {
+            syntax: '<angle>';
+            initial-value: 0deg;
+            inherits: false;
+        }
+
+        @keyframes rotate {
+            to { --angle: 360deg; }
+        }
+
+        /* Coins Cyber */
+        .corner {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            border: 5px solid var(--secondary-color);
+            z-index: 20;
+            filter: drop-shadow(0 0-8px var(--secondary-color));
+        }
+
+        .top-left { top: -5px; left: -5px; border-right: none; border-bottom: none; }
+        .top-right { top: -5px; right: -5px; border-left: none; border-bottom: none; }
+        .bottom-left { bottom: -5px; left: -5px; border-right: none; border-top: none; }
+        .bottom-right { bottom: -5px; right: -5px; border-left: none; border-top: none; }
+
+        .label {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            color: white;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: var(--primary-color);
+            padding: 4px 15px;
+            clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%);
+            z-index: 30;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="webcam-frame">
+        <div class="blur-overlay">
+            <div class="privacy-icon">🔒</div>
+            <div class="privacy-text">Privacy Mode</div>
+        </div>
+        
+        <div class="border-animation"></div>
+        
+        <div class="corner top-left"></div>
+        <div class="corner top-right"></div>
+        <div class="corner bottom-left"></div>
+        <div class="corner bottom-right"></div>
+
+        <div class="label">Cam Off</div>
+    </div>
+</body>
+</html>

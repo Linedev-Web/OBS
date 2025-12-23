@@ -11,28 +11,43 @@
             --text-color: #2c2c2c;
         }
 
+        /* Motif nappe à carreaux marron/beige */
         body {
             margin: 0;
             padding: 0;
             width: 1920px;
             height: 1080px;
-            background-color: var(--bg-color);
+            background-color: #d2b48c; /* Beige */
+            background-image: 
+                linear-gradient(45deg, #7c5c42 25%, transparent 25%), 
+                linear-gradient(-45deg, #7c5c42 25%, transparent 25%), 
+                linear-gradient(45deg, transparent 75%, #7c5c42 75%), 
+                linear-gradient(-45deg, transparent 75%, #7c5c42 75%);
+            background-size: 80px 80px;
+            background-position: 0 0, 0 40px, 40px -40px, -40px 0px;
             font-family: 'Inter', sans-serif;
             color: var(--text-color);
             display: flex;
             justify-content: center;
             align-items: center;
             overflow: hidden;
+            position: relative;
         }
 
         .main-content {
+            background: rgba(248, 245, 210, 0.95);
+            padding: 60px 100px;
+            border-radius: 15px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
             text-align: center;
+            z-index: 10;
+            border: 8px double #7c5c42;
         }
 
         .title {
             font-size: 80px;
-            font-weight: 300;
-            letter-spacing: 20px;
+            font-weight: 700;
+            letter-spacing: 15px;
             text-transform: uppercase;
             margin: 0;
             color: var(--accent-color);
@@ -40,10 +55,11 @@
 
         .subtitle {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 18px;
-            letter-spacing: 5px;
+            font-size: 22px;
+            letter-spacing: 3px;
             margin-top: 20px;
-            opacity: 0.6;
+            color: #555;
+            font-weight: 700;
         }
 
         .dots {

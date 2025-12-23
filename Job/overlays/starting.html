@@ -11,12 +11,20 @@
             --text-color: #2c2c2c;
         }
 
+        /* Motif nappe à carreaux marron/beige */
         body {
             margin: 0;
             padding: 0;
             width: 1920px;
             height: 1080px;
-            background-color: var(--bg-color);
+            background-color: #d2b48c; /* Beige */
+            background-image: 
+                linear-gradient(45deg, #7c5c42 25%, transparent 25%), 
+                linear-gradient(-45deg, #7c5c42 25%, transparent 25%), 
+                linear-gradient(45deg, transparent 75%, #7c5c42 75%), 
+                linear-gradient(-45deg, transparent 75%, #7c5c42 75%);
+            background-size: 80px 80px;
+            background-position: 0 0, 0 40px, 40px -40px, -40px 0px;
             font-family: 'Inter', sans-serif;
             color: var(--text-color);
             display: flex;
@@ -26,25 +34,20 @@
             position: relative;
         }
 
-        /* Texture de papier subtile */
-        body::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            opacity: 0.03;
-            background-image: url('https://www.transparenttextures.com/patterns/p6.png');
-            pointer-events: none;
-        }
-
         .main-content {
+            background: rgba(248, 245, 210, 0.95);
+            padding: 60px 100px;
+            border-radius: 15px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
             text-align: center;
             z-index: 10;
+            border: 8px double #7c5c42;
         }
 
         .title {
             font-size: 80px;
-            font-weight: 300;
-            letter-spacing: 20px;
+            font-weight: 700; /* Plus gras pour la lisibilité */
+            letter-spacing: 15px;
             text-transform: uppercase;
             margin: 0;
             color: var(--accent-color);
@@ -52,19 +55,22 @@
 
         .subtitle {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 18px;
-            letter-spacing: 5px;
+            font-size: 22px;
+            letter-spacing: 3px;
             margin-top: 20px;
-            opacity: 0.6;
+            color: #555;
+            font-weight: 700;
         }
 
         /* Barre de chargement élégante */
         .loading-bar {
             width: 400px;
-            height: 1px;
+            height: 4px;
             background: rgba(124, 92, 66, 0.2);
             margin: 50px auto;
             position: relative;
+            overflow: hidden;
+            border-radius: 2px;
         }
 
         .loading-bar::after {
@@ -78,19 +84,24 @@
         }
 
         @keyframes moveBar {
-            0% { left: 0; width: 0; }
+            0% { left: -50px; width: 50px; }
             50% { left: 0; width: 100%; }
-            100% { left: 100%; width: 0; }
+            100% { left: 100%; width: 50px; }
         }
 
         .details {
             position: absolute;
-            bottom: 60px;
+            bottom: 40px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 30px;
+            border-radius: 30px;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 12px;
-            opacity: 0.4;
+            font-size: 14px;
+            color: var(--accent-color);
+            font-weight: 700;
             display: flex;
             gap: 40px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
     </style>
 </head>

@@ -6,11 +6,10 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=JetBrains+Mono:wght@400&display=swap');
 
         :root {
-            --bg-color: #f8f5f2;
-            --sidebar-color: #ffffff;
+            --bg-color: #d2b48c;
             --accent-color: #7c5c42;
             --text-color: #2c2c2c;
-            --border-color: #eaddd0;
+            --panel-bg: rgba(248, 245, 210, 0.95);
         }
 
         body {
@@ -19,117 +18,168 @@
             width: 1920px;
             height: 1080px;
             background-color: var(--bg-color);
+            background-image: 
+                linear-gradient(45deg, #7c5c42 25%, transparent 25%), 
+                linear-gradient(-45deg, #7c5c42 25%, transparent 25%), 
+                linear-gradient(45deg, transparent 75%, #7c5c42 75%), 
+                linear-gradient(-45deg, transparent 75%, #7c5c42 75%);
+            background-size: 80px 80px;
+            background-position: 0 0, 0 40px, 40px -40px, -40px 0px;
             font-family: 'Inter', sans-serif;
             color: var(--text-color);
             display: flex;
             overflow: hidden;
+            padding: 30px;
+            box-sizing: border-box;
+            gap: 30px;
         }
 
-        /* Sidebar Droite pour le Chat */
-        .chat-container {
-            width: 450px;
-            height: 100%;
-            background: var(--sidebar-color);
-            border-left: 1px solid var(--border-color);
+        /* Panneau Principal */
+        .main-panel {
+            flex: 1;
             display: flex;
             flex-direction: column;
+            gap: 30px;
+        }
+
+        /* Cadre Webcam */
+        .webcam-container {
+            background: var(--panel-bg);
+            border: 8px double var(--accent-color);
+            border-radius: 15px;
+            position: relative;
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        /* Zone vide pour la webcam (16:9 approx) */
+        .webcam-placeholder {
+            width: 90%;
+            height: 90%;
+            background: rgba(0,0,0,0.05);
+            border: 2px dashed var(--accent-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--accent-color);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .panel-label {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: var(--accent-color);
+            color: white;
+            padding: 5px 20px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            text-transform: uppercase;
+            border-radius: 5px;
+            z-index: 5;
+        }
+
+        /* Panneau de Chat */
+        .chat-panel {
+            width: 450px;
+            background: var(--panel-bg);
+            border: 8px double var(--accent-color);
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
             position: relative;
         }
 
         .chat-header {
-            padding: 30px;
-            border-bottom: 1px solid var(--border-color);
-            font-family: 'JetBrains Mono', monospace;
+            padding: 25px;
+            text-align: center;
+            border-bottom: 2px solid rgba(124, 92, 66, 0.2);
+            font-weight: 700;
+            font-size: 20px;
+            color: var(--accent-color);
             text-transform: uppercase;
             letter-spacing: 2px;
-            font-size: 14px;
-            color: var(--accent-color);
         }
 
-        /* Zone principale */
-        .main-view {
-            flex-grow: 1;
-            padding: 40px;
+        /* Barre de Stats en Bas */
+        .stats-bar {
+            height: 120px;
+            background: var(--panel-bg);
+            border: 8px double var(--accent-color);
+            border-radius: 15px;
             display: flex;
-            flex-direction: column;
-            gap: 40px;
-        }
-
-        /* Cadre Webcam */
-        .webcam-box {
-            width: 800px;
-            height: 600px;
-            border: 1px solid var(--border-color);
-            background: rgba(255, 255, 255, 0.5);
-            position: relative;
-        }
-
-        .webcam-label {
-            position: absolute;
-            top: -15px;
-            left: 20px;
-            background: var(--accent-color);
-            color: white;
-            padding: 4px 15px;
-            font-size: 11px;
-            font-family: 'JetBrains Mono', monospace;
-            text-transform: uppercase;
-        }
-
-        /* Stats en bas */
-        .stats-footer {
-            margin-top: auto;
-            display: flex;
-            gap: 20px;
+            justify-content: space-around;
+            align-items: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            padding: 0 20px;
         }
 
         .stat-item {
-            background: white;
-            border: 1px solid var(--border-color);
-            padding: 15px 25px;
-            min-width: 200px;
             display: flex;
             flex-direction: column;
+            align-items: center;
+            gap: 5px;
         }
 
-        .stat-title {
-            font-size: 10px;
+        .stat-icon {
+            font-size: 24px;
+        }
+
+        .stat-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
             text-transform: uppercase;
-            letter-spacing: 1px;
             color: #888;
-            margin-bottom: 5px;
         }
 
         .stat-value {
             font-weight: 700;
-            font-size: 16px;
+            font-size: 18px;
+            color: var(--accent-color);
         }
+
+        .divider {
+            width: 2px;
+            height: 40px;
+            background: rgba(124, 92, 66, 0.2);
+        }
+
     </style>
 </head>
 <body>
-    <div class="main-view">
-        <div class="webcam-box">
-            <div class="webcam-label">Live Camera</div>
+    <div class="main-panel">
+        <div class="webcam-container">
+            <div class="panel-label">Live Development</div>
+            <div class="webcam-placeholder">ZONE WEBCAM</div>
         </div>
-
-        <div class="stats-footer">
+        
+        <div class="stats-bar">
             <div class="stat-item">
-                <span class="stat-title">Dernier Follow</span>
-                <span class="stat-value" id="most_recent_follower">...</span>
+                <span class="stat-label">🌿 Dernier Follow</span>
+                <span class="stat-value" id="most_recent_follower">Chargement...</span>
             </div>
+            <div class="divider"></div>
             <div class="stat-item">
-                <span class="stat-title">Dernier Sub</span>
-                <span class="stat-value" id="most_recent_subscriber">...</span>
+                <span class="stat-label">☕ Dernier Sub</span>
+                <span class="stat-value" id="most_recent_subscriber">Chargement...</span>
             </div>
+            <div class="divider"></div>
             <div class="stat-item">
-                <span class="stat-title">Dernière Donation</span>
-                <span class="stat-value" id="most_recent_donator">...</span>
+                <span class="stat-label">💰 Dernière Donation</span>
+                <span class="stat-value" id="most_recent_donator">Chargement...</span>
             </div>
         </div>
     </div>
 
-    <div class="chat-container">
-        <div class="chat-header">Discussion en direct</div>
+    <div class="chat-panel">
+        <div class="chat-header">Coffee Chat</div>
     </div>
 
     <script>
