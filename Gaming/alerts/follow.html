@@ -3,152 +3,129 @@
 <head>
     <meta charset="UTF-8">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Montserrat:wght@700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Rajdhani:wght@500;700&display=swap');
+
+        :root {
+            --primary-color: #9146ff;
+            --secondary-color: #00ffff;
+            --bg-dark: #0a0a0a;
+        }
 
         body {
             margin: 0;
             padding: 0;
             overflow: hidden;
             background: transparent;
-            font-family: 'Montserrat', sans-serif;
+            font-family: 'Rajdhani', sans-serif;
         }
 
         .alert-container {
             position: relative;
             width: 100%;
-            height: calc(100vh - 16px);
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            perspective: 1000px;
+            text-align: center;
         }
 
-        /* Animations */
-        @keyframes glitch {
-            0% { transform: translate(0); text-shadow: -2px 2px #ff00ff, 2px -2px #00ffff; }
-            25% { transform: translate(-2px, 2px); text-shadow: 2px -2px #ff00ff, -2px 2px #00ffff; }
-            50% { transform: translate(2px, -2px); text-shadow: -2px -2px #ff00ff, 2px 2px #00ffff; }
-            75% { transform: translate(-2px, -2px); text-shadow: 2px 2px #ff00ff, -2px -2px #00ffff; }
-            100% { transform: translate(0); text-shadow: -2px 2px #ff00ff, 2px -2px #00ffff; }
+        @keyframes subPop {
+            0% { transform: scale(0) rotate(-10deg); opacity: 0; }
+            70% { transform: scale(1.1) rotate(5deg); }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
         }
 
-        @keyframes mainEntrance {
-            0% { transform: rotateX(-90deg) scale(0.5); opacity: 0; }
-            60% { transform: rotateX(20deg) scale(1.1); opacity: 1; }
-            100% { transform: rotateX(0deg) scale(1); opacity: 1; }
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-10px) rotate(2deg); }
-        }
-
-        @keyframes neonPulse {
-            0%, 100% { box-shadow: 0 0 20px #9146ff, inset 0 0 10px #9146ff; }
-            50% { box-shadow: 0 0 40px #9146ff, inset 0 0 20px #9146ff; }
-        }
-
-        @keyframes particleUp {
-            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-            20% { opacity: 1; }
-            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        @keyframes glowPulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(145, 70, 255, 0.4), inset 0 0 15px rgba(145, 70, 255, 0.2); }
+            50% { box-shadow: 0 0 40px rgba(145, 70, 255, 0.8), inset 0 0 25px rgba(145, 70, 255, 0.4); }
         }
 
         .alert-box {
             position: relative;
-            width: 500px;
-            min-height: 200px;
+            width: 600px;
+            min-height: 250px;
             box-sizing: border-box;
-            background: rgba(10, 10, 10, 0.9);
-            padding: 30px 60px;
-            border-radius: 5px;
-            border: 2px solid #9146ff;
+            background: var(--bg-dark);
+            padding: 40px 60px;
+            border-radius: 4px;
+            border: 3px solid var(--primary-color);
             color: white;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            animation: mainEntrance 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, 
-                       neonPulse 2s infinite ease-in-out,
-                       float 4s infinite ease-in-out;
-            text-align: center;
+            animation: 
+                subPop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards,
+                glowPulse 2s infinite ease-in-out;
+            z-index: 10;
         }
 
-        /* Particules décoratives sans JS */
-        .particles span {
+        .alert-box::before {
+            content: "";
             position: absolute;
-            width: 8px;
-            height: 8px;
-            background: #9146ff;
-            border-radius: 50%;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(45deg, rgba(145, 70, 255, 0.1) 0%, transparent 100%);
             pointer-events: none;
-            animation: particleUp 2s infinite linear;
-            opacity: 0;
         }
-
-        .particles span:nth-child(1) { left: 10%; animation-delay: 0s; }
-        .particles span:nth-child(2) { left: 30%; animation-delay: 0.5s; }
-        .particles span:nth-child(3) { left: 50%; animation-delay: 1.2s; }
-        .particles span:nth-child(4) { left: 70%; animation-delay: 0.8s; }
-        .particles span:nth-child(5) { left: 90%; animation-delay: 1.5s; }
 
         .title {
             font-family: 'Orbitron', sans-serif;
-            font-size: 20px;
+            font-size: 24px;
+            font-weight: 900;
+            color: #fff;
             text-transform: uppercase;
-            letter-spacing: 5px;
-            color: #9146ff;
+            letter-spacing: 4px;
             margin-bottom: 10px;
+            text-shadow: 0 0 10px var(--primary-color);
         }
 
         .name {
             font-family: 'Orbitron', sans-serif;
-            font-size: 52px;
+            font-size: 64px;
             font-weight: 900;
-            text-transform: uppercase;
+            color: var(--secondary-color);
+            text-shadow: 0 0 20px var(--secondary-color);
+            margin: 5px 0;
+            letter-spacing: -1px;
+        }
+
+        .message {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
             color: #fff;
-            animation: glitch 3s infinite;
+            background: rgba(145, 70, 255, 0.2);
+            padding: 5px 30px;
+            border-left: 4px solid var(--secondary-color);
+            border-right: 4px solid var(--secondary-color);
+            display: inline-block;
+            margin-top: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
-        .icon {
-            font-size: 50px;
+        .icon-main {
+            font-size: 60px;
+            display: block;
             margin-bottom: 15px;
-            filter: drop-shadow(0 0 10px #9146ff);
+            filter: drop-shadow(0 0 15px var(--secondary-color));
+            animation: float 3s infinite ease-in-out;
         }
 
-        .corner {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            border: 3px solid #9146ff;
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
         }
-        .top-left { top: -5px; left: -5px; border-right: none; border-bottom: none; }
-        .top-right { top: -5px; right: -5px; border-left: none; border-bottom: none; }
-        .bottom-left { bottom: -5px; left: -5px; border-right: none; border-top: none; }
-        .bottom-right { bottom: -5px; right: -5px; border-left: none; border-top: none; }
 
     </style>
 </head>
 <body>
 <div class="alert-container">
     <div class="alert-box">
-        <div class="particles">
-            <span></span><span></span><span></span><span></span><span></span>
-        </div>
-        <div class="top-left corner"></div>
-        <div class="top-right corner"></div>
-        <div class="bottom-left corner"></div>
-        <div class="bottom-right corner"></div>
-
-        <div class="icon">
-            💜
-        </div>
-        <div class="title">
-            New Challenger
-        </div>
-        <div class="name">
-            {name}
-        </div>
+        <div class="icon-main">💜</div>
+        <div class="title">Nouveau Follow!</div>
+        <div class="name">{name}</div>
+        <div class="message">Merci pour le soutien !</div>
     </div>
 </div>
 </body>

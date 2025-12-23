@@ -3,71 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Montserrat:wght@700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Rajdhani:wght@500;700&display=swap');
+
+        :root {
+            --primary-color: #9146ff;
+            --secondary-color: #00ffff;
+            --bg-dark: #0a0a0a;
+        }
 
         body {
             margin: 0;
             padding: 0;
             overflow: hidden;
             background: transparent;
-            font-family: 'Montserrat', sans-serif;
+            font-family: 'Rajdhani', sans-serif;
         }
 
         .alert-container {
             position: relative;
             width: 100%;
-            height: calc(100vh - 16px);
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            perspective: 1000px;
+            text-align: center;
         }
 
-        @keyframes boxEntrance {
-            0% {
-                transform: scale(0.8) translateY(100px);
-                opacity: 0;
-            }
-            100% {
-                transform: scale(1) translateY(0);
-                opacity: 1;
-            }
+        @keyframes subPop {
+            0% { transform: scale(0) rotate(-10deg); opacity: 0; }
+            70% { transform: scale(1.1) rotate(5deg); }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
         }
 
-        @keyframes goldGlow {
-            0%, 100% {
-                border-color: #d4af37;
-                box-shadow: 0 0 20px rgba(212, 175, 55, 0.4), inset 0 0 10px rgba(212, 175, 55, 0.2);
-            }
-            50% {
-                border-color: #fff;
-                box-shadow: 0 0 40px rgba(212, 175, 55, 0.8), inset 0 0 20px rgba(212, 175, 55, 0.4);
-            }
-        }
-
-        @keyframes lineAnim {
-            0% {
-                width: 0;
-                opacity: 0;
-            }
-            100% {
-                width: 100px;
-                opacity: 1;
-            }
-        }
-
-        @keyframes spark {
-            0% {
-                transform: scale(0);
-                opacity: 0;
-            }
-            50% {
-                opacity: 1;
-            }
-            100% {
-                transform: scale(1.5) rotate(90deg);
-                opacity: 0;
-            }
+        @keyframes glowPulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(145, 70, 255, 0.4), inset 0 0 15px rgba(145, 70, 255, 0.2); }
+            50% { box-shadow: 0 0 40px rgba(145, 70, 255, 0.8), inset 0 0 25px rgba(145, 70, 255, 0.4); }
         }
 
         .alert-box {
@@ -75,98 +45,84 @@
             width: 600px;
             min-height: 250px;
             box-sizing: border-box;
-            background: linear-gradient(180deg, #1a1a1a 0%, #000 100%);
-            padding: 40px 80px;
-            border: 2px solid #d4af37;
-            border-radius: 0;
-            text-align: center;
+            background: var(--bg-dark);
+            padding: 40px 60px;
+            border-radius: 4px;
+            border: 3px solid var(--primary-color);
+            color: white;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            animation: boxEntrance 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards,
-            goldGlow 4s infinite ease-in-out;
+            animation: 
+                subPop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards,
+                glowPulse 2s infinite ease-in-out;
             z-index: 10;
         }
 
-        /* Ornementations */
-        .line {
+        .alert-box::before {
+            content: "";
             position: absolute;
-            height: 2px;
-            background: #d4af37;
-            animation: lineAnim 1s forwards;
-            animation-delay: 0.5s;
-        }
-
-        .line-tl {
-            top: 20px;
-            left: -50px;
-        }
-
-        .line-br {
-            bottom: 20px;
-            right: -50px;
-        }
-
-        .sparkle {
-            position: absolute;
-            color: #d4af37;
-            font-size: 20px;
-            animation: spark 2s infinite;
-        }
-
-        .sparkle:nth-child(1) {
-            top: 10%;
-            left: 5%;
-            animation-delay: 0.2s;
-        }
-
-        .sparkle:nth-child(2) {
-            bottom: 10%;
-            right: 5%;
-            animation-delay: 1.2s;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(45deg, rgba(145, 70, 255, 0.1) 0%, transparent 100%);
+            pointer-events: none;
         }
 
         .title {
-            font-family: 'Syncopate', sans-serif;
-            font-size: 18px;
-            font-weight: 700;
-            color: #d4af37;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 24px;
+            font-weight: 900;
+            color: #fff;
             text-transform: uppercase;
-            letter-spacing: 8px;
-            margin-bottom: 20px;
-            opacity: 0.8;
+            letter-spacing: 4px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px var(--primary-color);
         }
 
         .name {
-            font-family: 'Syncopate', sans-serif;
-            font-size: 56px;
-            font-weight: 700;
-            color: #fff;
-            text-transform: uppercase;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-            margin-bottom: 10px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 64px;
+            font-weight: 900;
+            color: var(--secondary-color);
+            text-shadow: 0 0 20px var(--secondary-color);
+            margin: 5px 0;
+            letter-spacing: -1px;
         }
 
         .badge {
             display: inline-block;
             padding: 8px 25px;
-            background: transparent;
-            border: 1px solid rgba(212, 175, 55, 0.5);
-            color: #d4af37;
-            font-size: 14px;
-            font-weight: 900;
+            background: rgba(145, 70, 255, 0.2);
+            border-left: 4px solid var(--secondary-color);
+            border-right: 4px solid var(--secondary-color);
+            color: #fff;
+            font-size: 16px;
+            font-weight: 700;
             letter-spacing: 3px;
             text-transform: uppercase;
             margin-top: 15px;
         }
 
         .welcome-text {
-            color: #666;
-            font-size: 12px;
-            letter-spacing: 5px;
-            text-transform: uppercase;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 18px;
+            color: #fff;
+            opacity: 0.8;
             margin-top: 20px;
+            font-style: italic;
+        }
+
+        .icon-main {
+            font-size: 60px;
+            display: block;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 0 15px var(--secondary-color));
+            animation: float 3s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
         }
 
     </style>
@@ -174,27 +130,11 @@
 <body>
 <div class="alert-container">
     <div class="alert-box">
-        <div class="sparkle">
-            ✦
-        </div>
-        <div class="sparkle">
-            ✦
-        </div>
-        <div class="line line-tl"></div>
-        <div class="line line-br"></div>
-
-        <div class="title">
-            New Elite
-        </div>
-        <div class="name">
-            {username}
-        </div>
-        <div class="badge">
-            {tenure} {sub_tier}
-        </div>
-        <div class="welcome-text">
-            {resub_message}
-        </div>
+        <div class="icon-main">👑</div>
+        <div class="title">Premier Abonné!</div>
+        <div class="name">{username}</div>
+        <div class="badge">{sub_tier}</div>
+        <div class="welcome-text">{resub_message}</div>
     </div>
 </div>
 </body>

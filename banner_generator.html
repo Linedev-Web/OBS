@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Générateur de Bannières Twitch</title>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Montserrat:wght@700;900&family=Inter:wght@400;700&family=JetBrains+Mono:wght@500&family=Orbitron:wght@400;900&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --panel-bg: #f0f0f0;
+            --control-bg: #ffffff;
+            --accent-gaming: #9146ff;
+            --accent-job: #d2b48c;
+            --gaming-cyan: #00ffff;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: var(--panel-bg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: var(--control-bg);
+            padding: 20px 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        h1 { text-align: center; color: #333; margin-top: 0; }
+
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        label { font-weight: 600; font-size: 13px; color: #555; }
+
+        input, select {
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 13px;
+        }
+
+        .preview-area {
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            background: #e0e0e0;
+            padding: 30px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        /* --- THEME GAMING --- */
+        .banner-gaming {
+            width: 320px;
+            min-height: 80px;
+            background: #0a0a0a;
+            padding: 15px 20px;
+            border-radius: 4px;
+            border: 2px solid var(--accent-gaming);
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 0 15px rgba(145, 70, 255, 0.4), inset 0 0 10px rgba(145, 70, 255, 0.2);
+            font-family: 'Orbitron', sans-serif;
+            position: relative;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        .banner-gaming::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(45deg, rgba(145, 70, 255, 0.1) 0%, transparent 100%);
+            pointer-events: none;
+        }
+
+        .banner-gaming .icon {
+            font-size: 32px;
+            filter: drop-shadow(0 0 8px var(--accent-gaming));
+            z-index: 2;
+        }
+
+        .banner-gaming .text-content {
+            display: flex;
+            flex-direction: column;
+            z-index: 2;
+        }
+
+        .banner-gaming .title {
+            font-weight: 900;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #fff;
+            text-shadow: 0 0 10px var(--accent-gaming);
+            margin: 0;
+            white-space: nowrap;
+        }
+
+        .banner-gaming .subtitle {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--gaming-cyan);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-top: 2px;
+            display: inline-block;
+            white-space: nowrap;
+            opacity: 0.9;
+        }
+
+        /* --- THEME JOB --- */
+        .banner-job {
+            width: 320px;
+            min-height: 70px;
+            background: #1a1a1a;
+            padding: 10px 20px;
+            border-left: 6px solid #d2b48c;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-family: 'Inter', sans-serif;
+            position: relative;
+            box-sizing: border-box;
+        }
+
+        .banner-job .text-content {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .banner-job .badge {
+            font-family: 'JetBrains Mono', monospace;
+            background: rgba(210, 180, 140, 0.2);
+            color: #d2b48c;
+            padding: 2px 8px;
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+            width: fit-content;
+            white-space: nowrap;
+        }
+
+        .banner-job .title {
+            font-size: 20px;
+            font-weight: 700;
+            margin: 0;
+            white-space: nowrap;
+        }
+
+        .banner-job .icon {
+            font-size: 30px;
+            opacity: 0.8;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        button {
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        .btn-generate {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .btn-generate:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+        }
+
+        #canvas-container {
+            margin-top: 30px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Générateur de Bannières Twitch</h1>
+
+    <div class="controls">
+        <div class="control-group">
+            <label for="theme-select">Thème</label>
+            <select id="theme-select" onchange="updatePreview()">
+                <option value="gaming">Gaming</option>
+                <option value="job">Job</option>
+            </select>
+        </div>
+        <div class="control-group">
+            <label for="type-select">Type</label>
+            <select id="type-select" onchange="autoFill()">
+                <option value="donation">Donation</option>
+                <option value="sub">Abonnement</option>
+                <option value="specs">Ma Config</option>
+                <option value="youtube">Youtube</option>
+                <option value="tiktok">Tiktok</option>
+                <option value="instagram">Instagram</option>
+                <option value="discord">Discord</option>
+                <option value="about">À propos</option>
+            </select>
+        </div>
+        <div class="control-group">
+            <label for="input-icon">Icône (Emoji ou SVG)</label>
+            <input type="text" id="input-icon" value="💎" oninput="updatePreview()">
+        </div>
+        <div class="control-group">
+            <label for="input-title">Titre</label>
+            <input type="text" id="input-title" value="DONATION" oninput="updatePreview()">
+        </div>
+        <div class="control-group">
+            <label for="input-subtitle">Sous-titre (Gaming uniquement)</label>
+            <input type="text" id="input-subtitle" value="Soutenir le stream" oninput="updatePreview()">
+        </div>
+        <div class="control-group">
+            <label for="input-badge">Badge (Job uniquement)</label>
+            <input type="text" id="input-badge" value="Soutien Développement" oninput="updatePreview()">
+        </div>
+    </div>
+
+    <div class="preview-area">
+        <div id="banner-preview">
+            <!-- Le contenu sera généré ici -->
+        </div>
+    </div>
+
+    <div class="actions">
+        <button class="btn-generate" onclick="generateImage()">Générer l'Image</button>
+    </div>
+
+    <div id="canvas-container"></div>
+</div>
+
+<script>
+    const svgs = {
+        youtube: `<svg viewBox="0 0 24 24" width="32" height="32" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>`,
+        tiktok: `<svg viewBox="0 0 24 24" width="32" height="32" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.06-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.03 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.9-.32-1.89-.23-2.74.24-.73.38-1.31 1.04-1.58 1.807-.32.79-.3 1.68-.03 2.48.32.77.98 1.39 1.78 1.63.85.24 1.73.21 2.54-.11.66-.26 1.19-.77 1.48-1.42.1-.22.15-.46.17-.7.04-2.27.02-4.54.02-6.81l.01-8.71z"/></svg>`,
+        instagram: `<svg viewBox="0 0 24 24" width="32" height="32" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.17.054 1.805.249 2.227.412.56.216.96.474 1.38.894.42.42.678.82.894 1.38.163.422.358 1.057.412 2.227.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.054 1.17-.249 1.805-.412 2.227-.216.56-.474.96-.894 1.38-.42.42-.82.678-1.38.894-.422.163-1.057.358-2.227.412-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.17-.054-1.805-.249-2.227-.412-.56-.216-.96-.474-1.38-.894-.42-.42-.678-.82-.894-1.38-.163-.422-.358-1.057-.412-2.227-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.054-1.17.249-1.805.412-2.227.216-.56.474-.96.894-1.38.42-.42.82-.678 1.38-.894.422-.163 1.057-.358 2.227-.412 1.266-.058 1.646-.07 4.85-.07zM12 0C8.741 0 8.333.014 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.741 0 12s.014 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126s1.355 1.078 2.144 1.384c.766.296 1.636.499 2.913.558C8.333 23.986 8.741 24 12 24s3.667-.014 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384s1.078-1.354 1.384-2.144c.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.014-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126s-1.354-1.077-2.144-1.384c-.765-.296-1.636-.499-2.913-.558C15.667.012 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>`,
+        discord: `<svg viewBox="0 0 24 24" width="32" height="32" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 11.721 11.721 0 0 0-.617-1.25.077.077 0 0 0-.079-.037 19.736 19.736 0 0 0-4.885 1.515.069.069 0 0 0-.032.027C.533 9.048-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0-5.993 3.03.078.078 0 0 0 .084-.028 14.091 14.091 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.125-.094.249-.192.37-.291a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.085 2.176 2.419 0 1.334-.966 2.419-2.176 2.419zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.085 2.176 2.419 0 1.334-.946 2.419-2.176 2.419z"/></svg>`,
+        user: `<svg viewBox="0 0 24 24" width="32" height="32" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>`
+    };
+
+    function updatePreview() {
+        const theme = document.getElementById('theme-select').value;
+        const iconInput = document.getElementById('input-icon').value;
+        const title = document.getElementById('input-title').value;
+        const subtitle = document.getElementById('input-subtitle').value;
+        const badge = document.getElementById('input-badge').value;
+        const previewDiv = document.getElementById('banner-preview');
+
+        // Gérer les icônes SVG si présentes dans la config
+        let iconHtml = iconInput;
+        if (iconInput.startsWith('svg:')) {
+            const svgName = iconInput.split(':')[1];
+            iconHtml = svgs[svgName] || iconInput;
+        }
+
+        if (theme === 'gaming') {
+            previewDiv.innerHTML = `
+                <div class="banner-gaming" id="capture">
+                    <div class="icon">${iconHtml}</div>
+                    <div class="text-content">
+                        <div class="title">${title}</div>
+                        <div class="subtitle">${subtitle}</div>
+                    </div>
+                </div>
+            `;
+        } else {
+            previewDiv.innerHTML = `
+                <div class="banner-job" id="capture">
+                    <div class="text-content">
+                        <div class="badge">${badge}</div>
+                        <div class="title">${title}</div>
+                    </div>
+                    <div class="icon">${iconHtml}</div>
+                </div>
+            `;
+        }
+    }
+
+    function autoFill() {
+        const type = document.getElementById('type-select').value;
+        const theme = document.getElementById('theme-select').value;
+        
+        const presets = {
+            donation: {
+                icon: theme === 'gaming' ? '💎' : '☕',
+                title: 'DONATION',
+                subtitle: 'Soutenir le stream',
+                badge: 'Soutien Développement'
+            },
+            sub: {
+                icon: theme === 'gaming' ? '⭐' : '💼',
+                title: 'ABONNEMENT',
+                subtitle: 'Rejoins le club',
+                badge: 'Membre Premium'
+            },
+            specs: {
+                icon: theme === 'gaming' ? '🖥️' : '⚙️',
+                title: 'MA CONFIG',
+                subtitle: 'Mon setup PC',
+                badge: 'Infos Matériel'
+            },
+            youtube: {
+                icon: 'svg:youtube',
+                title: 'YOUTUBE',
+                subtitle: 'Abonne-toi à la chaîne',
+                badge: 'Contenu Vidéo'
+            },
+            tiktok: {
+                icon: 'svg:tiktok',
+                title: 'TIKTOK',
+                subtitle: 'Suis-moi pour les clips',
+                badge: 'Format Court'
+            },
+            instagram: {
+                icon: 'svg:instagram',
+                title: 'INSTAGRAM',
+                subtitle: 'Actu au quotidien',
+                badge: 'Réseaux Sociaux'
+            },
+            discord: {
+                icon: 'svg:discord',
+                title: 'DISCORD',
+                subtitle: 'Rejoins la communauté',
+                badge: 'Hub Communautaire'
+            },
+            about: {
+                icon: 'svg:user',
+                title: 'À PROPOS',
+                subtitle: 'En savoir plus',
+                badge: 'Bio & Infos'
+            }
+        };
+
+        const config = presets[type];
+        if (config) {
+            document.getElementById('input-icon').value = config.icon;
+            document.getElementById('input-title').value = config.title;
+            document.getElementById('input-subtitle').value = config.subtitle;
+            document.getElementById('input-badge').value = config.badge;
+        }
+        updatePreview();
+    }
+
+    function generateImage() {
+        const element = document.getElementById('capture');
+        html2canvas(element, {
+            backgroundColor: null,
+            scale: 2 // Meilleure qualité
+        }).then(canvas => {
+            const link = document.createElement("a");
+            const theme = document.getElementById('theme-select').value;
+            const type = document.getElementById('type-select').value;
+            link.download = `banner_${theme}_${type}.png`;
+            link.href = canvas.toDataURL("image/png");
+            link.click();
+        });
+    }
+
+    // Initialisation
+    updatePreview();
+</script>
+
+</body>
+</html>

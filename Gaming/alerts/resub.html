@@ -3,47 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&family=Montserrat:wght@700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Rajdhani:wght@500;700&display=swap');
+
+        :root {
+            --primary-color: #9146ff;
+            --secondary-color: #00ffff;
+            --bg-dark: #0a0a0a;
+        }
 
         body {
             margin: 0;
             padding: 0;
             overflow: hidden;
             background: transparent;
-            font-family: 'Montserrat', sans-serif;
+            font-family: 'Rajdhani', sans-serif;
         }
 
         .alert-container {
             position: relative;
             width: 100%;
-            height: calc(100vh - 16px);
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            perspective: 1200px;
+            text-align: center;
         }
 
-        /* Animations */
-        @keyframes containerEntrance {
-            0% { transform: rotateY(90deg) scale(0.8); opacity: 0; }
-            100% { transform: rotateY(0deg) scale(1); opacity: 1; }
+        @keyframes subPop {
+            0% { transform: scale(0) rotate(-10deg); opacity: 0; }
+            70% { transform: scale(1.1) rotate(5deg); }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
         }
 
-        @keyframes holoFlow {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        @keyframes pulseGlow {
-            0%, 100% { box-shadow: 0 0 20px rgba(0, 255, 242, 0.3), inset 0 0 10px rgba(0, 255, 242, 0.2); }
-            50% { box-shadow: 0 0 40px rgba(0, 255, 242, 0.6), inset 0 0 20px rgba(0, 255, 242, 0.4); }
-        }
-
-        @keyframes dataStream {
-            0% { transform: translateY(-100%); opacity: 0; }
-            50% { opacity: 0.5; }
-            100% { transform: translateY(100%); opacity: 0; }
+        @keyframes glowPulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(145, 70, 255, 0.4), inset 0 0 15px rgba(145, 70, 255, 0.2); }
+            50% { box-shadow: 0 0 40px rgba(145, 70, 255, 0.8), inset 0 0 25px rgba(145, 70, 255, 0.4); }
         }
 
         .alert-box {
@@ -51,94 +45,48 @@
             width: 600px;
             min-height: 250px;
             box-sizing: border-box;
-            background: rgba(10, 20, 30, 0.85);
-            backdrop-filter: blur(12px);
+            background: var(--bg-dark);
             padding: 40px 60px;
-            border: 2px solid rgba(0, 255, 242, 0.5);
             border-radius: 4px;
-            text-align: center;
+            border: 3px solid var(--primary-color);
+            color: white;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            animation: containerEntrance 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards,
-                       pulseGlow 3s infinite ease-in-out;
-            overflow: hidden;
+            animation: 
+                subPop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards,
+                glowPulse 2s infinite ease-in-out;
+            z-index: 10;
         }
 
-        /* Effet de balayage holographique */
         .alert-box::before {
             content: "";
             position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(45deg, 
-                transparent 0%, 
-                rgba(0, 255, 242, 0.05) 45%, 
-                rgba(0, 255, 242, 0.2) 50%, 
-                rgba(0, 255, 242, 0.05) 55%, 
-                transparent 100%);
-            background-size: 200% 200%;
-            animation: holoFlow 4s infinite linear;
-            pointer-events: none;
-        }
-
-        /* Barres de données verticales */
-        .data-lines {
-            position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(45deg, rgba(145, 70, 255, 0.1) 0%, transparent 100%);
             pointer-events: none;
-            z-index: 1;
-        }
-
-        .data-lines span {
-            position: absolute;
-            width: 1px;
-            height: 50px;
-            background: linear-gradient(to bottom, transparent, #00fff2, transparent);
-            animation: dataStream 2s infinite linear;
-            opacity: 0;
-        }
-
-        .data-lines span:nth-child(1) { left: 10%; animation-delay: 0.2s; }
-        .data-lines span:nth-child(2) { left: 30%; animation-delay: 1.5s; }
-        .data-lines span:nth-child(3) { left: 70%; animation-delay: 0.8s; }
-        .data-lines span:nth-child(4) { left: 90%; animation-delay: 2.3s; }
-
-        .content {
-            position: relative;
-            z-index: 2;
         }
 
         .title {
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 18px;
-            font-weight: 700;
-            color: #00fff2;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 24px;
+            font-weight: 900;
+            color: #fff;
             text-transform: uppercase;
-            letter-spacing: 6px;
+            letter-spacing: 4px;
             margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-        }
-
-        .title::before, .title::after {
-            content: "";
-            width: 40px;
-            height: 1px;
-            background: #00fff2;
+            text-shadow: 0 0 10px var(--primary-color);
         }
 
         .name {
-            font-family: 'Rajdhani', sans-serif;
+            font-family: 'Orbitron', sans-serif;
             font-size: 60px;
-            font-weight: 700;
-            color: #fff;
-            text-transform: uppercase;
-            margin: 10px 0;
-            letter-spacing: 2px;
-            text-shadow: 0 0 15px rgba(0, 255, 242, 0.5);
+            font-weight: 900;
+            color: var(--secondary-color);
+            text-shadow: 0 0 20px var(--secondary-color);
+            margin: 5px 0;
+            letter-spacing: -1px;
         }
 
         .stats-container {
@@ -146,8 +94,9 @@
             justify-content: center;
             gap: 30px;
             margin-top: 20px;
-            border-top: 1px solid rgba(0, 255, 242, 0.2);
-            padding-top: 20px;
+            border-top: 1px solid rgba(0, 255, 255, 0.2);
+            padding-top: 15px;
+            width: 100%;
         }
 
         .stat-item {
@@ -157,56 +106,64 @@
         }
 
         .stat-value {
-            font-size: 24px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 28px;
             font-weight: 900;
-            color: #00fff2;
+            color: var(--secondary-color);
         }
 
         .stat-label {
-            font-size: 10px;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 12px;
             text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.5);
+            color: rgba(255, 255, 255, 0.6);
             letter-spacing: 2px;
-            margin-top: 5px;
+            margin-top: 2px;
         }
 
-        .icon-shield {
-            font-size: 40px;
+        .message {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 18px;
+            font-weight: 500;
+            color: #fff;
+            font-style: italic;
+            margin-top: 15px;
+            opacity: 0.9;
+        }
+
+        .icon-main {
+            font-size: 50px;
+            display: block;
             margin-bottom: 10px;
-            filter: drop-shadow(0 0 10px #00fff2);
+            filter: drop-shadow(0 0 15px var(--secondary-color));
+            animation: float 3s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
         }
 
     </style>
 </head>
 <body>
-<div class="alert-container">
-    <div class="alert-box">
-        <div class="data-lines">
-            <span></span><span></span><span></span><span></span>
-        </div>
-        <div class="content">
-            <div class="icon-shield">
-                🛡️
-            </div>
-            <div class="title">
-                Loyalty Update
-            </div>
-            <div class="name">
-                {username}
-            </div>
+    <div class="alert-container">
+        <div class="alert-box">
+            <div class="icon-main">🛡️</div>
+            <div class="title">FIDÉLITÉ!</div>
+            <div class="name">{username}</div>
             <div class="stats-container">
                 <div class="stat-item">
                     <span class="stat-value">{tenure}</span>
-                    <span class="stat-label">Months</span>
+                    <span class="stat-label">Mois</span>
                 </div>
                 <div class="stat-item">
-                    <span class="stat-value">{sub_tier}</span>
-                    <span class="stat-label">Tier</span>
+                    <span class="stat-value">T{sub_tier}</span>
+                    <span class="stat-label">Niveau</span>
                 </div>
             </div>
-            <span class="stat-label">{resub_message}</span>
+            <div class="message">{resub_message}</div>
         </div>
     </div>
-</div>
 </body>
 </html>
