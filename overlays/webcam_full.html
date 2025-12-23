@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&display=swap');
+
+        :root {
+            --primary-color: #9146ff; /* Twitch Purple */
+            --secondary-color: #00ffff; /* Cyan neon */
+            --bg-dark: rgba(10, 10, 10, 0.8);
+            --border-width: 3px;
+            --webcam-width: 594px;
+            --webcam-height: 380px;
+            --label-height: 40px;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: transparent;
+            font-family: 'Orbitron', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        /* Conteneur Global */
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px; /* Espace entre les lignes de labels et la webcam */
+            align-items: center;
+        }
+
+        /* Lignes de labels (Haut et Bas) */
+        .labels-row {
+            display: flex;
+            gap: 20px;
+            width: 100%;
+            justify-content: space-between;
+        }
+
+        /* Style d'un module Label */
+        .label-box {
+            position: relative;
+            background: var(--bg-dark);
+            border-left: 3px solid var(--primary-color);
+            padding: 5px 15px;
+            min-width: 250px;
+            height: var(--label-height);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+            border-radius: 2px;
+        }
+
+        .label-title {
+            font-size: 9px;
+            color: var(--secondary-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 2px;
+        }
+
+        .label-content {
+            font-size: 16px;
+            font-weight: 900;
+            color: white;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Zone Webcam */
+        .webcam-area {
+            position: relative;
+            width: var(--webcam-width);
+            height: var(--webcam-height);
+            box-sizing: border-box;
+        }
+
+        /* Bordure animée de la webcam */
+        .border-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border: var(--border-width) solid transparent;
+            border-radius: 4px;
+            background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)) padding-box,
+                        conic-gradient(from var(--angle), var(--primary-color), var(--secondary-color), var(--primary-color)) border-box;
+            animation: rotate 4s linear infinite;
+        }
+
+        @property --angle {
+            syntax: '<angle>';
+            initial-value: 0deg;
+            inherits: false;
+        }
+
+        @keyframes rotate {
+            to { --angle: 360deg; }
+        }
+
+        /* Coins Cyber */
+        .corner {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            border: 3px solid var(--secondary-color);
+            z-index: 10;
+            animation: pulse 2s infinite ease-in-out;
+        }
+
+        .top-left { top: -4px; left: -4px; border-right: none; border-bottom: none; }
+        .top-right { top: -4px; right: -4px; border-left: none; border-bottom: none; }
+        .bottom-left { bottom: -4px; left: -4px; border-right: none; border-top: none; }
+        .bottom-right { bottom: -4px; right: -4px; border-left: none; border-top: none; }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        /* Décoration ligne scan */
+        .scan-line {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--secondary-color), transparent);
+            opacity: 0.5;
+            animation: scan 3s infinite linear;
+        }
+
+        @keyframes scan {
+            0% { transform: translateY(0); opacity: 0; }
+            50% { opacity: 0.5; }
+            100% { transform: translateY(-445px); opacity: 0; }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <!-- Labels du HAUT -->
+        <div class="labels-row">
+            <div class="label-box">
+                <div class="label-title">Dernier Follow</div>
+                <div class="label-content" id="most_recent_follower">En attente...</div>
+            </div>
+            <div class="label-box">
+                <div class="label-title">Dernier Sub</div>
+                <div class="label-content" id="most_recent_subscriber">En attente...</div>
+            </div>
+        </div>
+
+        <!-- ZONE WEBCAM -->
+        <div class="webcam-area">
+            <div class="border-animation"></div>
+            <div class="corner top-left"></div>
+            <div class="corner top-right"></div>
+            <div class="corner bottom-left"></div>
+            <div class="corner bottom-right"></div>
+            <div class="scan-line"></div>
+        </div>
+
+        <!-- Labels du BAS -->
+        <div class="labels-row">
+            <div class="label-box">
+                <div class="label-title">Dernier Don</div>
+                <div class="label-content" id="most_recent_donator">En attente...</div>
+            </div>
+            <div class="label-box">
+                <div class="label-title">Top Don</div>
+                <div class="label-content" id="all_time_top_donator">En attente...</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Chemin relatif vers vos fichiers Streamlabels
+        const STREAMLABELS_PATH = '../../Streamlabels/';
+        
+        const labels = [
+            { id: 'most_recent_follower', file: 'most_recent_follower.txt' },
+            { id: 'most_recent_subscriber', file: 'most_recent_subscriber.txt' },
+            { id: 'most_recent_donator', file: 'most_recent_donator.txt' },
+            { id: 'all_time_top_donator', file: 'all_time_top_donator.txt' }
+        ];
+
+        async function updateLabels() {
+            for (const label of labels) {
+                try {
+                    const response = await fetch(STREAMLABELS_PATH + label.file + '?t=' + Date.now());
+                    if (response.ok) {
+                        const text = await response.text();
+                        if (text.trim()) {
+                            document.getElementById(label.id).textContent = text.trim();
+                        }
+                    }
+                } catch (error) {
+                    console.error('Erreur lecture: ' + label.file);
+                }
+            }
+        }
+
+        setInterval(updateLabels, 30000);
+        updateLabels();
+    </script>
+</body>
+</html>

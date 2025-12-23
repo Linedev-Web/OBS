@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Montserrat:wght@700;900&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: transparent;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .alert-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1000px;
+        }
+
+        @keyframes boxEntrance {
+            0% {
+                transform: scale(0.8) translateY(100px);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1) translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes goldGlow {
+            0%, 100% {
+                border-color: #d4af37;
+                box-shadow: 0 0 20px rgba(212, 175, 55, 0.4), inset 0 0 10px rgba(212, 175, 55, 0.2);
+            }
+            50% {
+                border-color: #fff;
+                box-shadow: 0 0 40px rgba(212, 175, 55, 0.8), inset 0 0 20px rgba(212, 175, 55, 0.4);
+            }
+        }
+
+        @keyframes lineAnim {
+            0% {
+                width: 0;
+                opacity: 0;
+            }
+            100% {
+                width: 100px;
+                opacity: 1;
+            }
+        }
+
+        @keyframes spark {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1.5) rotate(90deg);
+                opacity: 0;
+            }
+        }
+
+        .alert-box {
+            position: relative;
+            background: linear-gradient(180deg, #1a1a1a 0%, #000 100%);
+            padding: 40px 80px;
+            border: 2px solid #d4af37;
+            border-radius: 0;
+            text-align: center;
+            animation: boxEntrance 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards,
+            goldGlow 4s infinite ease-in-out;
+            z-index: 10;
+        }
+
+        /* Ornementations */
+        .line {
+            position: absolute;
+            height: 2px;
+            background: #d4af37;
+            animation: lineAnim 1s forwards;
+            animation-delay: 0.5s;
+        }
+
+        .line-tl {
+            top: 20px;
+            left: -50px;
+        }
+
+        .line-br {
+            bottom: 20px;
+            right: -50px;
+        }
+
+        .sparkle {
+            position: absolute;
+            color: #d4af37;
+            font-size: 20px;
+            animation: spark 2s infinite;
+        }
+
+        .sparkle:nth-child(1) {
+            top: 10%;
+            left: 5%;
+            animation-delay: 0.2s;
+        }
+
+        .sparkle:nth-child(2) {
+            bottom: 10%;
+            right: 5%;
+            animation-delay: 1.2s;
+        }
+
+        .title {
+            font-family: 'Syncopate', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: #d4af37;
+            text-transform: uppercase;
+            letter-spacing: 8px;
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+
+        .name {
+            font-family: 'Syncopate', sans-serif;
+            font-size: 56px;
+            font-weight: 700;
+            color: #fff;
+            text-transform: uppercase;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            margin-bottom: 10px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 8px 25px;
+            background: transparent;
+            border: 1px solid rgba(212, 175, 55, 0.5);
+            color: #d4af37;
+            font-size: 14px;
+            font-weight: 900;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-top: 15px;
+        }
+
+        .welcome-text {
+            color: #666;
+            font-size: 12px;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            margin-top: 20px;
+        }
+
+    </style>
+</head>
+<body>
+<div class="alert-container">
+    <div class="alert-box">
+        <div class="sparkle">✦</div>
+        <div class="sparkle">✦</div>
+        <div class="line line-tl"></div>
+        <div class="line line-br"></div>
+
+        <div class="title">New Elite</div>
+        <div class="name">{username}</div>
+        <div class="badge">{tenure} {sub_tier}</div>
+        <div class="welcome-text">{resub_message}</div>
+    </div>
+</div>
+</body>
+</html>

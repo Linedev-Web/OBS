@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&display=swap');
+
+        :root {
+            --primary-color: #9146ff; /* Twitch Purple */
+            --secondary-color: #00ffff; /* Cyan neon */
+            --border-width: 3px;
+            --frame-width: 594px;
+            --frame-height: 380px;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: transparent;
+            font-family: 'Orbitron', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        /* Le conteneur principal respecte les dimensions demandées */
+        .webcam-frame {
+            position: relative;
+            width: var(--frame-width);
+            height: var(--frame-height);
+            box-sizing: border-box;
+            /* On laisse le centre vide pour la webcam */
+        }
+
+        /* Bordure animée avec gradient tournant */
+        .border-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border: var(--border-width) solid transparent;
+            border-radius: 4px;
+            background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)) padding-box,
+                        conic-gradient(from var(--angle), var(--primary-color), var(--secondary-color), var(--primary-color)) border-box;
+            animation: rotate 4s linear infinite;
+        }
+
+        @property --angle {
+            syntax: '<angle>';
+            initial-value: 0deg;
+            inherits: false;
+        }
+
+        @keyframes rotate {
+            to { --angle: 360deg; }
+        }
+
+        /* Coins renforcés "Cyber" */
+        .corner {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 4px solid var(--secondary-color);
+            z-index: 10;
+            filter: drop-shadow(0 0 5px var(--secondary-color));
+            animation: pulse 2s infinite ease-in-out;
+        }
+
+        .top-left { top: -5px; left: -5px; border-right: none; border-bottom: none; }
+        .top-right { top: -5px; right: -5px; border-left: none; border-bottom: none; }
+        .bottom-left { bottom: -5px; left: -5px; border-right: none; border-top: none; }
+        .bottom-right { bottom: -5px; right: -5px; border-left: none; border-top: none; }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.1); }
+        }
+
+        /* Petit label discret */
+        .label {
+            position: absolute;
+            bottom: -25px;
+            right: 10px;
+            color: white;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: var(--primary-color);
+            padding: 2px 10px;
+            clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%);
+            opacity: 0.8;
+        }
+
+        /* Effet de lueur externe */
+        .glow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            box-shadow: 0 0 15px rgba(145, 70, 255, 0.3);
+            pointer-events: none;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="webcam-frame">
+        <div class="border-animation"></div>
+        <div class="glow"></div>
+        
+        <div class="corner top-left"></div>
+        <div class="corner top-right"></div>
+        <div class="corner bottom-left"></div>
+        <div class="corner bottom-right"></div>
+
+        <div class="label">Live Stream</div>
+    </div>
+</body>
+</html>

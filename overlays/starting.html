@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Rajdhani:wght@500;700&display=swap');
+
+        :root {
+            --primary-color: #9146ff;
+            --secondary-color: #00ffff;
+            --bg-dark: #0a0a0a;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            width: 1920px;
+            height: 1080px;
+            background-color: var(--bg-dark);
+            font-family: 'Orbitron', sans-serif;
+            color: white;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        /* Fond avec grille animée */
+        .background {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(to right, rgba(145, 70, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(145, 70, 255, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: 1;
+        }
+
+        .background::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, transparent 0%, var(--bg-dark) 80%);
+        }
+
+        /* Lignes de scan */
+        .scanlines {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.02) 50%, transparent 50%);
+            background-size: 100% 4px;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+        }
+
+        .main-title {
+            font-size: 100px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 15px;
+            margin: 0;
+            background: linear-gradient(to bottom, #fff 40%, #999 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 20px rgba(145, 70, 255, 0.8));
+            animation: textPulse 3s infinite ease-in-out;
+        }
+
+        .sub-title {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 24px;
+            color: var(--secondary-color);
+            text-transform: uppercase;
+            letter-spacing: 10px;
+            margin-top: -10px;
+            opacity: 0.8;
+            animation: glitch 4s infinite;
+        }
+
+        /* Décorations néon */
+        .neon-bar {
+            width: 400px;
+            height: 4px;
+            background: var(--primary-color);
+            margin: 40px auto;
+            position: relative;
+            box-shadow: 0 0 15px var(--primary-color);
+        }
+
+        .neon-bar::before {
+            content: "";
+            position: absolute;
+            top: 0; left: -50px; width: 30px; height: 100%;
+            background: var(--secondary-color);
+            box-shadow: 0 0 10px var(--secondary-color);
+            animation: barMove 2s infinite ease-in-out;
+        }
+
+        @keyframes textPulse {
+            0%, 100% { transform: scale(1); filter: brightness(1) drop-shadow(0 0 20px rgba(145, 70, 255, 0.8)); }
+            50% { transform: scale(1.02); filter: brightness(1.2) drop-shadow(0 0 40px rgba(145, 70, 255, 1)); }
+        }
+
+        @keyframes barMove {
+            0% { left: -10%; }
+            50% { left: 100%; }
+            100% { left: -10%; }
+        }
+
+        @keyframes glitch {
+            0% { transform: translate(0); text-shadow: none; }
+            2% { transform: translate(-2px, 1px); text-shadow: 2px 0 #ff00ff, -2px 0 #00ffff; }
+            4% { transform: translate(2px, -1px); text-shadow: -2px 0 #ff00ff, 2px 0 #00ffff; }
+            6% { transform: translate(0); text-shadow: none; }
+            100% { transform: translate(0); }
+        }
+
+        /* Coins de l'écran */
+        .corner {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border: 2px solid var(--primary-color);
+            z-index: 5;
+        }
+        .tl { top: 40px; left: 40px; border-right: none; border-bottom: none; }
+        .tr { top: 40px; right: 40px; border-left: none; border-bottom: none; }
+        .bl { bottom: 40px; left: 40px; border-right: none; border-top: none; }
+        .br { bottom: 40px; right: 40px; border-left: none; border-top: none; }
+
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+    <div class="scanlines"></div>
+    
+    <div class="corner tl"></div>
+    <div class="corner tr"></div>
+    <div class="corner bl"></div>
+    <div class="corner br"></div>
+
+    <div class="content">
+        <h1 class="main-title">STARTING</h1>
+        <div class="sub-title">Préparez-vous pour l'aventure</div>
+        <div class="neon-bar"></div>
+    </div>
+</body>
+</html>

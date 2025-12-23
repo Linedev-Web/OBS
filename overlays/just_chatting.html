@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Rajdhani:wght@500;700&display=swap');
+
+        :root {
+            --primary-color: #9146ff;
+            --secondary-color: #00ffff;
+            --bg-dark: #0a0a0a;
+            --overlay-bg: rgba(10, 10, 10, 0.85);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            width: 1920px;
+            height: 1080px;
+            background: transparent;
+            font-family: 'Orbitron', sans-serif;
+            color: white;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Conteneur principal */
+        .layout {
+            display: grid;
+            grid-template-columns: 1fr 450px;
+            grid-template-rows: 1fr 200px;
+            width: 100%;
+            height: 100%;
+            gap: 20px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* Zone Webcam (Grande) */
+        .webcam-container {
+            grid-column: 1;
+            grid-row: 1;
+            position: relative;
+            border: 2px solid var(--primary-color);
+            background: var(--overlay-bg);
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(145, 70, 255, 0.2);
+            overflow: hidden;
+        }
+
+        .webcam-container::before {
+            content: "WEBCAM AREA";
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 40px;
+            opacity: 0.1;
+            letter-spacing: 10px;
+        }
+
+        /* Zone Chat */
+        .chat-container {
+            grid-column: 2;
+            grid-row: 1 / span 2;
+            position: relative;
+            border: 2px solid var(--secondary-color);
+            background: var(--overlay-bg);
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
+        }
+
+        .container-header {
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 14px;
+            color: var(--secondary-color);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            background: var(--secondary-color);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        /* Zone Labels / Infos */
+        .info-bar {
+            grid-column: 1;
+            grid-row: 2;
+            display: flex;
+            gap: 20px;
+        }
+
+        .info-box {
+            flex: 1;
+            background: var(--overlay-bg);
+            border-left: 4px solid var(--primary-color);
+            padding: 15px 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-radius: 4px;
+        }
+
+        .info-title {
+            font-size: 10px;
+            color: var(--secondary-color);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+
+        .info-content {
+            font-size: 24px;
+            font-weight: 900;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        /* Coins décoratifs */
+        .corner {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--primary-color);
+        }
+        .tl { top: -2px; left: -2px; border-right: none; border-bottom: none; }
+        .tr { top: -2px; right: -2px; border-left: none; border-bottom: none; }
+        .bl { bottom: -2px; left: -2px; border-right: none; border-top: none; }
+        .br { bottom: -2px; right: -2px; border-left: none; border-top: none; }
+
+    </style>
+</head>
+<body>
+    <div class="layout">
+        <!-- Webcam -->
+        <div class="webcam-container">
+            <div class="corner tl"></div>
+            <div class="corner tr"></div>
+            <div class="corner bl"></div>
+            <div class="corner br"></div>
+        </div>
+
+        <!-- Chat -->
+        <div class="chat-container">
+            <div class="container-header">
+                <span class="dot"></span> Live Chat
+            </div>
+        </div>
+
+        <!-- Info Bar -->
+        <div class="info-bar">
+            <div class="info-box">
+                <div class="info-title">Dernier Follow</div>
+                <div class="info-content" id="most_recent_follower">En attente...</div>
+            </div>
+            <div class="info-box">
+                <div class="info-title">Dernier Sub</div>
+                <div class="info-content" id="most_recent_subscriber">En attente...</div>
+            </div>
+            <div class="info-box">
+                <div class="info-title">Dernier Don</div>
+                <div class="info-content" id="most_recent_donator">En attente...</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const STREAMLABELS_PATH = './../../Streamlabels/';
+        const labels = [
+            { id: 'most_recent_follower', file: 'most_recent_follower.txt' },
+            { id: 'most_recent_subscriber', file: 'most_recent_subscriber.txt' },
+            { id: 'most_recent_donator', file: 'most_recent_donator.txt' }
+        ];
+
+        async function updateLabels() {
+            for (const label of labels) {
+                try {
+                    const response = await fetch(STREAMLABELS_PATH + label.file + '?t=' + Date.now());
+                    if (response.ok) {
+                        const text = await response.text();
+                        document.getElementById(label.id).textContent = text.trim() || '...';
+                    }
+                } catch (error) {
+                    console.error('Erreur labels:', error);
+                }
+            }
+        }
+
+        setInterval(updateLabels, 30000);
+        updateLabels();
+    </script>
+</body>
+</html>

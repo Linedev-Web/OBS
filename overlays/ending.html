@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Rajdhani:wght@500;700&display=swap');
+
+        :root {
+            --primary-color: #9146ff;
+            --secondary-color: #00ffff;
+            --bg-dark: #0a0a0a;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            width: 1920px;
+            height: 1080px;
+            background-color: var(--bg-dark);
+            font-family: 'Orbitron', sans-serif;
+            color: white;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        /* Fond avec grille */
+        .background {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(to right, rgba(145, 70, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(145, 70, 255, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: 1;
+        }
+
+        .background::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, transparent 0%, var(--bg-dark) 80%);
+        }
+
+        .content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+        }
+
+        .main-title {
+            font-size: 100px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 15px;
+            margin: 0;
+            background: linear-gradient(to bottom, #fff 40%, #999 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 20px rgba(145, 70, 255, 0.8));
+            animation: textFadeOut 4s infinite ease-in-out;
+        }
+
+        .sub-title {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 24px;
+            color: var(--secondary-color);
+            text-transform: uppercase;
+            letter-spacing: 10px;
+            margin-top: -10px;
+            opacity: 0.8;
+        }
+
+        /* Animation de déconnexion */
+        .logout-progress {
+            width: 500px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.1);
+            margin: 40px auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logout-progress::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--secondary-color);
+            box-shadow: 0 0 10px var(--secondary-color);
+            animation: progressFill 4s infinite linear;
+        }
+
+        @keyframes textFadeOut {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.98); }
+        }
+
+        @keyframes progressFill {
+            0% { transform: translateX(-100%); }
+            80% { transform: translateX(0); }
+            100% { transform: translateX(0); opacity: 0; }
+        }
+
+        /* Coins */
+        .corner {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border: 2px solid var(--primary-color);
+            opacity: 0.5;
+        }
+        .tl { top: 40px; left: 40px; border-right: none; border-bottom: none; }
+        .tr { top: 40px; right: 40px; border-left: none; border-bottom: none; }
+        .bl { bottom: 40px; left: 40px; border-right: none; border-top: none; }
+        .br { bottom: 40px; right: 40px; border-left: none; border-top: none; }
+
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+    
+    <div class="corner tl"></div>
+    <div class="corner tr"></div>
+    <div class="corner bl"></div>
+    <div class="corner br"></div>
+
+    <div class="content">
+        <h1 class="main-title">ENDING</h1>
+        <div class="sub-title">Merci d'avoir suivi le stream</div>
+        <div class="logout-progress"></div>
+    </div>
+</body>
+</html>

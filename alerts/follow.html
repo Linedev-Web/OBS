@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Montserrat:wght@700;900&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: transparent;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .alert-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1000px;
+        }
+
+        /* Animations */
+        @keyframes glitch {
+            0% { transform: translate(0); text-shadow: -2px 2px #ff00ff, 2px -2px #00ffff; }
+            25% { transform: translate(-2px, 2px); text-shadow: 2px -2px #ff00ff, -2px 2px #00ffff; }
+            50% { transform: translate(2px, -2px); text-shadow: -2px -2px #ff00ff, 2px 2px #00ffff; }
+            75% { transform: translate(-2px, -2px); text-shadow: 2px 2px #ff00ff, -2px -2px #00ffff; }
+            100% { transform: translate(0); text-shadow: -2px 2px #ff00ff, 2px -2px #00ffff; }
+        }
+
+        @keyframes mainEntrance {
+            0% { transform: rotateX(-90deg) scale(0.5); opacity: 0; }
+            60% { transform: rotateX(20deg) scale(1.1); opacity: 1; }
+            100% { transform: rotateX(0deg) scale(1); opacity: 1; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
+        }
+
+        @keyframes neonPulse {
+            0%, 100% { box-shadow: 0 0 20px #9146ff, inset 0 0 10px #9146ff; }
+            50% { box-shadow: 0 0 40px #9146ff, inset 0 0 20px #9146ff; }
+        }
+
+        @keyframes particleUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            20% { opacity: 1; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        }
+
+        .alert-box {
+            position: relative;
+            background: rgba(10, 10, 10, 0.9);
+            padding: 30px 60px;
+            border-radius: 5px;
+            border: 2px solid #9146ff;
+            color: white;
+            animation: mainEntrance 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, 
+                       neonPulse 2s infinite ease-in-out,
+                       float 4s infinite ease-in-out;
+            text-align: center;
+        }
+
+        /* Particules décoratives sans JS */
+        .particles span {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #9146ff;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: particleUp 2s infinite linear;
+            opacity: 0;
+        }
+
+        .particles span:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .particles span:nth-child(2) { left: 30%; animation-delay: 0.5s; }
+        .particles span:nth-child(3) { left: 50%; animation-delay: 1.2s; }
+        .particles span:nth-child(4) { left: 70%; animation-delay: 0.8s; }
+        .particles span:nth-child(5) { left: 90%; animation-delay: 1.5s; }
+
+        .title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 20px;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            color: #9146ff;
+            margin-bottom: 10px;
+        }
+
+        .name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 52px;
+            font-weight: 900;
+            text-transform: uppercase;
+            color: #fff;
+            animation: glitch 3s infinite;
+        }
+
+        .icon {
+            font-size: 50px;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 0 10px #9146ff);
+        }
+
+        .corner {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #9146ff;
+        }
+        .top-left { top: -5px; left: -5px; border-right: none; border-bottom: none; }
+        .top-right { top: -5px; right: -5px; border-left: none; border-bottom: none; }
+        .bottom-left { bottom: -5px; left: -5px; border-right: none; border-top: none; }
+        .bottom-right { bottom: -5px; right: -5px; border-left: none; border-top: none; }
+
+    </style>
+</head>
+<body>
+    <div class="alert-container">
+        <div class="alert-box">
+            <div class="particles">
+                <span></span><span></span><span></span><span></span><span></span>
+            </div>
+            <div class="top-left corner"></div>
+            <div class="top-right corner"></div>
+            <div class="bottom-left corner"></div>
+            <div class="bottom-right corner"></div>
+            
+            <div class="icon">💜</div>
+            <div class="title">New Challenger</div>
+            <div class="name">{name}</div>
+        </div>
+    </div>
+</body>
+</html>

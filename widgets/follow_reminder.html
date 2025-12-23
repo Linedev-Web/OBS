@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Widget Follow Reminder</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: transparent;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .widget-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            perspective: 1000px;
+        }
+
+        .popin {
+            display: none; /* Caché par défaut */
+            background: white;
+            padding: 20px 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            border-left: 8px solid #9146ff;
+            transform-origin: bottom right;
+        }
+
+        .popin.active {
+            display: flex;
+            align-items: center;
+            animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        .popin.closing {
+            animation: popOut 0.5s ease-in forwards;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0) rotate(-15deg); opacity: 0; }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+
+        @keyframes popOut {
+            0% { transform: scale(1) rotate(0deg); opacity: 1; }
+            100% { transform: scale(0) rotate(15deg); opacity: 0; }
+        }
+
+        .icons {
+            display: flex;
+            gap: 15px;
+            margin-right: 20px;
+            font-size: 35px;
+        }
+
+        .fa-thumbs-up {
+            color: #3b5998;
+            animation: float 2s infinite ease-in-out;
+        }
+
+        .fa-heart {
+            color: #e31b23;
+            animation: float 2s infinite ease-in-out 0.5s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .text-content {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .text-content span:first-child {
+            font-weight: 800;
+            font-size: 20px;
+            color: #333;
+            text-transform: uppercase;
+        }
+
+        .text-content span:last-child {
+            font-weight: 400;
+            font-size: 16px;
+            color: #666;
+        }
+
+        /* Barre de progression de visibilité */
+        .progress-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 4px;
+            background: #9146ff;
+            width: 100%;
+            border-radius: 0 0 0 20px;
+            transform-origin: left;
+        }
+
+        .active .progress-bar {
+            animation: progress 10s linear forwards;
+        }
+
+        @keyframes progress {
+            from { transform: scaleX(1); }
+            to { transform: scaleX(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="widget-container">
+        <div id="followPopin" class="popin">
+            <div class="icons">
+                <i class="fas fa-thumbs-up"></i>
+                <i class="fas fa-heart"></i>
+            </div>
+            <div class="text-content">
+                <span>N'oublie pas de Follow !</span>
+                <span>Ça aide énormément la chaîne ❤️</span>
+            </div>
+            <div class="progress-bar"></div>
+        </div>
+    </div>
+
+    <script>
+        const popin = document.getElementById('followPopin');
+        const intervalTime = 10 * 60 * 1000; // 10 minutes
+        const displayTime = 10000; // 10 secondes
+
+        function showPopin() {
+            popin.classList.remove('closing');
+            popin.classList.add('active');
+
+            setTimeout(() => {
+                hidePopin();
+            }, displayTime);
+        }
+
+        function hidePopin() {
+            popin.classList.add('closing');
+            setTimeout(() => {
+                popin.classList.remove('active');
+            }, 500);
+        }
+
+        // Lancer le cycle
+        setInterval(showPopin, intervalTime);
+
+        // Affichage initial après 5 secondes pour tester
+        setTimeout(showPopin, 5000);
+    </script>
+</body>
+</html>
