@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Webcam Full Blur V2</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&family=Exo+2:wght@800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --surface:   rgba(8,3,22,.93);
+    --primary:   #c47bff;
+    --text:      #f0e8ff;
+    --text-dim:  #c4a8f0;
+    --red:       #ff3d78;
+    --border:    rgba(196,123,255,.28);
+    --border-hi: rgba(196,123,255,.55);
+    --glow-sm:   0 0 6px rgba(196,123,255,.40);
+    --glow-md:   0 0 10px rgba(196,123,255,.28), 0 0 20px rgba(196,123,255,.10);
+    --glow-red:  0 0 6px rgba(255,61,120,.50);
+    --frame-w: 594px; --frame-h: 380px; --bar-h: 64px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: var(--frame-w);
+    height: calc(var(--frame-h) + var(--bar-h) * 2);
+    background: transparent; overflow: hidden;
+    font-family: 'Rajdhani', sans-serif; color: var(--text); -webkit-font-smoothing: antialiased;
+  }
+  .wrapper { display: flex; flex-direction: column; height: 100%; }
+
+  .top-bar {
+    height: var(--bar-h); background: var(--surface);
+    border: 1px solid var(--border); border-bottom: none;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 18px; position: relative; overflow: hidden;
+  }
+  .top-bar::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: linear-gradient(to bottom, var(--primary), transparent); box-shadow: var(--glow-sm); }
+  .top-bar::after  { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(196,123,255,.04) 0%, transparent 60%); pointer-events: none; }
+  .channel-name { font-family: 'Exo 2', sans-serif; font-size: 26px; font-weight: 900; letter-spacing: 5px; text-transform: uppercase; color: var(--text); text-shadow: var(--glow-sm); position: relative; z-index: 1; }
+  .channel-name .accent { color: var(--primary); }
+  .brb-tag { font-size: 22px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--text-dim); position: relative; z-index: 1; }
+
+  .frame { position: relative; flex: 1; width: 100%; }
+  .blur-cover {
+    position: absolute; inset: 0; background: rgba(8,3,22,.85); backdrop-filter: blur(14px);
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; z-index: 5;
+  }
+  .grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(196,123,255,.04) 1px, transparent 1px), linear-gradient(90deg, rgba(196,123,255,.04) 1px, transparent 1px); background-size: 40px 40px; pointer-events: none; z-index: 6; }
+  .brb-icon { width: 44px; height: 44px; border: 2px solid var(--border-hi); display: flex; align-items: center; justify-content: center; position: relative; z-index: 7; animation: pulse 2.5s ease-in-out infinite; box-shadow: var(--glow-sm); }
+  .brb-icon::before, .brb-icon::after { content: ''; position: absolute; background: var(--primary); }
+  .brb-icon::before { width: 2px; height: 14px; }
+  .brb-icon::after  { width: 14px; height: 2px; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+  .brb-label { font-family: 'Exo 2', sans-serif; font-size: 28px; font-weight: 900; letter-spacing: 10px; text-transform: uppercase; color: var(--text); text-shadow: var(--glow-sm); position: relative; z-index: 7; }
+  .brb-sub   { font-size: 22px; font-weight: 500; letter-spacing: 5px; text-transform: uppercase; color: var(--text-dim); position: relative; z-index: 7; }
+
+  @property --a { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+  @keyframes spin { to { --a: 360deg; } }
+  .border-spin { position: absolute; inset: 0; border: 2px solid transparent; background: linear-gradient(transparent, transparent) padding-box, conic-gradient(from var(--a), transparent 30%, var(--primary) 50%, transparent 70%) border-box; animation: spin 5s linear infinite; z-index: 15; opacity: .7; }
+  .border-base { position: absolute; inset: 0; border: 1px solid var(--border); border-top: none; border-bottom: none; z-index: 15; }
+  .corner { position: absolute; width: 20px; height: 20px; z-index: 16; }
+  .corner::before, .corner::after { content: ''; position: absolute; background: var(--primary); box-shadow: var(--glow-sm); }
+  .corner::before { width: 100%; height: 2px; top: 0; left: 0; }
+  .corner::after  { width: 2px; height: 100%; top: 0; left: 0; }
+  .corner.tl { top: 8px; left: 8px; }
+  .corner.tr { top: 8px; right: 8px; transform: scaleX(-1); }
+  .corner.bl { bottom: 8px; left: 8px; transform: scaleY(-1); }
+  .corner.br { bottom: 8px; right: 8px; transform: scale(-1); }
+  .scanlines { position: absolute; inset: 0; background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,.05) 3px, rgba(0,0,0,.05) 4px); pointer-events: none; z-index: 20; }
+
+  .bottom-bar {
+    height: var(--bar-h); background: var(--surface);
+    border: 1px solid var(--border); border-top: none;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 18px; position: relative; overflow: hidden;
+  }
+  .bottom-bar::after  { content: ''; position: absolute; right: 0; top: 0; bottom: 0; width: 3px; background: linear-gradient(to top, var(--primary), transparent); box-shadow: var(--glow-sm); }
+  .bottom-bar::before { content: ''; position: absolute; inset: 0; background: linear-gradient(270deg, rgba(196,123,255,.04) 0%, transparent 60%); pointer-events: none; }
+  .status-text { font-size: 22px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; color: var(--text-dim); position: relative; z-index: 1; }
+  .badge-pause { background: rgba(255,61,120,.08); border: 1px solid rgba(255,61,120,.30); padding: 4px 16px; clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%); position: relative; z-index: 1; }
+  .badge-pause span { font-size: 22px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--red); }
+</style>
+</head>
+<body>
+<div class="wrapper">
+  <div class="top-bar">
+    <div class="channel-name"><span class="accent">L</span>ATSHOW</div>
+    <div class="brb-tag">BRB</div>
+  </div>
+  <div class="frame">
+    <div class="blur-cover">
+      <div class="brb-icon"></div>
+      <div class="brb-label">BRB</div>
+      <div class="brb-sub">De retour bientôt</div>
+    </div>
+    <div class="grid"></div>
+    <div class="border-spin"></div>
+    <div class="border-base"></div>
+    <div class="corner tl"></div>
+    <div class="corner tr"></div>
+    <div class="corner bl"></div>
+    <div class="corner br"></div>
+    <div class="scanlines"></div>
+  </div>
+  <div class="bottom-bar">
+    <div class="status-text">CAM_01 :: Masquée</div>
+    <div class="badge-pause"><span>Pause</span></div>
+  </div>
+</div>
+</body>
+</html>

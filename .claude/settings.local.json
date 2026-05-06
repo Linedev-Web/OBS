@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem -Path \"C:\\\\Workspace\\\\Stream\\\\OBS\\\\Gaming\\\\overlays\" -Recurse -Force)",
+      "Bash(Select-Object FullName, PSIsContainer)",
+      "Bash(Sort-Object FullName)",
+      "Bash(Remove-Item *)",
+      "PowerShell(Remove-Item *)",
+      "Bash(New-Item -ItemType Directory -Path \"C:\\\\Workspace\\\\Stream\\\\OBS\\\\Matt\" -Force)",
+      "Bash(Out-Null)",
+      "Bash(Write-Output \"OK\")"
+    ]
+  }
+}

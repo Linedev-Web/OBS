@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Kills Counter V2</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&family=Exo+2:wght@800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --surface:  rgba(8,3,22,.93);
+    --primary:  #c47bff;
+    --text:     #f0e8ff;
+    --text-dim: #c4a8f0;
+    --gold:     #ffd166;
+    --red:      #ff3d78;
+    --border:   rgba(196,123,255,.28);
+    --border-hi:rgba(196,123,255,.55);
+    --glow-sm:  0 0 6px rgba(196,123,255,.40);
+    --glow-gold:0 0 8px rgba(255,209,102,.45);
+    --glow-red: 0 0 6px rgba(255,61,120,.45);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { width: 440px; background: transparent; overflow: hidden; font-family: 'Rajdhani', sans-serif; color: var(--text); -webkit-font-smoothing: antialiased; }
+
+  .hud { background: var(--surface); border: 1px solid var(--border); position: relative; overflow: hidden; }
+  .hud::before { content: ''; position: absolute; top: 0; left: -100%; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--primary), transparent); box-shadow: var(--glow-sm); animation: slide 3s linear infinite; }
+  @keyframes slide { to { left: 100%; } }
+  .hud::after { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,.05) 3px, rgba(0,0,0,.05) 4px); pointer-events: none; z-index: 50; }
+
+  .corner { position: absolute; width: 14px; height: 14px; z-index: 20; }
+  .corner::before, .corner::after { content: ''; position: absolute; background: var(--primary); box-shadow: var(--glow-sm); }
+  .corner::before { width: 100%; height: 1px; top: 0; left: 0; }
+  .corner::after  { width: 1px; height: 100%; top: 0; left: 0; }
+  .corner.tl { top: 4px; left: 4px; } .corner.tr { top: 4px; right: 4px; transform: scaleX(-1); }
+  .corner.bl { bottom: 4px; left: 4px; transform: scaleY(-1); } .corner.br { bottom: 4px; right: 4px; transform: scale(-1); }
+
+  .header { display: flex; align-items: center; justify-content: space-between; padding: 11px 14px; border-bottom: 1px solid var(--border); position: relative; z-index: 10; }
+  .header-title { font-family: 'Exo 2', sans-serif; font-size: 22px; font-weight: 900; letter-spacing: 3px; text-transform: uppercase; color: var(--text); text-shadow: var(--glow-sm); }
+  .header-live { display: flex; align-items: center; gap: 6px; font-size: 22px; letter-spacing: 2px; color: var(--red); }
+  .dot { width: 6px; height: 6px; background: var(--red); border-radius: 50%; box-shadow: var(--glow-red); animation: blink 1.2s step-end infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  .stats-row { display: flex; position: relative; z-index: 10; }
+  .stat { flex: 1; padding: 18px 12px; text-align: center; position: relative; }
+  .stat:not(:last-child)::after { content: ''; position: absolute; right: 0; top: 20%; bottom: 20%; width: 1px; background: var(--border); }
+
+  .stat-value { font-family: 'Exo 2', sans-serif; font-size: 48px; font-weight: 900; line-height: 1; }
+  .stat-value.pop { animation: pop .2s ease; }
+  @keyframes pop { 0% { transform: scale(1); } 50% { transform: scale(1.22); } 100% { transform: scale(1); } }
+
+  .stat.kills  .stat-value { color: var(--text); text-shadow: var(--glow-sm); }
+  .stat.deaths .stat-value { color: var(--red);  text-shadow: var(--glow-red); }
+  .stat.kd     .stat-value { color: var(--gold); text-shadow: var(--glow-gold); font-size: 32px; }
+
+  .stat-label { font-size: 22px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; margin-top: 5px; }
+  .stat.kills  .stat-label { color: var(--text-dim); }
+  .stat.deaths .stat-label { color: rgba(255,61,120,.55); }
+  .stat.kd     .stat-label { color: rgba(255,209,102,.55); }
+
+  .streak-row { border-top: 1px solid var(--border); padding: 10px 14px; display: flex; align-items: center; gap: 10px; position: relative; z-index: 10; }
+  .streak-label { font-size: 22px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; color: var(--text-dim); white-space: nowrap; }
+  .streak-icons { display: flex; gap: 4px; flex: 1; }
+  .s-icon { width: 13px; height: 13px; background: rgba(196,123,255,.06); border: 1px solid rgba(196,123,255,.20); transition: background .2s, box-shadow .2s; }
+  .s-icon.active { background: var(--primary); box-shadow: var(--glow-sm); border-color: var(--primary); }
+  .streak-count { font-family: 'Exo 2', sans-serif; font-size: 16px; font-weight: 900; color: var(--gold); text-shadow: var(--glow-gold); min-width: 22px; text-align: right; }
+
+  .controls { border-top: 1px solid rgba(196,123,255,.12); padding: 10px 14px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; font-size: 22px; letter-spacing: 2px; text-transform: uppercase; color: rgba(196,123,255,.30); position: relative; z-index: 10; }
+  .controls kbd { background: rgba(196,123,255,.07); border: 1px solid rgba(196,123,255,.20); padding: 2px 8px; font-family: inherit; font-size: 22px; color: rgba(196,123,255,.45); border-radius: 2px; }
+</style>
+</head>
+<body>
+<div class="hud">
+  <div class="corner tl"></div><div class="corner tr"></div><div class="corner bl"></div><div class="corner br"></div>
+  <div class="header">
+    <div class="header-title">Stats Session</div>
+    <div class="header-live"><div class="dot"></div>LIVE</div>
+  </div>
+  <div class="stats-row">
+    <div class="stat kills"><div class="stat-value" id="kills-val">0</div><div class="stat-label">Kills</div></div>
+    <div class="stat deaths"><div class="stat-value" id="deaths-val">0</div><div class="stat-label">Deaths</div></div>
+    <div class="stat kd"><div class="stat-value" id="kd-val">—</div><div class="stat-label">K / D</div></div>
+  </div>
+  <div class="streak-row">
+    <span class="streak-label">Streak</span>
+    <div class="streak-icons" id="streak-icons"></div>
+    <div class="streak-count" id="streak-val">0</div>
+  </div>
+  <div class="controls">
+    <span><kbd>K</kbd> kill</span><span><kbd>D</kbd> death</span>
+    <span><kbd>S</kbd> streak</span><span><kbd>R</kbd> reset</span>
+  </div>
+</div>
+<script>
+  let kills = 0, deaths = 0, streak = 0;
+  const MAX = 10;
+  const killsEl = document.getElementById('kills-val');
+  const deathsEl = document.getElementById('deaths-val');
+  const kdEl = document.getElementById('kd-val');
+  const streakEl = document.getElementById('streak-val');
+  const iconsEl = document.getElementById('streak-icons');
+  for (let i = 0; i < MAX; i++) { const d = document.createElement('div'); d.className = 's-icon streak-icon'; d.id = 'si-'+i; iconsEl.appendChild(d); }
+  function updateKD() { kdEl.textContent = deaths === 0 ? (kills > 0 ? kills.toFixed(1) : '—') : (kills/deaths).toFixed(2); }
+  function updateStreak() { streakEl.textContent = streak; for (let i=0;i<MAX;i++) document.getElementById('si-'+i).classList.toggle('active', i < Math.min(streak,MAX)); }
+  function pop(el) { el.classList.remove('pop'); void el.offsetWidth; el.classList.add('pop'); }
+  document.addEventListener('keydown', e => {
+    switch(e.key.toLowerCase()) {
+      case 'k': kills++;  killsEl.textContent  = kills;  pop(killsEl);  updateKD(); break;
+      case 'd': deaths++; deathsEl.textContent = deaths; pop(deathsEl); streak=0; updateStreak(); updateKD(); break;
+      case 's': streak++; updateStreak(); break;
+      case 'r': kills=deaths=streak=0; killsEl.textContent='0'; deathsEl.textContent='0'; kdEl.textContent='—'; updateStreak(); break;
+    }
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Ending V2</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&family=Exo+2:wght@800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:      #080312;
+    --surface: rgba(8,3,22,.93);
+    --primary: #c47bff;
+    --text:    #f0e8ff;
+    --text-dim:#c4a8f0;
+    --gold:    #ffd166;
+    --border:  rgba(196,123,255,.28);
+    --border-hi: rgba(196,123,255,.50);
+    --glow-sm:  0 0 6px rgba(196,123,255,.40);
+    --glow-lg:  0 0 18px rgba(196,123,255,.35), 0 0 50px rgba(196,123,255,.10);
+    --glow-gold:0 0 8px rgba(255,209,102,.45);
+    --yt: #ff4040; --tw: #c47bff; --ttg: #ff6eb4; --ttd: #00ccff; --ig: #e1306c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { width: 1920px; height: 1080px; background: var(--bg); overflow: hidden; font-family: 'Rajdhani', sans-serif; color: var(--text); -webkit-font-smoothing: antialiased; }
+
+  .grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(196,123,255,.045) 1px, transparent 1px), linear-gradient(90deg, rgba(196,123,255,.045) 1px, transparent 1px); background-size: 90px 90px; }
+  .vignette { position: absolute; inset: 0; background: radial-gradient(ellipse 80% 70% at center, transparent 30%, rgba(8,3,18,.95) 100%); }
+  .ambient { position: absolute; inset: 0; background: radial-gradient(ellipse 60% 50% at center, rgba(196,123,255,.05) 0%, transparent 70%); }
+  .scanlines { position: absolute; inset: 0; background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,.07) 3px, rgba(0,0,0,.07) 4px); pointer-events: none; z-index: 5; }
+
+  .corner { position: absolute; width: 90px; height: 90px; z-index: 10; }
+  .corner::before, .corner::after { content: ''; position: absolute; background: var(--gold); box-shadow: var(--glow-gold); }
+  .corner::before { width: 100%; height: 2px; top: 0; left: 0; }
+  .corner::after  { width: 2px; height: 100%; top: 0; left: 0; }
+  .corner.tl { top: 30px; left: 30px; }
+  .corner.tr { top: 30px; right: 30px; transform: scaleX(-1); }
+  .corner.bl { bottom: 30px; left: 30px; transform: scaleY(-1); }
+  .corner.br { bottom: 30px; right: 30px; transform: scale(-1); }
+  .line { position: absolute; left: 0; right: 0; height: 1px; z-index: 4; }
+  .line-top    { top: 0;    background: linear-gradient(90deg, transparent, var(--gold) 30%, var(--gold) 70%, transparent); box-shadow: var(--glow-gold); }
+  .line-bottom { bottom: 0; background: linear-gradient(90deg, transparent, var(--gold) 30%, var(--gold) 70%, transparent); box-shadow: var(--glow-gold); }
+
+  .center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -54%); text-align: center; z-index: 15; }
+  .merci { font-size: 22px; font-weight: 500; letter-spacing: 10px; text-transform: uppercase; color: var(--gold); text-shadow: var(--glow-gold); margin-bottom: 24px; animation: fadeUp .8s ease both; }
+  .title { font-family: 'Exo 2', sans-serif; font-size: 110px; font-weight: 900; letter-spacing: 16px; text-transform: uppercase; color: var(--text); text-shadow: var(--glow-lg); animation: fadeUp .8s ease .2s both; }
+  .subtitle { font-size: 22px; font-weight: 500; letter-spacing: 8px; text-transform: uppercase; color: var(--text-dim); margin-top: 18px; animation: fadeUp .8s ease .4s both; }
+
+  .platforms { display: flex; gap: 20px; justify-content: center; margin-top: 60px; animation: fadeUp .8s ease .6s both; }
+  .pb { text-align: center; padding: 20px 32px; background: rgba(196,123,255,.04); border: 1px solid var(--border); position: relative; display: flex; flex-direction: column; align-items: center; gap: 10px; min-width: 170px; }
+  .pb::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; }
+  .pb.yt ::before { background: var(--yt); } .pb.tw ::before { background: var(--tw); }
+  .pb.ttg::before { background: var(--ttg); } .pb.ttd::before { background: var(--ttd); } .pb.ig ::before { background: var(--ig); }
+  .pb-icon { width: 28px; height: 28px; }
+  .pb.yt  .pb-icon { color: var(--yt); } .pb.tw  .pb-icon { color: var(--tw); }
+  .pb.ttg .pb-icon { color: var(--ttg); } .pb.ttd .pb-icon { color: var(--ttd); } .pb.ig  .pb-icon { color: var(--ig); }
+  .pb-name { font-family: 'Exo 2', sans-serif; font-size: 22px; font-weight: 900; letter-spacing: 3px; text-transform: uppercase; }
+  .pb.yt  .pb-name { color: var(--yt); } .pb.tw  .pb-name { color: var(--tw); }
+  .pb.ttg .pb-name { color: var(--ttg); } .pb.ttd .pb-name { color: var(--ttd); } .pb.ig  .pb-name { color: var(--ig); }
+  .pb-handle { font-size: 22px; font-weight: 500; letter-spacing: 1px; color: var(--text-dim); }
+  .pb-cta    { font-size: 22px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; color: rgba(196,123,255,.45); }
+
+  .shutdown { position: absolute; bottom: 55px; left: 50%; transform: translateX(-50%); width: 460px; text-align: center; z-index: 15; }
+  .shutdown-label { font-size: 22px; letter-spacing: 4px; text-transform: uppercase; color: rgba(196,123,255,.35); margin-bottom: 10px; }
+  .track { height: 3px; background: rgba(196,123,255,.07); border: 1px solid var(--border); overflow: hidden; position: relative; }
+  .fill  { position: absolute; top: 0; left: 0; height: 100%; width: 0%; background: var(--primary); box-shadow: var(--glow-sm); animation: countdown 30s linear forwards; }
+  @keyframes countdown { to { width: 100%; } }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+</style>
+</head>
+<body>
+<div class="grid"></div><div class="vignette"></div><div class="ambient"></div><div class="scanlines"></div>
+<div class="line line-top"></div><div class="line line-bottom"></div>
+<div class="corner tl"></div><div class="corner tr"></div><div class="corner bl"></div><div class="corner br"></div>
+
+<div class="center">
+  <div class="merci">// Merci d'avoir regardé //</div>
+  <div class="title">GG WP</div>
+  <div class="subtitle">Retrouvez-moi sur toutes les plateformes</div>
+  <div class="platforms">
+    <div class="pb yt">
+      <svg class="pb-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.7 15.5V8.5l6.3 3.5-6.3 3.5z"/></svg>
+      <div class="pb-name">YouTube</div><div class="pb-handle">@Latshow-y</div><div class="pb-cta">Abonne-toi</div>
+    </div>
+    <div class="pb tw">
+      <svg class="pb-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M11.6 5.9h1.6v4.6h-1.6zm4.3 0H17v4.6h-1.6zM2.4 0 0 3.4v17.2h5.8V24l3.4-3.4h4.3L21.6 12V0zm17.6 11.1-3.4 3.4H12l-3 3v-3H4.8V1.6h15.2z"/></svg>
+      <div class="pb-name">Twitch</div><div class="pb-handle">latshow_</div><div class="pb-cta">Follow</div>
+    </div>
+    <div class="pb ttg">
+      <svg class="pb-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M19.6 3.3A4.9 4.9 0 0 1 15.2 0h-3.4v16.4a2.9 2.9 0 1 1-2.9-2.9c.3 0 .5 0 .8.1V10a6.3 6.3 0 0 0-.8-.1A6.3 6.3 0 0 0 2.6 16.3a6.3 6.3 0 0 0 9.2 5.6V24h3.4v-9.1a8.3 8.3 0 0 0 4.4 1.3V12.8a4.9 4.9 0 0 1-4.4-4.9V7a8.3 8.3 0 0 0 4.4 1.3V4.9a4.9 4.9 0 0 1-.1-.4z"/></svg>
+      <div class="pb-name">TikTok</div><div class="pb-handle">@latshow_</div><div class="pb-cta">Gaming</div>
+    </div>
+    <div class="pb ttd">
+      <svg class="pb-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M19.6 3.3A4.9 4.9 0 0 1 15.2 0h-3.4v16.4a2.9 2.9 0 1 1-2.9-2.9c.3 0 .5 0 .8.1V10a6.3 6.3 0 0 0-.8-.1A6.3 6.3 0 0 0 2.6 16.3a6.3 6.3 0 0 0 9.2 5.6V24h3.4v-9.1a8.3 8.3 0 0 0 4.4 1.3V12.8a4.9 4.9 0 0 1-4.4-4.9V7a8.3 8.3 0 0 0 4.4 1.3V4.9a4.9 4.9 0 0 1-.1-.4z"/></svg>
+      <div class="pb-name">TikTok DEV</div><div class="pb-handle">@linedev_</div><div class="pb-cta">Développement</div>
+    </div>
+    <div class="pb ig">
+      <svg class="pb-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+      <div class="pb-name">Instagram</div><div class="pb-handle">latshow.y</div><div class="pb-cta">Follow</div>
+    </div>
+  </div>
+</div>
+
+<div class="shutdown">
+  <div class="shutdown-label">Fermeture du stream...</div>
+  <div class="track"><div class="fill"></div></div>
+</div>
+</body>
+</html>

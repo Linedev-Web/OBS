@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Follow Reminder Widget V2</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&family=Exo+2:wght@800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --surface:  rgba(8,3,22,.97);
+    --primary:  #c47bff;
+    --text:     #f0e8ff;
+    --text-dim: #c4a8f0;
+    --border:   rgba(196,123,255,.28);
+    --border-hi:rgba(196,123,255,.65);
+    --glow-sm:  0 0 6px rgba(196,123,255,.40);
+    --glow-md:  0 0 12px rgba(196,123,255,.38), 0 0 30px rgba(196,123,255,.14);
+    --yt:#ff4040; --tw:#c47bff; --ttg:#ff6eb4; --ttd:#00ccff; --ig:#e1306c;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background:transparent; overflow:hidden;
+    font-family:'Rajdhani',sans-serif; -webkit-font-smoothing:antialiased;
+  }
+
+  /* ── Widget positionné bas-droite ── */
+  .widget {
+    position:fixed; bottom:32px; right:32px;
+    width:520px;
+    background:var(--surface);
+    border:1px solid var(--border-hi);
+    overflow:hidden;
+    display:none;
+    flex-direction:column;
+    transform-origin:bottom right;
+    box-shadow:0 0 40px rgba(196,123,255,.22), 0 0 100px rgba(196,123,255,.08);
+  }
+  .widget.active  { display:flex; animation:popIn  .55s cubic-bezier(.175,.885,.32,1.275) forwards; }
+  .widget.closing { display:flex; animation:popOut .40s ease-in forwards; }
+
+  @keyframes popIn  {
+    from { opacity:0; transform:scale(.65) translateY(24px); }
+    to   { opacity:1; transform:scale(1)   translateY(0); }
+  }
+  @keyframes popOut {
+    from { opacity:1; transform:scale(1)   translateY(0); }
+    to   { opacity:0; transform:scale(.65) translateY(24px); }
+  }
+
+  /* Ligne scanning */
+  .widget::before {
+    content:''; position:absolute; top:0; left:-100%; width:100%; height:2px;
+    background:linear-gradient(90deg,transparent,var(--primary),transparent);
+    box-shadow:var(--glow-sm); animation:scan 2s linear infinite; z-index:30;
+  }
+  @keyframes scan { to { left:100%; } }
+
+  /* Scanlines CRT */
+  .widget::after {
+    content:''; position:absolute; inset:0;
+    background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.06) 3px,rgba(0,0,0,.06) 4px);
+    pointer-events:none; z-index:40;
+  }
+
+  /* Barre accent gauche */
+  .accent { position:absolute; left:0; top:0; bottom:0; width:4px; background:var(--primary); box-shadow:0 0 16px rgba(196,123,255,.90); z-index:10; }
+
+  /* Coins */
+  .corner { position:absolute; width:18px; height:18px; z-index:50; }
+  .corner::before,.corner::after { content:''; position:absolute; background:var(--primary); box-shadow:var(--glow-sm); }
+  .corner::before { width:100%; height:2px; top:0; left:0; }
+  .corner::after  { width:2px; height:100%; top:0; left:0; }
+  .corner.tl { top:4px; left:4px; }
+  .corner.tr { top:4px; right:4px; transform:scaleX(-1); }
+  .corner.bl { bottom:4px; left:4px; transform:scaleY(-1); }
+  .corner.br { bottom:4px; right:4px; transform:scale(-1); }
+
+  /* ── En-tête ── */
+  .header {
+    padding:18px 20px 14px 26px;
+    display:flex; align-items:center; gap:14px;
+    border-bottom:1px solid var(--border);
+    position:relative; z-index:10;
+    background:linear-gradient(90deg,rgba(196,123,255,.07) 0%,transparent 80%);
+  }
+  .bell {
+    width:48px; height:48px; flex-shrink:0;
+    border:2px solid var(--border-hi); border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    color:var(--primary); box-shadow:var(--glow-md);
+    animation:shake 3.5s ease-in-out infinite;
+  }
+  @keyframes shake {
+    0%,70%,100% { transform:rotate(0); }
+    75%  { transform:rotate(-14deg); }
+    80%  { transform:rotate(14deg); }
+    85%  { transform:rotate(-8deg); }
+    90%  { transform:rotate(8deg); }
+    95%  { transform:rotate(-4deg); }
+  }
+  .header-text { display:flex; flex-direction:column; gap:3px; }
+  .header-title {
+    font-family:'Exo 2',sans-serif;
+    font-size:28px; font-weight:900; letter-spacing:4px; text-transform:uppercase;
+    color:var(--primary); text-shadow:var(--glow-sm); line-height:1;
+  }
+  .header-sub {
+    font-size:22px; font-weight:500; letter-spacing:2px;
+    color:var(--text-dim);
+  }
+
+  /* ── Message ── */
+  .message {
+    padding:14px 20px 14px 26px;
+    font-family:'Exo 2',sans-serif;
+    font-size:22px; font-weight:900; letter-spacing:2px; text-transform:uppercase;
+    color:var(--text); line-height:1.3;
+    border-bottom:1px solid var(--border);
+    position:relative; z-index:10;
+  }
+  .message .accent-text { color:var(--primary); text-shadow:var(--glow-sm); }
+
+  /* ── Plateformes ── */
+  .platforms {
+    padding:14px 20px 14px 26px;
+    display:flex; flex-direction:column; gap:10px;
+    position:relative; z-index:10;
+  }
+  .plat-row {
+    display:flex; align-items:center; gap:12px;
+    padding:6px 10px 6px 8px;
+    border:1px solid rgba(196,123,255,.10);
+    background:rgba(196,123,255,.03);
+    position:relative;
+  }
+  .plat-row::before {
+    content:''; position:absolute; left:0; top:0; bottom:0; width:3px;
+  }
+  .plat-row.yt::before  { background:var(--yt);  box-shadow:0 0 8px rgba(255,64,64,.50); }
+  .plat-row.tw::before  { background:var(--tw);  box-shadow:0 0 8px rgba(196,123,255,.50); }
+  .plat-row.ttg::before { background:var(--ttg); box-shadow:0 0 8px rgba(255,110,180,.50); }
+  .plat-row.ttd::before { background:var(--ttd); box-shadow:0 0 8px rgba(0,204,255,.50); }
+  .plat-row.ig::before  { background:var(--ig);  box-shadow:0 0 8px rgba(225,48,108,.50); }
+
+  .plat-icon { width:22px; height:22px; flex-shrink:0; }
+  .plat-row.yt  .plat-icon { color:var(--yt);  filter:drop-shadow(0 0 4px var(--yt)); }
+  .plat-row.tw  .plat-icon { color:var(--tw);  filter:drop-shadow(0 0 4px var(--tw)); }
+  .plat-row.ttg .plat-icon { color:var(--ttg); filter:drop-shadow(0 0 4px var(--ttg)); }
+  .plat-row.ttd .plat-icon { color:var(--ttd); filter:drop-shadow(0 0 4px var(--ttd)); }
+  .plat-row.ig  .plat-icon { color:var(--ig);  filter:drop-shadow(0 0 4px var(--ig)); }
+
+  .plat-name {
+    font-family:'Exo 2',sans-serif;
+    font-size:22px; font-weight:900; letter-spacing:2px; text-transform:uppercase;
+    min-width:150px;
+  }
+  .plat-row.yt  .plat-name { color:var(--yt); }
+  .plat-row.tw  .plat-name { color:var(--tw); }
+  .plat-row.ttg .plat-name { color:var(--ttg); }
+  .plat-row.ttd .plat-name { color:var(--ttd); }
+  .plat-row.ig  .plat-name { color:var(--ig); }
+
+  .plat-handle {
+    font-size:22px; font-weight:500; letter-spacing:1px;
+    color:var(--text-dim);
+  }
+
+  /* ── Barre de progression ── */
+  .progress-wrap {
+    height:4px; background:rgba(196,123,255,.08);
+    border-top:1px solid var(--border);
+    position:relative; z-index:10; overflow:hidden;
+  }
+  .progress-fill {
+    height:100%; width:100%;
+    background:linear-gradient(90deg,var(--primary),rgba(196,123,255,.50));
+    box-shadow:var(--glow-sm);
+    transform-origin:left;
+  }
+</style>
+</head>
+<body>
+
+<div class="widget" id="widget">
+  <div class="accent"></div>
+  <div class="corner tl"></div><div class="corner tr"></div>
+  <div class="corner bl"></div><div class="corner br"></div>
+
+  <div class="header">
+    <div class="bell">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 22c1.1 0 2-.9 2-2h-4a2 2 0 0 0 2 2zm6-6V11c0-3.07-1.64-5.64-4.5-6.32V4a1.5 1.5 0 0 0-3 0v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/>
+      </svg>
+    </div>
+    <div class="header-text">
+      <div class="header-title">N'oublie pas !</div>
+      <div class="header-sub">Ça aide vraiment beaucoup ♥</div>
+    </div>
+  </div>
+
+  <div class="message">
+    Follow &amp; <span class="accent-text">Abonne-toi</span><br>sur toutes les plateformes !
+  </div>
+
+  <div class="platforms">
+    <div class="plat-row yt">
+      <svg class="plat-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.7 15.5V8.5l6.3 3.5-6.3 3.5z"/></svg>
+      <span class="plat-name">YouTube</span>
+      <span class="plat-handle">@Latshow-y</span>
+    </div>
+    <div class="plat-row tw">
+      <svg class="plat-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M11.6 5.9h1.6v4.6h-1.6zm4.3 0H17v4.6h-1.6zM2.4 0 0 3.4v17.2h5.8V24l3.4-3.4h4.3L21.6 12V0zm17.6 11.1-3.4 3.4H12l-3 3v-3H4.8V1.6h15.2z"/></svg>
+      <span class="plat-name">Twitch</span>
+      <span class="plat-handle">latshow_</span>
+    </div>
+    <div class="plat-row ttg">
+      <svg class="plat-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M19.6 3.3A4.9 4.9 0 0 1 15.2 0h-3.4v16.4a2.9 2.9 0 1 1-2.9-2.9c.3 0 .5 0 .8.1V10a6.3 6.3 0 0 0-.8-.1A6.3 6.3 0 0 0 2.6 16.3a6.3 6.3 0 0 0 9.2 5.6V24h3.4v-9.1a8.3 8.3 0 0 0 4.4 1.3V12.8a4.9 4.9 0 0 1-4.4-4.9V7a8.3 8.3 0 0 0 4.4 1.3V4.9a4.9 4.9 0 0 1-.1-.4z"/></svg>
+      <span class="plat-name">TikTok</span>
+      <span class="plat-handle">@latshow_</span>
+    </div>
+    <div class="plat-row ttd">
+      <svg class="plat-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M19.6 3.3A4.9 4.9 0 0 1 15.2 0h-3.4v16.4a2.9 2.9 0 1 1-2.9-2.9c.3 0 .5 0 .8.1V10a6.3 6.3 0 0 0-.8-.1A6.3 6.3 0 0 0 2.6 16.3a6.3 6.3 0 0 0 9.2 5.6V24h3.4v-9.1a8.3 8.3 0 0 0 4.4 1.3V12.8a4.9 4.9 0 0 1-4.4-4.9V7a8.3 8.3 0 0 0 4.4 1.3V4.9a4.9 4.9 0 0 1-.1-.4z"/></svg>
+      <span class="plat-name">TikTok DEV</span>
+      <span class="plat-handle">@linedev_</span>
+    </div>
+    <div class="plat-row ig">
+      <svg class="plat-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+      <span class="plat-name">Instagram</span>
+      <span class="plat-handle">latshow.y</span>
+    </div>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-fill" id="fill"></div>
+  </div>
+</div>
+
+<script>
+  const widget = document.getElementById('widget');
+  const fill   = document.getElementById('fill');
+  const DISPLAY  = 10000;        // 10 secondes visible
+  const INTERVAL = 10 * 60 * 1000; // toutes les 10 minutes
+
+  function show() {
+    // Redémarre l'animation de la barre de progression
+    fill.style.animation = 'none';
+    void fill.offsetWidth;
+    fill.style.animation = `countdown ${DISPLAY / 1000}s linear forwards`;
+
+    widget.classList.remove('closing');
+    widget.classList.add('active');
+    setTimeout(hide, DISPLAY);
+  }
+
+  function hide() {
+    widget.classList.remove('active');
+    widget.classList.add('closing');
+    setTimeout(() => widget.classList.remove('closing'), 420);
+  }
+
+  show();
+  setInterval(show, INTERVAL);
+</script>
+
+<style>
+  @keyframes countdown {
+    from { transform: scaleX(1); }
+    to   { transform: scaleX(0); }
+  }
+</style>
+</body>
+</html>
