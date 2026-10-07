@@ -53,6 +53,8 @@ function source(nom, id, settings, extra = {}) {
 function filtre(nom, id, versioned, settings, enabled = true) {
   return { prev_ver: VERSION, name: nom, uuid: crypto.randomUUID(), id, versioned_id: versioned, settings, mixers: 0, sync: 0, flags: 0, volume: 1, balance: 0.5, enabled, muted: false, 'push-to-mute': false, 'push-to-mute-delay': 0, 'push-to-talk': false, 'push-to-talk-delay': 0, hotkeys: {}, deinterlace_mode: 0, deinterlace_field_order: 0, monitoring_type: 0, private_settings: {} };
 }
+// Baisse un son (jeu, son du PC) quand le micro parle : compresseur déclenché par le micro.
+const attenuation = () => filtre('Baisse quand tu parles', 'compressor_filter', 'compressor_filter', { ratio: 4, threshold: -32, attack_time: 10, release_time: 400, output_gain: 0, sidechain_source: 'Micro' });
 const CSS_BASE = 'body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden}';
 
 // ---------- Sources partagées d'une collection ----------
@@ -64,8 +66,8 @@ function sourcesCommunes(seance) {
     mixers: camRef.mixers, versioned_id: camRef.versioned_id,
     filters: [
       ...(couleur ? [filtre('Couleurs', couleur.id, couleur.versioned_id, couleur.settings)] : []),
-      // Enregistrement séparé de la caméra (rushs pour les shorts) : désactivé par défaut en live, activable dans OBS.
-      ...(enreg ? [filtre('Enregistrement caméra', enreg.id, enreg.versioned_id, enreg.settings, false)] : []),
+      // Enregistrement séparé de la webcam pendant le live (module Source Record, réglages de Plateau) : voulu par le client.
+      ...(enreg ? [filtre('Enregistrement caméra', enreg.id, enreg.versioned_id, enreg.settings, true)] : []),
     ],
     hotkeys: {},
   });
@@ -74,9 +76,13 @@ function sourcesCommunes(seance) {
   const micro = source('Micro', 'wasapi_input_capture', micRef.settings, {
     mixers: 255, sync: micRef.sync, flags: micRef.flags,
     filters: [
+      // Chaîne voix : bruit de fond retiré, silences adoucis (clavier), un peu moins de grave et plus de clarté,
+      // niveau égalisé, plafond de sécurité. Le micro FIFINE K658 est dynamique : pas besoin d'une porte dure.
       filtre('Réduction du bruit', 'noise_suppress_filter', 'noise_suppress_filter_v2', { method: 'rnnoise' }),
-      filtre('Compresseur', 'compressor_filter', 'compressor_filter', { ratio: 4, threshold: -20, attack_time: 6, release_time: 60, output_gain: 3 }),
-      filtre('Limiteur', 'limiter_filter', 'limiter_filter', { threshold: -3, release_time: 60 }),
+      filtre('Expandeur', 'expander_filter', 'expander_filter', { presets: 'expander', ratio: 3, threshold: -42, attack_time: 10, release_time: 120, output_gain: 0, detector: 'RMS' }),
+      filtre('Égaliseur', 'basic_eq_filter', 'basic_eq_filter', { low: -2, mid: 0, high: 1.5 }),
+      filtre('Compresseur', 'compressor_filter', 'compressor_filter', { ratio: 3, threshold: -20, attack_time: 5, release_time: 80, output_gain: 4 }),
+      filtre('Limiteur', 'limiter_filter', 'limiter_filter', { threshold: -1.5, release_time: 60 }),
     ],
     hotkeys: { 'libobs.mute': [touche(conf.raccourcis_communs.micro_couper)], 'libobs.unmute': [touche(conf.raccourcis_communs.micro_retablir)], 'libobs.push-to-mute': [], 'libobs.push-to-talk': [] },
   });
@@ -84,15 +90,18 @@ function sourcesCommunes(seance) {
   const s = { camera, micro };
   if (seance.id === 'gaming') {
     const jeuRef = refSource('Capture de jeu');
-    s.capture = source('Capture du jeu', 'game_capture', { ...jeuRef.settings, capture_audio: true }, { volume: 1, mixers: 255, hotkeys: { ...vide(), hotkey_start: [], hotkey_stop: [] },
-      filters: [filtre('Limiteur', 'limiter_filter', 'limiter_filter', { threshold: -6, release_time: 60 })] });
+    s.capture = source('Capture du jeu', 'game_capture', { ...jeuRef.settings, capture_audio: true }, { volume: 0.32, mixers: 255, hotkeys: { ...vide(), hotkey_start: [], hotkey_stop: [] },
+      filters: [attenuation(), filtre('Limiteur', 'limiter_filter', 'limiter_filter', { threshold: -6, release_time: 60 })] });
     const disco = refSource('Discord');
-    s.discord = source('Discord', 'wasapi_process_output_capture', disco.settings, { volume: 0.8, filters: [filtre('Limiteur', 'limiter_filter', 'limiter_filter', { threshold: -6, release_time: 60 })] });
+    // Discord : les voix des amis ramenées au même niveau, sans les faire baisser quand tu parles.
+    s.discord = source('Discord', 'wasapi_process_output_capture', disco.settings, { volume: 0.85, filters: [
+      filtre('Compresseur', 'compressor_filter', 'compressor_filter', { ratio: 3, threshold: -24, attack_time: 6, release_time: 80, output_gain: 2 }),
+      filtre('Limiteur', 'limiter_filter', 'limiter_filter', { threshold: -3, release_time: 60 })] });
   } else {
     const fen = refSource('Fenettre');
     s.capture = source('Fenêtre', 'window_capture', { ...fen.settings, method: 2, cursor: true, client_area: true }, { mixers: 0, hotkeys: {} });
     const pc = refSource('Capture audio (sortie)');
-    s.sonpc = source('Son du PC', 'wasapi_output_capture', pc.settings, { volume: 0.7, filters: [filtre('Limiteur', 'limiter_filter', 'limiter_filter', { threshold: -6, release_time: 60 })] });
+    s.sonpc = source('Son du PC', 'wasapi_output_capture', pc.settings, { volume: 0.5, filters: [attenuation(), filtre('Limiteur', 'limiter_filter', 'limiter_filter', { threshold: -6, release_time: 60 })] });
   }
   const chatRef = refSource('Social chatting');
   s.chat = source('Chat', 'browser_source', { url: chatRef.settings.url, width: 440, height: 840, css: CSS_BASE, fps_custom: true, fps: 30 }, { mixers: 0, hotkeys: { ...vide(), 'ObsBrowser.Refresh': [] } });
@@ -112,7 +121,7 @@ function musique(cle) {
   const dossier = `${MUSIQUE}/${cle}`;
   return source(`Musique — ${cle.replace('/', ' ')}`, 'vlc_source', {
     playlist: [{ value: dossier, hidden: false, selected: false }], loop: true, shuffle: true, playback_behavior: 'stop_restart', network_caching: 400,
-  }, { volume: 0.35, hotkeys: { ...vide(), 'VLC_PLAY_PAUSE': [], 'VLC_RESTART': [], 'VLC_STOP': [], 'VLC_PLAYLIST_NEXT': [], 'VLC_PLAYLIST_PREV': [] } });
+  }, { volume: 0.6, hotkeys: { ...vide(), 'VLC_PLAY_PAUSE': [], 'VLC_RESTART': [], 'VLC_STOP': [], 'VLC_PLAYLIST_NEXT': [], 'VLC_PLAYLIST_PREV': [] } });
 }
 
 // ---------- Éléments de scène ----------
