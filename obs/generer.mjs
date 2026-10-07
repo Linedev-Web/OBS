@@ -11,6 +11,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
+import { collectionOuverte } from './obs-websocket.mjs';
 
 const ICI = path.dirname(fileURLToPath(import.meta.url));
 const RACINE = path.resolve(ICI, '..');
@@ -29,6 +30,17 @@ const CANEVAS = '6c69626f-6273-4c00-9d88-c5136d61696e'; // canevas principal d'O
 const VERSION = ref.sources[0]?.prev_ver ?? 537001986;
 const OVERLAYS = path.join(RACINE, 'overlays').replaceAll('\\', '/');
 const MUSIQUE = path.join(RACINE, 'musique').replaceAll('\\', '/');
+const TRANSITIONS = path.join(RACINE, 'transitions').replaceAll('\\', '/');
+
+// Transition de scène « Tuiles 3D » (stinger, demande du client, 2026-10-07) : vidéo transparente rendue par
+// transitions/rendre.mjs. OBS change de scène à 620 ms, quand les tuiles couvrent tout l'écran. Son du whoosh dans le
+// live et dans le casque (2) ; décodage logiciel (le décodage matériel du VP9 perd la transparence).
+const TRANSITION = 'Tuiles 3D';
+const transition = (marque) => ({
+  name: TRANSITION, id: 'obs_stinger_transition',
+  settings: { path: `${TRANSITIONS}/transition_${marque}.webm`, tp_type: 0, transition_point: 620,
+    audio_monitoring: 2, audio_fade_style: 1, hw_decode: false, preload: false },
+});
 
 const refSource = (nom) => {
   const s = ref.sources.find((x) => x.name === nom);
@@ -93,7 +105,7 @@ function sourcesCommunes(seance) {
   const s = { camera, micro };
   if (seance.id === 'gaming') {
     const jeuRef = refSource('Capture de jeu');
-    s.capture = source('Capture du jeu', 'game_capture', { ...jeuRef.settings, capture_audio: true }, { volume: 0.32, mixers: 255, hotkeys: { ...vide(), hotkey_start: [], hotkey_stop: [] },
+    s.capture = source('Capture du jeu', 'game_capture', { ...jeuRef.settings, capture_audio: true, anti_cheat_hook: true }, { volume: 0.32, mixers: 255, hotkeys: { ...vide(), hotkey_start: [], hotkey_stop: [] },
       filters: [attenuation(), filtre('Limiteur', 'limiter_filter', 'limiter_filter', { threshold: -6, release_time: 60 })] });
     const disco = refSource('Discord');
     // Discord : les voix des amis ramenées au même niveau, sans les faire baisser quand tu parles.
@@ -198,7 +210,7 @@ function construire(seance) {
     scene_order: seance.scenes.map((s) => ({ name: s.nom })),
     current_scene: seance.scenes[0].nom,
     current_program_scene: seance.scenes[0].nom,
-    current_transition: 'Fondu', transition_duration: 300, transitions: [], quick_transitions: [],
+    current_transition: TRANSITION, transition_duration: 300, transitions: [transition(seance.marque)], quick_transitions: [],
     saved_projectors: [], preview_locked: false, scaling_enabled: false, scaling_level: 0, scaling_off_x: 0, scaling_off_y: 0,
     modules: {}, resolution: { x: W, y: H }, version: ref.version ?? 2,
     sources: [...sources, ...scenes],
@@ -206,14 +218,18 @@ function construire(seance) {
 }
 
 const FICHIERS = { gaming: 'Live_Gaming.json', montage: 'Live_Montage.json', dev: 'Live_Dev.json' };
+// Collection ouverte : demandée à OBS quand il tourne (user.ini n'est réécrit qu'à la fermeture d'OBS : après un
+// changement de collection, il désigne encore l'ancienne — constaté le 2026-10-07), sinon lue dans user.ini.
+const ouverteDansObs = ECRIRE ? await collectionOuverte() : undefined;
 const ouverte = (() => { try { return /SceneCollectionFile=(.+)/.exec(fs.readFileSync(path.join(process.env.APPDATA, 'obs-studio', 'user.ini'), 'utf8'))?.[1]?.trim(); } catch { return undefined; } })();
+const estOuverte = (seance) => (ouverteDansObs ? ouverteDansObs === seance.nom : ouverte === FICHIERS[seance.id]);
 const horodatage = new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-');
 for (const seance of conf.seances) {
   const col = construire(seance);
   const fichier = path.join(SCENES_OBS, FICHIERS[seance.id]);
   const resume = col.scene_order.map((s) => s.name).join(' | ');
   if (!ECRIRE) { console.log(`[simulation] ${FICHIERS[seance.id]} — ${seance.nom} : ${resume} (${col.sources.length} sources)`); continue; }
-  if (ouverte === FICHIERS[seance.id]) { console.log(`IGNORÉ ${FICHIERS[seance.id]} : collection ouverte dans OBS, change de collection puis relance.`); continue; }
+  if (estOuverte(seance)) { console.log(`IGNORÉ ${FICHIERS[seance.id]} : collection ouverte dans OBS, change de collection puis relance.`); continue; }
   if (fs.existsSync(fichier)) {
     // L'adresse des alertes StreamElements (avec sa clé) n'est posée que dans OBS : on la garde d'une génération à l'autre.
     const avant = JSON.parse(fs.readFileSync(fichier, 'utf8')).sources;

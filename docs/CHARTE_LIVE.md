@@ -12,6 +12,8 @@ travail par-ci par-là », « je ne veux pas que ça se voie que c'est fait par 
   **Exception : les alertes** (demande du client, 2026-10-07 : « je veux du fun, comme une animation After Effects ») —
   titre qui claque en zoom, secousse, sticker qui saute, bulle de BD drôle, gerbe de losanges, jingle à chaque alerte.
   Toujours sans trait décoratif ni néon.
+  **Exception aussi : la transition de scène** (demande du client, 2026-10-07 : « une animation en mode élément en 3D »)
+  — tuiles qui se retournent en 3D, nom de la chaîne en relief, une seule couleur d'accent en vague. Sans néon ni particules.
 - Plus de deux tailles de titre par écran, plus d'une couleur d'accent par écran.
 - **Aucun trait décoratif à côté ou sous un texte** (demande du client, 2026-10-07 : « ça fait IA, les traits, tout le monde en a ») :
   un point ou une petite forme géométrique (losange, carré) à la place. Les lignes de structure (bord d'un cadre, séparation

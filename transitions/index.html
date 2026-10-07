@@ -1,0 +1,137 @@
+<!doctype html>
+<!--
+  Transition de scène (« stinger ») des lives — demande du client, 2026-10-07 : « une animation en mode élément en 3D
+  pour faire une belle transition », comme les grands streamers.
+  Un mur de tuiles en 3D se retourne de gauche à droite et couvre tout l'écran, le nom de la chaîne arrive en relief,
+  OBS change de scène pendant que l'écran est couvert (point de bascule : 0,62 s), puis les tuiles repartent et
+  découvrent la nouvelle scène. Latshow : losanges nuit, vague cyan. linedev : carrés papier, vague vermillon.
+  Rendu en WebM transparent par HyperFrames (voir rendre.mjs), lu par la transition « Stinger » d'OBS.
+-->
+<html lang="fr" data-composition-variables='[{"id":"marque","type":"string","label":"Marque (latshow ou linedev)","default":"latshow"}]'>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>Transition des lives</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "Russo One"; src: url("medias/russo-one-400.ttf") format("truetype"); }
+      @font-face { font-family: "Archivo Black"; src: url("medias/archivo-black-400.woff2") format("woff2"); }
+      html, body { margin: 0; background: transparent; }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; }
+      .clip { position: absolute; inset: 0; }
+
+      /* Couleurs par marque (charte des lives, docs/CHARTE_LIVE.md) */
+      #root[data-marque="latshow"] { --bord: #1E1C33; --face: #0F0E1A; --vague: #22D3EE; --texte: #E9E6FF; --detail: #A855F7;
+        --relief-avant: #3A3462; --relief-fond: #15132A; --police: "Russo One"; }
+      #root[data-marque="linedev"] { --bord: #DCD4C3; --face: #EFE9DD; --vague: #F4471B; --texte: #14130F; --detail: #F4471B;
+        --relief-avant: #B9B2A3; --relief-fond: #8C8677; --police: "Archivo Black"; }
+
+      /* Mur de tuiles : perspective commune, point de fuite au centre */
+      .mur { position: absolute; inset: 0; perspective: 1600px; perspective-origin: 50% 50%; transform-style: preserve-3d; }
+      .tuile { position: absolute; display: block; background: var(--bord); backface-visibility: hidden; will-change: transform; }
+      .tuile .face, .tuile .vague { position: absolute; inset: 3px; display: block; }
+      .tuile .face { background: var(--face); }
+      .tuile .vague { background: var(--vague); }
+      .losange, .losange .face, .losange .vague { clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); }
+
+      /* Nom de la chaîne en relief : copies empilées en profondeur */
+      .scene3d { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+        perspective: 1400px; transform-style: preserve-3d; }
+      .logo { position: relative; display: block; width: 1100px; height: 220px; transform-style: preserve-3d; }
+      .couche { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 26px;
+        font-family: var(--police); font-size: 168px; line-height: 1; white-space: nowrap; letter-spacing: .02em; }
+      .couche .point { display: block; width: 38px; height: 38px; background: currentColor; transform: rotate(45deg); }
+      #root[data-marque="linedev"] .couche { font-size: 176px; letter-spacing: -.02em; gap: 0; }
+      #root[data-marque="linedev"] .couche .point { width: 30px; height: 30px; transform: none; align-self: flex-end; margin: 0 0 30px 10px; }
+      .avant { color: var(--texte); }
+      .avant .point { color: var(--detail); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="transition" data-start="0" data-width="1920" data-height="1080" data-duration="1.5" data-marque="latshow">
+      <section id="transition-scene" class="clip" data-start="0" data-duration="1.5" data-track-index="0">
+        <div class="mur" id="mur"></div>
+        <div class="scene3d"><div class="logo" id="logo" data-layout-allow-overlap></div></div>
+      </section>
+      <audio id="son-arrivee" src="medias/whoosh.mp3" data-start="0" data-duration="0.57" data-track-index="10" data-volume="0.8"></audio>
+      <audio id="son-impact" src="medias/impact-bass-1.mp3" data-start="0.5" data-duration="1" data-track-index="11" data-volume="0.45"></audio>
+      <audio id="son-depart" src="medias/whoosh.mp3" data-start="0.9" data-duration="0.57" data-track-index="12" data-volume="0.55"></audio>
+    </div>
+    <script>
+      const MARQUES = {
+        latshow: { forme: "losange", pas: 240, mot: "LATSHOW" },
+        linedev: { forme: "carre", pas: 180, mot: "linedev" },
+      };
+      const LARGEUR = 1920, HAUTEUR = 1080;
+      const COUCHES = 18;          // profondeur du relief
+      const borne = (v) => Math.min(1, Math.max(0, v));
+
+      const vars = window.__hyperframes.getVariables();
+      const cle = MARQUES[vars.marque] ? vars.marque : "latshow";
+      const M = MARQUES[cle];
+      const root = document.getElementById("root");
+      root.dataset.marque = cle;
+
+      // Centres des tuiles : grille carrée (linedev) ou grille de losanges = deux grilles décalées d'un demi-pas (latshow).
+      function centres() {
+        const p = M.pas, liste = [];
+        for (let i = -1; i <= Math.ceil(LARGEUR / p) + 1; i++) {
+          for (let j = -1; j <= Math.ceil(HAUTEUR / p) + 1; j++) {
+            if (M.forme === "carre") liste.push([i * p + p / 2, j * p + p / 2]);
+            else { liste.push([i * p, j * p]); liste.push([i * p + p / 2, j * p + p / 2]); }
+          }
+        }
+        // Rien d'inutile hors champ
+        return liste.filter(([x, y]) => x > -M.pas / 2 && x < LARGEUR + M.pas / 2 && y > -M.pas / 2 && y < HAUTEUR + M.pas / 2);
+      }
+
+      const mur = document.getElementById("mur");
+      const tuiles = centres().map(([x, y]) => {
+        const t = document.createElement("div");
+        t.className = "tuile" + (M.forme === "losange" ? " losange" : "");
+        const cote = M.pas + 2; // léger recouvrement : aucune fente entre deux tuiles
+        Object.assign(t.style, { left: `${x - cote / 2}px`, top: `${y - cote / 2}px`, width: `${cote}px`, height: `${cote}px` });
+        const face = document.createElement("span"); face.className = "face";
+        const vague = document.createElement("span"); vague.className = "vague";
+        t.append(face, vague);
+        mur.appendChild(t);
+        return { t, vague, x, y };
+      });
+
+      const logo = document.getElementById("logo");
+      for (let k = COUCHES; k >= 0; k--) {
+        const c = document.createElement("div");
+        c.className = "couche" + (k === 0 ? " avant" : "");
+        c.setAttribute("data-layout-allow-overlap", ""); // couches du relief : superposées exprès
+        const mot = document.createElement("span"); mot.textContent = M.mot; mot.setAttribute("data-layout-allow-overlap", "");
+        const point = document.createElement("span"); point.className = "point";
+        c.append(mot, point);
+        if (k > 0) {
+          const a = k / COUCHES; // dégradé du relief : clair près de la face, sombre au fond
+          c.style.color = `color-mix(in srgb, var(--relief-fond) ${Math.round(a * 100)}%, var(--relief-avant))`;
+        }
+        c.style.transform = `translateZ(${-k * 3}px)`;
+        logo.appendChild(c);
+      }
+
+      const tl = gsap.timeline({ paused: true });
+      // Ordre de passage : de gauche à droite, un peu en diagonale
+      const depart = (x, y) => borne(x / LARGEUR) * 0.22 + borne(y / HAUTEUR) * 0.06;
+      for (const { t, vague, x, y } of tuiles) {
+        const d = depart(x, y);
+        // Opacité en plus de la rotation : vues de biais (bords de l'écran), les tuiles de champ se verraient avant leur tour
+        tl.fromTo(t, { rotationY: -125, z: 140, opacity: 0 }, { rotationY: 0, z: 0, opacity: 1, duration: 0.26, ease: "power3.out" }, 0.02 + d);
+        // Vague d'accent : un front étroit, pas tout l'écran
+        tl.fromTo(vague, { opacity: 0.9 }, { opacity: 0, duration: 0.14, ease: "power2.in" }, 0.06 + d);
+        tl.to(t, { rotationY: 125, z: -60, opacity: 0, duration: 0.28, ease: "power3.in" }, 0.9 + d);
+      }
+      // Le nom arrive en relief juste avant la bascule (0,62 s), oscille à peine, puis repart avant les tuiles du centre
+      gsap.set(logo, { rotationX: -88, rotationY: -18, z: -320, opacity: 0 }); // état de départ, stable à toute recherche
+      tl.to(logo, { rotationX: 8, z: 0, opacity: 1, duration: 0.24, ease: "expo.out" }, 0.44);
+      tl.to(logo, { rotationY: 12, duration: 0.5, ease: "sine.inOut" }, 0.44); // le relief se voit pendant la rotation
+      tl.to(logo, { rotationX: 80, z: -200, opacity: 0, duration: 0.14, ease: "power2.in" }, 0.9);
+
+      window.__timelines["transition"] = tl;
+    </script>
+  </body>
+</html>
