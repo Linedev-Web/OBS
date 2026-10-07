@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Matt Racing Live — Overlay Blur</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Barlow+Condensed:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blue:   #0A1EFF;
+  --blue-g: rgba(10,30,255,.6);
+  --blue-d: rgba(10,30,255,.12);
+  --red:    #FF1E1E;
+  --red-g:  rgba(255,30,30,.6);
+  --red-d:  rgba(255,30,30,.10);
+  --white:  #FFFFFF;
+  --carbon: #06060A;
+  --c2:     #0E0E14;
+  --grey:   #4A5868;
+  --grey-l: #8A9AAA;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  width:1920px; height:1080px;
+  background:transparent; overflow:hidden;
+  font-family:'Barlow Condensed',sans-serif; color:var(--white);
+}
+
+/* Couches blur */
+.blur-game {
+  position:absolute; top:0; left:0; width:1920px; height:536px;
+  background:rgba(6,6,10,.55);
+  backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+  z-index:4;
+}
+.blur-cams {
+  position:absolute; top:592px; left:0; width:1920px; height:488px;
+  background:rgba(6,6,10,.45);
+  backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
+  z-index:4;
+}
+
+/* Bordures jeu */
+.game-border-top {
+  position:absolute; top:0; left:0; right:0; height:3px;
+  background:linear-gradient(90deg, var(--blue), var(--red));
+  box-shadow:0 0 10px var(--blue-g); z-index:5;
+}
+.game-border-left  { position:absolute; top:0; left:0;  width:3px; height:536px; background:linear-gradient(180deg, var(--blue), transparent); z-index:5; }
+.game-border-right { position:absolute; top:0; right:0; width:3px; height:536px; background:linear-gradient(180deg, var(--red), transparent);  z-index:5; }
+.hud-c  { position:absolute; z-index:6; width:56px; height:56px; }
+.hud-tl { top:6px; left:6px;  border-top:2px solid var(--white); border-left:2px solid var(--white);  }
+.hud-tr { top:6px; right:6px; border-top:2px solid var(--white); border-right:2px solid var(--white); }
+
+/* Barre séparatrice */
+.sep {
+  position:absolute; top:536px; left:0; width:1920px; height:56px;
+  background:var(--carbon);
+  display:flex; align-items:center;
+  overflow:hidden; z-index:10;
+}
+.sep::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg, var(--blue), var(--red)); box-shadow:0 2px 8px var(--blue-g); }
+.sep::after  { content:''; position:absolute; bottom:0; left:0; right:0; height:3px; background:linear-gradient(90deg, var(--blue), var(--red)); }
+
+.sline {
+  position:absolute; top:3px; bottom:3px; width:120px;
+  background:linear-gradient(90deg, transparent, rgba(255,255,255,.05), transparent);
+  animation:sline 3s linear infinite;
+}
+@keyframes sline { from { left:-120px; } to { left:1920px; } }
+
+.sep-left  { display:flex; align-items:center; padding-left:20px; gap:12px; z-index:2; }
+.sep-num   { font-family:'Orbitron',sans-serif; font-size:42px; font-weight:900; color:var(--blue); text-shadow:0 0 20px var(--blue-g); }
+.sep-name  { font-family:'Orbitron',sans-serif; font-size:22px; font-weight:700; letter-spacing:5px; }
+.sep-tag   { font-size:11px; font-weight:600; letter-spacing:8px; color:var(--grey-l); text-transform:uppercase; }
+
+.sep-center { position:absolute; left:50%; transform:translateX(-50%); text-align:center; z-index:2; }
+.sep-title  { font-family:'Orbitron',sans-serif; font-size:28px; font-weight:900; letter-spacing:10px; white-space:nowrap; }
+.sep-sub    { font-size:11px; font-weight:600; letter-spacing:8px; color:var(--grey-l); }
+
+.sep-right  { position:absolute; right:20px; z-index:2; display:flex; flex-direction:column; align-items:flex-end; gap:3px; }
+.social     { font-size:20px; font-weight:700; letter-spacing:1px; color:var(--white); }
+
+/* Cams */
+.cam { position:absolute; top:592px; height:484px; background:transparent; }
+.cam-cockpit { left:0;     width:956px; border:2px solid var(--blue); box-shadow:0 0 28px var(--blue-g); }
+.cam-pedals  { left:964px; width:956px; border:2px solid var(--red);  box-shadow:0 0 28px var(--red-g);  }
+.cam-divider { position:absolute; top:592px; left:956px; width:8px; height:488px; background:linear-gradient(180deg, var(--blue), var(--carbon) 50%, var(--red)); }
+
+.cam-badge {
+  position:absolute; top:0; left:0;
+  height:36px; padding:0 26px 0 16px;
+  display:flex; align-items:center;
+  font-family:'Orbitron',sans-serif; font-size:14px; font-weight:700;
+  letter-spacing:5px; text-transform:uppercase;
+  clip-path:polygon(0 0, calc(100% - 12px) 0, 100% 100%, 0 100%);
+}
+.cam-cockpit .cam-badge { background:var(--blue); }
+.cam-pedals  .cam-badge { background:var(--red);  }
+
+.cc { position:absolute; width:18px; height:18px; }
+.cc-tl { top:0; left:0;    border-top:2px solid var(--white); border-left:2px solid var(--white);   }
+.cc-tr { top:0; right:0;   border-top:2px solid var(--white); border-right:2px solid var(--white);  }
+.cc-bl { bottom:0; left:0; border-bottom:2px solid var(--white); border-left:2px solid var(--white);  }
+.cc-br { bottom:0; right:0;border-bottom:2px solid var(--white); border-right:2px solid var(--white); }
+
+.bottom-stripe { position:absolute; bottom:0; left:0; right:0; height:4px; background:linear-gradient(90deg, var(--blue), var(--red)); }
+
+/* Zone alerte centrale */
+.alert-zone {
+  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  width:700px; height:200px; z-index:20;
+}
+</style>
+</head>
+<body>
+
+<div class="blur-game"></div>
+<div class="blur-cams"></div>
+
+<div class="game-border-top"></div>
+<div class="game-border-left"></div>
+<div class="game-border-right"></div>
+<div class="hud-c hud-tl"></div>
+<div class="hud-c hud-tr"></div>
+
+<div class="sep">
+  <div class="sline" style="animation-delay:0s;animation-duration:2.8s"></div>
+  <div class="sline" style="animation-delay:.9s;animation-duration:3.4s"></div>
+  <div class="sline" style="animation-delay:1.8s;animation-duration:2.5s"></div>
+  <div class="sep-left">
+    <span class="sep-num">01</span>
+    <div><div class="sep-name">Matt Racing</div><div class="sep-tag">Sim Racing · FR</div></div>
+  </div>
+  <div class="sep-center">
+    <div class="sep-title">MATT RACING LIVE</div>
+    <div class="sep-sub">SIM RACING · LIVE STREAM</div>
+  </div>
+  <div class="sep-right">
+    <span class="social">twitch.tv/mattracinglive</span>
+    <span class="social">@MattRacingLive</span>
+  </div>
+</div>
+
+<div class="cam cam-cockpit">
+  <div class="cam-badge">Cockpit</div>
+  <div class="cc cc-tl"></div><div class="cc cc-tr"></div>
+  <div class="cc cc-bl"></div><div class="cc cc-br"></div>
+</div>
+<div class="cam-divider"></div>
+<div class="cam cam-pedals">
+  <div class="cam-badge">Pedals</div>
+  <div class="cc cc-tl"></div><div class="cc cc-tr"></div>
+  <div class="cc cc-bl"></div><div class="cc cc-br"></div>
+</div>
+
+<div class="alert-zone"></div>
+<div class="bottom-stripe"></div>
+</body>
+</html>

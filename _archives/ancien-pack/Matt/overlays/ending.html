@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Matt Racing Live — Ending</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Barlow+Condensed:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blue:   #0A1EFF;
+  --blue-g: rgba(10,30,255,.6);
+  --blue-d: rgba(10,30,255,.12);
+  --red:    #FF1E1E;
+  --red-g:  rgba(255,30,30,.6);
+  --red-d:  rgba(255,30,30,.1);
+  --white:  #FFFFFF;
+  --carbon: #06060A;
+  --c2:     #0E0E14;
+  --grey:   #4A5868;
+  --grey-l: #8A9AAA;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  width:1920px; height:1080px; overflow:hidden;
+  background:var(--carbon);
+  font-family:'Barlow Condensed',sans-serif; color:var(--white);
+}
+
+.bg-carbon {
+  position:absolute; inset:0;
+  background:
+    repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(255,255,255,.012) 2px, rgba(255,255,255,.012) 4px),
+    repeating-linear-gradient(-45deg, transparent, transparent 2px, rgba(255,255,255,.012) 2px, rgba(255,255,255,.012) 4px),
+    var(--carbon);
+}
+.halo-blue { position:absolute; top:-300px; left:-300px; width:1000px; height:1000px; border-radius:50%; background:radial-gradient(circle, var(--blue-d), transparent 65%); }
+.halo-red  { position:absolute; bottom:-300px; right:-300px; width:1000px; height:1000px; border-radius:50%; background:radial-gradient(circle, var(--red-d), transparent 65%); }
+
+/* Drapeau à damier décoratif */
+.checker-deco {
+  position:absolute; top:0; right:0; width:280px; height:120px;
+  background-image:repeating-conic-gradient(rgba(255,255,255,.06) 0% 25%, transparent 0% 50%);
+  background-size:20px 20px;
+  -webkit-mask-image:linear-gradient(135deg, transparent 30%, black 80%);
+  mask-image:linear-gradient(135deg, transparent 30%, black 80%);
+}
+
+.stripe-top    { position:absolute; top:0; left:0; right:0; height:6px; background:linear-gradient(90deg, var(--blue), var(--red)); box-shadow:0 0 20px var(--blue-g); }
+.stripe-bottom { position:absolute; bottom:0; left:0; right:0; height:6px; background:linear-gradient(90deg, var(--red), var(--blue)); }
+
+.bg-num {
+  position:absolute; bottom:-60px; left:20px;
+  font-family:'Orbitron',sans-serif; font-size:520px; font-weight:900; line-height:1;
+  color:transparent; -webkit-text-stroke:2px rgba(255,30,30,.08);
+  user-select:none; pointer-events:none; letter-spacing:-20px;
+}
+
+/* Coins */
+.deco { position:absolute; z-index:8; }
+.deco-tl { top:18px; left:18px;   width:70px; height:70px; border-top:2px solid var(--blue); border-left:2px solid var(--blue); }
+.deco-tr { top:18px; right:18px;  width:70px; height:70px; border-top:2px solid var(--white); border-right:2px solid var(--white); }
+.deco-bl { bottom:18px; left:18px;  width:70px; height:70px; border-bottom:2px solid var(--blue); border-left:2px solid var(--blue); }
+.deco-br { bottom:18px; right:18px; width:70px; height:70px; border-bottom:2px solid var(--red);  border-right:2px solid var(--red);  }
+
+/* Contenu central */
+.main {
+  position:absolute; inset:0;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  z-index:5;
+}
+.end-tag { font-size:14px; font-weight:700; letter-spacing:18px; color:var(--grey-l); text-transform:uppercase; margin-bottom:12px; animation:fadeUp 1s ease-out both; }
+.merci {
+  font-family:'Orbitron',sans-serif; font-size:120px; font-weight:900; line-height:.9; letter-spacing:-4px;
+  background:linear-gradient(135deg, var(--white) 0%, var(--grey-l) 40%, var(--white) 100%);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  animation:fadeUp 1s .15s ease-out both;
+}
+.merci-sub { font-family:'Orbitron',sans-serif; font-size:36px; font-weight:700; letter-spacing:14px; color:var(--red); text-shadow:0 0 30px var(--red-g); margin-top:6px; animation:fadeUp 1s .3s ease-out both; }
+.divider {
+  width:600px; height:2px; margin:30px auto;
+  background:linear-gradient(90deg, transparent, var(--white), transparent);
+  box-shadow:0 0 10px rgba(255,255,255,.3);
+  animation:expandW 1s .45s ease-out both;
+}
+@keyframes expandW { from{transform:scaleX(0)} to{transform:scaleX(1)} }
+.merci-msg { font-size:30px; font-weight:600; letter-spacing:3px; color:var(--grey-l); text-align:center; max-width:900px; line-height:1.4; animation:fadeUp 1s .6s ease-out both; }
+.rdv-block {
+  margin-top:30px;
+  background:var(--blue-d); border:1px solid rgba(10,30,255,.3);
+  padding:16px 40px; display:flex; align-items:center; gap:20px;
+  animation:fadeUp 1s .75s ease-out both;
+}
+.rdv-label { font-size:22px; font-weight:700; letter-spacing:4px; color:var(--grey-l); }
+.rdv-val   { font-family:'Orbitron',sans-serif; font-size:36px; font-weight:700; color:var(--white); }
+
+@keyframes fadeUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+
+/* Panel socials droite */
+.socials-panel {
+  position:absolute; right:80px; top:50%; transform:translateY(-50%);
+  z-index:10; display:flex; flex-direction:column; gap:20px;
+  animation:fadeUp 1s .9s ease-out both;
+}
+.soc-card {
+  display:flex; align-items:center; gap:16px;
+  background:var(--c2); border-left:3px solid;
+  padding:14px 24px; min-width:360px;
+}
+.soc-card.blue { border-color:var(--blue); }
+.soc-card.red  { border-color:var(--red);  }
+.soc-card.white{ border-color:var(--white);}
+.soc-label  { font-family:'Orbitron',sans-serif; font-size:11px; font-weight:700; letter-spacing:5px; color:var(--grey); text-transform:uppercase; }
+.soc-handle { font-size:26px; font-weight:700; letter-spacing:1px; color:var(--white); }
+</style>
+</head>
+<body>
+
+<div class="bg-carbon"></div>
+<div class="halo-blue"></div>
+<div class="halo-red"></div>
+<div class="checker-deco"></div>
+<div class="stripe-top"></div>
+<div class="stripe-bottom"></div>
+<div class="bg-num">01</div>
+
+<div class="deco deco-tl"></div>
+<div class="deco deco-tr"></div>
+<div class="deco deco-bl"></div>
+<div class="deco deco-br"></div>
+
+<div class="main">
+  <div class="end-tag">Matt Racing Live · Fin du Stream</div>
+  <div class="merci">MERCI</div>
+  <div class="merci-sub">D'AVOIR ÉTÉ LÀ !</div>
+  <div class="divider"></div>
+  <div class="merci-msg">Merci à tous pour votre présence sur le stream !<br>Chaque like, follow et sub compte énormément 🏁</div>
+  <div class="rdv-block">
+    <span class="rdv-label">Prochain stream :</span>
+    <span class="rdv-val">Très bientôt !</span>
+  </div>
+</div>
+
+<div class="socials-panel">
+  <div class="soc-card blue">
+    <div><div class="soc-label">Twitch</div><div class="soc-handle">twitch.tv/mattracinglive</div></div>
+  </div>
+  <div class="soc-card red">
+    <div><div class="soc-label">YouTube</div><div class="soc-handle">@MattRacingLive</div></div>
+  </div>
+  <div class="soc-card white">
+    <div><div class="soc-label">Instagram</div><div class="soc-handle">mattracinglive</div></div>
+  </div>
+</div>
+
+</body>
+</html>

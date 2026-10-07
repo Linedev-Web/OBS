@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>ASMR Ce Soir Widget V2</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&family=Exo+2:wght@800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<style>
+  :root {
+    --surface:   rgba(8,3,22,.97);
+    --primary:   #c47bff;
+    --pink:      #ff9ed8;
+    --lavender:  #f6eeff;
+    --text:      #f0e8ff;
+    --text-dim:  #c4a8f0;
+    --border:    rgba(196,123,255,.28);
+    --border-hi: rgba(196,123,255,.65);
+    --glow-sm:   0 0 6px rgba(196,123,255,.40);
+    --glow-md:   0 0 12px rgba(196,123,255,.38), 0 0 30px rgba(196,123,255,.14);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:transparent; overflow:hidden; font-family:'Rajdhani',sans-serif; -webkit-font-smoothing:antialiased; }
+
+  /* ── Scène centrée (source navigateur 1920×1080) ── */
+  .stage { position:fixed; inset:0; display:flex; align-items:center; justify-content:center; }
+  .scene {
+    position:relative; width:1000px; height:560px;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+  }
+  .content { position:relative; z-index:2; display:flex; flex-direction:column; align-items:center; }
+
+  /* Halo sombre + lueur : garde le titre lisible sur n'importe quel jeu */
+  .halo {
+    position:absolute; inset:-110px -170px; z-index:0; pointer-events:none;
+    background:
+      radial-gradient(ellipse 40% 34% at 50% 46%, rgba(196,123,255,.18), transparent 70%),
+      radial-gradient(ellipse 50% 50% at 50% 51%, rgba(8,3,22,.90) 0%, rgba(8,3,22,.78) 50%, rgba(8,3,22,.35) 66%, transparent 78%);
+  }
+
+  /* ── Ambiance : ondes concentriques + particules ── */
+  .ambient { position:absolute; inset:0; z-index:1; pointer-events:none; }
+  .ring {
+    position:absolute; left:50%; top:42%;
+    width:760px; height:300px; margin:-150px 0 0 -380px;
+    border:1px solid rgba(196,123,255,.40); border-radius:50%;
+    box-shadow:0 0 18px rgba(196,123,255,.18), inset 0 0 18px rgba(196,123,255,.12);
+    opacity:0;
+  }
+  .particle { position:absolute; left:0; top:0; border-radius:50%; opacity:0; }
+
+  /* ── Coins GamingV2 ── */
+  .frame { position:absolute; inset:48px 80px; z-index:2; pointer-events:none; }
+  .corner {
+    position:absolute; width:34px; height:34px;
+    border:0 solid var(--primary);
+    filter:drop-shadow(0 0 5px rgba(196,123,255,.75));
+  }
+  .corner.tl { top:0;    left:0;  border-top-width:2px;    border-left-width:2px; }
+  .corner.tr { top:0;    right:0; border-top-width:2px;    border-right-width:2px; }
+  .corner.bl { bottom:0; left:0;  border-bottom-width:2px; border-left-width:2px; }
+  .corner.br { bottom:0; right:0; border-bottom-width:2px; border-right-width:2px; }
+
+  /* ── Sur-titre ── */
+  .eyebrow {
+    font-size:15px; font-weight:500; letter-spacing:8px; text-transform:uppercase;
+    color:var(--text-dim); margin-bottom:6px;
+  }
+
+  /* ── Titre principal ── */
+  .title {
+    display:flex; font-family:'Exo 2',sans-serif; font-weight:900;
+    font-size:168px; line-height:.95; text-transform:uppercase;
+    filter:drop-shadow(0 0 14px rgba(196,123,255,0.45));
+  }
+  .title .ch {
+    --sheen:100%;
+    display:inline-block; margin:0 12px;
+    background-image:
+      linear-gradient(105deg, transparent 42%, rgba(255,255,255,.95) 50%, transparent 58%),
+      linear-gradient(180deg, var(--lavender) 0%, var(--primary) 55%, var(--pink) 100%);
+    background-size:300% 100%, 100% 100%;
+    background-position:var(--sheen) 50%, 0 0;
+    background-repeat:no-repeat;
+    -webkit-background-clip:text; background-clip:text;
+    color:transparent; -webkit-text-fill-color:transparent;
+  }
+  .title .space, .sub-text .space { display:inline-block; width:28px; }
+
+  /* ── Onde sonore ── */
+  .wave { position:relative; display:flex; align-items:center; gap:5px; height:70px; margin:10px 0 16px; }
+  .wave-line {
+    position:absolute; left:-40px; right:-40px; top:50%; height:1px;
+    background:linear-gradient(90deg, transparent, var(--primary) 20%, var(--pink) 50%, var(--primary) 80%, transparent);
+    box-shadow:var(--glow-sm);
+  }
+  .bar {
+    width:4px; height:64px; border-radius:2px;
+    background:linear-gradient(180deg, var(--pink), var(--primary) 50%, var(--pink));
+    box-shadow:0 0 8px rgba(196,123,255,.55);
+    transform:scaleY(.04);
+  }
+  .static .bar { transform:scaleY(.4); }
+
+  /* ── Sous-titre « Ce soir » + heure optionnelle ── */
+  .subtitle { display:flex; align-items:center; }
+  .sub-text {
+    display:flex; font-weight:700; font-size:44px; line-height:1; text-transform:uppercase;
+    color:var(--text); text-shadow:0 0 10px rgba(196,123,255,.55), 0 0 26px rgba(196,123,255,.20);
+  }
+  .sub-text .ch { display:inline-block; margin:0 9px; }
+  .sub-sep {
+    width:40px; height:2px; margin:0 18px 0 24px;
+    background:linear-gradient(90deg, var(--primary), var(--pink)); box-shadow:var(--glow-sm);
+  }
+  .sub-time {
+    font-family:'Exo 2',sans-serif; font-weight:900; font-size:40px; letter-spacing:4px;
+    color:var(--primary); text-shadow:var(--glow-md);
+  }
+
+  /* ── Ligne d'infos ── */
+  .meta {
+    display:flex; align-items:center; gap:12px; margin-top:20px;
+    font-size:16px; font-weight:700; letter-spacing:3px; text-transform:uppercase;
+    color:var(--text-dim); text-shadow:0 0 8px rgba(8,3,22,.95);
+  }
+  .meta svg { color:var(--primary); flex-shrink:0; filter:drop-shadow(0 0 5px rgba(196,123,255,.60)); }
+  .meta .dot { width:4px; height:4px; border-radius:50%; background:var(--primary); box-shadow:var(--glow-sm); }
+</style>
+</head>
+<body>
+
+<div class="stage">
+  <div class="scene" id="scene">
+    <div class="halo" id="halo"></div>
+
+    <div class="ambient" id="ambient">
+      <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+      <div id="particles"></div>
+    </div>
+
+    <div class="frame" aria-hidden="true">
+      <span class="corner tl"></span><span class="corner tr"></span>
+      <span class="corner bl"></span><span class="corner br"></span>
+    </div>
+
+    <div class="content">
+      <div class="eyebrow" id="eyebrow"></div>
+      <h1 class="title" id="title"></h1>
+      <div class="wave" id="wave" aria-hidden="true"><div class="wave-line" id="waveLine"></div></div>
+      <div class="subtitle" id="subtitle"><div class="sub-text" id="subText"></div></div>
+      <div class="meta" id="meta">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12 1a9 9 0 0 0-9 9v7a3 3 0 0 0 3 3h3v-8H5v-2a7 7 0 0 1 14 0v2h-4v8h3a3 3 0 0 0 3-3v-7a9 9 0 0 0-9-9z"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ─── CONFIGURATION ───────────────────────────────────────────────
+  // Modifie directement ici, ou passe des paramètres URL :
+  //   ?title=ASMR&sub=Ce soir&time=21:00&tags=Mets ton casque,Chuchotements&every=300
+  //   time  : heure affichée à côté du sous-titre (vide = masquée)
+  //   every : rejoue l'animation d'entrée toutes les N secondes (0 = jamais)
+  // ─────────────────────────────────────────────────────────────────
+  const DEFAULTS = {
+    label: '// Session spéciale //',
+    title: 'ASMR',
+    sub:   'Ce soir',
+    time:  '',
+    tags:  'Mets ton casque,Chuchotements,Détente',
+    every: 0,
+  };
+
+  const BAR_COUNT      = 54;
+  const BAR_MIN        = 0.04;
+  const PARTICLE_COUNT = 26;
+  const RING_CYCLE     = 6;     // secondes par onde concentrique
+  const MIN_EVERY      = 12;    // secondes : laisse le temps à la sortie + l'entrée
+  const FONT_TIMEOUT   = 2500;  // ms max d'attente des polices
+  const GLOW_LOW       = 'drop-shadow(0 0 14px rgba(196,123,255,0.45))';
+  const GLOW_HIGH      = 'drop-shadow(0 0 30px rgba(196,123,255,0.85))';
+  const CORNER_DIR     = [{ x: -1, y: -1 }, { x: 1, y: -1 }, { x: -1, y: 1 }, { x: 1, y: 1 }];
+  const PARTICLE_TINTS = ['#ffffff', '#c47bff', '#ff9ed8'];
+
+  const params   = new URLSearchParams(window.location.search);
+  const everyRaw = Number(params.get('every')) || DEFAULTS.every;
+  const CONFIG = {
+    label: params.get('label') ?? DEFAULTS.label,
+    title: params.get('title') || DEFAULTS.title,
+    sub:   params.get('sub')   || DEFAULTS.sub,
+    time:  (params.get('time') ?? DEFAULTS.time).trim(),
+    tags:  (params.get('tags') ?? DEFAULTS.tags).split(',').map((t) => t.trim()).filter(Boolean),
+    every: everyRaw > 0 ? Math.max(MIN_EVERY, everyRaw) : 0,
+  };
+
+  const $ = (id) => document.getElementById(id);
+
+  // ─── Construction du DOM ─────────────────────────────────────────
+  function splitChars(container, text) {
+    container.setAttribute('aria-label', text);
+    const spans = Array.from(text).map((char) => {
+      const span = document.createElement('span');
+      span.setAttribute('aria-hidden', 'true');
+      span.className = char === ' ' ? 'space' : 'ch';
+      if (char !== ' ') span.textContent = char;
+      container.appendChild(span);
+      return span;
+    });
+    return spans.filter((span) => span.className === 'ch');
+  }
+
+  function buildTime(subtitle) {
+    if (!CONFIG.time) return [];
+    const sep  = document.createElement('span');
+    const time = document.createElement('span');
+    sep.className  = 'sub-sep';
+    time.className = 'sub-time';
+    time.textContent = CONFIG.time.replace(':', 'H');
+    subtitle.append(sep, time);
+    return [sep, time];
+  }
+
+  function buildMeta(meta) {
+    CONFIG.tags.forEach((tag, i) => {
+      if (i > 0) {
+        const dot = document.createElement('span');
+        dot.className = 'dot';
+        meta.appendChild(dot);
+      }
+      const span = document.createElement('span');
+      span.textContent = tag;
+      meta.appendChild(span);
+    });
+  }
+
+  function buildBars(wave) {
+    return Array.from({ length: BAR_COUNT }, () => {
+      const bar = document.createElement('span');
+      bar.className = 'bar';
+      wave.appendChild(bar);
+      return bar;
+    });
+  }
+
+  function buildScene() {
+    $('eyebrow').textContent = CONFIG.label;
+    buildMeta($('meta'));
+    return {
+      scene:      $('scene'),
+      halo:       $('halo'),
+      ambient:    $('ambient'),
+      eyebrow:    $('eyebrow'),
+      title:      $('title'),
+      meta:       $('meta'),
+      waveLine:   $('waveLine'),
+      particles:  $('particles'),
+      rings:      Array.from(document.querySelectorAll('.ring')),
+      corners:    Array.from(document.querySelectorAll('.corner')),
+      titleChars: splitChars($('title'), CONFIG.title),
+      subChars:   splitChars($('subText'), CONFIG.sub),
+      timeParts:  buildTime($('subtitle')),
+      bars:       buildBars($('wave')),
+    };
+  }
+
+  // ─── Onde sonore procédurale (deux sinus lents = respiration) ────
+  function driveWave(bars, wave) {
+    const setters  = bars.map((bar) => gsap.quickSetter(bar, 'scaleY'));
+    const half     = (bars.length - 1) / 2;
+    const envelope = bars.map((_, i) => Math.exp(-(((i - half) / half) ** 2) * 2.4));
+    gsap.ticker.add((time) => {
+      setters.forEach((set, i) => {
+        const slow = 0.5 + 0.5 * Math.sin(time * 1.1 + i * 0.38);
+        const soft = 0.5 + 0.5 * Math.sin(time * 0.65 - i * 0.21 + 1.7);
+        set(Math.max(BAR_MIN, envelope[i] * (0.2 + 0.8 * slow * soft) * wave.amp));
+      });
+    });
+  }
+
+  // ─── Ambiance permanente : ondes + poussière lumineuse ───────────
+  function startAmbient(el) {
+    const ringStagger = { each: RING_CYCLE / el.rings.length, repeat: -1 };
+    gsap.fromTo(el.rings, { scale: .35 }, { scale: 1.5, duration: RING_CYCLE, ease: 'sine.out', stagger: ringStagger });
+    gsap.fromTo(el.rings, { opacity: .55 }, { opacity: 0, duration: RING_CYCLE, ease: 'sine.in', stagger: ringStagger });
+
+    const rand = gsap.utils.random;
+    Array.from({ length: PARTICLE_COUNT }, () => {
+      const p    = document.createElement('span');
+      const size = rand(2, 5);
+      p.className = 'particle';
+      gsap.set(p, { width: size, height: size, background: rand(PARTICLE_TINTS), boxShadow: `0 0 ${size * 3}px rgba(196,123,255,.8)` });
+      el.particles.appendChild(p);
+
+      const x0 = rand(90, 910), y0 = rand(360, 520), life = rand(7, 12);
+      gsap.timeline({ repeat: -1, delay: rand(0, 8) })
+        .fromTo(p, { x: x0, y: y0 }, { x: x0 + rand(-40, 40), y: y0 - rand(160, 300), duration: life, ease: 'none' }, 0)
+        .fromTo(p, { opacity: 0 }, { opacity: rand(.4, .9), duration: life * .35, ease: 'sine.out' }, 0)
+        .to(p, { opacity: 0, duration: life * .45, ease: 'sine.in' }, life * .55);
+    });
+  }
+
+  // ─── Entrée ──────────────────────────────────────────────────────
+  function playIntro(el, wave, onDone) {
+    gsap.set(el.scene, { scale: 1 });
+    gsap.set(el.titleChars, { '--sheen': '100%' });
+    const spreadX = (i, _t, all) => (i - (all.length - 1) / 2) * 70;
+
+    const tl = gsap.timeline({ defaults: { ease: 'expo.out' }, onComplete: onDone })
+      .fromTo(el.halo,     { opacity: 0, scale: .8 }, { opacity: 1, scale: 1, duration: 1.8, ease: 'sine.out' }, 0)
+      .fromTo(el.ambient,  { opacity: 0 }, { opacity: 1, duration: 2, ease: 'sine.out' }, .3)
+      .fromTo(el.waveLine, { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 1.4 }, .2)
+      .fromTo(el.titleChars,
+        { opacity: 0, x: spreadX, y: 40, scale: 1.25, filter: 'blur(22px)' },
+        { opacity: 1, x: 0, y: 0, scale: 1, filter: 'blur(0px)', duration: 2, stagger: { each: .14, from: 'center' } }, .5)
+      .to(wave, { amp: 1, duration: 1.8, ease: 'sine.inOut' }, 1)
+      .fromTo(el.subChars,
+        { opacity: 0, y: 18, filter: 'blur(10px)' },
+        { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.2, stagger: .07 }, 1.6)
+      .fromTo(el.corners,
+        { opacity: 0, x: (i) => CORNER_DIR[i].x * 24, y: (i) => CORNER_DIR[i].y * 24 },
+        { opacity: 1, x: 0, y: 0, duration: 1.2 }, 1.9)
+      .fromTo([el.eyebrow, el.meta],
+        { opacity: 0, y: (i) => (i === 0 ? -12 : 12) },
+        { opacity: 1, y: 0, duration: 1.2, ease: 'sine.out', stagger: .2 }, 2.2);
+
+    if (el.timeParts.length) {
+      tl.fromTo(el.timeParts, { opacity: 0, x: -14 }, { opacity: 1, x: 0, duration: 1, stagger: .12 }, 2.1);
+    }
+    return tl;
+  }
+
+  // ─── Boucle calme (après l'entrée) ───────────────────────────────
+  function startIdle(el, wave) {
+    return [
+      gsap.fromTo(el.title, { filter: GLOW_LOW }, { filter: GLOW_HIGH, duration: 3.2, ease: 'sine.inOut', yoyo: true, repeat: -1 }),
+      gsap.to(el.scene, { scale: 1.015, duration: 4.5, ease: 'sine.inOut', yoyo: true, repeat: -1 }),
+      gsap.to(wave, { amp: .6, duration: 3.6, ease: 'sine.inOut', yoyo: true, repeat: -1 }),
+      gsap.to(el.titleChars, { y: -7, duration: 2.8, ease: 'sine.inOut', stagger: { each: .35, repeat: -1, yoyo: true } }),
+      gsap.timeline({ repeat: -1, repeatDelay: 4 })
+        .fromTo(el.titleChars, { '--sheen': '100%' }, { '--sheen': '0%', duration: 1.3, ease: 'sine.inOut', stagger: .12 }),
+    ];
+  }
+
+  // ─── Sortie (utilisée seulement si ?every=N) ─────────────────────
+  function playOutro(el, wave) {
+    return gsap.timeline({ defaults: { ease: 'power2.in' } })
+      .to([el.eyebrow, el.meta, ...el.corners, ...el.timeParts], { opacity: 0, duration: .6 }, 0)
+      .to(el.subChars, { opacity: 0, y: -10, filter: 'blur(8px)', duration: .6, stagger: .04 }, 0)
+      .to(el.titleChars, { opacity: 0, y: -30, filter: 'blur(18px)', duration: .9, stagger: { each: .08, from: 'edges' } }, .2)
+      .to(wave, { amp: 0, duration: .8 }, .2)
+      .to(el.waveLine, { opacity: 0, scaleX: 0, duration: .8 }, .5)
+      .to([el.halo, el.ambient], { opacity: 0, duration: .9 }, .6);
+  }
+
+  function fontsReady() {
+    const timeout = new Promise((resolve) => setTimeout(resolve, FONT_TIMEOUT));
+    return Promise.race([document.fonts.ready, timeout]);
+  }
+
+  function init() {
+    const el = buildScene();
+    if (!window.gsap) {
+      // GSAP indisponible (hors ligne) : affichage statique, sans animation
+      document.body.classList.add('static');
+      return;
+    }
+
+    const wave = { amp: 0 };
+    let idle = [];
+    const playIn = () => playIntro(el, wave, () => { idle = startIdle(el, wave); });
+
+    gsap.set(el.scene, { autoAlpha: 0 });
+    fontsReady().then(() => {
+      gsap.set(el.scene, { autoAlpha: 1 });
+      driveWave(el.bars, wave);
+      startAmbient(el);
+      playIn();
+
+      if (CONFIG.every > 0) {
+        setInterval(() => {
+          idle.forEach((tween) => tween.kill());
+          idle = [];
+          playOutro(el, wave).eventCallback('onComplete', playIn);
+        }, CONFIG.every * 1000);
+      }
+    });
+  }
+
+  init();
+</script>
+</body>
+</html>

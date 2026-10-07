@@ -164,6 +164,22 @@
     color:var(--text-dim);
   }
 
+  /* ── Compteur prochain rappel ── */
+  .next-reminder {
+    position:fixed; bottom:10px; right:10px;
+    font-family:'Exo 2',sans-serif;
+    font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase;
+    color:rgba(196,123,255,.28);
+    display:flex; align-items:center; gap:6px;
+    pointer-events:none; z-index:9999;
+    text-shadow:0 0 8px rgba(196,123,255,.12);
+  }
+  .next-reminder::before {
+    content:''; flex-shrink:0; width:3px; height:3px; border-radius:50%;
+    background:rgba(196,123,255,.28); display:block;
+    box-shadow:0 0 5px rgba(196,123,255,.18);
+  }
+
   /* ── Barre de progression ── */
   .progress-wrap {
     height:4px; background:rgba(196,123,255,.08);
@@ -234,14 +250,30 @@
   </div>
 </div>
 
+<div class="next-reminder" id="nextReminder">NEXT · 5:00</div>
+
 <script>
-  const widget = document.getElementById('widget');
-  const fill   = document.getElementById('fill');
-  const DISPLAY  = 10000;        // 10 secondes visible
-  const INTERVAL = 10 * 60 * 1000; // toutes les 10 minutes
+  const widget       = document.getElementById('widget');
+  const fill         = document.getElementById('fill');
+  const nextReminder = document.getElementById('nextReminder');
+
+  const DISPLAY  = 10000;           // 10 secondes visible
+  const INTERVAL = 5 * 60 * 1000;  // toutes les 5 minutes
+
+  let nextShowTime = Date.now() + INTERVAL;
+
+  function updateCountdown() {
+    const remaining = Math.max(0, nextShowTime - Date.now());
+    const mins = Math.floor(remaining / 60000);
+    const secs = Math.floor((remaining % 60000) / 1000);
+    nextReminder.textContent = `NEXT · ${mins}:${secs.toString().padStart(2, '0')}`;
+  }
+
+  setInterval(updateCountdown, 1000);
 
   function show() {
-    // Redémarre l'animation de la barre de progression
+    nextShowTime = Date.now() + INTERVAL;
+
     fill.style.animation = 'none';
     void fill.offsetWidth;
     fill.style.animation = `countdown ${DISPLAY / 1000}s linear forwards`;

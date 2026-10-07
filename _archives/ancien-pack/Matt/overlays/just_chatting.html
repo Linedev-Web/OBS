@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Matt Racing Live — Just Chatting</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Barlow+Condensed:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blue:   #0A1EFF;
+  --blue-g: rgba(10,30,255,.6);
+  --blue-d: rgba(10,30,255,.12);
+  --red:    #FF1E1E;
+  --red-g:  rgba(255,30,30,.6);
+  --white:  #FFFFFF;
+  --carbon: #06060A;
+  --c2:     rgba(6,6,10,.92);
+  --grey:   #4A5868;
+  --grey-l: #8A9AAA;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  width:1920px; height:1080px;
+  background:transparent; overflow:hidden;
+  font-family:'Barlow Condensed',sans-serif; color:var(--white);
+}
+
+/* Zone cam principale (gauche, 0-1380px) */
+.cam-main {
+  position:absolute; top:0; left:0; width:1380px; height:1080px;
+  background:transparent;
+  border-right:4px solid var(--blue);
+  box-shadow:4px 0 24px var(--blue-g);
+}
+
+/* Badge driver haut gauche */
+.driver-badge {
+  position:absolute; top:20px; left:20px;
+  background:var(--c2); border:1px solid var(--blue);
+  box-shadow:0 0 24px var(--blue-g);
+  padding:14px 30px 14px 20px;
+  clip-path:polygon(0 0, calc(100% - 14px) 0, 100% 100%, 0 100%);
+  display:flex; align-items:center; gap:14px;
+}
+.d-num  { font-family:'Orbitron',sans-serif; font-size:52px; font-weight:900; line-height:1; color:var(--blue); text-shadow:0 0 24px var(--blue-g); }
+.d-name { font-family:'Orbitron',sans-serif; font-size:34px; font-weight:700; letter-spacing:6px; line-height:1; }
+.d-sub  { font-size:16px; font-weight:600; letter-spacing:8px; color:var(--grey-l); text-transform:uppercase; }
+
+/* Barre bas de cam */
+.cam-bar {
+  position:absolute; bottom:0; left:0; width:1380px; height:58px;
+  background:var(--c2); display:flex; align-items:center;
+  border-top:2px solid var(--blue); box-shadow:0 -4px 20px var(--blue-g);
+  padding:0 24px; gap:20px; overflow:hidden;
+}
+.cam-bar::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, var(--blue), var(--red)); }
+
+.live-dot { width:12px; height:12px; border-radius:50%; background:var(--red); box-shadow:0 0 12px var(--red-g); animation:pulsedot 1.4s ease-in-out infinite; flex-shrink:0; }
+@keyframes pulsedot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(.7)} }
+.live-text { font-family:'Orbitron',sans-serif; font-size:22px; font-weight:700; letter-spacing:4px; color:var(--red); }
+.bar-sep   { color:var(--grey); font-size:22px; }
+.bar-title { font-family:'Orbitron',sans-serif; font-size:26px; font-weight:700; letter-spacing:6px; }
+.bar-sub   { font-size:22px; font-weight:600; letter-spacing:3px; color:var(--grey-l); }
+
+/* Panneau droit (1380-1920px) */
+.panel-right {
+  position:absolute; top:0; right:0; width:540px; height:1080px;
+  background:var(--carbon);
+  display:flex; flex-direction:column;
+}
+
+/* Top du panneau */
+.panel-top {
+  height:220px;
+  background:linear-gradient(135deg, var(--blue-d), transparent 60%),
+             linear-gradient(225deg, var(--red-g), transparent 60%);
+  background-color:rgba(14,14,20,.95);
+  position:relative; overflow:hidden;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:4px;
+  border-bottom:2px solid var(--red);
+}
+.panel-top::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg, var(--blue), var(--red)); }
+
+/* Numéro géant décoratif */
+.panel-bg-num {
+  position:absolute; bottom:-20px; right:10px;
+  font-family:'Orbitron',sans-serif;
+  font-size:160px; font-weight:900; line-height:1;
+  color:transparent;
+  -webkit-text-stroke:2px rgba(10,30,255,.12);
+  user-select:none; pointer-events:none;
+}
+
+.panel-team { font-size:13px; font-weight:700; letter-spacing:10px; color:var(--grey-l); text-transform:uppercase; z-index:1; }
+.panel-name { font-family:'Orbitron',sans-serif; font-size:52px; font-weight:900; letter-spacing:2px; line-height:1; z-index:1; }
+
+/* Zone chat */
+.chat-zone {
+  flex:1; position:relative;
+  border-bottom:1px solid rgba(255,255,255,.05);
+}
+.chat-label {
+  position:absolute; top:16px; left:20px;
+  font-family:'Orbitron',sans-serif;
+  font-size:13px; font-weight:700; letter-spacing:6px;
+  color:var(--grey); text-transform:uppercase;
+}
+
+/* Socials */
+.panel-socials {
+  padding:20px 24px; background:rgba(14,14,20,.95);
+  display:flex; flex-direction:column; gap:10px;
+}
+.panel-socials::before { content:''; display:block; height:2px; background:linear-gradient(90deg, var(--blue), var(--red)); margin-bottom:6px; }
+
+.soc-row { display:flex; align-items:center; gap:12px; }
+.soc-icon {
+  width:34px; height:34px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:14px; font-weight:900; flex-shrink:0;
+  background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.15);
+}
+.soc-icon.tw { border-color:var(--blue); background:var(--blue-d); }
+.soc-icon.yt { border-color:var(--red);  background:rgba(255,30,30,.1); }
+.soc-icon.ig { border-color:rgba(255,255,255,.3); }
+.soc-handle  { font-size:24px; font-weight:700; letter-spacing:1px; color:var(--white); }
+
+/* Bandes globales */
+.global-top    { position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg, var(--blue), var(--red)); box-shadow:0 0 12px var(--blue-g); z-index:5; }
+.global-bottom { position:absolute; bottom:0; left:0; right:0; height:4px; background:linear-gradient(90deg, var(--blue), var(--red)); z-index:5; }
+</style>
+</head>
+<body>
+
+<div class="global-top"></div>
+<div class="global-bottom"></div>
+
+<div class="cam-main">
+  <div class="driver-badge">
+    <span class="d-num">01</span>
+    <div><div class="d-name">Matt</div><div class="d-sub">Sim Racing · FR</div></div>
+  </div>
+  <div class="cam-bar">
+    <div class="live-dot"></div>
+    <span class="live-text">LIVE</span>
+    <span class="bar-sep">·</span>
+    <span class="bar-title">JUST CHATTING</span>
+    <span class="bar-sep">·</span>
+    <span class="bar-sub">Matt Racing Live</span>
+  </div>
+</div>
+
+<div class="panel-right">
+  <div class="panel-top">
+    <span class="panel-team">Matt Racing Team</span>
+    <span class="panel-name">MATT</span>
+    <span class="panel-bg-num">01</span>
+  </div>
+  <div class="chat-zone">
+    <div class="chat-label">CHAT</div>
+  </div>
+  <div class="panel-socials">
+    <div class="soc-row">
+      <div class="soc-icon tw">T</div>
+      <span class="soc-handle">twitch.tv/mattracinglive</span>
+    </div>
+    <div class="soc-row">
+      <div class="soc-icon yt">▶</div>
+      <span class="soc-handle">@MattRacingLive</span>
+    </div>
+    <div class="soc-row">
+      <div class="soc-icon ig">ig</div>
+      <span class="soc-handle">mattracinglive</span>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

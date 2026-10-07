@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Matt Racing Live — Overlay Full</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Barlow+Condensed:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blue:   #0A1EFF;
+  --blue-g: rgba(10,30,255,.6);
+  --blue-d: rgba(10,30,255,.12);
+  --red:    #FF1E1E;
+  --red-g:  rgba(255,30,30,.6);
+  --red-d:  rgba(255,30,30,.10);
+  --white:  #FFFFFF;
+  --carbon: rgba(6,6,10,.92);
+  --c2:     rgba(14,14,20,.9);
+  --grey:   #4A5868;
+  --grey-l: #8A9AAA;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  width:1920px; height:1080px;
+  background:transparent; overflow:hidden;
+  font-family:'Barlow Condensed',sans-serif; color:var(--white);
+}
+
+.border-top    { position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg, var(--blue), var(--red)); box-shadow:0 0 12px var(--blue-g); z-index:10; }
+.border-bottom { position:absolute; bottom:0; left:0; right:0; height:4px; background:linear-gradient(90deg, var(--blue), var(--red)); z-index:10; }
+
+/* Badge driver haut gauche */
+.driver-tag {
+  position:absolute; top:14px; left:14px; z-index:20;
+  background:var(--carbon); border:1px solid var(--blue);
+  box-shadow:0 0 20px var(--blue-g);
+  padding:10px 22px 10px 16px;
+  clip-path:polygon(0 0, calc(100% - 12px) 0, 100% 100%, 0 100%);
+  display:flex; align-items:center; gap:12px;
+}
+.d-num  { font-family:'Orbitron',sans-serif; font-size:38px; font-weight:900; color:var(--blue); text-shadow:0 0 20px var(--blue-g); }
+.d-name { font-family:'Orbitron',sans-serif; font-size:28px; font-weight:700; letter-spacing:4px; line-height:1; }
+.d-sub  { font-size:14px; font-weight:600; letter-spacing:6px; color:var(--grey-l); }
+
+/* Social haut droite */
+.social-tag {
+  position:absolute; top:14px; right:14px; z-index:20;
+  background:var(--carbon); border:1px solid var(--red);
+  box-shadow:0 0 20px var(--red-g);
+  padding:10px 16px 10px 22px;
+  clip-path:polygon(12px 0, 100% 0, 100% 100%, 0 100%);
+  display:flex; flex-direction:column; align-items:flex-end; gap:3px;
+}
+.soc { font-size:20px; font-weight:700; letter-spacing:1px; color:var(--white); }
+
+/* Cams flottantes bas gauche */
+.cam-float { position:absolute; bottom:20px; background:#06060A; overflow:hidden; }
+.cam-float-cockpit { left:20px;   width:420px; height:280px; border:2px solid var(--blue); box-shadow:0 0 28px var(--blue-g), 0 8px 40px rgba(0,0,0,.8); }
+.cam-float-pedals  { left:452px;  width:420px; height:280px; border:2px solid var(--red);  box-shadow:0 0 28px var(--red-g),  0 8px 40px rgba(0,0,0,.8); }
+
+.fc { position:absolute; width:14px; height:14px; }
+.fc-tl { top:0; left:0;    border-top:2px solid var(--white); border-left:2px solid var(--white);   }
+.fc-tr { top:0; right:0;   border-top:2px solid var(--white); border-right:2px solid var(--white);  }
+.fc-bl { bottom:0; left:0; border-bottom:2px solid var(--white); border-left:2px solid var(--white);  }
+.fc-br { bottom:0; right:0;border-bottom:2px solid var(--white); border-right:2px solid var(--white); }
+
+.fl-badge {
+  position:absolute; top:0; left:0;
+  height:30px; padding:0 20px 0 12px;
+  display:flex; align-items:center;
+  font-family:'Orbitron',sans-serif; font-size:13px; font-weight:700; letter-spacing:4px;
+  clip-path:polygon(0 0, calc(100% - 10px) 0, 100% 100%, 0 100%);
+}
+.cam-float-cockpit .fl-badge { background:var(--blue); }
+.cam-float-pedals  .fl-badge { background:var(--red);  }
+
+/* Séparateur vertical entre les deux cams */
+.cam-sep-v {
+  position:absolute; bottom:20px; left:442px;
+  width:10px; height:280px;
+  background:linear-gradient(180deg, var(--blue), #06060A, var(--red));
+}
+
+/* Info bas droite */
+.info-bar {
+  position:absolute; bottom:20px; right:20px;
+  background:var(--c2); border:1px solid rgba(255,255,255,.1);
+  padding:14px 22px; min-width:260px;
+}
+.info-bar::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, var(--blue), var(--red)); }
+.info-title { font-family:'Orbitron',sans-serif; font-size:11px; font-weight:700; letter-spacing:6px; color:var(--grey-l); text-transform:uppercase; margin-bottom:8px; }
+.info-row   { display:flex; justify-content:space-between; align-items:center; gap:16px; margin:4px 0; }
+.info-label { font-size:22px; font-weight:700; letter-spacing:2px; color:var(--grey-l); }
+.info-val   { font-family:'Orbitron',sans-serif; font-size:28px; font-weight:700; color:var(--white); }
+.info-val.blue { color:var(--blue); text-shadow:0 0 12px var(--blue-g); }
+.info-val.red  { color:var(--red);  text-shadow:0 0 12px var(--red-g);  }
+</style>
+</head>
+<body>
+
+<div class="border-top"></div>
+<div class="border-bottom"></div>
+
+<div class="driver-tag">
+  <span class="d-num">01</span>
+  <div><div class="d-name">MATT</div><div class="d-sub">SIM RACING · FR</div></div>
+</div>
+
+<div class="social-tag">
+  <span class="soc">twitch.tv/mattracinglive</span>
+  <span class="soc">@MattRacingLive</span>
+</div>
+
+<div class="cam-float cam-float-cockpit">
+  <div class="fl-badge">Cockpit</div>
+  <div class="fc fc-tl"></div><div class="fc fc-tr"></div>
+  <div class="fc fc-bl"></div><div class="fc fc-br"></div>
+</div>
+<div class="cam-sep-v"></div>
+<div class="cam-float cam-float-pedals">
+  <div class="fl-badge">Pedals</div>
+  <div class="fc fc-tl"></div><div class="fc fc-tr"></div>
+  <div class="fc fc-bl"></div><div class="fc fc-br"></div>
+</div>
+
+<div class="info-bar">
+  <div class="info-title">Telemetry</div>
+  <div class="info-row"><span class="info-label">POS</span><span class="info-val blue" id="pos">P1</span></div>
+  <div class="info-row"><span class="info-label">LAP</span><span class="info-val" id="lap">—</span></div>
+</div>
+
+</body>
+</html>

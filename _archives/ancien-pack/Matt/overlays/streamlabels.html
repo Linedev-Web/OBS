@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Matt Racing Live — Stream Labels / Alerts</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Barlow+Condensed:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blue:   #0A1EFF;
+  --blue-g: rgba(10,30,255,.7);
+  --blue-d: rgba(10,30,255,.12);
+  --red:    #FF1E1E;
+  --red-g:  rgba(255,30,30,.7);
+  --red-d:  rgba(255,30,30,.10);
+  --white:  #FFFFFF;
+  --carbon: rgba(6,6,10,.95);
+  --c2:     rgba(12,12,18,.92);
+  --grey:   #4A5868;
+  --grey-l: #8A9AAA;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  width:1920px; height:1080px;
+  background:transparent; overflow:hidden;
+  font-family:'Barlow Condensed',sans-serif; color:var(--white);
+}
+
+/* ── ALERTE PRINCIPALE (centre haut) ── */
+.alert-box {
+  position:absolute; top:60px; left:50%; transform:translateX(-50%);
+  min-width:680px; max-width:900px;
+  background:var(--carbon);
+  border:1px solid rgba(10,30,255,.5);
+  box-shadow:0 0 40px var(--blue-g), 0 12px 60px rgba(0,0,0,.9);
+  overflow:hidden;
+  animation:alertIn .5s cubic-bezier(.175,.885,.32,1.275) both;
+  z-index:50;
+}
+@keyframes alertIn {
+  from { transform:translateX(-50%) translateY(-40px) scale(.9); opacity:0; }
+  to   { transform:translateX(-50%) translateY(0) scale(1); opacity:1; }
+}
+
+.alert-stripe        { height:5px; background:linear-gradient(90deg, var(--blue), var(--red)); box-shadow:0 0 16px var(--blue-g); }
+.alert-stripe-bottom { height:3px; background:linear-gradient(90deg, var(--blue), var(--red)); }
+
+.alert-body {
+  padding:18px 28px 20px;
+  display:flex; align-items:center; gap:20px;
+}
+.alert-icon { font-size:52px; flex-shrink:0; animation:iconBounce .6s .3s ease-out both; }
+@keyframes iconBounce { 0%{transform:scale(0) rotate(-20deg)} 70%{transform:scale(1.15) rotate(5deg)} 100%{transform:scale(1) rotate(0)} }
+
+.alert-content { flex:1; }
+.alert-type {
+  font-size:14px; font-weight:700; letter-spacing:8px;
+  color:var(--grey-l); text-transform:uppercase; margin-bottom:4px;
+}
+.alert-name {
+  font-family:'Orbitron',sans-serif;
+  font-size:38px; font-weight:900; line-height:1; letter-spacing:2px;
+}
+.alert-message { font-size:24px; font-weight:600; letter-spacing:2px; color:var(--grey-l); margin-top:4px; }
+
+.alert-amount { font-family:'Orbitron',sans-serif; font-size:52px; font-weight:900; flex-shrink:0; }
+.amt-blue  { color:var(--blue); text-shadow:0 0 24px var(--blue-g); }
+.amt-red   { color:var(--red);  text-shadow:0 0 24px var(--red-g);  }
+.amt-white { color:var(--white); text-shadow:0 0 24px rgba(255,255,255,.5); }
+
+/* ── LABELS PERMANENTS (bas gauche) ── */
+.labels-panel {
+  position:absolute; bottom:56px; left:20px;
+  display:flex; flex-direction:column; gap:8px; z-index:10;
+}
+.label-card {
+  background:var(--carbon); border-left:3px solid;
+  display:flex; align-items:center; gap:12px;
+  padding:8px 16px; min-width:300px;
+}
+.label-card.blue  { border-color:var(--blue); box-shadow:0 0 14px var(--blue-g); }
+.label-card.red   { border-color:var(--red);  box-shadow:0 0 14px var(--red-g);  }
+.label-card.white { border-color:var(--white);}
+
+.lc-icon  { font-size:20px; }
+.lc-label { font-size:11px; font-weight:700; letter-spacing:5px; color:var(--grey); text-transform:uppercase; }
+.lc-val   { font-family:'Orbitron',sans-serif; font-size:22px; font-weight:700; line-height:1.2; }
+.lc-val.blue  { color:var(--blue); }
+.lc-val.red   { color:var(--red);  }
+.lc-val.white { color:var(--white);}
+
+/* ── TICKER BAS ── */
+.ticker-bar {
+  position:absolute; bottom:0; left:0; right:0;
+  height:44px; background:var(--carbon);
+  border-top:2px solid rgba(10,30,255,.4);
+  display:flex; align-items:center; overflow:hidden; z-index:20;
+}
+.ticker-badge {
+  flex-shrink:0; height:100%; padding:0 20px;
+  background:var(--blue); display:flex; align-items:center;
+  font-family:'Orbitron',sans-serif; font-size:13px; font-weight:700; letter-spacing:4px;
+  clip-path:polygon(0 0, calc(100% - 12px) 0, 100% 100%, 0 100%);
+  padding-right:28px; white-space:nowrap;
+}
+.ticker-scroll-wrap { flex:1; overflow:hidden; }
+.ticker-scroll {
+  white-space:nowrap; font-size:22px; font-weight:600; letter-spacing:3px; color:var(--grey-l);
+  animation:tickerMove 30s linear infinite; display:inline-block;
+}
+@keyframes tickerMove { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+/* Boutons démo */
+.demo-controls { position:fixed; top:10px; right:10px; z-index:200; display:flex; gap:6px; flex-wrap:wrap; max-width:400px; }
+.demo-btn { font-size:12px; padding:5px 10px; cursor:pointer; background:rgba(0,0,0,.7); border:1px solid rgba(255,255,255,.2); color:var(--white); font-family:'Orbitron',sans-serif; letter-spacing:1px; }
+</style>
+</head>
+<body>
+
+<!-- ALERTE -->
+<div class="alert-box" id="alertBox" style="display:none">
+  <div class="alert-stripe"></div>
+  <div class="alert-body">
+    <div class="alert-icon" id="alertIcon">🏁</div>
+    <div class="alert-content">
+      <div class="alert-type" id="alertType">NOUVEAU FOLLOWER</div>
+      <div class="alert-name" id="alertName">Username</div>
+      <div class="alert-message" id="alertMsg">Merci du follow !</div>
+    </div>
+    <div class="alert-amount" id="alertAmount"></div>
+  </div>
+  <div class="alert-stripe-bottom"></div>
+</div>
+
+<!-- LABELS PERMANENTS -->
+<div class="labels-panel">
+  <div class="label-card blue">
+    <span class="lc-icon">👥</span>
+    <div><div class="lc-label">Dernier Follower</div><div class="lc-val blue" id="lastFollower">—</div></div>
+  </div>
+  <div class="label-card red">
+    <span class="lc-icon">⭐</span>
+    <div><div class="lc-label">Dernier Sub</div><div class="lc-val red" id="lastSub">—</div></div>
+  </div>
+  <div class="label-card white">
+    <span class="lc-icon">💰</span>
+    <div><div class="lc-label">Dernier Don</div><div class="lc-val white" id="lastDonation">—</div></div>
+  </div>
+</div>
+
+<!-- TICKER -->
+<div class="ticker-bar">
+  <div class="ticker-badge">🏁 MATT RACING LIVE</div>
+  <div class="ticker-scroll-wrap">
+    <span class="ticker-scroll">
+      Twitch : twitch.tv/mattracinglive &nbsp;·&nbsp; YouTube : @MattRacingLive &nbsp;·&nbsp; Instagram : mattracinglive &nbsp;·&nbsp; 🏎️ Sim Racing · N°01 Matt &nbsp;·&nbsp; Follow pour ne rien rater ! &nbsp;·&nbsp;
+      Twitch : twitch.tv/mattracinglive &nbsp;·&nbsp; YouTube : @MattRacingLive &nbsp;·&nbsp; Instagram : mattracinglive &nbsp;·&nbsp; 🏎️ Sim Racing · N°01 Matt &nbsp;·&nbsp; Follow pour ne rien rater ! &nbsp;·&nbsp;
+    </span>
+  </div>
+</div>
+
+<!-- BOUTONS DÉMO -->
+<div class="demo-controls">
+  <button class="demo-btn" onclick="testAlert('follow')">Test Follow</button>
+  <button class="demo-btn" onclick="testAlert('sub')">Test Sub</button>
+  <button class="demo-btn" onclick="testAlert('donation')">Test Don</button>
+  <button class="demo-btn" onclick="testAlert('resub')">Test Resub</button>
+</div>
+
+<script>
+const ALERTS = {
+  follow:   { icon:'🏁', type:'NOUVEAU FOLLOWER', msg:'Merci du follow !',     amtClass:'amt-blue',  amount:'' },
+  sub:      { icon:'⭐', type:'NOUVEAU SUB',       msg:'Merci pour le sub !',   amtClass:'amt-red',   amount:'Sub' },
+  donation: { icon:'💰', type:'DONATION',          msg:'Merci pour le don !',   amtClass:'amt-white', amount:'5€' },
+  resub:    { icon:'🔄', type:'RE-SUB',            msg:'Toujours fidèle ! 💙',  amtClass:'amt-blue',  amount:'×3' },
+};
+
+let alertTimeout = null;
+
+function showAlert(type, name, extra = {}) {
+  const cfg = { ...ALERTS[type], ...extra };
+  document.getElementById('alertIcon').textContent   = cfg.icon;
+  document.getElementById('alertType').textContent   = cfg.type;
+  document.getElementById('alertName').textContent   = name;
+  document.getElementById('alertMsg').textContent    = cfg.msg;
+  const amtEl = document.getElementById('alertAmount');
+  amtEl.textContent = cfg.amount;
+  amtEl.className   = 'alert-amount ' + cfg.amtClass;
+
+  const box = document.getElementById('alertBox');
+  box.style.display = 'block';
+  box.style.animation = 'none';
+  void box.offsetWidth;
+  box.style.animation = 'alertIn .5s cubic-bezier(.175,.885,.32,1.275) both';
+
+  if (type === 'follow')   document.getElementById('lastFollower').textContent  = name;
+  if (type === 'sub')      document.getElementById('lastSub').textContent       = name;
+  if (type === 'donation') document.getElementById('lastDonation').textContent  = name + ' · ' + (cfg.amount || '?');
+
+  if (alertTimeout) clearTimeout(alertTimeout);
+  alertTimeout = setTimeout(() => { box.style.display = 'none'; }, 7000);
+}
+
+function testAlert(type) {
+  const names = ['SpeedFR', 'TurboGamer', 'RacerXX', 'MaxPilot', 'MattFan01'];
+  showAlert(type, names[Math.floor(Math.random() * names.length)]);
+}
+
+window.addEventListener('hashchange', () => {
+  const [type, name] = location.hash.slice(1).split(':');
+  if (type && name) showAlert(type, decodeURIComponent(name));
+});
+</script>
+</body>
+</html>

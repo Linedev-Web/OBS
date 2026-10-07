@@ -17,7 +17,7 @@ textes des chaînes. Refonte complète le 2026-10-07 (demande du client : « com
 | `musique\` | 16 morceaux maison ACE-Step (`composer.py`, `catalogue.json` : graines, régénérables). Joués en boucle par les sources VLC des écrans Démarrage, Pause, Pause bébé, Fin. |
 | `chaines\` | Bannières, panneaux et textes Twitch / YouTube **à valider** : `chaines\A_VALIDER.md`. Rien n’est publié sans le oui du client. |
 | `docs\CHARTE_LIVE.md` | Règles de style (à lire avant de toucher un visuel). |
-| `Gaming\`, `GamingV2\`, `Job\`, `Matt\`, `banner_generator.html` | Ancien pack, à archiver au ménage (le client l’a demandé, après validation du nouveau). |
+| `_archivesancien-pack` | Ancien pack (Gaming, GamingV2, Job, Matt, banner_generator.html, ancien README), archivé au ménage du 2026-10-07. Plateau pointe encore sur ses overlays. |
 
 ## Règles
 

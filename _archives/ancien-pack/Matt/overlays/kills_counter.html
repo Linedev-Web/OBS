@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Matt Racing Live — Race Stats</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Barlow+Condensed:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blue:   #0A1EFF;
+  --blue-g: rgba(10,30,255,.6);
+  --blue-d: rgba(10,30,255,.1);
+  --red:    #FF1E1E;
+  --red-g:  rgba(255,30,30,.6);
+  --white:  #FFFFFF;
+  --carbon: rgba(6,6,10,.93);
+  --c2:     rgba(12,12,18,.92);
+  --grey:   #4A5868;
+  --grey-l: #8A9AAA;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  width:1920px; height:1080px;
+  background:transparent; overflow:hidden;
+  font-family:'Barlow Condensed',sans-serif; color:var(--white);
+}
+
+/* Widget positionné haut gauche */
+.widget {
+  position:absolute; top:20px; left:20px;
+  width:440px;
+  background:var(--carbon);
+  border:1px solid rgba(10,30,255,.4);
+  box-shadow:0 0 30px var(--blue-g), 0 8px 40px rgba(0,0,0,.8);
+  overflow:hidden;
+}
+
+/* En-tête */
+.widget-header {
+  height:42px;
+  background:linear-gradient(90deg, var(--blue) 0%, rgba(10,30,255,.8) 100%);
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 16px; position:relative; overflow:hidden;
+}
+.widget-header::after {
+  content:''; position:absolute; inset:0;
+  background:repeating-linear-gradient(-55deg, transparent, transparent 8px, rgba(255,255,255,.04) 8px, rgba(255,255,255,.04) 16px);
+}
+.wh-title { font-family:'Orbitron',sans-serif; font-size:14px; font-weight:700; letter-spacing:5px; z-index:1; }
+.wh-num   { font-family:'Orbitron',sans-serif; font-size:20px; font-weight:900; color:rgba(255,255,255,.5); z-index:1; }
+
+/* Grille de stats */
+.stats-grid {
+  display:grid; grid-template-columns:1fr 1fr 1fr;
+  gap:1px; background:rgba(255,255,255,.04);
+  border-top:1px solid rgba(10,30,255,.3);
+}
+.stat-cell { background:var(--c2); padding:14px 12px; text-align:center; }
+.stat-label { font-size:11px; font-weight:700; letter-spacing:4px; color:var(--grey); text-transform:uppercase; margin-bottom:4px; }
+.stat-val { font-family:'Orbitron',sans-serif; font-size:36px; font-weight:900; line-height:1; }
+.v-blue  { color:var(--blue);  text-shadow:0 0 14px var(--blue-g);  }
+.v-red   { color:var(--red);   text-shadow:0 0 14px var(--red-g);   }
+.v-white { color:var(--white); }
+
+.stat-divider { grid-column:1 / -1; height:1px; background:rgba(10,30,255,.2); }
+
+/* Meilleur tour */
+.best-lap-row {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:10px 16px;
+  background:rgba(10,30,255,.07);
+  border-top:1px solid rgba(10,30,255,.2);
+}
+.bl-label { font-size:22px; font-weight:700; letter-spacing:3px; color:var(--grey-l); }
+.bl-val   { font-family:'Orbitron',sans-serif; font-size:28px; font-weight:700; color:var(--white); }
+
+/* Pied */
+.widget-footer { height:5px; background:linear-gradient(90deg, var(--blue), var(--red)); }
+
+/* Boutons contrôle */
+.controls {
+  position:fixed; bottom:20px; left:20px;
+  display:flex; gap:8px; z-index:100; flex-wrap:wrap; max-width:460px;
+}
+.btn {
+  font-family:'Orbitron',sans-serif; font-size:11px; font-weight:700;
+  letter-spacing:2px; padding:6px 12px; cursor:pointer;
+  border:1px solid rgba(255,255,255,.2); background:rgba(0,0,0,.6);
+  color:var(--white); text-transform:uppercase;
+}
+.btn:hover { background:var(--blue-d); border-color:var(--blue); }
+.btn.danger:hover { background:rgba(255,30,30,.15); border-color:var(--red); }
+</style>
+</head>
+<body>
+
+<div class="widget">
+  <div class="widget-header">
+    <span class="wh-title">RACE STATS</span>
+    <span class="wh-num">01 MATT</span>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-cell">
+      <div class="stat-label">Position</div>
+      <div class="stat-val v-blue" id="position">P1</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-label">Tour</div>
+      <div class="stat-val v-white" id="lap">1/20</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-label">Gap</div>
+      <div class="stat-val v-red" id="gap">+0.0s</div>
+    </div>
+
+    <div class="stat-divider"></div>
+
+    <div class="stat-cell">
+      <div class="stat-label">Victoires</div>
+      <div class="stat-val v-white" id="wins">0</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-label">Podiums</div>
+      <div class="stat-val v-blue" id="podiums">0</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-label">Poles</div>
+      <div class="stat-val v-red" id="poles">0</div>
+    </div>
+  </div>
+
+  <div class="best-lap-row">
+    <span class="bl-label">Meilleur Tour</span>
+    <span class="bl-val" id="bestLap">--:--.---</span>
+  </div>
+
+  <div class="widget-footer"></div>
+</div>
+
+<!-- Contrôles (masquez dans OBS) -->
+<div class="controls">
+  <button class="btn" onclick="updatePos(-1)">↑ POS</button>
+  <button class="btn" onclick="updatePos(1)">↓ POS</button>
+  <button class="btn" onclick="addWin()">+ WIN</button>
+  <button class="btn" onclick="addPodium()">+ POD</button>
+  <button class="btn" onclick="addPole()">+ POLE</button>
+  <button class="btn danger" onclick="resetAll()">RESET</button>
+</div>
+
+<script>
+const state = { pos:1, maxPos:20, lapCur:1, lapMax:20, gap:0.0, wins:0, podiums:0, poles:0, bestLap:null };
+
+function render() {
+  document.getElementById('position').textContent = 'P' + state.pos;
+  document.getElementById('position').className = 'stat-val ' + (state.pos === 1 ? 'v-white' : state.pos <= 3 ? 'v-blue' : 'v-red');
+  document.getElementById('lap').textContent = state.lapCur + '/' + state.lapMax;
+  const gapStr = state.gap === 0 ? 'LEAD' : (state.gap > 0 ? '+' : '') + state.gap.toFixed(1) + 's';
+  document.getElementById('gap').textContent = gapStr;
+  document.getElementById('gap').className = 'stat-val ' + (state.gap === 0 ? 'v-blue' : 'v-red');
+  document.getElementById('wins').textContent = state.wins;
+  document.getElementById('podiums').textContent = state.podiums;
+  document.getElementById('poles').textContent = state.poles;
+  document.getElementById('bestLap').textContent = state.bestLap || '--:--.---';
+}
+
+function updatePos(dir) {
+  state.pos = Math.max(1, Math.min(state.maxPos, state.pos + dir));
+  state.gap = state.pos === 1 ? 0 : parseFloat((Math.random() * 5 + 0.1).toFixed(1));
+  render();
+}
+function addWin()    { state.wins++;    render(); }
+function addPodium() { state.podiums++; render(); }
+function addPole()   { state.poles++;   render(); }
+function resetAll()  { Object.assign(state, {pos:1,gap:0,lapCur:1,wins:0,podiums:0,poles:0,bestLap:null}); render(); }
+
+const p = new URLSearchParams(window.location.search);
+if (p.get('pos'))     state.pos     = parseInt(p.get('pos'));
+if (p.get('lap'))     state.lapCur  = parseInt(p.get('lap'));
+if (p.get('laps'))    state.lapMax  = parseInt(p.get('laps'));
+if (p.get('gap'))     state.gap     = parseFloat(p.get('gap'));
+if (p.get('wins'))    state.wins    = parseInt(p.get('wins'));
+if (p.get('podiums')) state.podiums = parseInt(p.get('podiums'));
+if (p.get('poles'))   state.poles   = parseInt(p.get('poles'));
+if (p.get('bestLap')) state.bestLap = p.get('bestLap');
+render();
+</script>
+</body>
+</html>

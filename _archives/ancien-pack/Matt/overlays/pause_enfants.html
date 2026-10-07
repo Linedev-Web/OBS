@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Matt Racing Live — Pause Famille</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Barlow+Condensed:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blue:   #0A1EFF;
+  --blue-g: rgba(10,30,255,.5);
+  --blue-d: rgba(10,30,255,.12);
+  --red:    #FF1E1E;
+  --red-g:  rgba(255,30,30,.5);
+  --red-d:  rgba(255,30,30,.1);
+  --white:  #FFFFFF;
+  --carbon: #08080E;
+  --c2:     #121218;
+  --grey:   #5A6878;
+  --grey-l: #A0B4C8;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  width:1920px; height:1080px; overflow:hidden;
+  background:var(--carbon);
+  font-family:'Barlow Condensed',sans-serif; color:var(--white);
+}
+
+/* Fond — légèrement plus lumineux que la pause normale */
+.bg {
+  position:absolute; inset:0;
+  background:
+    radial-gradient(ellipse at 30% 30%, var(--blue-d), transparent 50%),
+    radial-gradient(ellipse at 70% 70%, var(--red-d), transparent 50%),
+    var(--carbon);
+}
+
+/* Petites étoiles */
+.stars { position:absolute; inset:0; pointer-events:none; }
+.star  { position:absolute; border-radius:50%; background:var(--white); animation:twinkle 3s ease-in-out infinite; }
+@keyframes twinkle { 0%,100%{opacity:.3;transform:scale(1)} 50%{opacity:.9;transform:scale(1.3)} }
+
+/* Bandes top/bottom — plus larges, festives */
+.stripe-top {
+  position:absolute; top:0; left:0; right:0; height:10px;
+  background:repeating-linear-gradient(90deg, var(--blue) 0px, var(--blue) 40px, var(--red) 40px, var(--red) 80px, var(--white) 80px, var(--white) 120px);
+  opacity:.7;
+}
+.stripe-top-solid {
+  position:absolute; top:10px; left:0; right:0; height:3px;
+  background:linear-gradient(90deg, var(--blue), var(--red));
+}
+.stripe-bottom {
+  position:absolute; bottom:0; left:0; right:0; height:10px;
+  background:repeating-linear-gradient(90deg, var(--blue) 0px, var(--blue) 40px, var(--red) 40px, var(--red) 80px, var(--white) 80px, var(--white) 120px);
+  opacity:.7;
+}
+.stripe-bottom-solid {
+  position:absolute; bottom:10px; left:0; right:0; height:3px;
+  background:linear-gradient(90deg, var(--red), var(--blue));
+}
+
+/* Icônes coins animés */
+.deco-corner { position:absolute; font-size:52px; z-index:3; }
+.dc-tl { top:22px; left:22px; animation:floatY 3s ease-in-out infinite; }
+.dc-tr { top:22px; right:22px; animation:floatY 3s .5s ease-in-out infinite; }
+.dc-bl { bottom:22px; left:22px; animation:floatY 3s 1s ease-in-out infinite; }
+.dc-br { bottom:22px; right:22px; animation:floatY 3s 1.5s ease-in-out infinite; }
+@keyframes floatY { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+
+/* Contenu */
+.main {
+  position:absolute; inset:0;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  z-index:5;
+}
+
+.family-badge {
+  background:var(--red-d); border:1px solid rgba(255,30,30,.35);
+  padding:8px 28px; margin-bottom:18px;
+  font-size:16px; font-weight:700; letter-spacing:10px;
+  color:var(--white); text-transform:uppercase;
+  animation:fadeUp .6s ease-out both;
+}
+
+.pause-icon { font-size:100px; line-height:1; margin-bottom:10px; animation:bounceIn .7s .15s ease-out both; }
+@keyframes bounceIn { 0%{transform:scale(0);opacity:0} 70%{transform:scale(1.1)} 100%{transform:scale(1);opacity:1} }
+
+.pause-title {
+  font-family:'Orbitron',sans-serif; font-size:100px; font-weight:900; line-height:.9; letter-spacing:-2px;
+  text-transform:uppercase; color:var(--white);
+  text-shadow:0 0 40px rgba(255,255,255,.3);
+  animation:fadeUp .7s .25s ease-out both;
+}
+.pause-sub {
+  font-family:'Orbitron',sans-serif; font-size:32px; font-weight:700; letter-spacing:10px;
+  color:var(--blue); text-shadow:0 0 20px var(--blue-g); margin-top:8px;
+  animation:fadeUp .7s .4s ease-out both;
+}
+.divider {
+  width:480px; height:2px; margin:24px auto;
+  background:linear-gradient(90deg, transparent, var(--blue), var(--red), transparent);
+  box-shadow:0 0 8px var(--blue-g);
+  animation:expandW .8s .5s ease-out both;
+}
+@keyframes expandW { from{transform:scaleX(0)} to{transform:scaleX(1)} }
+.pause-msg {
+  font-size:30px; font-weight:600; letter-spacing:2px;
+  color:var(--grey-l); text-align:center; line-height:1.5;
+  animation:fadeUp .7s .6s ease-out both;
+}
+
+/* Bloc fun */
+.fun-block { margin-top:24px; display:flex; gap:24px; animation:fadeUp .7s .75s ease-out both; }
+.fun-card {
+  background:var(--blue-d); border:1px solid rgba(10,30,255,.25);
+  padding:14px 24px; text-align:center;
+}
+.fun-icon  { font-size:32px; }
+.fun-label { font-size:22px; font-weight:700; letter-spacing:2px; color:var(--white); margin-top:4px; }
+
+/* Socials bas */
+.socials {
+  position:absolute; bottom:28px; left:50%; transform:translateX(-50%);
+  display:flex; gap:32px; z-index:10;
+  animation:fadeUp .7s .9s ease-out both;
+}
+.soc-item { display:flex; align-items:center; gap:10px; }
+.soc-icon {
+  width:34px; height:34px;
+  display:flex; align-items:center; justify-content:center; font-weight:900; font-size:15px;
+  background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.2);
+}
+.soc-handle { font-size:24px; font-weight:700; color:var(--grey-l); }
+
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+</style>
+</head>
+<body>
+
+<div class="bg"></div>
+<div class="stars" id="stars"></div>
+
+<div class="stripe-top"></div>
+<div class="stripe-top-solid"></div>
+<div class="stripe-bottom"></div>
+<div class="stripe-bottom-solid"></div>
+
+<span class="deco-corner dc-tl">⭐</span>
+<span class="deco-corner dc-tr">🏁</span>
+<span class="deco-corner dc-bl">🏎️</span>
+<span class="deco-corner dc-br">⭐</span>
+
+<div class="main">
+  <div class="family-badge">⚡ Contenu Famille · Mode Enfants ⚡</div>
+  <div class="pause-icon">🏎️</div>
+  <div class="pause-title">PAUSE</div>
+  <div class="pause-sub">RETOUR BIENTÔT !</div>
+  <div class="divider"></div>
+  <div class="pause-msg">
+    Matt revient dans quelques instants...<br>
+    En attendant, restes bien assis(e) et sage ! 😊
+  </div>
+  <div class="fun-block">
+    <div class="fun-card"><div class="fun-icon">🎮</div><div class="fun-label">Sim Racing</div></div>
+    <div class="fun-card"><div class="fun-icon">🏁</div><div class="fun-label">Course Auto</div></div>
+    <div class="fun-card"><div class="fun-icon">🏎️</div><div class="fun-label">Matt N°01</div></div>
+  </div>
+</div>
+
+<div class="socials">
+  <div class="soc-item"><div class="soc-icon">T</div><span class="soc-handle">mattracinglive</span></div>
+  <div class="soc-item"><div class="soc-icon">▶</div><span class="soc-handle">@MattRacingLive</span></div>
+</div>
+
+<script>
+const starsEl = document.getElementById('stars');
+for (let i = 0; i < 40; i++) {
+  const s = document.createElement('div');
+  s.className = 'star';
+  const size = Math.random() * 3 + 1;
+  s.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*100}%;width:${size}px;height:${size}px;animation-delay:${Math.random()*3}s;animation-duration:${2+Math.random()*2}s;`;
+  starsEl.appendChild(s);
+}
+</script>
+</body>
+</html>

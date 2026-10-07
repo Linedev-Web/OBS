@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Matt Racing Live — Overlay Principal</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Barlow+Condensed:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blue:   #0A1EFF;
+  --blue-g: rgba(10,30,255,.6);
+  --blue-d: rgba(10,30,255,.15);
+  --red:    #FF1E1E;
+  --red-g:  rgba(255,30,30,.6);
+  --red-d:  rgba(255,30,30,.12);
+  --white:  #FFFFFF;
+  --carbon: #06060A;
+  --c2:     #0E0E14;
+  --grey:   #4A5868;
+  --grey-l: #8A9AAA;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  width:1920px; height:1080px;
+  background:transparent; overflow:hidden;
+  font-family:'Barlow Condensed',sans-serif; color:var(--white);
+}
+
+/* ── BORDURES ZONE JEU (0-536px) ── */
+.game-border-top {
+  position:absolute; top:0; left:0; right:0; height:3px;
+  background:linear-gradient(90deg, var(--blue), var(--red));
+  box-shadow:0 0 10px var(--blue-g);
+  z-index:5;
+}
+.game-border-left {
+  position:absolute; top:0; left:0; width:3px; height:536px;
+  background:linear-gradient(180deg, var(--blue), transparent);
+  z-index:5;
+}
+.game-border-right {
+  position:absolute; top:0; right:0; width:3px; height:536px;
+  background:linear-gradient(180deg, var(--red), transparent);
+  z-index:5;
+}
+
+/* Coins HUD haut */
+.hud-c { position:absolute; z-index:6; width:56px; height:56px; }
+.hud-tl { top:6px; left:6px; border-top:2px solid var(--white); border-left:2px solid var(--white); }
+.hud-tl::after { content:''; position:absolute; top:4px; left:4px; width:7px; height:7px; background:var(--white); }
+.hud-tr { top:6px; right:6px; border-top:2px solid var(--white); border-right:2px solid var(--white); }
+.hud-tr::after { content:''; position:absolute; top:4px; right:4px; width:7px; height:7px; background:var(--white); }
+
+/* Badge driver haut gauche */
+.driver-badge {
+  position:absolute; top:14px; left:14px; z-index:7;
+  background:var(--blue);
+  padding:7px 22px 7px 14px;
+  clip-path:polygon(0 0, calc(100% - 10px) 0, 100% 100%, 0 100%);
+  display:flex; align-items:center; gap:10px;
+}
+.badge-num {
+  font-family:'Orbitron',sans-serif;
+  font-size:28px; font-weight:900; line-height:1;
+  color:var(--white);
+}
+.badge-info { display:flex; flex-direction:column; }
+.badge-name {
+  font-family:'Orbitron',sans-serif;
+  font-size:22px; font-weight:700;
+  letter-spacing:4px; line-height:1; color:var(--white);
+}
+.badge-sub {
+  font-size:11px; font-weight:600;
+  letter-spacing:6px; color:rgba(255,255,255,.6);
+  text-transform:uppercase;
+}
+
+/* ── BARRE SÉPARATRICE (536-592px, h:56px) ── */
+.sep {
+  position:absolute; top:536px; left:0; width:1920px; height:56px;
+  background:var(--carbon);
+  display:flex; align-items:center;
+  overflow:hidden; z-index:10;
+}
+.sep::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:3px;
+  background:linear-gradient(90deg, var(--blue), var(--red));
+  box-shadow:0 2px 8px var(--blue-g);
+}
+.sep::after {
+  content:''; position:absolute; bottom:0; left:0; right:0; height:3px;
+  background:linear-gradient(90deg, var(--blue), var(--red));
+}
+
+/* Lignes de vitesse animées */
+.sline {
+  position:absolute; top:3px; bottom:3px; width:120px;
+  background:linear-gradient(90deg, transparent, rgba(255,255,255,.05), transparent);
+  animation:sline 3s linear infinite;
+}
+@keyframes sline { from { left:-120px; } to { left:1920px; } }
+
+.sep-left {
+  display:flex; align-items:center; padding-left:20px;
+  gap:12px; z-index:2; flex-shrink:0;
+}
+.sep-num {
+  font-family:'Orbitron',sans-serif;
+  font-size:42px; font-weight:900; line-height:1;
+  color:var(--blue); text-shadow:0 0 20px var(--blue-g);
+  letter-spacing:-2px;
+}
+.sep-name-wrap { display:flex; flex-direction:column; }
+.sep-name {
+  font-family:'Orbitron',sans-serif;
+  font-size:22px; font-weight:700;
+  letter-spacing:5px; line-height:1.1;
+}
+.sep-tag {
+  font-size:11px; font-weight:600;
+  letter-spacing:8px; color:var(--grey-l); text-transform:uppercase;
+}
+
+.sep-center {
+  position:absolute; left:50%; transform:translateX(-50%);
+  text-align:center; z-index:2;
+}
+.sep-title {
+  font-family:'Orbitron',sans-serif;
+  font-size:28px; font-weight:900;
+  letter-spacing:10px; white-space:nowrap;
+  text-shadow:0 0 24px rgba(255,255,255,.3);
+}
+.sep-sub {
+  font-size:11px; font-weight:600;
+  letter-spacing:8px; color:var(--grey-l);
+}
+
+.sep-right {
+  position:absolute; right:20px; z-index:2;
+  display:flex; flex-direction:column; align-items:flex-end; gap:3px;
+}
+.social { font-size:20px; font-weight:700; letter-spacing:1px; color:var(--white); }
+
+/* ── CAMS (592-1080px) ── */
+.cam {
+  position:absolute; top:592px; height:484px;
+  background:transparent;
+}
+.cam-cockpit {
+  left:0; width:956px;
+  border:2px solid var(--blue);
+  box-shadow:0 0 28px var(--blue-g), inset 0 0 40px var(--blue-d);
+}
+.cam-pedals {
+  left:964px; width:956px;
+  border:2px solid var(--red);
+  box-shadow:0 0 28px var(--red-g), inset 0 0 40px var(--red-d);
+}
+
+/* Séparateur central */
+.cam-divider {
+  position:absolute; top:592px; left:956px;
+  width:8px; height:488px;
+  background:linear-gradient(180deg, var(--blue), var(--carbon) 50%, var(--red));
+}
+
+/* Badge de cam */
+.cam-badge {
+  position:absolute; top:0; left:0;
+  height:36px; padding:0 26px 0 16px;
+  display:flex; align-items:center; gap:8px;
+  font-family:'Orbitron',sans-serif;
+  font-size:14px; font-weight:700;
+  letter-spacing:5px; text-transform:uppercase;
+  clip-path:polygon(0 0, calc(100% - 12px) 0, 100% 100%, 0 100%);
+}
+.cam-cockpit .cam-badge { background:var(--blue); }
+.cam-pedals  .cam-badge { background:var(--red);  }
+
+/* Coins de cam (blanc) */
+.cc { position:absolute; width:18px; height:18px; }
+.cc-tl { top:0; left:0;    border-top:2px solid var(--white); border-left:2px solid var(--white);   }
+.cc-tr { top:0; right:0;   border-top:2px solid var(--white); border-right:2px solid var(--white);  }
+.cc-bl { bottom:0; left:0; border-bottom:2px solid var(--white); border-left:2px solid var(--white);  }
+.cc-br { bottom:0; right:0;border-bottom:2px solid var(--white); border-right:2px solid var(--white); }
+
+/* Watermark */
+.cam-watermark {
+  position:absolute; bottom:10px; right:14px;
+  font-family:'Orbitron',sans-serif;
+  font-size:22px; font-weight:900;
+  letter-spacing:6px; text-transform:uppercase;
+  opacity:.1;
+}
+.cam-cockpit .cam-watermark { color:var(--blue); }
+.cam-pedals  .cam-watermark { color:var(--red);  }
+
+/* Bande bottom */
+.bottom-stripe {
+  position:absolute; bottom:0; left:0; right:0; height:4px;
+  background:linear-gradient(90deg, var(--blue), var(--red));
+}
+</style>
+</head>
+<body>
+
+<div class="game-border-top"></div>
+<div class="game-border-left"></div>
+<div class="game-border-right"></div>
+<div class="hud-c hud-tl"></div>
+<div class="hud-c hud-tr"></div>
+
+<div class="driver-badge">
+  <span class="badge-num">01</span>
+  <div class="badge-info">
+    <span class="badge-name">Matt</span>
+    <span class="badge-sub">Sim Racing · FR</span>
+  </div>
+</div>
+
+<!-- BARRE SÉPARATRICE -->
+<div class="sep">
+  <div class="sline" style="animation-delay:0s;animation-duration:2.8s"></div>
+  <div class="sline" style="animation-delay:.9s;animation-duration:3.4s"></div>
+  <div class="sline" style="animation-delay:1.7s;animation-duration:2.5s"></div>
+  <div class="sline" style="animation-delay:2.5s;animation-duration:3.9s"></div>
+
+  <div class="sep-left">
+    <span class="sep-num">01</span>
+    <div class="sep-name-wrap">
+      <span class="sep-name">Matt Racing</span>
+      <span class="sep-tag">Sim Racing · FR</span>
+    </div>
+  </div>
+
+  <div class="sep-center">
+    <div class="sep-title">MATT RACING LIVE</div>
+    <div class="sep-sub">SIM RACING · LIVE STREAM</div>
+  </div>
+
+  <div class="sep-right">
+    <span class="social">twitch.tv/mattracinglive</span>
+    <span class="social">@MattRacingLive</span>
+  </div>
+</div>
+
+<!-- CAM COCKPIT -->
+<div class="cam cam-cockpit">
+  <div class="cam-badge">Cockpit</div>
+  <div class="cc cc-tl"></div><div class="cc cc-tr"></div>
+  <div class="cc cc-bl"></div><div class="cc cc-br"></div>
+  <div class="cam-watermark">COCKPIT</div>
+</div>
+
+<div class="cam-divider"></div>
+
+<!-- CAM PEDALS -->
+<div class="cam cam-pedals">
+  <div class="cam-badge">Pedals</div>
+  <div class="cc cc-tl"></div><div class="cc cc-tr"></div>
+  <div class="cc cc-bl"></div><div class="cc cc-br"></div>
+  <div class="cam-watermark">PEDALS</div>
+</div>
+
+<div class="bottom-stripe"></div>
+
+</body>
+</html>

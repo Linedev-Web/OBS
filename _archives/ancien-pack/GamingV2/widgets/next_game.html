@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Next Game Widget V2</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&family=Exo+2:wght@800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --surface:   rgba(8,3,22,.97);
+    --primary:   #c47bff;
+    --text:      #f0e8ff;
+    --text-dim:  #c4a8f0;
+    --border:    rgba(196,123,255,.28);
+    --border-hi: rgba(196,123,255,.65);
+    --glow-sm:   0 0 6px rgba(196,123,255,.40);
+    --glow-md:   0 0 12px rgba(196,123,255,.38), 0 0 30px rgba(196,123,255,.14);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:transparent; overflow:hidden; font-family:'Rajdhani',sans-serif; -webkit-font-smoothing:antialiased; }
+
+  .widget {
+    position:fixed; top:32px; left:32px;
+    width:400px;
+    background:var(--surface);
+    border:1px solid var(--border-hi);
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    box-shadow:0 0 40px rgba(196,123,255,.22), 0 0 100px rgba(196,123,255,.08);
+    animation:popIn .55s cubic-bezier(.175,.885,.32,1.275) forwards;
+  }
+
+  @keyframes popIn {
+    from { opacity:0; transform:scale(.65) translateY(-18px); }
+    to   { opacity:1; transform:scale(1)   translateY(0); }
+  }
+
+  /* Ligne scanning */
+  .widget::before {
+    content:''; position:absolute; top:0; left:-100%; width:100%; height:2px;
+    background:linear-gradient(90deg,transparent,var(--primary),transparent);
+    box-shadow:var(--glow-sm); animation:scan 2s linear infinite; z-index:30;
+  }
+  @keyframes scan { to { left:100%; } }
+
+  /* Scanlines CRT */
+  .widget::after {
+    content:''; position:absolute; inset:0;
+    background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.06) 3px,rgba(0,0,0,.06) 4px);
+    pointer-events:none; z-index:40;
+  }
+
+  /* Barre accent gauche */
+  .accent { position:absolute; left:0; top:0; bottom:0; width:4px; background:var(--primary); box-shadow:0 0 16px rgba(196,123,255,.90); z-index:10; }
+
+  /* Coins */
+  .corner { position:absolute; width:16px; height:16px; z-index:50; }
+  .corner::before,.corner::after { content:''; position:absolute; background:var(--primary); box-shadow:var(--glow-sm); }
+  .corner::before { width:100%; height:2px; top:0; left:0; }
+  .corner::after  { width:2px; height:100%; top:0; left:0; }
+  .corner.tl { top:4px; left:4px; }
+  .corner.tr { top:4px; right:4px; transform:scaleX(-1); }
+  .corner.bl { bottom:4px; left:4px; transform:scaleY(-1); }
+  .corner.br { bottom:4px; right:4px; transform:scale(-1); }
+
+  /* ── En-tête ── */
+  .header {
+    padding:14px 18px 12px 24px;
+    display:flex; align-items:center; gap:12px;
+    border-bottom:1px solid var(--border);
+    position:relative; z-index:10;
+    background:linear-gradient(90deg,rgba(196,123,255,.07) 0%,transparent 80%);
+  }
+  .icon-wrap {
+    width:42px; height:42px; flex-shrink:0;
+    border:2px solid var(--border-hi); border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    color:var(--primary); box-shadow:var(--glow-md);
+    animation:pulse 3s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%,100% { box-shadow:var(--glow-md); }
+    50%      { box-shadow:0 0 18px rgba(196,123,255,.65), 0 0 40px rgba(196,123,255,.22); }
+  }
+  .header-text { display:flex; flex-direction:column; gap:2px; }
+  .header-label {
+    font-size:11px; font-weight:500; letter-spacing:4px; text-transform:uppercase;
+    color:var(--text-dim); line-height:1;
+  }
+  .header-title {
+    font-family:'Exo 2',sans-serif;
+    font-size:22px; font-weight:900; letter-spacing:3px; text-transform:uppercase;
+    color:var(--primary); text-shadow:var(--glow-sm); line-height:1;
+  }
+
+  /* ── Corps ── */
+  .body { padding:16px 18px 16px 24px; position:relative; z-index:10; display:flex; flex-direction:column; gap:14px; }
+
+  /* Bloc jeu */
+  .game-block { display:flex; flex-direction:column; gap:4px; }
+  .block-label {
+    font-size:10px; font-weight:500; letter-spacing:4px; text-transform:uppercase;
+    color:rgba(196,123,255,.40);
+  }
+  .game-name {
+    font-family:'Exo 2',sans-serif;
+    font-size:30px; font-weight:900; letter-spacing:2px; text-transform:uppercase;
+    color:var(--text); text-shadow:0 0 8px rgba(196,123,255,.22);
+    line-height:1;
+  }
+
+  /* Séparateur */
+  .sep {
+    height:1px;
+    background:linear-gradient(90deg,var(--primary),rgba(196,123,255,.08));
+    box-shadow:var(--glow-sm);
+  }
+
+  /* Bloc heure */
+  .time-block { display:flex; align-items:center; gap:14px; }
+  .time-icon { color:var(--primary); flex-shrink:0; filter:drop-shadow(0 0 4px rgba(196,123,255,.50)); }
+  .time-info { display:flex; flex-direction:column; gap:2px; }
+  .time-label {
+    font-size:10px; font-weight:500; letter-spacing:4px; text-transform:uppercase;
+    color:rgba(196,123,255,.40);
+  }
+  .time-value {
+    font-family:'Exo 2',sans-serif;
+    font-size:36px; font-weight:900; letter-spacing:4px;
+    color:var(--primary); text-shadow:var(--glow-md);
+    line-height:1;
+  }
+  .time-countdown {
+    font-size:12px; font-weight:500; letter-spacing:3px; text-transform:uppercase;
+    color:var(--text-dim);
+    margin-top:2px;
+  }
+
+  /* Live dot */
+  .s-dot {
+    display:inline-block; width:6px; height:6px; border-radius:50%;
+    background:var(--primary); box-shadow:var(--glow-sm);
+    animation:blink 2s ease infinite; margin-right:6px; vertical-align:middle;
+  }
+  @keyframes blink { 0%,100% { opacity:1; } 50% { opacity:.15; } }
+
+  /* ── Barre de progression ── */
+  .progress-wrap {
+    height:3px; background:rgba(196,123,255,.06);
+    border-top:1px solid var(--border);
+    position:relative; z-index:10; overflow:hidden;
+  }
+  .progress-fill {
+    height:100%; width:100%;
+    background:linear-gradient(90deg,var(--primary),rgba(196,123,255,.50));
+    box-shadow:var(--glow-sm);
+    transform-origin:left;
+    animation:countdown linear forwards;
+  }
+</style>
+</head>
+<body>
+
+<div class="widget" id="widget">
+  <div class="accent"></div>
+  <div class="corner tl"></div><div class="corner tr"></div>
+  <div class="corner bl"></div><div class="corner br"></div>
+
+  <div class="header">
+    <div class="icon-wrap">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M21 6H3a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2zM8 13.5H6.5V15h-2v-1.5H3v-2h1.5V10h2v1.5H8zm8.25 1.25a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5zm2.5-3a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5z"/>
+      </svg>
+    </div>
+    <div class="header-text">
+      <div class="header-label">// Prochain sur le stream //</div>
+      <div class="header-title">NEXT GAME</div>
+    </div>
+  </div>
+
+  <div class="body">
+    <div class="game-block">
+      <div class="block-label">Jeu</div>
+      <div class="game-name" id="gameName">Valorant</div>
+    </div>
+
+    <div class="sep"></div>
+
+    <div class="time-block">
+      <div class="time-icon">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/>
+        </svg>
+      </div>
+      <div class="time-info">
+        <div class="time-label">Heure de l'événement</div>
+        <div class="time-value" id="eventTime">21H00</div>
+        <div class="time-countdown" id="countdown"><span class="s-dot"></span><span id="countdownText">Calcul...</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-fill" id="fill"></div>
+  </div>
+</div>
+
+<script>
+  // ─── CONFIGURATION ───────────────────────────────────────────────
+  // Modifie directement ici, ou passe des paramètres URL :
+  //   ?game=Minecraft&time=20:30
+  // ─────────────────────────────────────────────────────────────────
+  const DEFAULTS = {
+    game: 'Valorant',
+    time: '21:00',   // format HH:MM
+  };
+
+  const params = new URLSearchParams(window.location.search);
+  const GAME   = params.get('game') || DEFAULTS.game;
+  const TIME   = params.get('time') || DEFAULTS.time;
+
+  // Affichage
+  document.getElementById('gameName').textContent  = GAME;
+  document.getElementById('eventTime').textContent = TIME.replace(':', 'H');
+
+  // Countdown vers l'heure de l'événement
+  function parseEventTime(str) {
+    const [h, m] = str.split(':').map(Number);
+    const now = new Date();
+    const target = new Date(now.getFullYear(), now.getMonth(), now.getDate(), h, m, 0);
+    if (target <= now) target.setDate(target.getDate() + 1);
+    return target;
+  }
+
+  function updateCountdown() {
+    const target   = parseEventTime(TIME);
+    const diff     = target - Date.now();
+    if (diff <= 0) {
+      document.getElementById('countdownText').textContent = 'C\'est l\'heure !';
+      return;
+    }
+    const h = Math.floor(diff / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    const parts = [];
+    if (h > 0) parts.push(`${h}h`);
+    if (m > 0 || h > 0) parts.push(`${m}m`);
+    parts.push(`${s}s`);
+    document.getElementById('countdownText').textContent = `Dans ${parts.join(' ')}`;
+  }
+
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+
+  // Barre de progression (animation scanning continue)
+  const fill = document.getElementById('fill');
+  fill.style.animation = 'none';
+</script>
+
+<style>
+  @keyframes countdown {
+    from { transform: scaleX(1); }
+    to   { transform: scaleX(0); }
+  }
+</style>
+</body>
+</html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Matt Racing Live — Pause / Pit Stop</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Barlow+Condensed:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blue:   #0A1EFF;
+  --blue-g: rgba(10,30,255,.6);
+  --blue-d: rgba(10,30,255,.12);
+  --red:    #FF1E1E;
+  --red-g:  rgba(255,30,30,.6);
+  --red-d:  rgba(255,30,30,.10);
+  --white:  #FFFFFF;
+  --carbon: #06060A;
+  --c2:     #0E0E14;
+  --grey:   #4A5868;
+  --grey-l: #8A9AAA;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  width:1920px; height:1080px; overflow:hidden;
+  background:var(--carbon);
+  font-family:'Barlow Condensed',sans-serif; color:var(--white);
+}
+
+/* Fond carbone */
+.bg-carbon {
+  position:absolute; inset:0;
+  background:
+    repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(255,255,255,.012) 2px, rgba(255,255,255,.012) 4px),
+    repeating-linear-gradient(-45deg, transparent, transparent 2px, rgba(255,255,255,.012) 2px, rgba(255,255,255,.012) 4px),
+    var(--carbon);
+}
+.halo-blue { position:absolute; top:-200px; left:-200px; width:800px; height:800px; border-radius:50%; background:radial-gradient(circle, var(--blue-d), transparent 65%); }
+.halo-red  { position:absolute; bottom:-200px; right:-200px; width:800px; height:800px; border-radius:50%; background:radial-gradient(circle, var(--red-d), transparent 65%); }
+
+/* BANDES PIT STOP — rouge/noir (remplace le jaune supprimé) */
+.pitlane-stripe {
+  position:absolute; top:0; left:0; right:0; height:60px;
+  background:repeating-linear-gradient(
+    -60deg,
+    var(--red) 0px, var(--red) 28px,
+    var(--carbon) 28px, var(--carbon) 56px
+  );
+  opacity:.7;
+}
+.pitlane-stripe-bottom {
+  position:absolute; bottom:0; left:0; right:0; height:60px;
+  background:repeating-linear-gradient(
+    -60deg,
+    var(--red) 0px, var(--red) 28px,
+    var(--carbon) 28px, var(--carbon) 56px
+  );
+  opacity:.7;
+}
+
+/* Lignes de délimitation */
+.stripe-line-top    { position:absolute; top:60px; left:0; right:0; height:4px; background:linear-gradient(90deg, var(--blue), var(--red)); box-shadow:0 0 14px var(--blue-g); }
+.stripe-line-bottom { position:absolute; bottom:60px; left:0; right:0; height:4px; background:linear-gradient(90deg, var(--blue), var(--red)); box-shadow:0 0 14px var(--red-g);  }
+
+/* Numéro fond décoratif */
+.bg-num {
+  position:absolute; bottom:-60px; right:60px;
+  font-family:'Orbitron',sans-serif; font-size:520px; font-weight:900; line-height:1;
+  color:transparent; -webkit-text-stroke:2px rgba(10,30,255,.08);
+  user-select:none; pointer-events:none; letter-spacing:-20px;
+}
+
+/* CONTENU CENTRAL */
+.main {
+  position:absolute; top:64px; bottom:64px; left:0; right:0;
+  display:flex; align-items:center; justify-content:center;
+  flex-direction:column; z-index:5;
+}
+
+.pit-label {
+  font-size:14px; font-weight:700; letter-spacing:20px;
+  color:var(--grey-l); text-transform:uppercase; margin-bottom:10px;
+  animation:fadeUp .7s ease-out both;
+}
+.pit-icon  { font-size:90px; line-height:1; margin-bottom:8px; animation:fadeUp .7s .1s ease-out both; }
+.pit-main  {
+  font-family:'Orbitron',sans-serif; font-size:110px; font-weight:900; line-height:.9; letter-spacing:-2px;
+  text-transform:uppercase; color:var(--white);
+  text-shadow:0 0 40px rgba(255,255,255,.3);
+  animation:fadeUp .7s .2s ease-out both;
+}
+.pit-sub {
+  font-family:'Orbitron',sans-serif; font-size:32px; font-weight:700; letter-spacing:10px;
+  color:var(--red); text-shadow:0 0 20px var(--red-g); margin-top:6px;
+  animation:fadeUp .7s .35s ease-out both;
+}
+.divider {
+  width:500px; height:2px; margin:26px auto;
+  background:linear-gradient(90deg, transparent, var(--blue), var(--red), transparent);
+  box-shadow:0 0 8px var(--blue-g);
+  animation:expandW .8s .45s ease-out both;
+}
+@keyframes expandW { from{transform:scaleX(0)} to{transform:scaleX(1)} }
+.pit-msg { font-size:28px; font-weight:600; letter-spacing:3px; color:var(--grey-l); text-align:center; animation:fadeUp .7s .55s ease-out both; }
+.brb-timer { margin-top:20px; display:flex; align-items:center; gap:16px; animation:fadeUp .7s .65s ease-out both; }
+.brb-label { font-size:22px; font-weight:700; letter-spacing:4px; color:var(--grey-l); }
+.brb-val   { font-family:'Orbitron',sans-serif; font-size:50px; font-weight:700; color:var(--white); text-shadow:0 0 20px rgba(255,255,255,.3); }
+
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+/* INFOS LATÉRALES */
+.side-info { position:absolute; z-index:10; display:flex; flex-direction:column; gap:16px; top:50%; transform:translateY(-50%); }
+.side-left  { left:60px; }
+.side-right { right:60px; align-items:flex-end; }
+
+.side-card {
+  background:rgba(14,14,20,.9);
+  border-left:3px solid var(--blue);
+  padding:12px 20px; min-width:240px;
+  animation:fadeUp .7s ease-out both;
+}
+.side-right .side-card { border-left:none; border-right:3px solid var(--red); text-align:right; }
+.sc-label { font-size:11px; font-weight:700; letter-spacing:6px; color:var(--grey); text-transform:uppercase; }
+.sc-val   { font-family:'Orbitron',sans-serif; font-size:26px; font-weight:700; color:var(--white); margin-top:2px; }
+
+/* Ticker bas */
+.ticker {
+  position:absolute; bottom:60px; left:0; right:0;
+  height:44px; background:rgba(10,30,255,.1);
+  border-top:1px solid rgba(10,30,255,.3);
+  display:flex; align-items:center; overflow:hidden; z-index:8;
+}
+.ticker-wrap { flex:1; overflow:hidden; }
+.ticker-content {
+  white-space:nowrap; font-size:22px; font-weight:600; letter-spacing:3px; color:var(--grey-l);
+  animation:tickerScroll 22s linear infinite;
+  display:inline-block;
+}
+@keyframes tickerScroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+</style>
+</head>
+<body>
+
+<div class="bg-carbon"></div>
+<div class="halo-blue"></div>
+<div class="halo-red"></div>
+
+<div class="pitlane-stripe"></div>
+<div class="pitlane-stripe-bottom"></div>
+<div class="stripe-line-top"></div>
+<div class="stripe-line-bottom"></div>
+<div class="bg-num">01</div>
+
+<div class="main">
+  <div class="pit-label">Matt Racing Live · N° 01</div>
+  <div class="pit-icon">🏎️</div>
+  <div class="pit-main">PIT STOP</div>
+  <div class="pit-sub">BE RIGHT BACK</div>
+  <div class="divider"></div>
+  <div class="pit-msg">Je reviens dans quelques instants...</div>
+  <div class="brb-timer">
+    <span class="brb-label">Pause depuis :</span>
+    <span class="brb-val" id="brbTimer">00:00</span>
+  </div>
+</div>
+
+<div class="side-info side-left">
+  <div class="side-card">
+    <div class="sc-label">Twitch</div>
+    <div class="sc-val">mattracinglive</div>
+  </div>
+  <div class="side-card" style="animation-delay:.15s">
+    <div class="sc-label">YouTube</div>
+    <div class="sc-val">@MattRacingLive</div>
+  </div>
+</div>
+<div class="side-info side-right">
+  <div class="side-card" style="animation-delay:.08s">
+    <div class="sc-label">Instagram</div>
+    <div class="sc-val">mattracinglive</div>
+  </div>
+  <div class="side-card" style="animation-delay:.22s">
+    <div class="sc-label">Team</div>
+    <div class="sc-val">Matt Racing #01</div>
+  </div>
+</div>
+
+<div class="ticker">
+  <div class="ticker-wrap">
+    <span class="ticker-content">
+      🏁 Bienvenue sur Matt Racing Live ! &nbsp;·&nbsp; Suivez sur Twitch : twitch.tv/mattracinglive &nbsp;·&nbsp; YouTube : @MattRacingLive &nbsp;·&nbsp; Instagram : mattracinglive &nbsp;·&nbsp; 🏎️ Sim Racing · Course · Passion &nbsp;·&nbsp; Merci pour votre soutien ! &nbsp;·&nbsp;
+      🏁 Bienvenue sur Matt Racing Live ! &nbsp;·&nbsp; Suivez sur Twitch : twitch.tv/mattracinglive &nbsp;·&nbsp; YouTube : @MattRacingLive &nbsp;·&nbsp; Instagram : mattracinglive &nbsp;·&nbsp; 🏎️ Sim Racing · Course · Passion &nbsp;·&nbsp; Merci pour votre soutien ! &nbsp;·&nbsp;
+    </span>
+  </div>
+</div>
+
+<script>
+let elapsed = 0;
+function updateBrb() {
+  elapsed++;
+  const m = String(Math.floor(elapsed / 60)).padStart(2,'0');
+  const s = String(elapsed % 60).padStart(2,'0');
+  document.getElementById('brbTimer').textContent = m + ':' + s;
+}
+setInterval(updateBrb, 1000);
+</script>
+</body>
+</html>
