@@ -1,6 +1,6 @@
-# Chaînes — à valider par le client
+# Chaînes — publié le 2026-10-07
 
-Préparé le 2026-10-07. **Rien n'est publié** : le client a choisi « je prépare, tu valides ». Une fois validé, Claude
+**Publié le 2026-10-07** après validation du client. Twitch : bio, bannière de profil, écran hors ligne, 6 panneaux (sans titre texte, l’image porte le titre). YouTube Latshow : bannière, photo (celle de Twitch, `photo_latshow_600.png`), description, 7 liens (« Ton serveur sur ServeurListe » : YouTube limite un titre de lien à 30 caractères). YouTube linedev : description seulement ; la bannière « cours en live » attend le premier cours annoncé. Une fois validé, Claude
 publie lui-même (Twitch : tableau de bord → Paramètres → Chaîne ; YouTube : Studio → Personnalisation).
 Visuels refaits avec `python D:\Stream\OBS\chaines\rendre.py` (sources HTML à côté de chaque PNG). Charte :
 `D:\Stream\OBS\docs\CHARTE_LIVE.md`.
@@ -43,8 +43,8 @@ Proposé, 6 panneaux 320×100 dans `twitch-latshow\panneaux\` (même modèle : `
 | `a-propos_320x100.png` — À PROPOS · Qui je suis, ce qu'on fait ici | aucun | Moi c'est Latshow. Je streame les jeux qui me plaisent, surtout de la simulation et de l'exploration (No Man's Sky en ce moment), et je monte mes épisodes pour YouTube. Ici on joue par passion, on discute, et personne n'est de trop. |
 | `planning_320x100.png` — PLANNING · Quand me trouver en live | `https://discord.gg/JEwmC44hvh` | Pas d'horaires fixes pour l'instant : le midi quand je peux, l'ASMR le soir. Active la cloche ou rejoins le Discord pour être prévenu à chaque live. |
 | `discord_320x100.png` — DISCORD · La commu, même hors live | `https://discord.gg/JEwmC44hvh` | Annonces des lives, entraide, soirées multi : la commu continue entre deux streams. Clique sur l'image pour nous rejoindre. |
-| `soutenir_320x100.png` — SOUTENIR · Dons, abonnements, follow | **lien de dons StreamElements** (voir questions) | Le follow et l'abonnement, c'est ce qui aide le plus. Si tu veux aller plus loin, un don sert à améliorer le stream : matériel, jeux, confort du live. Merci, vraiment. |
-| `materiel_320x100.png` — MATÉRIEL · Ce que j'utilise en live | aucun | Caméra : Logitech MX Brio · Micro : FIFINE K658 · Logiciel : OBS Studio · **(à compléter : PC, écran, clavier, souris — voir questions)** |
+| `soutenir_320x100.png` — SOUTENIR · Dons, abonnements, follow | `https://streamlabs.com/latshow` (gardé tant que les dons StreamElements ne sont pas reliés à PayPal par le client) | Le follow et l'abonnement, c'est ce qui aide le plus. Si tu veux aller plus loin, un don sert à améliorer le stream : matériel, jeux, confort du live. Merci, vraiment. |
+| `materiel_320x100.png` — MATÉRIEL · Ce que j'utilise en live | aucun | Caméra : Logitech MX Brio · Micro : FIFINE K658 · Logiciel : OBS Studio |
 | `regles_320x100.png` — RÈGLES DU CHAT · Pour que ça reste cool | aucun | 1. On reste bienveillant, avec tout le monde. 2. Pas de spoil sur le jeu en cours. 3. Pas de pub ni de lien sans demander. 4. Pas de conseils de jeu non demandés (backseat), sauf si je demande de l'aide. 5. Les modos ont le dernier mot. |
 
 Le panneau TikTok actuel disparaît (TikTok reste dans les liens de YouTube) : à dire si tu veux le garder.
@@ -109,7 +109,11 @@ lank.li ; e-mail contact@linedev.fr).
 
 ---
 
-## Questions pour le client
+## Réponses du client (2026-10-07)
+
+ASMR gardé ; même photo partout (celle de Twitch) ; liens dev gardés sur Latshow ; panneau Matériel minimal ; Discord en lien direct ; dons : Streamlabs gardé jusqu’à ce que le client relie PayPal à StreamElements. Validé (« c’est bon, commence ») : publication le 2026-10-07.
+
+## Questions posées au client
 
 1. **Dons** : on passe sur StreamElements. Le lien du panneau « Soutenir » (aujourd'hui `streamlabs.com/latshow`)
    deviendra la page de dons StreamElements, créée pendant la mise en place des alertes. D'accord pour retirer Streamlabs ?
