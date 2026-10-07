@@ -20,7 +20,8 @@
 html, body { width: 1920px; height: 1080px; overflow: hidden; background: transparent; }
 .scene { position: absolute; inset: 0; }
 
-.alerte { position: absolute; left: 50%; top: var(--haut); width: 1200px; height: 420px; transform: translateX(-50%); }
+/* Centrée sur la page (1920×1080). Dans OBS, la source « Alertes » a cette taille et est étirée sur tout le canevas. */
+.alerte { position: absolute; left: calc(50vw - 600px); top: var(--haut); width: 1200px; height: 420px; }
 .alerte[hidden] { display: none; }
 
 /* Bandeau qui balaie : la couleur de l'événement, en biais */
@@ -84,9 +85,9 @@ html, body { width: 1920px; height: 1080px; overflow: hidden; background: transp
 @keyframes respire { from { transform: scale(1); } to { transform: scale(1.05); } }
 @keyframes tombe { from { transform: translateY(-70px) rotate(-14deg); opacity: 0; } to { transform: none; opacity: 1; } }
 @keyframes secousse {
-  0%, 100% { transform: translateX(-50%); }
-  15% { transform: translate(calc(-50% - 14px), 8px); } 30% { transform: translate(calc(-50% + 12px), -6px); }
-  45% { transform: translate(calc(-50% - 8px), 4px); } 60% { transform: translate(calc(-50% + 6px), -2px); } 80% { transform: translate(calc(-50% - 2px), 1px); }
+  0%, 100% { transform: none; }
+  15% { transform: translate(-14px, 8px); } 30% { transform: translate(12px, -6px); }
+  45% { transform: translate(-8px, 4px); } 60% { transform: translate(6px, -2px); } 80% { transform: translate(-2px, 1px); }
 }
 @keyframes monte { from { opacity: 0; transform: translateY(46px); } to { opacity: 1; transform: none; } }
 @keyframes pop { 0% { opacity: 0; transform: scale(0) rotate(-24deg); } 70% { opacity: 1; transform: scale(1.18) rotate(6deg); } 100% { opacity: 1; transform: scale(1) rotate(-4deg); } }
@@ -96,7 +97,7 @@ html, body { width: 1920px; height: 1080px; overflow: hidden; background: transp
   70% { opacity: 1; }
   100% { opacity: 0; transform: translate(var(--dx), var(--dy)) rotate(calc(45deg + var(--r))) scale(1); }
 }
-@keyframes sortie { from { opacity: 1; transform: translateX(-50%) scale(1); filter: blur(0); } to { opacity: 0; transform: translateX(-50%) scale(1.25); filter: blur(10px); } }
+@keyframes sortie { from { opacity: 1; transform: scale(1); filter: blur(0); } to { opacity: 0; transform: scale(1.25); filter: blur(10px); } }
 
 /* Mascotte Curseur à la place de la photo */
 .mascotte { width: 150px; height: 150px; border-radius: 50%; border: 8px solid #fff; background: var(--surface); box-shadow: 8px 8px 0 var(--ombre);

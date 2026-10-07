@@ -21,7 +21,8 @@ const ECRIRE = process.argv.includes('--ecrire');
 const conf = JSON.parse(fs.readFileSync(path.join(ICI, 'seances.json'), 'utf8'));
 const ref = JSON.parse(fs.readFileSync(REFERENCE, 'utf8'));
 const [W, H] = conf.canevas.obs;
-const K = W / conf.canevas.maquette[0]; // 4/3
+const [MW, MH] = conf.canevas.maquette;
+const K = W / MW; // 4/3
 const CANEVAS = '6c69626f-6273-4c00-9d88-c5136d61696e'; // canevas principal d'OBS
 const VERSION = ref.sources[0]?.prev_ver ?? 537001986;
 const OVERLAYS = path.join(RACINE, 'overlays').replaceAll('\\', '/');
@@ -106,9 +107,11 @@ function sourcesCommunes(seance) {
   const chatRef = refSource('Social chatting');
   s.chat = source('Chat', 'browser_source', { url: chatRef.settings.url, width: 440, height: 840, css: CSS_BASE, fps_custom: true, fps: 30 }, { mixers: 0, hotkeys: { ...vide(), 'ObsBrowser.Refresh': [] } });
   // Son des alertes : passé par OBS (sinon les spectateurs ne l'entendent pas) et écouté dans le casque (2 = écoute et sortie).
-  s.alertes = source('Alertes', 'browser_source', { url: '', width: 1920, height: 1080, css: CSS_BASE, reroute_audio: true }, { volume: 0.8, monitoring: 2, hotkeys: { ...vide(), 'ObsBrowser.Refresh': [] } });
+  // Taille de la page StreamElements (1920×1080), étirée sur tout le canevas dans les scènes : en 2560×1440, la page
+  // restait collée en haut à gauche et l'alerte paraissait petite et décentrée (constaté le 2026-10-07).
+  s.alertes = source('Alertes', 'browser_source', { url: '', width: MW, height: MH, css: CSS_BASE, reroute_audio: true }, { volume: 0.8, monitoring: 2, hotkeys: { ...vide(), 'ObsBrowser.Refresh': [] } });
   // Latshow diffuse aussi sur YouTube (multistream StreamElements) : la chaîne YouTube a son propre overlay d'alertes.
-  if (seance.marque === 'latshow') s.alertesYoutube = source('Alertes YouTube', 'browser_source', { url: '', width: 1920, height: 1080, css: CSS_BASE, reroute_audio: true }, { volume: 0.8, monitoring: 2, hotkeys: { ...vide(), 'ObsBrowser.Refresh': [] } });
+  if (seance.marque === 'latshow') s.alertesYoutube = source('Alertes YouTube', 'browser_source', { url: '', width: MW, height: MH, css: CSS_BASE, reroute_audio: true }, { volume: 0.8, monitoring: 2, hotkeys: { ...vide(), 'ObsBrowser.Refresh': [] } });
   return s;
 }
 
@@ -181,8 +184,8 @@ function construire(seance) {
       if (!musiques.has(sc.musique)) { const m = musique(sc.musique); musiques.set(sc.musique, m); sources.push(m); }
       ajouter(musiques.get(sc.musique));
     }
-    ajouter(com.alertes);
-    if (com.alertesYoutube) ajouter(com.alertesYoutube);
+    ajouter(com.alertes, [0, 0, MW, MH], 'etirer');
+    if (com.alertesYoutube) ajouter(com.alertesYoutube, [0, 0, MW, MH], 'etirer');
     const hk = { 'OBSBasic.SelectScene': [touche(sc.touche)] };
     for (const it of items) { hk[`libobs.show_scene_item.${it.id}`] = []; hk[`libobs.hide_scene_item.${it.id}`] = []; }
     scenes.push({ ...source(sc.nom, 'scene', { id_counter: n, custom_size: false, items }, { mixers: 0, hotkeys: hk }), canvas_uuid: CANEVAS });

@@ -43,7 +43,7 @@ Proposé, 6 panneaux 320×100 dans `twitch-latshow\panneaux\` (même modèle : `
 | `a-propos_320x100.png` — À PROPOS · Qui je suis, ce qu'on fait ici | aucun | Moi c'est Latshow. Je streame les jeux qui me plaisent, surtout de la simulation et de l'exploration (No Man's Sky en ce moment), et je monte mes épisodes pour YouTube. Ici on joue par passion, on discute, et personne n'est de trop. |
 | `planning_320x100.png` — PLANNING · Quand me trouver en live | `https://discord.gg/JEwmC44hvh` | Pas d'horaires fixes pour l'instant : le midi quand je peux, l'ASMR le soir. Active la cloche ou rejoins le Discord pour être prévenu à chaque live. |
 | `discord_320x100.png` — DISCORD · La commu, même hors live | `https://discord.gg/JEwmC44hvh` | Annonces des lives, entraide, soirées multi : la commu continue entre deux streams. Clique sur l'image pour nous rejoindre. |
-| `soutenir_320x100.png` — SOUTENIR · Dons, abonnements, follow | `https://streamlabs.com/latshow` (gardé tant que les dons StreamElements ne sont pas reliés à PayPal par le client) | Le follow et l'abonnement, c'est ce qui aide le plus. Si tu veux aller plus loin, un don sert à améliorer le stream : matériel, jeux, confort du live. Merci, vraiment. |
+| `soutenir_320x100.png` — SOUTENIR · Dons, abonnements, follow | `https://streamelements.com/latshow_/tip` (page de dons StreamElements depuis le 2026-10-07, PayPal relié ; remplace `streamlabs.com/latshow`) | Le follow et l'abonnement, c'est ce qui aide le plus. Si tu veux aller plus loin, un don sert à améliorer le stream : matériel, jeux, confort du live. Merci, vraiment. |
 | `materiel_320x100.png` — MATÉRIEL · Ce que j'utilise en live | aucun | Caméra : Logitech MX Brio · Micro : FIFINE K658 · Logiciel : OBS Studio |
 | `regles_320x100.png` — RÈGLES DU CHAT · Pour que ça reste cool | aucun | 1. On reste bienveillant, avec tout le monde. 2. Pas de spoil sur le jeu en cours. 3. Pas de pub ni de lien sans demander. 4. Pas de conseils de jeu non demandés (backseat), sauf si je demande de l'aide. 5. Les modos ont le dernier mot. |
 
@@ -111,7 +111,7 @@ lank.li ; e-mail contact@linedev.fr).
 
 ## Réponses du client (2026-10-07)
 
-ASMR gardé ; même photo partout (celle de Twitch) ; liens dev gardés sur Latshow ; panneau Matériel minimal ; Discord en lien direct ; dons : Streamlabs gardé jusqu’à ce que le client relie PayPal à StreamElements. Validé (« c’est bon, commence ») : publication le 2026-10-07.
+ASMR gardé ; même photo partout (celle de Twitch) ; liens dev gardés sur Latshow ; panneau Matériel minimal ; Discord en lien direct ; dons : Streamlabs gardé jusqu’à ce que le client relie PayPal à StreamElements (fait le 2026-10-07 : panneau Soutenir passé sur la page StreamElements). Validé (« c’est bon, commence ») : publication le 2026-10-07.
 
 ## Questions posées au client
 
