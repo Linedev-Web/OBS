@@ -32,3 +32,7 @@ Tout est prêt dans OBS. Une séance = une collection de scènes (menu **Collect
 | Ctrl+Alt+F10 | Rétablir le micro | | |
 
 Le détail de chaque scène (à quoi elle sert) est sur la page **Live** du cockpit et dans `obs/seances.json`.
+
+## Stream Deck
+
+Touche **Live** en haut à gauche de ta page d’accueil → **Gaming**, **Montage** ou **Dev**. Dans chaque dossier : les 8 scènes (celle à l’antenne est allumée), **Charger la séance** (bonne collection et bon profil d’un coup), **Micro** et **Son** (allumés quand ils sont coupés), **Garder 60 s** (enregistre le dernier moment fort dans `D:StreamRush`, pour en faire un short), **Enregistrer**, et **Live** : appui long pour lancer ou couper le direct.

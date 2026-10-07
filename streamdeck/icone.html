@@ -1,0 +1,35 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><title>Icône Stream Deck</title>
+<!-- Une touche 144x144 rendue par Chrome sans interface : ?m=latshow|linedev &t=Texte (\n = ligne) &e=normal|actif &f=losange|carre|rond|triangle &p=petit texte -->
+<link rel="stylesheet" href="../overlays/commun/polices.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:144px;height:144px;overflow:hidden}
+body{display:flex;flex-direction:column;justify-content:flex-end;padding:16px 14px 18px;font-variant-ligatures:none}
+.latshow{background:#0F0E1A;color:#E9E6FF;font-family:'Inter',sans-serif}
+.latshow.actif{background:#22D3EE;color:#07060F}
+.linedev{background:#FBF8F1;color:#14130F;font-family:'JetBrains Mono',monospace}
+.linedev.actif{background:#F4471B;color:#FBF8F1}
+.forme{position:absolute;left:16px;top:16px;width:14px;height:14px}
+.latshow .forme{background:#22D3EE}.latshow.actif .forme{background:#07060F}
+.linedev .forme{background:#F4471B}.linedev.actif .forme{background:#FBF8F1}
+.losange{transform:rotate(45deg) scale(.85)}.rond{border-radius:50%}
+.triangle{width:0!important;height:0!important;background:none!important;border-left:15px solid #22D3EE;border-top:9px solid transparent;border-bottom:9px solid transparent}
+.latshow.actif .triangle{border-left-color:#07060F}.linedev .triangle{border-left-color:#F4471B}.linedev.actif .triangle{border-left-color:#FBF8F1}
+.t{font-weight:700;font-size:22px;line-height:1.08;white-space:pre-line;letter-spacing:-.01em}
+.latshow .t{font-family:'Inter',sans-serif}
+.linedev .t{font-family:'Archivo Black',sans-serif;font-weight:400;font-size:20px;letter-spacing:-.02em}
+.t.long{font-size:18px}
+.p{margin-top:6px;font-size:13px;opacity:.7;white-space:nowrap}
+.cadre{position:absolute;inset:0;border:2px solid rgba(233,230,255,.12)}
+.linedev .cadre{border-color:#14130F}
+.actif .cadre{border-color:transparent}
+</style></head><body>
+<div class="cadre"></div><div class="forme"></div><div class="t"></div><div class="p"></div>
+<script>
+const q = new URLSearchParams(location.search);
+document.body.className = (q.get('m') || 'latshow') + ' ' + (q.get('e') === 'actif' ? 'actif' : '');
+document.querySelector('.forme').classList.add(q.get('f') || 'losange');
+const t = (q.get('t') || '').replace(/\\n/g, '\n');
+const el = document.querySelector('.t'); el.textContent = t; if (Math.max(...t.split('\n').map(l => l.length)) > 9) el.classList.add('long');
+document.querySelector('.p').textContent = q.get('p') || '';
+</script></body></html>
