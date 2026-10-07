@@ -10,7 +10,7 @@ textes des chaînes. Refonte complète le 2026-10-07 (demande du client : « com
 | Dossier | Contenu |
 |---|---|
 | `obs\seances.json` | **Source unique** : les trois séances (Live — Gaming, Live — Montage, Live — Dev), leurs scènes, touches, rôles, et la position de chaque caméra, capture et chat (`cadres`). Lu aussi par la page Live du cockpit. |
-| `obs\generer.mjs` | Écrit les collections OBS `Live_Gaming.json`, `Live_Montage.json`, `Live_Dev.json` dans `%APPDATA%\obs-studio\basic\scenes\` (`node obs/generer.mjs` simule, `--ecrire` écrit). Reprend caméra, micro, jeu, fenêtre, Discord et chat de la collection Plateau. Ne réécrit jamais la collection ouverte dans OBS ; garde l’adresse des alertes déjà posée. |
+| `obs\generer.mjs` | Écrit les collections OBS `Live_Gaming.json`, `Live_Montage.json`, `Live_Dev.json` dans `%APPDATA%\obs-studio\basic\scenes\` (`node obs/generer.mjs` simule, `--ecrire` écrit). Reprend caméra, micro, jeu, fenêtre, Discord et chat d’une copie de l’ancienne collection Plateau (`scenes_archives_livePlateau_reference.json`), retirée d’OBS le 2026-10-07 : ne pas l’effacer. Ne réécrit jamais la collection ouverte dans OBS ; garde l’adresse des alertes déjà posée. |
 | `overlays\latshow\`, `overlays\linedev\` | Habillages HTML (maquette 1920×1080, sources OBS en 2560×1440). `overlays\commun\scene.js` : mise à l’échelle, textes du jour, compte à rebours. |
 | `overlays\live.js` | Textes du jour (jeu, sujet du cours, étape, prochain live), écrit par la page Live du cockpit, relu toutes les 2 s. |
 | `alertes\streamelements\` | Widgets d’alertes v2 (2026-10-07, façon After Effects : titre qui claque, sticker, bulle drôle, gerbe de losanges, jingle par type). En ligne sur trois overlays : Latshow Twitch, Latshow YouTube, linedev YouTube. `widget.js` identique dans les deux dossiers ; `node test-widget.mjs` ; `apercu.html`. Mise en ligne par l’API StreamElements depuis le tableau de bord (session du client), jamais par copier-coller. Le son des sources « Alertes » d’OBS passe par OBS (sinon les spectateurs ne l’entendent pas). Les sources « Alertes » font **1920×1080** (la taille de la page StreamElements) et sont **étirées** sur le canevas 2560×1440 : en 2560×1440, la page restait collée en haut à gauche et l’alerte paraissait petite et décentrée. |
@@ -18,7 +18,7 @@ textes des chaînes. Refonte complète le 2026-10-07 (demande du client : « com
 | `musique\` | 16 morceaux maison ACE-Step (`composer.py`, `catalogue.json` : graines, régénérables). Joués en boucle par les sources VLC des écrans Démarrage, Pause, Pause bébé, Fin. |
 | `chaines\` | Bannières, panneaux et textes Twitch / YouTube **à valider** : `chaines\A_VALIDER.md`. Rien n’est publié sans le oui du client. |
 | `docs\CHARTE_LIVE.md` | Règles de style (à lire avant de toucher un visuel). |
-| `_archives/ancien-pack/` | Ancien pack (Gaming, GamingV2, Job, Matt, banner_generator.html, ancien README), archivé au ménage du 2026-10-07. Plateau pointe encore sur ses overlays. |
+| `_archives/ancien-pack/` | Ancien pack (Gaming, GamingV2, Job, Matt, banner_generator.html, ancien README), archivé au ménage du 2026-10-07. Plus rien ne s’en sert dans OBS depuis le retrait de la collection Plateau (2026-10-07). |
 
 ## Règles
 

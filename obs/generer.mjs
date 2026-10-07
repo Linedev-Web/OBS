@@ -15,7 +15,9 @@ import { fileURLToPath } from 'node:url';
 const ICI = path.dirname(fileURLToPath(import.meta.url));
 const RACINE = path.resolve(ICI, '..');
 const SCENES_OBS = path.join(process.env.APPDATA, 'obs-studio', 'basic', 'scenes');
-const REFERENCE = path.join(SCENES_OBS, 'Plateau.json');
+// Réglages des périphériques (caméra, micro, jeu, fenêtre, Discord, chat) : copie de l'ancienne collection Plateau,
+// retirée d'OBS le 2026-10-07 et gardée hors de sa liste pour servir de référence.
+const REFERENCE = path.join(SCENES_OBS, '_archives_live', 'Plateau_reference.json');
 const ECRIRE = process.argv.includes('--ecrire');
 
 const conf = JSON.parse(fs.readFileSync(path.join(ICI, 'seances.json'), 'utf8'));
