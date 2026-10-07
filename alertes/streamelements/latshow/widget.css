@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Russo+One&display=block');
+
+/* Alertes Latshow — charte des lives (D:\Stream\OBS\docs\CHARTE_LIVE.md) : nuit, texte clair, un seul accent cyan. */
+:root {
+  --surface: #0F0E1A;
+  --texte: #E9E6FF;
+  --texte-2: rgba(233, 230, 255, .62);
+  --trait: rgba(233, 230, 255, .14);
+  --accent: #22D3EE;
+  --haut: 40px;
+}
+
+html, body { margin: 0; padding: 0; background: transparent; overflow: hidden; }
+
+.scene {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  font-family: 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Bandeau en haut au centre : loin de la caméra (bas droite) et du centre du jeu. */
+.alerte {
+  position: absolute;
+  top: var(--haut);
+  left: 50%;
+  box-sizing: border-box;
+  min-width: 460px;
+  max-width: 880px;
+  padding: 24px 40px 26px;
+  background: var(--surface);
+  border: 1px solid var(--trait);
+  border-radius: 4px;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, .38);
+  text-align: center;
+  opacity: 0;
+  transform: translate(-50%, -14px);
+}
+.alerte[hidden] { display: none; }
+
+.trait {
+  display: block;
+  width: 12px;
+  height: 12px;
+  margin: 0 auto 16px;
+  background: var(--accent);
+  transform: rotate(45deg) scale(0);
+}
+
+.type {
+  margin: 0;
+  font: 700 16px/1 'Inter', sans-serif;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.ligne {
+  margin: 14px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  column-gap: 12px;
+  row-gap: 4px;
+}
+
+.pseudo {
+  max-width: 800px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font: 400 44px/1.1 'Russo One', sans-serif;
+  text-transform: uppercase;
+  color: var(--texte);
+}
+
+.detail {
+  font: 400 26px/1.25 'Inter', sans-serif;
+  color: var(--texte);
+}
+
+.message {
+  display: none;
+  max-width: 780px;
+  margin: 14px auto 0;
+  font: 400 22px/1.4 'Inter', sans-serif;
+  color: var(--texte-2);
+  overflow-wrap: anywhere;
+}
+.avec-message .message { display: block; }
+
+/* Mouvement : court, lent, sans rebond. */
+.entree { animation: entree 420ms cubic-bezier(.2, .7, .2, 1) forwards; }
+.entree .trait { animation: losange 420ms 180ms ease-out forwards; }
+.sortie { animation: sortie 340ms ease-in forwards; }
+.sortie .trait { transform: rotate(45deg) scale(1); }
+@keyframes losange { to { transform: rotate(45deg) scale(1); } }
+
+@keyframes entree {
+  from { opacity: 0; transform: translate(-50%, -14px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+@keyframes sortie {
+  from { opacity: 1; transform: translate(-50%, 0); }
+  to { opacity: 0; transform: translate(-50%, -10px); }
+}

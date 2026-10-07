@@ -1,0 +1,16 @@
+{
+  "plateforme": "youtube",
+  "duree": 7,
+  "entre": 0.6,
+  "haut": 40,
+  "messageMax": 140,
+  "filtrer": true,
+  "devise": "",
+  "afficherAbonneYoutube": true,
+  "afficherMembre": true,
+  "afficherSuperchat": true,
+  "afficherDon": true,
+  "donMin": 0,
+  "son": "",
+  "volume": 40
+}

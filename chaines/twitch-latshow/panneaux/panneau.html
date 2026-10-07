@@ -1,0 +1,10 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><link rel="stylesheet" href="../../latshow.css"><style>
+body{width:320px;height:100px;position:relative;background:var(--surface)}
+.cadre{position:absolute;inset:0;border:1px solid var(--trait)}
+.barre{position:absolute;left:24px;top:24px;width:4px;height:52px}
+.t{position:absolute;left:44px;top:22px;font-size:27px}
+.s{position:absolute;left:44px;top:58px;font-size:16px;color:var(--texte2)}
+</style></head><body><div class="cadre"></div><div class="barre"></div>
+<div class="t marque" id="t"></div><div class="s" id="s"></div>
+<script>const q=new URLSearchParams(location.search);t.textContent=q.get('t');s.textContent=q.get('s');</script>
+</body></html>

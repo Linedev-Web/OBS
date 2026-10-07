@@ -1,0 +1,127 @@
+{
+  "widgetName": {
+    "type": "hidden",
+    "value": "linedev — Alertes"
+  },
+  "widgetAuthor": {
+    "type": "hidden",
+    "value": "linedev"
+  },
+  "widgetDuration": {
+    "type": "hidden",
+    "value": 9
+  },
+  "tester": {
+    "type": "button",
+    "label": "Tester toutes les alertes",
+    "value": "tester",
+    "group": "Général"
+  },
+  "plateforme": {
+    "type": "dropdown",
+    "label": "Plateforme de ce compte",
+    "value": "youtube",
+    "options": {
+      "auto": "Automatique",
+      "twitch": "Twitch",
+      "youtube": "YouTube"
+    },
+    "group": "Général"
+  },
+  "duree": {
+    "type": "number",
+    "label": "Durée d'une alerte (secondes)",
+    "value": 7,
+    "min": 3,
+    "max": 20,
+    "step": 1,
+    "group": "Général"
+  },
+  "entre": {
+    "type": "number",
+    "label": "Pause entre deux alertes (secondes)",
+    "value": 0.6,
+    "min": 0,
+    "max": 5,
+    "step": 0.1,
+    "group": "Général"
+  },
+  "haut": {
+    "type": "number",
+    "label": "Distance au bord haut de l'écran (px)",
+    "value": 40,
+    "min": 0,
+    "max": 400,
+    "step": 4,
+    "group": "Général"
+  },
+  "messageMax": {
+    "type": "number",
+    "label": "Longueur maximale d'un message (0 = aucun message)",
+    "value": 140,
+    "min": 0,
+    "max": 300,
+    "step": 10,
+    "group": "Général"
+  },
+  "filtrer": {
+    "type": "checkbox",
+    "label": "Filtrer les grossièretés (filtre StreamElements)",
+    "value": true,
+    "group": "Général"
+  },
+  "devise": {
+    "type": "text",
+    "label": "Devise des dons (vide = celle du compte, ex. EUR)",
+    "value": "",
+    "group": "Général"
+  },
+  "afficherAbonneYoutube": {
+    "type": "checkbox",
+    "label": "Abonnés à la chaîne (YouTube)",
+    "value": true,
+    "group": "Événements"
+  },
+  "afficherMembre": {
+    "type": "checkbox",
+    "label": "Membres (YouTube)",
+    "value": true,
+    "group": "Événements"
+  },
+  "afficherSuperchat": {
+    "type": "checkbox",
+    "label": "Super Chat (YouTube)",
+    "value": true,
+    "group": "Événements"
+  },
+  "afficherDon": {
+    "type": "checkbox",
+    "label": "Dons (StreamElements)",
+    "value": true,
+    "group": "Événements"
+  },
+  "donMin": {
+    "type": "number",
+    "label": "Dons : montant minimum affiché",
+    "value": 0,
+    "min": 0,
+    "max": 10000,
+    "step": 0.5,
+    "group": "Événements"
+  },
+  "son": {
+    "type": "sound-input",
+    "label": "Son de l'alerte (optionnel)",
+    "value": "",
+    "group": "Son"
+  },
+  "volume": {
+    "type": "slider",
+    "label": "Volume du son",
+    "value": 40,
+    "min": 0,
+    "max": 100,
+    "step": 1,
+    "group": "Son"
+  }
+}

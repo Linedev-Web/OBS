@@ -1,0 +1,12 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><title>Démarrage</title>
+<link rel="stylesheet" href="latshow.css"><script src="../commun/scene.js"></script></head><body><div id="scene">
+<div class="fond"></div><div class="filigrane">LATSHOW</div>
+<div class="marque">LATSHOW</div>
+<div class="bloc"><div class="surtitre" id="genre">Live gaming</div>
+<div class="titre">Ça commence</div>
+<div class="texte" data-si><span>Au programme : </span><b data-live="titre"></b></div>
+<div class="compte chiffres" data-compte data-fini="J’arrive">05:00</div></div>
+<div class="zone" style="left:1416px;top:120px;width:440px;height:840px"></div><div class="cadre" style="left:1414px;top:118px;width:444px;height:844px"></div><div class="zone-titre" style="left:1416px;top:88px">Le chat</div>
+<div class="pied"><span><b>LATSHOW</b> sur Twitch et YouTube</span><span>Un follow, ça aide vraiment</span></div>
+<div class="barre" data-compte-barre></div>
+</div><script>document.addEventListener('live',()=>{document.getElementById('genre').textContent=document.documentElement.dataset.seance==='montage'?'Live montage':'Live gaming';});</script></body></html>

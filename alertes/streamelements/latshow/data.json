@@ -1,0 +1,22 @@
+{
+  "plateforme": "auto",
+  "duree": 7,
+  "entre": 0.6,
+  "haut": 40,
+  "messageMax": 140,
+  "filtrer": true,
+  "devise": "",
+  "afficherFollow": true,
+  "afficherSub": true,
+  "afficherBits": true,
+  "bitsMin": 1,
+  "afficherRaid": true,
+  "raidMin": 1,
+  "afficherAbonneYoutube": true,
+  "afficherMembre": true,
+  "afficherSuperchat": true,
+  "afficherDon": true,
+  "donMin": 0,
+  "son": "",
+  "volume": 40
+}

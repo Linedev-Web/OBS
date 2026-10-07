@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Aperçu des alertes</title>
+<!--
+  Aperçu local des widgets StreamElements (latshow\ et linedev\), sans compte StreamElements.
+  Charge widget.html / widget.css / widget.js / fields.json tels quels, simule onWidgetLoad puis envoie des événements.
+  À ouvrir par un petit serveur local (fetch ne lit pas file://), depuis ce dossier :
+      python -m http.server 8765      puis  http://localhost:8765/apercu.html
+  Modes :
+      apercu.html                      boutons pour déclencher chaque alerte, comme en live
+      apercu.html?planche=latshow      toutes les alertes figées sur une planche (captures de contrôle)
+      apercu.html?planche=linedev
+-->
+<style>
+  body { margin: 0; background: #1b1a22; color: #eee; font: 14px/1.4 system-ui, sans-serif; }
+  .barre { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 12px 16px; }
+  .barre button, .barre select { font: inherit; padding: 6px 10px; }
+  .scene-apercu { width: 1920px; height: 1080px; border: 0; transform: scale(.5); transform-origin: 0 0; }
+  .cadre-apercu { width: 960px; height: 540px; overflow: hidden; margin: 0 16px 16px; }
+  .planche { padding: 16px; display: grid; gap: 10px; }
+  .planche h2 { margin: 6px 0 0; font: 600 13px/1 system-ui; color: #aaa; text-transform: uppercase; letter-spacing: .1em; }
+  .vignette { width: 960px; height: 150px; overflow: hidden; border-radius: 4px; }
+  .vignette iframe { width: 1920px; height: 300px; border: 0; transform: scale(.5); transform-origin: 0 0; }
+</style>
+</head>
+<body>
+<script>
+'use strict';
+
+const FONDS = {
+  latshow: "#07060F url('_apercu/fond-jeu.jpg') center / cover",
+  // Éditeur sombre simulé : la scène Cours de linedev montre l'éditeur du client sous l'alerte.
+  linedev: '#1E1E1E repeating-linear-gradient(180deg, transparent 0 38px, rgba(255,255,255,.035) 38px 40px)',
+};
+
+// Événements factices, au format de onEventReceived (obj.detail = { listener, event }).
+const EXEMPLES = {
+  latshow: [
+    ['Follow', 'follower-latest', { name: 'voituresballon' }],
+    ['Abonnement 3 mois', 'subscriber-latest', { name: 'Stifious', amount: 3, tier: '1000', message: 'Trois mois déjà, toujours aussi chill les lives.' }],
+    ['Abonnements offerts', 'subscriber-latest', { name: 'FyzDesign', sender: 'FyzDesign', amount: 5, bulkGifted: true }],
+    ['Abonnement offert', 'subscriber-latest', { name: 'Nouveau_Viewer', sender: 'Stifious', amount: 1, gifted: true }],
+    ['Don + message piégé', 'tip-latest', { name: 'FyzDesign', amount: 5, message: '<script>alert("pirate")<\/script><b>gras</b> et un très long message pour vérifier que la coupe se fait proprement sur un mot entier sans déborder du cadre, même quand le spectateur raconte sa vie.' }],
+    ['Bits', 'cheer-latest', { name: 'Roadside_Fan', amount: 500, message: 'Cheer500 Bien joué pour la pêche' }],
+    ['Raid', 'raid-latest', { name: 'LaConfrerieDesRats', amount: 42 }],
+    ['Pseudo très long', 'follower-latest', { name: 'UnPseudoVraimentTresTresLongDeTwitch' }],
+  ],
+  latshowYoutube: [
+    ['Abonné YouTube', 'subscriber-latest', { name: 'Marie Dupont' }],
+    ['Membre YouTube', 'sponsor-latest', { name: 'Marie Dupont', amount: 2 }],
+    ['Super Chat', 'superchat-latest', { name: 'Marie Dupont', amount: 10, message: 'Tu joues à quoi ensuite ?' }],
+  ],
+  linedev: [
+    ['Abonné', 'subscriber-latest', { name: 'Julien' }],
+    ['Membre', 'sponsor-latest', { name: 'Camille', amount: 3, message: 'Merci pour les explications sur les closures.' }],
+    ['Super Chat', 'superchat-latest', { name: 'Samir', amount: 5, message: 'Tu peux refaire le passage sur async/await ?' }],
+    ['Don + message piégé', 'tip-latest', { name: 'Léa', amount: 2.5, message: '<img src=x onerror=alert(1)> merci pour le cours, je commence enfin à comprendre les promesses en JavaScript, à la semaine prochaine !' }],
+    ['Adhésions offertes', 'sponsor-latest', { name: 'Thomas', sender: 'Thomas', amount: 5, bulkGifted: true }],
+  ],
+};
+
+const lire = (url) => fetch(url).then((r) => {
+  if (!r.ok) throw new Error(`${url} : ${r.status}`);
+  return r.text();
+});
+
+async function chargerWidget(marque) {
+  const [html, css, js, champs] = await Promise.all(
+    ['widget.html', 'widget.css', 'widget.js', 'fields.json'].map((f) => lire(`${marque}/${f}`)),
+  );
+  const reglages = {};
+  for (const [cle, champ] of Object.entries(JSON.parse(champs))) {
+    if (!cle.startsWith('widget') && champ.type !== 'button') reglages[cle] = champ.value;
+  }
+  return { html, css, js, reglages };
+}
+
+// JSON placé dans une balise script : « < » échappé, sinon un message contenant la balise fermante la refermerait.
+const enScript = (valeur) => JSON.stringify(valeur).replace(/</g, '\\u003c');
+
+function documentWidget(w, { marque, plateforme, reglages, evenements, fond }) {
+  const charge = {
+    fieldData: { ...w.reglages, ...reglages },
+    channel: { username: 'apercu', provider: plateforme },
+    currency: { code: 'EUR', name: 'Euro', symbol: '€' },
+    session: { data: {} },
+    recents: [],
+  };
+  return `<!doctype html><html lang="fr"><head><meta charset="utf-8"><style>${w.css}</style>
+<style>html,body{background:${fond || FONDS[marque]};height:100%}</style></head><body>${w.html}
+<script>${w.js.replace(/<\/script/gi, '<\\/script')}<\/script>
+<script>
+(async () => {
+  await document.fonts.ready;
+  window.dispatchEvent(new CustomEvent('onWidgetLoad', { detail: ${enScript(charge)} }));
+  const evenements = ${enScript(evenements || [])};
+  evenements.forEach((d, i) => setTimeout(() => window.dispatchEvent(new CustomEvent('onEventReceived', { detail: d })), 60 + i * 40));
+  window.envoyer = (d) => window.dispatchEvent(new CustomEvent('onEventReceived', { detail: d }));
+})();
+<\/script></body></html>`;
+}
+
+async function planche(marque) {
+  const w = await chargerWidget(marque);
+  const conteneur = document.createElement('div');
+  conteneur.className = 'planche';
+  document.body.append(conteneur);
+  const series = marque === 'latshow'
+    ? [...EXEMPLES.latshow.map((e) => [...e, 'twitch']), ...EXEMPLES.latshowYoutube.map((e) => [...e, 'youtube'])]
+    : EXEMPLES.linedev.map((e) => [...e, 'youtube']);
+  for (const [titre, listener, event, plateforme] of series) {
+    const h = document.createElement('h2');
+    h.textContent = `${titre} · ${plateforme}`;
+    const v = document.createElement('div');
+    v.className = 'vignette';
+    const f = document.createElement('iframe');
+    f.srcdoc = documentWidget(w, { marque, plateforme, reglages: { duree: 600, filtrer: false }, evenements: [{ listener, event }] });
+    v.append(f);
+    conteneur.append(h, v);
+  }
+}
+
+async function interactif() {
+  const barre = document.createElement('div');
+  barre.className = 'barre';
+  const choix = document.createElement('select');
+  for (const [valeur, libelle] of [['latshow|twitch', 'Latshow · Twitch'], ['latshow|youtube', 'Latshow · YouTube'], ['linedev|youtube', 'linedev · YouTube']]) {
+    const o = document.createElement('option');
+    o.value = valeur;
+    o.textContent = libelle;
+    choix.append(o);
+  }
+  const boutons = document.createElement('span');
+  const cadre = document.createElement('div');
+  cadre.className = 'cadre-apercu';
+  const scene = document.createElement('iframe');
+  scene.className = 'scene-apercu';
+  cadre.append(scene);
+  barre.append(choix, boutons);
+  document.body.append(barre, cadre);
+
+  async function monter() {
+    const [marque, plateforme] = choix.value.split('|');
+    const w = await chargerWidget(marque);
+    scene.srcdoc = documentWidget(w, { marque, plateforme, reglages: { filtrer: false } });
+    const liste = marque === 'linedev' ? EXEMPLES.linedev : plateforme === 'youtube' ? EXEMPLES.latshowYoutube : EXEMPLES.latshow;
+    boutons.replaceChildren(...liste.map(([titre, listener, event]) => {
+      const b = document.createElement('button');
+      b.textContent = titre;
+      b.onclick = () => scene.contentWindow.envoyer({ listener, event });
+      return b;
+    }), (() => {
+      const b = document.createElement('button');
+      b.textContent = 'Passer (event:skip)';
+      b.onclick = () => scene.contentWindow.envoyer({ listener: 'event:skip', event: {} });
+      return b;
+    })(), (() => {
+      const b = document.createElement('button');
+      b.textContent = 'Bouton « Tester »';
+      b.onclick = () => scene.contentWindow.envoyer({ listener: 'event:test', event: { listener: 'widget-button', field: 'tester', value: 'tester' } });
+      return b;
+    })());
+  }
+  choix.onchange = monter;
+  await monter();
+}
+
+const marquePlanche = new URLSearchParams(location.search).get('planche');
+(marquePlanche ? planche(marquePlanche) : interactif()).catch((erreur) => {
+  document.body.textContent = `Erreur : ${erreur.message} (ouvrir cette page par un serveur local, voir l'en-tête du fichier).`;
+});
+</script>
+</body>
+</html>

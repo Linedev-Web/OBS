@@ -1,0 +1,386 @@
+{
+  "_note": "Source unique des séances de live : lue par obs/generer.mjs (collections OBS) et par la page Live du cockpit. Coordonnées en unités de maquette 1920x1080 (le canevas OBS est en 2560x1440 : x 4/3).",
+  "canevas": {
+    "maquette": [
+      1920,
+      1080
+    ],
+    "obs": [
+      2560,
+      1440
+    ],
+    "fps": 60
+  },
+  "raccourcis_communs": {
+    "micro_couper": "Ctrl+Alt+F9",
+    "micro_retablir": "Ctrl+Alt+F10"
+  },
+  "seances": [
+    {
+      "id": "gaming",
+      "nom": "Live — Gaming",
+      "marque": "latshow",
+      "diffusion": [
+        "Twitch latshow",
+        "YouTube Latshow"
+      ],
+      "profil": "Live Latshow",
+      "scenes": [
+        {
+          "id": "demarrage",
+          "nom": "Démarrage",
+          "touche": "Ctrl+Alt+F1",
+          "overlay": "latshow/demarrage.html",
+          "musique": "latshow/demarrage",
+          "chat": true,
+          "role": "Écran d'attente avec compte à rebours (5 min, repart à chaque affichage)."
+        },
+        {
+          "id": "principal",
+          "nom": "Jeu",
+          "touche": "Ctrl+Alt+F2",
+          "overlay": "latshow/jeu.html",
+          "capture": "jeu",
+          "camera": "coin",
+          "role": "Le jeu en plein écran, ta caméra en bas à droite."
+        },
+        {
+          "id": "secondaire",
+          "nom": "Jeu sans caméra",
+          "touche": "Ctrl+Alt+F3",
+          "capture": "jeu",
+          "role": "Le jeu seul, pour une cinématique ou un moment à montrer en grand."
+        },
+        {
+          "id": "discussion",
+          "nom": "Discussion",
+          "touche": "Ctrl+Alt+F4",
+          "overlay": "latshow/discussion.html",
+          "camera": "grande",
+          "chat": true,
+          "role": "Ta caméra en grand et le chat : début de live, questions, fin de partie."
+        },
+        {
+          "id": "pause",
+          "nom": "Pause",
+          "touche": "Ctrl+Alt+F5",
+          "overlay": "latshow/pause.html",
+          "musique": "latshow/pause",
+          "chat": true,
+          "micro_coupe": true,
+          "role": "Pause café. Le micro est coupé automatiquement."
+        },
+        {
+          "id": "pause-bebe",
+          "nom": "Pause bébé",
+          "touche": "Ctrl+Alt+F6",
+          "overlay": "latshow/pause-bebe.html",
+          "musique": "latshow/bebe",
+          "chat": true,
+          "micro_coupe": true,
+          "role": "Le petit a besoin de toi. Micro coupé automatiquement."
+        },
+        {
+          "id": "souci",
+          "nom": "Souci technique",
+          "touche": "Ctrl+Alt+F7",
+          "overlay": "latshow/souci.html",
+          "musique": "latshow/pause",
+          "micro_coupe": true,
+          "role": "Le jeu plante ou le son déraille : on cache tout le temps de régler."
+        },
+        {
+          "id": "fin",
+          "nom": "Fin",
+          "touche": "Ctrl+Alt+F8",
+          "overlay": "latshow/fin.html",
+          "musique": "latshow/fin",
+          "camera": "fin",
+          "role": "Merci, prochain live, raid."
+        }
+      ]
+    },
+    {
+      "id": "montage",
+      "nom": "Live — Montage",
+      "marque": "latshow",
+      "diffusion": [
+        "Twitch latshow",
+        "YouTube Latshow"
+      ],
+      "profil": "Live Latshow",
+      "scenes": [
+        {
+          "id": "demarrage",
+          "nom": "Démarrage",
+          "touche": "Ctrl+Alt+F1",
+          "overlay": "latshow/demarrage.html",
+          "musique": "latshow/demarrage",
+          "chat": true,
+          "role": "Écran d'attente avec compte à rebours."
+        },
+        {
+          "id": "principal",
+          "nom": "Montage",
+          "touche": "Ctrl+Alt+F2",
+          "overlay": "latshow/montage.html",
+          "capture": "fenetre",
+          "camera": "colonne",
+          "chat": true,
+          "role": "Ton logiciel de montage cadré, caméra et chat dans la colonne de droite."
+        },
+        {
+          "id": "secondaire",
+          "nom": "Aperçu plein écran",
+          "touche": "Ctrl+Alt+F3",
+          "overlay": "latshow/jeu.html",
+          "capture": "fenetre",
+          "camera": "coin",
+          "role": "La fenêtre en grand pour montrer un rendu, ta caméra en bas à droite."
+        },
+        {
+          "id": "discussion",
+          "nom": "Discussion",
+          "touche": "Ctrl+Alt+F4",
+          "overlay": "latshow/discussion.html",
+          "camera": "grande",
+          "chat": true,
+          "role": "Ta caméra en grand et le chat."
+        },
+        {
+          "id": "pause",
+          "nom": "Pause",
+          "touche": "Ctrl+Alt+F5",
+          "overlay": "latshow/pause.html",
+          "musique": "latshow/pause",
+          "chat": true,
+          "micro_coupe": true,
+          "role": "Pause café, micro coupé."
+        },
+        {
+          "id": "pause-bebe",
+          "nom": "Pause bébé",
+          "touche": "Ctrl+Alt+F6",
+          "overlay": "latshow/pause-bebe.html",
+          "musique": "latshow/bebe",
+          "chat": true,
+          "micro_coupe": true,
+          "role": "Micro coupé automatiquement."
+        },
+        {
+          "id": "souci",
+          "nom": "Souci technique",
+          "touche": "Ctrl+Alt+F7",
+          "overlay": "latshow/souci.html",
+          "musique": "latshow/pause",
+          "micro_coupe": true,
+          "role": "On cache tout le temps de régler."
+        },
+        {
+          "id": "fin",
+          "nom": "Fin",
+          "touche": "Ctrl+Alt+F8",
+          "overlay": "latshow/fin.html",
+          "musique": "latshow/fin",
+          "camera": "fin",
+          "role": "Merci, prochain live, raid."
+        }
+      ]
+    },
+    {
+      "id": "dev",
+      "nom": "Live — Dev",
+      "marque": "linedev",
+      "diffusion": [
+        "YouTube linedev"
+      ],
+      "profil": "Live linedev",
+      "scenes": [
+        {
+          "id": "demarrage",
+          "nom": "Démarrage",
+          "touche": "Ctrl+Alt+F1",
+          "overlay": "linedev/demarrage.html",
+          "musique": "linedev/demarrage",
+          "chat": true,
+          "role": "Écran d'attente : sujet du cours et compte à rebours."
+        },
+        {
+          "id": "principal",
+          "nom": "Cours",
+          "touche": "Ctrl+Alt+F2",
+          "overlay": "linedev/cours.html",
+          "capture": "fenetre",
+          "camera": "colonne",
+          "chat": true,
+          "role": "Ton éditeur ou ton navigateur cadré en grand, caméra et chat à droite, titre et étape du cours en bas."
+        },
+        {
+          "id": "secondaire",
+          "nom": "Face à face",
+          "touche": "Ctrl+Alt+F3",
+          "overlay": "linedev/face-a-face.html",
+          "capture": "fenetre",
+          "camera": "cote",
+          "role": "Toi et l'écran côte à côte, pour poser une notion avant de coder."
+        },
+        {
+          "id": "discussion",
+          "nom": "Questions",
+          "touche": "Ctrl+Alt+F4",
+          "overlay": "linedev/discussion.html",
+          "camera": "grande",
+          "chat": true,
+          "role": "Ta caméra en grand et le chat, pour répondre aux questions."
+        },
+        {
+          "id": "pause",
+          "nom": "Pause",
+          "touche": "Ctrl+Alt+F5",
+          "overlay": "linedev/pause.html",
+          "musique": "linedev/pause",
+          "chat": true,
+          "micro_coupe": true,
+          "role": "Pause café, micro coupé."
+        },
+        {
+          "id": "pause-bebe",
+          "nom": "Pause bébé",
+          "touche": "Ctrl+Alt+F6",
+          "overlay": "linedev/pause-bebe.html",
+          "musique": "linedev/bebe",
+          "chat": true,
+          "micro_coupe": true,
+          "role": "Micro coupé automatiquement."
+        },
+        {
+          "id": "souci",
+          "nom": "Souci technique",
+          "touche": "Ctrl+Alt+F7",
+          "overlay": "linedev/souci.html",
+          "musique": "linedev/pause",
+          "micro_coupe": true,
+          "role": "On cache tout le temps de régler."
+        },
+        {
+          "id": "fin",
+          "nom": "Fin",
+          "touche": "Ctrl+Alt+F8",
+          "overlay": "linedev/fin.html",
+          "musique": "linedev/fin",
+          "camera": "fin",
+          "role": "Récap du cours, prochain rendez-vous."
+        }
+      ]
+    }
+  ],
+  "cadres": {
+    "_note": "Rectangles [x, y, largeur, hauteur] en unités de maquette 1920x1080. Les overlays dessinent leurs bordures exactement autour de ces rectangles.",
+    "latshow": {
+      "camera.coin": [
+        1504,
+        836,
+        384,
+        216
+      ],
+      "camera.grande": [
+        64,
+        152,
+        1280,
+        720
+      ],
+      "camera.colonne": [
+        1600,
+        0,
+        320,
+        400
+      ],
+      "camera.fin": [
+        1240,
+        300,
+        576,
+        324
+      ],
+      "capture.cadree": [
+        0,
+        0,
+        1600,
+        900
+      ],
+      "chat.discussion": [
+        1376,
+        152,
+        480,
+        720
+      ],
+      "chat.colonne": [
+        1600,
+        400,
+        320,
+        680
+      ],
+      "chat.attente": [
+        1416,
+        120,
+        440,
+        840
+      ]
+    },
+    "linedev": {
+      "camera.colonne": [
+        1600,
+        0,
+        320,
+        400
+      ],
+      "camera.cote": [
+        64,
+        176,
+        832,
+        468
+      ],
+      "camera.grande": [
+        64,
+        64,
+        1280,
+        720
+      ],
+      "camera.fin": [
+        1240,
+        300,
+        576,
+        324
+      ],
+      "capture.cadree": [
+        0,
+        0,
+        1600,
+        900
+      ],
+      "capture.cote": [
+        960,
+        176,
+        896,
+        504
+      ],
+      "chat.colonne": [
+        1600,
+        400,
+        320,
+        500
+      ],
+      "chat.discussion": [
+        1376,
+        64,
+        480,
+        720
+      ],
+      "chat.attente": [
+        1416,
+        120,
+        440,
+        840
+      ]
+    }
+  }
+}

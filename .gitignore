@@ -1,0 +1,29 @@
+# Comme les autres dépôts de D:\Stream : seuls le code et le texte sont suivis.
+# Sons, vidéos, images, polices et binaires restent sur le disque (sauvegarde NAS), jamais dans git.
+*.mp3
+*.wav
+*.ogg
+*.flac
+*.mp4
+*.webm
+*.mov
+*.mkv
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.webp
+*.woff
+*.woff2
+*.ttf
+*.otf
+*.zip
+_Archives_travail/
+musique/_composer.log
+__pycache__/
+
+# Secrets : jamais versionnés
+.env
+.env.*
+# Export de profil OBS : contient la clé de stream Twitch
+Sans_nom/

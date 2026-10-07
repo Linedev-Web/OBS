@@ -1,0 +1,8 @@
+/* Charte « La Ligne » (D:\Stream\Pilotage\docs\chaine_linedev\commun.css), polices en local */
+@font-face{font-family:'Archivo Black';src:url('../overlays/commun/polices/archivo-black-400.woff2') format('woff2')}
+@font-face{font-family:'JetBrains Mono';src:url('../overlays/commun/polices/jetbrains-mono-400.woff2') format('woff2');font-weight:100 800}
+:root{--papier:#EFE9DD;--grille:#DCD4C3;--encre:#14130F;--verm:#F4471B;--clair:#FBF8F1;--gris:#8C8677}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--papier);overflow:hidden;font-variant-ligatures:none}
+.papier{position:absolute;inset:0;background-color:var(--papier);
+ background-image:linear-gradient(var(--grille) 1px,transparent 1px),linear-gradient(90deg,var(--grille) 1px,transparent 1px);background-size:60px 60px}

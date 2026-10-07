@@ -1,0 +1,13 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><title>Montage</title>
+<link rel="stylesheet" href="latshow.css"><script src="../commun/scene.js"></script>
+<style>.bande{position:absolute;left:0;top:900px;width:1600px;height:180px;background:var(--nuit);border-top:2px solid var(--trait)}
+.bande .surtitre{position:absolute;left:56px;top:48px}.bande .projet{position:absolute;left:56px;top:88px;font:700 40px/1.2 'Inter';max-width:1150px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bande .m{position:absolute;right:56px;top:76px;font:400 30px/1 'Russo One';letter-spacing:.04em}
+.colonne{position:absolute;left:1600px;top:0;width:320px;height:1080px;background:var(--nuit);border-left:2px solid var(--trait)}</style></head><body><div id="scene">
+<!-- Capture (0,0,1600,900), caméra (1600,0,320,400) et chat (1600,400,320,680) posés par-dessus dans OBS -->
+<div class="zone" style="left:0;top:0;width:1600px;height:900px;background:#000"></div>
+<div class="colonne"></div>
+<div class="zone" style="left:1600px;top:0;width:320px;height:400px"></div>
+<div class="zone-titre" style="left:1624px;top:424px">Le chat</div>
+<div class="bande"><div class="surtitre">En montage</div><div class="projet" data-live="titre" data-defaut="Montage en direct"></div><div class="m">LATSHOW</div></div>
+</div></body></html>

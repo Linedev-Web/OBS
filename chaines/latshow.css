@@ -1,0 +1,14 @@
+/* Identité Latshow pour les visuels de chaîne (charte : D:\Stream\OBS\docs\CHARTE_LIVE.md) */
+@font-face{font-family:'Inter';src:url('../overlays/commun/polices/inter-400.woff2') format('woff2');font-weight:100 900}
+@font-face{font-family:'Russo One';src:url('../overlays/commun/polices/russo-one-400.ttf') format('truetype')}
+:root{--nuit:#07060F;--surface:#0F0E1A;--trait:rgba(233,230,255,.14);--texte:#E9E6FF;--texte2:rgba(233,230,255,.62);--cyan:#22D3EE;--violet:#A855F7}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:var(--nuit);color:var(--texte);font-family:'Inter',sans-serif;overflow:hidden;-webkit-font-smoothing:antialiased}
+.marque{font-family:'Russo One',sans-serif;text-transform:uppercase;letter-spacing:.02em;line-height:1}
+.barre{width:48px;height:4px;background:var(--cyan)}
+.coins{position:absolute;inset:var(--marge,32px)}
+.coins i{position:absolute;width:28px;height:28px;border-color:rgba(233,230,255,.28);border-style:solid;border-width:0}
+.coins i:nth-child(1){left:0;top:0;border-left-width:2px;border-top-width:2px}
+.coins i:nth-child(2){right:0;top:0;border-right-width:2px;border-top-width:2px}
+.coins i:nth-child(3){left:0;bottom:0;border-left-width:2px;border-bottom-width:2px}
+.coins i:nth-child(4){right:0;bottom:0;border-right-width:2px;border-bottom-width:2px}

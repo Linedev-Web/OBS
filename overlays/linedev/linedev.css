@@ -1,0 +1,45 @@
+/* linedev — lives dev, format cours. Charte « La Ligne » : docs/CHARTE_LIVE.md */
+@import url('../commun/base.css');
+:root{--papier:#EFE9DD;--grille:#DCD4C3;--encre:#14130F;--verm:#F4471B;--clair:#FBF8F1;--gris:#8C8677;--chaine:#F2D46B}
+body{color:var(--encre);font-family:'JetBrains Mono',monospace;font-variant-ligatures:none}
+.papier{position:absolute;inset:0;background-color:var(--papier);background-image:linear-gradient(var(--grille) 1px,transparent 1px),linear-gradient(90deg,var(--grille) 1px,transparent 1px);background-size:60px 60px}
+.gout{position:absolute;left:0;top:0;bottom:0;width:96px;border-right:2px solid var(--grille);font:400 22px/60px 'JetBrains Mono';color:var(--gris);text-align:right;padding:0 20px 0 0}
+.gout .actif{color:var(--verm);font-weight:700}
+.marque{position:absolute;left:160px;top:72px;display:flex;align-items:center;gap:16px;font:400 34px/1 'Archivo Black';letter-spacing:-.02em}
+.marque span{color:var(--verm)}
+.marque svg{width:34px;height:auto}
+.com{font:400 24px/1 'JetBrains Mono';color:var(--gris)}
+.titre{font:400 104px/1 'Archivo Black';letter-spacing:-.03em;margin-top:22px;position:relative;display:inline-block}
+.titre::after{content:"";display:inline-block;width:.15em;height:.15em;background:var(--verm);margin-left:.05em}
+.texte{font:400 30px/1.5 'JetBrains Mono';margin-top:52px;max-width:1100px}
+.texte b{color:var(--verm);font-weight:700}
+.bloc{position:absolute;left:160px;top:250px}
+.code{display:inline-block;background:var(--encre);color:var(--clair);font:400 30px/1.6 'JetBrains Mono';padding:22px 32px;border-radius:14px;white-space:pre;margin-top:44px}
+.k{color:var(--verm)}.s{color:var(--chaine)}.c{color:var(--gris)}
+.compte{font:400 168px/1 'Archivo Black';letter-spacing:-.03em;margin-top:18px}
+.compte-fini .compte{color:var(--verm)}
+.depuis{font:400 24px/1 'JetBrains Mono';color:var(--gris);margin-top:40px}
+.depuis span{color:var(--encre);font-weight:700}
+.pied{position:absolute;left:160px;bottom:64px;display:flex;gap:40px;font:400 22px/1 'JetBrains Mono';color:var(--gris)}
+.pied b{color:var(--encre);font-weight:700}
+.barre{position:absolute;left:0;right:0;bottom:0;height:6px;background:var(--verm);transform-origin:0 50%;transform:scaleX(0)}
+.cadre{position:absolute;border:3px solid var(--encre);pointer-events:none}
+.etiquette{position:absolute;font:700 16px/1 'JetBrains Mono';background:var(--encre);color:var(--clair);padding:8px 12px}
+.zone{position:absolute;background:var(--clair)}
+.zone.sombre{background:var(--encre)}
+.zone-titre{position:absolute;font:400 18px/1 'JetBrains Mono';color:var(--gris)}
+.bande{position:absolute;left:0;top:900px;width:1920px;height:180px;background:var(--clair);border-top:3px solid var(--encre)}
+.bande .num{position:absolute;left:0;top:0;width:96px;height:180px;border-right:2px solid var(--grille);font:700 22px/1 'JetBrains Mono';color:var(--verm);text-align:right;padding:46px 20px 0 0}
+.bande .com{position:absolute;left:136px;top:40px;font-size:20px}
+.bande .cours{position:absolute;left:136px;top:72px;font:400 44px/1.1 'Archivo Black';letter-spacing:-.02em;max-width:1180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bande .etape{position:absolute;left:136px;top:128px;font:400 24px/1 'JetBrains Mono';color:var(--gris);max-width:1180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bande .etape b{color:var(--verm);font-weight:700}
+.bande .prog{position:absolute;right:300px;top:78px;display:flex;gap:8px}
+.bande .prog i{width:28px;height:10px;background:var(--grille);border-radius:3px}
+.bande .prog i.fait{background:var(--encre)}.bande .prog i.actif{background:var(--verm)}
+.bande .m{position:absolute;right:56px;top:66px;display:flex;align-items:center;gap:14px;font:400 30px/1 'Archivo Black';letter-spacing:-.02em}
+.bande .m span{color:var(--verm)}.bande .m svg{width:30px;height:auto}
+.bloc,.marque,.pied{opacity:0;transform:translateY(12px);transition:opacity .9s ease,transform .9s ease}
+.pret .bloc,.pret .marque,.pret .pied{opacity:1;transform:none}
+.pret .pied{transition-delay:.25s}
+[hidden]{display:none!important}
