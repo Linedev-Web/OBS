@@ -8,5 +8,11 @@
   "resub": "https://cdn.streamelements.com/uploads/01m4b2xgnn2wm4zzzqk74ra4tc.mp3",
   "sub": "https://cdn.streamelements.com/uploads/01m4b2xgdyjxez3w1ghxzrxdpc.mp3",
   "superchat": "https://cdn.streamelements.com/uploads/01m4b2xjc452htt5543fykcjg6.mp3",
-  "tip": "https://cdn.streamelements.com/uploads/01m4b2xh4h3ghr0trg59ztq9v2.mp3"
+  "tip": "https://cdn.streamelements.com/uploads/01m4b2xh4h3ghr0trg59ztq9v2.mp3",
+  "linedev": {
+    "abonne": "https://cdn.streamelements.com/uploads/01m4b3c61q73tnghdftc9x2vhj.mp3",
+    "membre": "https://cdn.streamelements.com/uploads/01m4b3c6b5ypbd7g5yy7zn3p7d.mp3",
+    "superchat": "https://cdn.streamelements.com/uploads/01m4b3c6jw71bb5kr2vgvvjg6c.mp3",
+    "tip": "https://cdn.streamelements.com/uploads/01m4b3c6tra5fphxtzb5629rhm.mp3"
+  }
 }

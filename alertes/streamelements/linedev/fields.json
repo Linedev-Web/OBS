@@ -31,7 +31,7 @@
   "duree": {
     "type": "number",
     "label": "Durée d'une alerte (secondes)",
-    "value": 7,
+    "value": 6.5,
     "min": 3,
     "max": 20,
     "step": 1,
@@ -76,6 +76,48 @@
     "value": "",
     "group": "Général"
   },
+  "afficherFollow": {
+    "type": "checkbox",
+    "label": "Follows (Twitch)",
+    "value": true,
+    "group": "Événements"
+  },
+  "afficherSub": {
+    "type": "checkbox",
+    "label": "Abonnements et abonnements offerts (Twitch)",
+    "value": true,
+    "group": "Événements"
+  },
+  "afficherBits": {
+    "type": "checkbox",
+    "label": "Bits (Twitch)",
+    "value": true,
+    "group": "Événements"
+  },
+  "bitsMin": {
+    "type": "number",
+    "label": "Bits : minimum affiché",
+    "value": 1,
+    "min": 1,
+    "max": 100000,
+    "step": 1,
+    "group": "Événements"
+  },
+  "afficherRaid": {
+    "type": "checkbox",
+    "label": "Raids (Twitch)",
+    "value": true,
+    "group": "Événements"
+  },
+  "raidMin": {
+    "type": "number",
+    "label": "Raids : nombre minimum de personnes",
+    "value": 1,
+    "min": 0,
+    "max": 10000,
+    "step": 1,
+    "group": "Événements"
+  },
   "afficherAbonneYoutube": {
     "type": "checkbox",
     "label": "Abonnés à la chaîne (YouTube)",
@@ -115,10 +157,70 @@
     "value": "",
     "group": "Son"
   },
+  "son_follow": {
+    "type": "sound-input",
+    "label": "Jingle — Follow",
+    "value": "",
+    "group": "Sons"
+  },
+  "son_abonne": {
+    "type": "sound-input",
+    "label": "Jingle — Abonné YouTube",
+    "value": "https://cdn.streamelements.com/uploads/01m4b3c61q73tnghdftc9x2vhj.mp3",
+    "group": "Sons"
+  },
+  "son_sub": {
+    "type": "sound-input",
+    "label": "Jingle — Abonnement",
+    "value": "",
+    "group": "Sons"
+  },
+  "son_resub": {
+    "type": "sound-input",
+    "label": "Jingle — Réabonnement",
+    "value": "",
+    "group": "Sons"
+  },
+  "son_gift": {
+    "type": "sound-input",
+    "label": "Jingle — Cadeau",
+    "value": "",
+    "group": "Sons"
+  },
+  "son_membre": {
+    "type": "sound-input",
+    "label": "Jingle — Membre YouTube",
+    "value": "https://cdn.streamelements.com/uploads/01m4b3c6b5ypbd7g5yy7zn3p7d.mp3",
+    "group": "Sons"
+  },
+  "son_tip": {
+    "type": "sound-input",
+    "label": "Jingle — Don",
+    "value": "https://cdn.streamelements.com/uploads/01m4b3c6tra5fphxtzb5629rhm.mp3",
+    "group": "Sons"
+  },
+  "son_superchat": {
+    "type": "sound-input",
+    "label": "Jingle — Super Chat",
+    "value": "https://cdn.streamelements.com/uploads/01m4b3c6jw71bb5kr2vgvvjg6c.mp3",
+    "group": "Sons"
+  },
+  "son_cheer": {
+    "type": "sound-input",
+    "label": "Jingle — Bits",
+    "value": "",
+    "group": "Sons"
+  },
+  "son_raid": {
+    "type": "sound-input",
+    "label": "Jingle — Raid",
+    "value": "",
+    "group": "Sons"
+  },
   "volume": {
     "type": "slider",
     "label": "Volume du son",
-    "value": 40,
+    "value": 70,
     "min": 0,
     "max": 100,
     "step": 1,

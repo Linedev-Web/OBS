@@ -22,6 +22,12 @@ const BULLES = {
   cheer: ['Ça pique… merci !', 'Pluie de bits !', 'Merci !'],
   raid: ['Bienvenue à tous !', 'La horde arrive', 'Installez-vous !'],
 };
+const BULLES_DEV = {
+  abonne: ['Bienvenue dans le cours !', 'git commit -m "merci"', 'Un dev de plus !'],
+  membre: ['Tu fais partie du code', 'npm install soutien', 'Merci, vraiment !'],
+  tip: ['Ça compile !', 'Le café est offert', 'Merci, vraiment !'],
+  superchat: ['Ça compile !', 'Énorme, merci', 'Merci !!'],
+};
 const COULEURS_ECLAT = ['var(--couleur)', '#FFFFFF', 'var(--couleur)', '#A855F7', '#22D3EE'];
 const AVATAR_DEFAUT = 'https://static-cdn.jtvnw.net/jtv_user_pictures/40408b0c-5cdc-4c32-b698-dc2e8a6de3bf-profile_image-600x600.png';
 const PSEUDO_MAX = 25;          // caractères ; au-delà, coupé avec « … »
@@ -298,7 +304,7 @@ function remplir(alerte) {
   carte.classList.add(`theme-${alerte.cle || 'follow'}`);
   if ($('titre')) lettres($('titre'), TITRES[alerte.cle] || alerte.type);
   if ($('type')) $('type').textContent = alerte.type;
-  if ($('bulle')) { const choix = BULLES[alerte.cle] || BULLES.follow; $('bulle').textContent = choix[Math.floor(Math.random() * choix.length)]; }
+  if ($('bulle')) { const dev = document.querySelector('[data-marque=linedev]'); const choix = (dev && BULLES_DEV[alerte.cle]) || BULLES[alerte.cle] || BULLES.follow; $('bulle').textContent = choix[Math.floor(Math.random() * choix.length)]; }
   if ($('avatar')) $('avatar').src = (reglages.avatar && String(reglages.avatar).trim()) || AVATAR_DEFAUT;
   eclat();
   if ($('titre')) lettres($('pseudo'), alerte.nom); else $('pseudo').textContent = alerte.nom;

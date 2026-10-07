@@ -9,6 +9,9 @@ travail par-ci par-là », « je ne veux pas que ça se voie que c'est fait par 
 - Néon, halos lumineux, flous de verre, dégradés partout, particules, étincelles, emoji, icônes décoratives en série.
 - Textes génériques en anglais (« Starting soon », « BRB ») : tout est en français, avec la voix du client (tutoiement).
 - Animations qui rebondissent ou tournent. Le mouvement est rare, lent, utile (fondu, glissement court).
+  **Exception : les alertes** (demande du client, 2026-10-07 : « je veux du fun, comme une animation After Effects ») —
+  titre qui claque en zoom, secousse, sticker qui saute, bulle de BD drôle, gerbe de losanges, jingle à chaque alerte.
+  Toujours sans trait décoratif ni néon.
 - Plus de deux tailles de titre par écran, plus d'une couleur d'accent par écran.
 - **Aucun trait décoratif à côté ou sous un texte** (demande du client, 2026-10-07 : « ça fait IA, les traits, tout le monde en a ») :
   un point ou une petite forme géométrique (losange, carré) à la place. Les lignes de structure (bord d'un cadre, séparation

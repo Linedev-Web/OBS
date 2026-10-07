@@ -45,7 +45,7 @@ function environnement() {
     console, Intl, Promise, Number, String, Math, Boolean, Error,
     setTimeout: (f, ms = 0) => { minuteurs.push({ t: maintenant + ms, f }); return minuteurs.length; },
     clearTimeout: () => {},
-    document: { getElementById: element, documentElement: element('racine'), createElement: creer },
+    document: { getElementById: element, documentElement: element('racine'), createElement: creer, querySelector: () => null },
     window: { addEventListener: (nom, f) => { ecouteurs[nom] = f; } },
     Audio: class { constructor(url) { this.url = url; } play() { return Promise.resolve(); } },
   };

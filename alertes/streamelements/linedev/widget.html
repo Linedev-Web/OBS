@@ -1,7 +1,16 @@
-<div class="scene" aria-live="polite">
+<div class="scene" data-marque="linedev" aria-live="polite">
   <div class="alerte" id="alerte" hidden>
-    <p class="rang rang-type"><span class="type" id="type"></span></p>
-    <p class="rang rang-nom"><span class="pseudo" id="pseudo"></span><span class="detail" id="detail"></span></p>
-    <p class="rang rang-message"><span class="commentaire" aria-hidden="true">//</span> <span class="message" id="message"></span></p>
+    <div class="bande" aria-hidden="true"></div>
+    <div class="eclat" id="eclat" aria-hidden="true"></div>
+    <p class="titre" id="titre"></p>
+    <div class="carte">
+      <div class="sticker"><span class="mascotte"><svg viewBox="0 0 150 190" xmlns="http://www.w3.org/2000/svg"><rect x="35" y="20" width="80" height="120" rx="14" fill="#F2573A" stroke="#0B111A" stroke-width="7"/><rect x="50" y="140" width="18" height="30" rx="6" fill="#0B111A"/><rect x="82" y="140" width="18" height="30" rx="6" fill="#0B111A"/><circle cx="60" cy="68" r="10" fill="#fff" stroke="#0B111A" stroke-width="4"/><circle cx="92" cy="68" r="10" fill="#fff" stroke="#0B111A" stroke-width="4"/><circle cx="62" cy="70" r="5" fill="#0B111A"/><circle cx="94" cy="70" r="5" fill="#0B111A"/><path d="M62 100 Q76 114 90 100" fill="none" stroke="#0B111A" stroke-width="6" stroke-linecap="round"/><path d="M115 95 Q140 80 136 50" fill="none" stroke="#0B111A" stroke-width="7" stroke-linecap="round"/></svg></span><span class="bulle" id="bulle"></span></div>
+      <div class="textes">
+        <p class="pseudo" id="pseudo"></p>
+        <p class="detail" id="detail"></p>
+        <p class="message" id="message"></p>
+      </div>
+    </div>
+    <div class="flash" aria-hidden="true"></div>
   </div>
 </div>
