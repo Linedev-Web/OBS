@@ -106,6 +106,8 @@ function sourcesCommunes(seance) {
   const chatRef = refSource('Social chatting');
   s.chat = source('Chat', 'browser_source', { url: chatRef.settings.url, width: 440, height: 840, css: CSS_BASE, fps_custom: true, fps: 30 }, { mixers: 0, hotkeys: { ...vide(), 'ObsBrowser.Refresh': [] } });
   s.alertes = source('Alertes', 'browser_source', { url: '', width: 1920, height: 1080, css: CSS_BASE }, { hotkeys: { ...vide(), 'ObsBrowser.Refresh': [] } });
+  // Latshow diffuse aussi sur YouTube (multistream StreamElements) : la chaîne YouTube a son propre overlay d'alertes.
+  if (seance.marque === 'latshow') s.alertesYoutube = source('Alertes YouTube', 'browser_source', { url: '', width: 1920, height: 1080, css: CSS_BASE }, { hotkeys: { ...vide(), 'ObsBrowser.Refresh': [] } });
   return s;
 }
 
@@ -179,6 +181,7 @@ function construire(seance) {
       ajouter(musiques.get(sc.musique));
     }
     ajouter(com.alertes);
+    if (com.alertesYoutube) ajouter(com.alertesYoutube);
     const hk = { 'OBSBasic.SelectScene': [touche(sc.touche)] };
     for (const it of items) { hk[`libobs.show_scene_item.${it.id}`] = []; hk[`libobs.hide_scene_item.${it.id}`] = []; }
     scenes.push({ ...source(sc.nom, 'scene', { id_counter: n, custom_size: false, items }, { mixers: 0, hotkeys: hk }), canvas_uuid: CANEVAS });
@@ -207,8 +210,12 @@ for (const seance of conf.seances) {
   if (ouverte === FICHIERS[seance.id]) { console.log(`IGNORÉ ${FICHIERS[seance.id]} : collection ouverte dans OBS, change de collection puis relance.`); continue; }
   if (fs.existsSync(fichier)) {
     // L'adresse des alertes StreamElements (avec sa clé) n'est posée que dans OBS : on la garde d'une génération à l'autre.
-    const ancienne = JSON.parse(fs.readFileSync(fichier, 'utf8')).sources.find((s) => s.name === 'Alertes')?.settings?.url;
-    if (ancienne) col.sources.find((s) => s.name === 'Alertes').settings.url = ancienne;
+    const avant = JSON.parse(fs.readFileSync(fichier, 'utf8')).sources;
+    for (const nom of ['Alertes', 'Alertes YouTube']) {
+      const ancienne = avant.find((s) => s.name === nom)?.settings?.url;
+      const neuve = col.sources.find((s) => s.name === nom);
+      if (ancienne && neuve) neuve.settings.url = ancienne;
+    }
     const archives = path.join(SCENES_OBS, '_archives_live');
     fs.mkdirSync(archives, { recursive: true });
     fs.copyFileSync(fichier, path.join(archives, `${horodatage}_${FICHIERS[seance.id]}`));
