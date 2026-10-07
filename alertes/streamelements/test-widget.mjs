@@ -30,17 +30,22 @@ function environnement() {
       remove(...c) { c.forEach((x) => elements[id].classes.delete(x)); },
       toggle(c, v) { if (v) elements[id].classes.add(c); else elements[id].classes.delete(c); },
       replace(a, b) { if (!elements[id].classes.delete(a)) return false; elements[id].classes.add(b); return true; },
+      [Symbol.iterator]() { return elements[id].classes.values(); },
     },
     style: { setProperty(k, v) { elements[id].proprietes[k] = v; } },
+    enfants: [],
+    appendChild(e) { elements[id].enfants.push(e); return e; },
     set innerHTML(_) { throw new Error('innerHTML interdit'); },
   };
+  // v2 : lettres animées et gerbe de losanges créent des éléments (jamais d'innerHTML)
+  const creer = () => ({ className: '', textContent: '', style: { setProperty() {} } });
   const ecouteurs = {};
   const affichees = [];
   const contexte = {
     console, Intl, Promise, Number, String, Math, Boolean, Error,
     setTimeout: (f, ms = 0) => { minuteurs.push({ t: maintenant + ms, f }); return minuteurs.length; },
     clearTimeout: () => {},
-    document: { getElementById: element, documentElement: element('racine') },
+    document: { getElementById: element, documentElement: element('racine'), createElement: creer },
     window: { addEventListener: (nom, f) => { ecouteurs[nom] = f; } },
     Audio: class { constructor(url) { this.url = url; } play() { return Promise.resolve(); } },
   };

@@ -27,3 +27,5 @@ __pycache__/
 .env.*
 # Export de profil OBS : contient la clé de stream Twitch
 Sans_nom/
+alertes/sons/_Archives_travail/
+alertes/sons/_composer.log

@@ -1,0 +1,292 @@
+{
+ "_note": "Sons des alertes, composés par composer_jingles.py. Minutage : whoosh 0 s, impact et jingle à 0,25 s.",
+ "licence": "Jingle composé en local par ACE-Step 1.5 (poids MIT, repackagés Comfy-Org en Apache 2.0) ; bruitages Pixabay Content License (usage commercial libre) et Kenney CC0. Usage commercial autorisé.",
+ "lufs_cible": -14.0,
+ "duree_ace_s": 16,
+ "garde_s": 3.5,
+ "sons": [
+  {
+   "fichier": "follow.mp3",
+   "marque": "latshow",
+   "style": "bright energetic synth pluck melody, catchy short jingle, punchy drums, uplifting electro pop notification, short",
+   "bpm": 128,
+   "tonalite": "C major",
+   "graine": 901,
+   "extrait_ace_s": [
+    5.15,
+    8.65
+   ],
+   "duree_s": 3.75,
+   "lufs": -14.2,
+   "bruitages": [
+    "whoosh-short.mp3",
+    "impact-bass-1.mp3",
+    "sparkle.mp3"
+   ],
+   "voix_detectee": false
+  },
+  {
+   "fichier": "sub.mp3",
+   "marque": "latshow",
+   "style": "triumphant electro fanfare, bright brass synths, rising build, big punchy drums, victorious celebration jingle, short",
+   "bpm": 128,
+   "tonalite": "D major",
+   "graine": 902,
+   "extrait_ace_s": [
+    7.05,
+    10.55
+   ],
+   "duree_s": 3.75,
+   "lufs": -14.3,
+   "bruitages": [
+    "whoosh-short.mp3",
+    "impact-bass-2.mp3",
+    "sparkle.mp3"
+   ],
+   "voix_detectee": false
+  },
+  {
+   "fichier": "resub.mp3",
+   "marque": "latshow",
+   "style": "triumphant electro fanfare, bright brass synths, rising build, big punchy drums, victorious celebration jingle, short, warm and grateful",
+   "bpm": 126,
+   "tonalite": "E major",
+   "graine": 903,
+   "extrait_ace_s": [
+    5.8,
+    9.3
+   ],
+   "duree_s": 3.75,
+   "lufs": -14.2,
+   "bruitages": [
+    "whoosh-short.mp3",
+    "impact-bass-2.mp3",
+    "sparkle.mp3"
+   ],
+   "voix_detectee": false
+  },
+  {
+   "fichier": "gift.mp3",
+   "marque": "latshow",
+   "style": "festive party electro jingle, joyful horn synths, bright energetic drums, celebration, confetti mood, short",
+   "bpm": 130,
+   "tonalite": "F major",
+   "graine": 904,
+   "extrait_ace_s": [
+    7.95,
+    11.45
+   ],
+   "duree_s": 3.75,
+   "lufs": -14.3,
+   "bruitages": [
+    "whoosh-short.mp3",
+    "impact-bass-2.mp3",
+    "sparkle.mp3",
+    "pop.mp3"
+   ],
+   "voix_detectee": false
+  },
+  {
+   "fichier": "tip.mp3",
+   "marque": "latshow",
+   "style": "euphoric uplifting chord stab, bright bells and chimes, sparkling happy electro jingle, punchy drums, short",
+   "bpm": 124,
+   "tonalite": "G major",
+   "graine": 905,
+   "extrait_ace_s": [
+    4.5,
+    8.0
+   ],
+   "duree_s": 3.75,
+   "lufs": -14.3,
+   "bruitages": [
+    "whoosh-short.mp3",
+    "impact-bass-1.mp3",
+    "chips-collide-2.ogg",
+    "chime.mp3"
+   ],
+   "voix_detectee": false
+  },
+  {
+   "fichier": "cheer.mp3",
+   "marque": "latshow",
+   "style": "playful bouncy electro motif, quirky fun synth lead, retro video game jingle, punchy drums, short",
+   "bpm": 140,
+   "tonalite": "A major",
+   "graine": 906,
+   "extrait_ace_s": [
+    10.3,
+    13.8
+   ],
+   "duree_s": 3.75,
+   "lufs": -14.2,
+   "bruitages": [
+    "whoosh-short.mp3",
+    "impact-bass-1.mp3",
+    "pop.mp3"
+   ],
+   "voix_detectee": false
+  },
+  {
+   "fichier": "raid.mp3",
+   "marque": "latshow",
+   "style": "epic drum roll build up into a powerful festival drop, massive synths, hype, energetic, short",
+   "bpm": 128,
+   "tonalite": "F minor",
+   "graine": 907,
+   "extrait_ace_s": [
+    6.25,
+    9.75
+   ],
+   "duree_s": 3.75,
+   "lufs": -14.3,
+   "bruitages": [
+    "whoosh-short.mp3",
+    "impact-bass-2.mp3"
+   ],
+   "voix_detectee": false
+  },
+  {
+   "fichier": "yt-abonne.mp3",
+   "marque": "latshow",
+   "style": "bright energetic synth pluck melody, catchy short jingle, punchy drums, uplifting electro pop notification, short",
+   "bpm": 126,
+   "tonalite": "G major",
+   "graine": 908,
+   "extrait_ace_s": [
+    3.85,
+    7.35
+   ],
+   "duree_s": 3.75,
+   "lufs": -14.4,
+   "bruitages": [
+    "whoosh-short.mp3",
+    "impact-bass-1.mp3",
+    "sparkle.mp3"
+   ],
+   "voix_detectee": false
+  },
+  {
+   "fichier": "yt-membre.mp3",
+   "marque": "latshow",
+   "style": "triumphant electro fanfare, bright brass synths, rising build, big punchy drums, victorious celebration jingle, short",
+   "bpm": 128,
+   "tonalite": "A major",
+   "graine": 909,
+   "extrait_ace_s": [
+    7.5,
+    11.0
+   ],
+   "duree_s": 3.75,
+   "lufs": -14.2,
+   "bruitages": [
+    "whoosh-short.mp3",
+    "impact-bass-2.mp3",
+    "sparkle.mp3"
+   ],
+   "voix_detectee": false
+  },
+  {
+   "fichier": "superchat.mp3",
+   "marque": "latshow",
+   "style": "euphoric uplifting chord stab, bright bells and chimes, sparkling happy electro jingle, punchy drums, short",
+   "bpm": 124,
+   "tonalite": "C major",
+   "graine": 910,
+   "extrait_ace_s": [
+    1.45,
+    4.95
+   ],
+   "duree_s": 3.75,
+   "lufs": -14.3,
+   "bruitages": [
+    "whoosh-short.mp3",
+    "impact-bass-1.mp3",
+    "chips-collide-2.ogg",
+    "chime.mp3"
+   ],
+   "voix_detectee": false
+  },
+  {
+   "fichier": "linedev-abonne.mp3",
+   "marque": "linedev",
+   "style": "bright chillhop jingle, warm rhodes chord stab, crisp punchy boom bap drums, positive, short",
+   "bpm": 96,
+   "tonalite": "F major",
+   "graine": 911,
+   "extrait_ace_s": [
+    2.3,
+    5.8
+   ],
+   "duree_s": 3.75,
+   "lufs": -14.2,
+   "bruitages": [
+    "whoosh-short.mp3",
+    "impact-bass-1.mp3",
+    "pop.mp3"
+   ],
+   "voix_detectee": false
+  },
+  {
+   "fichier": "linedev-membre.mp3",
+   "marque": "linedev",
+   "style": "uplifting lofi hip hop jingle, jazzy keys, punchy drums, warm and celebratory, short",
+   "bpm": 92,
+   "tonalite": "Bb major",
+   "graine": 912,
+   "extrait_ace_s": [
+    3.9,
+    7.4
+   ],
+   "duree_s": 3.75,
+   "lufs": -14.3,
+   "bruitages": [
+    "whoosh-short.mp3",
+    "impact-bass-1.mp3",
+    "sparkle.mp3"
+   ],
+   "voix_detectee": false
+  },
+  {
+   "fichier": "linedev-superchat.mp3",
+   "marque": "linedev",
+   "style": "bright lofi jingle with bells and chimes, jazzy major chords, warm and happy, punchy drums, short",
+   "bpm": 90,
+   "tonalite": "D major",
+   "graine": 913,
+   "extrait_ace_s": [
+    7.65,
+    11.15
+   ],
+   "duree_s": 3.75,
+   "lufs": -14.3,
+   "bruitages": [
+    "whoosh-short.mp3",
+    "impact-bass-1.mp3",
+    "chips-collide-2.ogg",
+    "chime.mp3"
+   ],
+   "voix_detectee": false
+  },
+  {
+   "fichier": "linedev-tip.mp3",
+   "marque": "linedev",
+   "style": "happy jazzy lofi jingle, warm piano chords, bright chimes, crisp drums, short",
+   "bpm": 94,
+   "tonalite": "E major",
+   "graine": 914,
+   "extrait_ace_s": [
+    3.05,
+    6.55
+   ],
+   "duree_s": 3.75,
+   "lufs": -14.3,
+   "bruitages": [
+    "whoosh-short.mp3",
+    "impact-bass-1.mp3",
+    "chips-collide-2.ogg"
+   ],
+   "voix_detectee": false
+  }
+ ]
+}

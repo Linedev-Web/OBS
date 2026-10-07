@@ -1,6 +1,6 @@
 {
   "plateforme": "auto",
-  "duree": 7,
+  "duree": 6.5,
   "entre": 0.6,
   "haut": 40,
   "messageMax": 140,
@@ -18,5 +18,16 @@
   "afficherDon": true,
   "donMin": 0,
   "son": "",
-  "volume": 40
+  "volume": 70,
+  "avatar": "",
+  "son_follow": "https://cdn.streamelements.com/uploads/01m4b2x6t82qwg0hajyf4eaxmn.mp3",
+  "son_abonne": "https://cdn.streamelements.com/uploads/01m4b2xhwjskq68e9s2vmy1krz.mp3",
+  "son_sub": "https://cdn.streamelements.com/uploads/01m4b2xgdyjxez3w1ghxzrxdpc.mp3",
+  "son_resub": "https://cdn.streamelements.com/uploads/01m4b2xgnn2wm4zzzqk74ra4tc.mp3",
+  "son_gift": "https://cdn.streamelements.com/uploads/01m4b2xgwxa8zzyeb2957bbrjs.mp3",
+  "son_membre": "https://cdn.streamelements.com/uploads/01m4b2xj4m2tkyw8vh8jyzzee7.mp3",
+  "son_tip": "https://cdn.streamelements.com/uploads/01m4b2xh4h3ghr0trg59ztq9v2.mp3",
+  "son_superchat": "https://cdn.streamelements.com/uploads/01m4b2xjc452htt5543fykcjg6.mp3",
+  "son_cheer": "https://cdn.streamelements.com/uploads/01m4b2xhcg74w79e2je524bc0d.mp3",
+  "son_raid": "https://cdn.streamelements.com/uploads/01m4b2xhnavf6qa3ym85g251kq.mp3"
 }

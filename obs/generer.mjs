@@ -46,7 +46,7 @@ function source(nom, id, settings, extra = {}) {
     prev_ver: VERSION, name: nom, uuid: crypto.randomUUID(), id, versioned_id: extra.versioned_id ?? id, settings,
     mixers: extra.mixers ?? 255, sync: extra.sync ?? 0, flags: extra.flags ?? 0, volume: extra.volume ?? 1, balance: 0.5,
     enabled: true, muted: false, 'push-to-mute': false, 'push-to-mute-delay': 0, 'push-to-talk': false, 'push-to-talk-delay': 0,
-    hotkeys: extra.hotkeys ?? vide(), deinterlace_mode: 0, deinterlace_field_order: 0, monitoring_type: 0, private_settings: {},
+    hotkeys: extra.hotkeys ?? vide(), deinterlace_mode: 0, deinterlace_field_order: 0, monitoring_type: extra.monitoring ?? 0, private_settings: {},
     ...(extra.filters ? { filters: extra.filters } : {}),
   };
 }
@@ -105,9 +105,10 @@ function sourcesCommunes(seance) {
   }
   const chatRef = refSource('Social chatting');
   s.chat = source('Chat', 'browser_source', { url: chatRef.settings.url, width: 440, height: 840, css: CSS_BASE, fps_custom: true, fps: 30 }, { mixers: 0, hotkeys: { ...vide(), 'ObsBrowser.Refresh': [] } });
-  s.alertes = source('Alertes', 'browser_source', { url: '', width: 1920, height: 1080, css: CSS_BASE }, { hotkeys: { ...vide(), 'ObsBrowser.Refresh': [] } });
+  // Son des alertes : passé par OBS (sinon les spectateurs ne l'entendent pas) et écouté dans le casque (2 = écoute et sortie).
+  s.alertes = source('Alertes', 'browser_source', { url: '', width: 1920, height: 1080, css: CSS_BASE, reroute_audio: true }, { volume: 0.8, monitoring: 2, hotkeys: { ...vide(), 'ObsBrowser.Refresh': [] } });
   // Latshow diffuse aussi sur YouTube (multistream StreamElements) : la chaîne YouTube a son propre overlay d'alertes.
-  if (seance.marque === 'latshow') s.alertesYoutube = source('Alertes YouTube', 'browser_source', { url: '', width: 1920, height: 1080, css: CSS_BASE }, { hotkeys: { ...vide(), 'ObsBrowser.Refresh': [] } });
+  if (seance.marque === 'latshow') s.alertesYoutube = source('Alertes YouTube', 'browser_source', { url: '', width: 1920, height: 1080, css: CSS_BASE, reroute_audio: true }, { volume: 0.8, monitoring: 2, hotkeys: { ...vide(), 'ObsBrowser.Refresh': [] } });
   return s;
 }
 

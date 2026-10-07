@@ -1,109 +1,99 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Russo+One&display=block');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;800;900&family=Russo+One&display=block');
 
-/* Alertes Latshow — charte des lives (D:\Stream\OBS\docs\CHARTE_LIVE.md) : nuit, texte clair, un seul accent cyan. */
+/* Alertes Latshow v2 (2026-10-07) — demande du client : « ça sort pas du commun, je veux du fun, un avatar, de la musique,
+   comme une animation After Effects ». Titre qui claque en zoom, secousse à l'impact, sticker de sa tête, bulle de BD,
+   pseudo lettre par lettre, gerbe de losanges, sortie en zoom. Toujours aucun trait décoratif (charte des lives). */
 :root {
+  --nuit: #07060F;
   --surface: #0F0E1A;
-  --texte: #E9E6FF;
-  --texte-2: rgba(233, 230, 255, .62);
-  --trait: rgba(233, 230, 255, .14);
-  --accent: #22D3EE;
+  --texte: #FFFFFF;
+  --couleur: #22D3EE;
+  --ombre: #0B6E80;
   --haut: 40px;
 }
+.theme-follow, .theme-abonne { --couleur: #22D3EE; --ombre: #0B6E80; }
+.theme-sub, .theme-resub, .theme-gift, .theme-membre { --couleur: #A855F7; --ombre: #4C1D95; }
+.theme-tip, .theme-superchat, .theme-cheer { --couleur: #FBBF24; --ombre: #92400E; }
+.theme-raid { --couleur: #FB7185; --ombre: #9F1239; }
 
-html, body { margin: 0; padding: 0; background: transparent; overflow: hidden; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 1920px; height: 1080px; overflow: hidden; background: transparent; }
+.scene { position: absolute; inset: 0; }
 
-.scene {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  font-family: 'Inter', system-ui, sans-serif;
-  -webkit-font-smoothing: antialiased;
-}
-
-/* Bandeau en haut au centre : loin de la caméra (bas droite) et du centre du jeu. */
-.alerte {
-  position: absolute;
-  top: var(--haut);
-  left: 50%;
-  box-sizing: border-box;
-  min-width: 460px;
-  max-width: 880px;
-  padding: 24px 40px 26px;
-  background: var(--surface);
-  border: 1px solid var(--trait);
-  border-radius: 4px;
-  box-shadow: 0 18px 44px rgba(0, 0, 0, .38);
-  text-align: center;
-  opacity: 0;
-  transform: translate(-50%, -14px);
-}
+.alerte { position: absolute; left: 50%; top: var(--haut); width: 1200px; height: 420px; transform: translateX(-50%); }
 .alerte[hidden] { display: none; }
 
-.trait {
-  display: block;
-  width: 12px;
-  height: 12px;
-  margin: 0 auto 16px;
-  background: var(--accent);
-  transform: rotate(45deg) scale(0);
-}
+/* Bandeau qui balaie : la couleur de l'événement, en biais */
+.bande { position: absolute; left: 90px; right: 90px; top: 34px; height: 170px; background: var(--couleur);
+  transform: translateX(-140%) skewX(-16deg); }
+.bande::after { content: ""; position: absolute; inset: 14px 26px; background: var(--nuit); }
 
-.type {
-  margin: 0;
-  font: 700 16px/1 'Inter', sans-serif;
-  letter-spacing: .16em;
-  text-transform: uppercase;
-  color: var(--accent);
-}
+/* Titre géant */
+.titre { position: absolute; left: 0; right: 0; top: 52px; text-align: center; font: 400 90px/1.2 'Russo One', sans-serif;
+  color: var(--texte); letter-spacing: .02em; text-transform: uppercase; white-space: nowrap;
+  text-shadow: 7px 7px 0 var(--ombre); opacity: 0; }
+.titre .l { display: inline-block; white-space: pre; }
 
-.ligne {
-  margin: 14px 0 0;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: center;
-  column-gap: 12px;
-  row-gap: 4px;
-}
+/* Flash blanc à l'impact */
+.flash { position: absolute; inset: -40px; background: #fff; opacity: 0; mix-blend-mode: screen; pointer-events: none; }
 
-.pseudo {
-  max-width: 800px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  font: 400 44px/1.1 'Russo One', sans-serif;
-  text-transform: uppercase;
-  color: var(--texte);
-}
-
-.detail {
-  font: 400 26px/1.25 'Inter', sans-serif;
-  color: var(--texte);
-}
-
-.message {
-  display: none;
-  max-width: 780px;
-  margin: 14px auto 0;
-  font: 400 22px/1.4 'Inter', sans-serif;
-  color: var(--texte-2);
-  overflow-wrap: anywhere;
-}
+/* Carte : sticker + bulle + pseudo */
+.carte { position: absolute; left: 140px; right: 140px; top: 226px; height: 170px; display: flex; align-items: center; gap: 30px; opacity: 0; }
+.sticker { position: relative; flex: none; width: 150px; height: 150px; }
+.sticker img { width: 150px; height: 150px; border-radius: 50%; border: 8px solid #fff; object-fit: cover; display: block;
+  box-shadow: 8px 8px 0 var(--ombre); background: var(--surface); }
+.textes { min-width: 0; flex: none; max-width: 860px; background: var(--nuit); padding: 14px 28px 16px; border-radius: 16px; box-shadow: 7px 7px 0 var(--ombre); }
+.pseudo { font: 900 64px/1.05 'Inter', sans-serif; color: var(--couleur); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  text-shadow: 4px 4px 0 var(--nuit); }
+.pseudo .l { display: inline-block; white-space: pre; }
+.detail { font: 800 30px/1.3 'Inter', sans-serif; color: var(--texte); margin-top: 6px; text-shadow: 3px 3px 0 var(--nuit); }
+.message { display: none; font: 500 24px/1.35 'Inter', sans-serif; color: var(--texte); margin-top: 10px; max-width: 760px;
+  background: rgba(7, 6, 15, .82); padding: 10px 16px; border-radius: 10px; }
 .avec-message .message { display: block; }
 
-/* Mouvement : court, lent, sans rebond. */
-.entree { animation: entree 420ms cubic-bezier(.2, .7, .2, 1) forwards; }
-.entree .trait { animation: losange 420ms 180ms ease-out forwards; }
-.sortie { animation: sortie 340ms ease-in forwards; }
-.sortie .trait { transform: rotate(45deg) scale(1); }
-@keyframes losange { to { transform: rotate(45deg) scale(1); } }
+/* Bulle de BD, au-dessus du sticker */
+.bulle { position: absolute; left: -36px; top: -62px; background: #fff; color: var(--nuit); font: 900 24px/1 'Inter', sans-serif;
+  padding: 12px 18px; border-radius: 18px; white-space: nowrap; transform-origin: 0 100%; opacity: 0;
+  box-shadow: 5px 5px 0 var(--ombre); }
+.bulle::after { content: ""; position: absolute; left: 70px; bottom: -14px; border-left: 16px solid #fff; border-bottom: 16px solid transparent; }
 
-@keyframes entree {
-  from { opacity: 0; transform: translate(-50%, -14px); }
-  to { opacity: 1; transform: translate(-50%, 0); }
-}
+/* Gerbe de losanges */
+.eclat { position: absolute; left: 50%; top: 120px; width: 0; height: 0; }
+.eclat i { position: absolute; width: var(--t); height: var(--t); background: var(--c); transform: rotate(45deg) scale(0); opacity: 0; }
 
-@keyframes sortie {
-  from { opacity: 1; transform: translate(-50%, 0); }
-  to { opacity: 0; transform: translate(-50%, -10px); }
+/* ---------- Mouvement ---------- */
+.entree .bande { animation: balayage .42s cubic-bezier(.2, .9, .2, 1) forwards; }
+.entree .flash { animation: flash .22s .26s ease-out; }
+.entree .titre { animation: claque .5s .22s cubic-bezier(.16, 1.3, .3, 1) forwards, respire 5s .72s ease-in-out forwards; }
+.entree .titre .l { animation: tombe .45s calc(.24s + var(--i) * .03s) cubic-bezier(.2, 1.6, .4, 1) both; }
+.entree.secoue { animation: secousse .38s .26s linear; }
+.entree .carte { animation: monte .45s .55s cubic-bezier(.2, 1.2, .4, 1) forwards; }
+.entree .sticker { animation: pop .55s .6s cubic-bezier(.2, 1.8, .4, 1) both, dandine 1.6s 1.2s ease-in-out infinite; }
+.entree .bulle { animation: pop .45s .95s cubic-bezier(.2, 1.8, .4, 1) both; }
+.entree .pseudo .l { animation: tombe .4s calc(.7s + var(--i) * .035s) cubic-bezier(.2, 1.6, .4, 1) both; }
+.entree .eclat i { animation: gerbe 1.1s .28s cubic-bezier(.1, .8, .3, 1) forwards; }
+.sortie { animation: sortie .42s cubic-bezier(.6, 0, .9, .4) forwards; }
+
+@keyframes balayage { from { transform: translateX(-140%) skewX(-16deg); } to { transform: translateX(0) skewX(-16deg); } }
+@keyframes flash { 0% { opacity: .55; } 100% { opacity: 0; } }
+@keyframes claque {
+  0% { opacity: 0; transform: scale(3.4); filter: blur(18px); }
+  60% { opacity: 1; transform: scale(.9); filter: blur(0); }
+  100% { opacity: 1; transform: scale(1); filter: blur(0); }
 }
+@keyframes respire { from { transform: scale(1); } to { transform: scale(1.05); } }
+@keyframes tombe { from { transform: translateY(-70px) rotate(-14deg); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes secousse {
+  0%, 100% { transform: translateX(-50%); }
+  15% { transform: translate(calc(-50% - 14px), 8px); } 30% { transform: translate(calc(-50% + 12px), -6px); }
+  45% { transform: translate(calc(-50% - 8px), 4px); } 60% { transform: translate(calc(-50% + 6px), -2px); } 80% { transform: translate(calc(-50% - 2px), 1px); }
+}
+@keyframes monte { from { opacity: 0; transform: translateY(46px); } to { opacity: 1; transform: none; } }
+@keyframes pop { 0% { opacity: 0; transform: scale(0) rotate(-24deg); } 70% { opacity: 1; transform: scale(1.18) rotate(6deg); } 100% { opacity: 1; transform: scale(1) rotate(-4deg); } }
+@keyframes dandine { 0%, 100% { rotate: 0deg; translate: 0 0; } 50% { rotate: 5deg; translate: 0 -6px; } }
+@keyframes gerbe {
+  0% { opacity: 1; transform: translate(0, 0) rotate(45deg) scale(.2); }
+  70% { opacity: 1; }
+  100% { opacity: 0; transform: translate(var(--dx), var(--dy)) rotate(calc(45deg + var(--r))) scale(1); }
+}
+@keyframes sortie { from { opacity: 1; transform: translateX(-50%) scale(1); filter: blur(0); } to { opacity: 0; transform: translateX(-50%) scale(1.25); filter: blur(10px); } }
