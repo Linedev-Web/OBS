@@ -382,5 +382,92 @@
         840
       ]
     }
+  },
+  "vertical": {
+    "_note": "Image verticale TikTok (canevas Aitum Vertical, 1080x1920, en pixels). Chaque scène principale est reliée à une scène verticale (vue) ; Aitum change l’image verticale en même temps. Rectangles [x, y, largeur, hauteur]. TikTok couvre le haut (nom, spectateurs : ~150 px) et le bas (commentaires : à partir de ~1300 px).",
+    "canevas": [
+      1080,
+      1920
+    ],
+    "vues": {
+      "demarrage": "demarrage",
+      "principal": "pile",
+      "discussion": "discussion",
+      "pause": "pause",
+      "pause-bebe": "pause-bebe",
+      "souci": "souci",
+      "fin": "fin",
+      "_secondaire": "pile avec caméra, plein sans caméra"
+    },
+    "cadres": {
+      "latshow": {
+        "camera.pile": [
+          0,
+          0,
+          1080,
+          540
+        ],
+        "capture.pile": [
+          0,
+          600,
+          1080,
+          1320
+        ],
+        "capture.plein": [
+          0,
+          500,
+          1080,
+          608
+        ],
+        "camera.discussion": [
+          0,
+          0,
+          1080,
+          1920
+        ],
+        "camera.fin": [
+          0,
+          0,
+          1080,
+          700
+        ]
+      },
+      "linedev": {
+        "camera.pile": [
+          0,
+          0,
+          1080,
+          540
+        ],
+        "capture.pile": [
+          0,
+          604,
+          1080,
+          1316
+        ],
+        "capture.plein": [
+          0,
+          500,
+          1080,
+          608
+        ],
+        "camera.discussion": [
+          0,
+          0,
+          1080,
+          1920
+        ],
+        "camera.fin": [
+          0,
+          0,
+          1080,
+          700
+        ]
+      }
+    },
+    "capture_alignee": {
+      "latshow": "centre",
+      "linedev": "gauche"
+    }
   }
 }

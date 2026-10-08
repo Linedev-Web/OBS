@@ -31,6 +31,15 @@ const VERSION = ref.sources[0]?.prev_ver ?? 537001986;
 const OVERLAYS = path.join(RACINE, 'overlays').replaceAll('\\', '/');
 const MUSIQUE = path.join(RACINE, 'musique').replaceAll('\\', '/');
 const TRANSITIONS = path.join(RACINE, 'transitions').replaceAll('\\', '/');
+const ALERTES = path.join(RACINE, 'alertes').replaceAll('\\', '/');
+
+// Image verticale TikTok (2026-10-08) : canevas du module Aitum Vertical, envoyé à TikTok LIVE Studio par la caméra
+// virtuelle. Une scène verticale par vue ; chaque scène principale y est reliée (réglage « canvas » de la scène,
+// lu par Aitum) : le Stream Deck change les deux images d'un seul appui.
+const VERT = conf.vertical;
+const [VW, VH] = VERT.canevas;
+const CANEVAS_VERTICAL = 'Aitum Vertical'; // nom cherché par le module
+const ALIGNEMENT = { centre: 0, gauche: 1 }; // OBS_ALIGN_LEFT = 1 (centré en hauteur)
 
 // Transition de scène « Tuiles 3D » (stinger, demande du client, 2026-10-07) : vidéo transparente rendue par
 // transitions/rendre.mjs. OBS change de scène à 620 ms, quand les tuiles couvrent tout l'écran. Son du whoosh dans le
@@ -129,6 +138,10 @@ function sourcesCommunes(seance) {
   s.alertes = source('Alertes', 'browser_source', { url: '', width: MW, height: MH, css: CSS_BASE, reroute_audio: true }, { volume: 0.8, monitoring: 2, hotkeys: { ...vide(), 'ObsBrowser.Refresh': [] } });
   // Latshow diffuse aussi sur YouTube (multistream StreamElements) : la chaîne YouTube a son propre overlay d'alertes.
   if (seance.marque === 'latshow') s.alertesYoutube = source('Alertes YouTube', 'browser_source', { url: '', width: MW, height: MH, css: CSS_BASE, reroute_audio: true }, { volume: 0.8, monitoring: 2, hotkeys: { ...vide(), 'ObsBrowser.Refresh': [] } });
+  // Alertes TikTok (TikFinity, alertes/tiktok/) dans l'image verticale. Leur son n'est pas passé par OBS : il sort
+  // directement par Windows, que TikTok LIVE Studio capte avec le son du PC (sinon il partirait aussi sur Twitch).
+  s.alertesTikTok = source('Alertes TikTok', 'browser_source', { is_local_file: true, local_file: `${ALERTES}/tiktok/${seance.marque}.html`,
+    width: VW, height: VH, css: CSS_BASE, fps_custom: true, fps: 30, reroute_audio: false, shutdown: false }, { mixers: 0, hotkeys: { ...vide(), 'ObsBrowser.Refresh': [] } });
   return s;
 }
 
@@ -140,6 +153,13 @@ function overlay(seance, scene) {
     css: `${CSS_BASE} :root{--seance:${seance.id}}`,
   }, { mixers: 0, hotkeys: { ...vide(), 'ObsBrowser.Refresh': [] } });
 }
+function overlayVertical(seance, vue, nom) {
+  return source(`Habillage TikTok — ${nom}`, 'browser_source', {
+    is_local_file: true, local_file: `${OVERLAYS}/${seance.marque}/vertical.html`, width: VW, height: VH, fps_custom: true, fps: 30,
+    restart_when_active: RELANCE.has(vue), shutdown: false, reroute_audio: false,
+    css: `${CSS_BASE} :root{--seance:${seance.id};--vue:${vue}}`,
+  }, { mixers: 0, hotkeys: { ...vide(), 'ObsBrowser.Refresh': [] } });
+}
 function musique(cle) {
   const dossier = `${MUSIQUE}/${cle}`;
   return source(`Musique — ${cle.replace('/', ' ')}`, 'vlc_source', {
@@ -148,17 +168,27 @@ function musique(cle) {
 }
 
 // ---------- Éléments de scène ----------
-function element(src, id, rect, ajustement = 'interieur') {
+// OBS 32 garde aussi chaque position en coordonnées relatives au canevas (origine au centre, unité = demi-hauteur).
+// Sans elles, il les calcule au chargement : le canevas vertical n'a pas encore de taille à ce moment-là, et tous ses
+// éléments tombaient à NaN (image verticale noire, constaté le 2026-10-08).
+function relatif(pos, bounds, [bw, bh]) {
+  const u = bh / 2;
+  return { scale_ref: { x: bw, y: bh }, pos_rel: { x: (pos.x - bw / 2) / u, y: (pos.y - bh / 2) / u }, scale_rel: { x: 1, y: 1 }, bounds_rel: { x: bounds.x / u, y: bounds.y / u } };
+}
+function element(src, id, rect, ajustement = 'interieur', { k = K, aligner = 0, canevas = [W, H] } = {}) {
   const base = {
     name: src.name, source_uuid: src.uuid, visible: true, locked: true, rot: 0, align: 5,
     bounds_type: 0, bounds_align: 0, bounds_crop: false, crop_left: 0, crop_top: 0, crop_right: 0, crop_bottom: 0, id,
     group_item_backup: false, pos: { x: 0, y: 0 }, scale: { x: 1, y: 1 }, bounds: { x: 0, y: 0 }, scale_filter: 'disable',
     blend_method: 'default', blend_type: 'normal', show_transition: { duration: 0 }, hide_transition: { duration: 0 }, private_settings: {},
+    ...relatif({ x: 0, y: 0 }, { x: 0, y: 0 }, canevas),
   };
   if (!rect) return base; // source plein canevas à sa taille (overlays 2560x1440) ou purement audio
   const [x, y, w, h] = rect;
+  const pos = { x: x * k, y: y * k };
+  const bounds = { x: w * k, y: h * k };
   return {
-    ...base, pos: { x: x * K, y: y * K }, bounds: { x: w * K, y: h * K },
+    ...base, pos, bounds, ...relatif(pos, bounds, canevas), bounds_align: aligner,
     // intérieur : tout est visible (capture) ; extérieur : remplit le cadre en rognant (caméra) ; étirer : taille exacte (navigateur)
     bounds_type: ajustement === 'exterieur' ? 3 : ajustement === 'etirer' ? 1 : 2, bounds_crop: ajustement === 'exterieur',
   };
@@ -175,12 +205,51 @@ function rectCapture(cadres, scene) {
   return [0, 0, 1920, 1080];
 }
 
-function construire(seance) {
+// Vue verticale d'une scène principale ; la scène secondaire est « pile » si elle garde la caméra, « plein » sinon.
+const vueVerticale = (sc) => (sc.id === 'secondaire' ? (sc.camera ? 'pile' : 'plein') : VERT.vues[sc.id]);
+
+// Scènes du canevas vertical, sans aucun son : un son présent dans une scène verticale active serait mixé dans le live
+// Twitch / YouTube (le micro coupé des pauses reviendrait). TikTok LIVE Studio prend le micro et le son du PC lui-même.
+function construireVertical(seance, com, canevas) {
+  const cadres = VERT.cadres[seance.marque];
+  const aligner = ALIGNEMENT[VERT.capture_alignee[seance.marque]] ?? 0;
+  const sources = [];
+  const scenes = [];
+  const parVue = new Map();
+  for (const sc of seance.scenes) {
+    const vue = vueVerticale(sc);
+    if (!vue) throw new Error(`Pas de vue verticale pour la scène « ${sc.nom} » (${seance.nom}) : voir vertical.vues dans seances.json`);
+    if (parVue.has(vue)) continue;
+    const nom = `TikTok — ${sc.nom}`;
+    parVue.set(vue, nom);
+    const ov = overlayVertical(seance, vue, sc.nom);
+    sources.push(ov);
+    const items = [];
+    let n = 0;
+    const ajouter = (src, rect, aj, opt) => items.push(element(src, ++n, rect, aj, { k: 1, canevas: [VW, VH], ...opt }));
+    const plein = [0, 0, VW, VH];
+    if (vue === 'discussion') { ajouter(com.camera, cadres['camera.discussion'], 'exterieur'); ajouter(ov, plein, 'etirer'); }
+    else {
+      ajouter(ov, plein, 'etirer');
+      if (vue === 'pile') { ajouter(com.camera, cadres['camera.pile'], 'exterieur'); ajouter(com.capture, cadres['capture.pile'], 'exterieur', { aligner }); }
+      if (vue === 'plein') ajouter(com.capture, cadres['capture.plein'], 'interieur');
+      if (vue === 'fin') ajouter(com.camera, cadres['camera.fin'], 'exterieur');
+    }
+    ajouter(com.alertesTikTok, plein, 'etirer');
+    const hk = { 'OBSBasic.SelectScene': [] };
+    for (const it of items) { hk[`libobs.show_scene_item.${it.id}`] = []; hk[`libobs.hide_scene_item.${it.id}`] = []; }
+    scenes.push({ ...source(nom, 'scene', { id_counter: n, custom_size: false, items, order: scenes.length, canvas_active: true }, { mixers: 0, hotkeys: hk }), canvas_uuid: canevas });
+  }
+  return { sources, scenes, lien: (sc) => [{ width: VW, height: VH, scene: parVue.get(vueVerticale(sc)) }] };
+}
+
+function construire(seance, canevasVertical) {
   const cadres = conf.cadres[seance.marque];
   const com = sourcesCommunes(seance);
   const sources = Object.values(com);
   const musiques = new Map();
   const scenes = [];
+  const vertical = construireVertical(seance, com, canevasVertical);
   for (const sc of seance.scenes) {
     const items = [];
     let n = 0;
@@ -205,7 +274,7 @@ function construire(seance) {
     if (com.alertesYoutube) ajouter(com.alertesYoutube, [0, 0, MW, MH], 'etirer');
     const hk = { 'OBSBasic.SelectScene': [touche(sc.touche)] };
     for (const it of items) { hk[`libobs.show_scene_item.${it.id}`] = []; hk[`libobs.hide_scene_item.${it.id}`] = []; }
-    scenes.push({ ...source(sc.nom, 'scene', { id_counter: n, custom_size: false, items }, { mixers: 0, hotkeys: hk }), canvas_uuid: CANEVAS });
+    scenes.push({ ...source(sc.nom, 'scene', { id_counter: n, custom_size: false, items, canvas: vertical.lien(sc) }, { mixers: 0, hotkeys: hk }), canvas_uuid: CANEVAS });
   }
   return {
     name: seance.nom,
@@ -213,10 +282,11 @@ function construire(seance) {
     scene_order: seance.scenes.map((s) => ({ name: s.nom })),
     current_scene: seance.scenes[0].nom,
     current_program_scene: seance.scenes[0].nom,
+    canvases: [{ info: { name: CANEVAS_VERTICAL, uuid: canevasVertical, private: false, flags: 14 } }],
     current_transition: TRANSITION, transition_duration: 300, transitions: [transition(seance.marque)], quick_transitions: [],
     saved_projectors: [], preview_locked: false, scaling_enabled: false, scaling_level: 0, scaling_off_x: 0, scaling_off_y: 0,
     modules: {}, resolution: { x: W, y: H }, version: ref.version ?? 2,
-    sources: [...sources, ...scenes],
+    sources: [...sources, ...vertical.sources, ...scenes, ...vertical.scenes],
   };
 }
 
@@ -227,10 +297,14 @@ const ouverteDansObs = ECRIRE ? await collectionOuverte() : undefined;
 const ouverte = (() => { try { return /SceneCollectionFile=(.+)/.exec(fs.readFileSync(path.join(process.env.APPDATA, 'obs-studio', 'user.ini'), 'utf8'))?.[1]?.trim(); } catch { return undefined; } })();
 const estOuverte = (seance) => (ouverteDansObs ? ouverteDansObs === seance.nom : ouverte === FICHIERS[seance.id]);
 const horodatage = new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-');
+// Identifiant du canevas Aitum Vertical déjà créé par le module dans la collection : on le garde.
+function canevasVerticalExistant(fichier) {
+  try { return JSON.parse(fs.readFileSync(fichier, 'utf8')).canvases?.find((c) => c.info?.name === CANEVAS_VERTICAL)?.info?.uuid; } catch { return undefined; }
+}
 for (const seance of conf.seances) {
-  const col = construire(seance);
   const fichier = path.join(SCENES_OBS, FICHIERS[seance.id]);
-  const resume = col.scene_order.map((s) => s.name).join(' | ');
+  const col = construire(seance, canevasVerticalExistant(fichier) ?? crypto.randomUUID());
+  const resume = col.scene_order.map((s) => s.name).join(' | ') + ` ; vertical : ${col.sources.filter((s) => s.canvas_uuid && s.canvas_uuid !== CANEVAS).map((s) => s.name).join(' | ')}`;
   if (!ECRIRE) { console.log(`[simulation] ${FICHIERS[seance.id]} — ${seance.nom} : ${resume} (${col.sources.length} sources)`); continue; }
   if (estOuverte(seance)) { console.log(`IGNORÉ ${FICHIERS[seance.id]} : collection ouverte dans OBS, change de collection puis relance.`); continue; }
   if (fs.existsSync(fichier)) {

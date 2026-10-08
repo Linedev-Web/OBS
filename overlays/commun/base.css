@@ -3,6 +3,9 @@
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{width:100%;height:100%;overflow:hidden;background:transparent}
 #scene{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:0 0;overflow:hidden}
+/* Pages verticales (image TikTok) : maquette 1080 × 1920, une seule vue affichée (choisie par --vue, voir scene.js). */
+[data-format=vertical] #scene{width:1080px;height:1920px}
+[data-format=vertical] [data-vues]:not(.vue-active){display:none}
 .abs{position:absolute}
 .trou{position:absolute}           /* zone laissée transparente : caméra, capture ou chat posés dessous dans OBS */
 .chiffres{font-variant-numeric:tabular-nums}

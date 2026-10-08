@@ -1,16 +1,17 @@
 {
-  "sauvegarde_le": "2026-10-08T10:21:56.578Z",
+  "sauvegarde_le": "2026-10-08T15:28:39.865Z",
   "obs": {
     "version": "32.2.2",
     "modules_ajoutes": [
+      "aitum-multistream",
       "logi_obs_plugin_x64",
       "move-transition",
       "obs-advanced-masks",
       "obs-backgroundremoval",
-      "obs-streamelements-core",
       "se-crash-wer",
       "sl-browser-plugin",
-      "source-record"
+      "source-record",
+      "vertical-canvas"
     ],
     "modules_utilisateur": [],
     "profils": [

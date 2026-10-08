@@ -14,10 +14,22 @@
   const debut = Date.now();
   const etat = { live: {} };
 
+  // Maquette 1920 × 1080, ou 1080 × 1920 pour les pages verticales (<html data-format="vertical">, image TikTok).
   function echelle() {
     const s = document.getElementById('scene');
-    if (s) s.style.transform = 'scale(' + (window.innerWidth / 1920) + ')';
+    const largeur = document.documentElement.dataset.format === 'vertical' ? 1080 : 1920;
+    if (s) s.style.transform = 'scale(' + (window.innerWidth / largeur) + ')';
   }
+  // Page verticale : la vue à montrer (demarrage, pile, plein, discussion, pause…) vient de ?vue=… ou de la variable
+  // CSS --vue, posée par obs/generer.mjs dans le « CSS personnalisé » de chaque source. OBS n'ajoute ce CSS qu'à la fin
+  // du chargement de la page : la vue est relue quand une feuille arrive dans <head>.
+  function montrerVue() {
+    const vue = params.get('vue') || getComputedStyle(document.documentElement).getPropertyValue('--vue').trim().replace(/["']/g, '');
+    if (!vue || document.documentElement.dataset.vue === vue) return;
+    document.documentElement.dataset.vue = vue;
+    document.querySelectorAll('[data-vues]').forEach((b) => b.classList.toggle('vue-active', b.dataset.vues.split(' ').includes(vue)));
+  }
+  new MutationObserver(montrerVue).observe(document.head, { childList: true });
   window.addEventListener('resize', echelle);
 
   function deuxChiffres(n) { return String(n).padStart(2, '0'); }
@@ -46,7 +58,7 @@
   function relire() {
     const s = document.createElement('script');
     s.src = '../live.js?t=' + Date.now();
-    s.onload = () => { seance = seanceCourante(); document.documentElement.dataset.seance = seance; const L = window.LIVE || {}; etat.live = L[seance] || {}; remplir(); s.remove(); };
+    s.onload = () => { montrerVue(); seance = seanceCourante(); document.documentElement.dataset.seance = seance; const L = window.LIVE || {}; etat.live = L[seance] || {}; remplir(); s.remove(); };
     s.onerror = () => s.remove();
     document.head.appendChild(s);
   }
@@ -62,7 +74,7 @@
 
   document.documentElement.dataset.seance = seance;
   document.addEventListener('DOMContentLoaded', () => {
-    echelle(); relire(); battre();
+    montrerVue(); echelle(); relire(); battre();
     setInterval(relire, 2000); setInterval(battre, 250);
     requestAnimationFrame(() => document.documentElement.classList.add('pret'));
   });

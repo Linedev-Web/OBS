@@ -1,0 +1,77 @@
+<!doctype html><html lang="fr" data-format="vertical"><head><meta charset="utf-8"><title>Vertical</title>
+<!-- Image verticale TikTok (1080 × 1920), linedev : une page, une vue par scène (--vue posée par obs/generer.mjs).
+     Papier en haut, encre en bas : TikTok écrit ses commentaires en blanc, illisibles sur le papier (essai du
+     2026-10-08). Texte important entre ~150 px (nom et spectateurs TikTok) et ~1300 px (commentaires). -->
+<link rel="stylesheet" href="linedev.css"><script src="../commun/scene.js"></script>
+<style>
+.v-encre{position:absolute;left:0;right:0;top:1250px;bottom:0;background:var(--encre)}
+.v-marque{left:0;right:0;top:400px;justify-content:center}
+.v-marque svg{width:44px}
+.v-centre{position:absolute;left:80px;right:80px;top:540px;text-align:center}
+.v-centre .com{font-size:28px}
+.v-centre .titre{font-size:84px}
+.v-centre .texte{font-size:34px;margin:36px auto 0;max-width:900px}
+.v-centre .code{font-size:28px;margin-top:40px;text-align:left}
+.v-centre .compte{font-size:180px;margin-top:20px}
+.v-centre .depuis{margin-top:48px;font-size:28px}
+.v-barre{position:absolute;left:240px;right:240px;top:1170px;height:6px;background:var(--grille)}
+.v-barre i{display:block;height:100%;background:var(--verm);transform-origin:0 50%;transform:scaleX(0)}
+.bandeau{position:absolute;left:0;right:0;height:64px;display:flex;align-items:center;gap:16px;padding:0 40px;background:var(--papier);border-top:3px solid var(--encre);border-bottom:3px solid var(--encre)}
+.bandeau .titre-jour{font:400 34px/1 'Archivo Black';letter-spacing:-.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bandeau .titre-jour::after{content:"";display:inline-block;width:.18em;height:.18em;background:var(--verm);margin-left:.06em}
+.bandeau .etape{margin-left:auto;flex:none;font:700 26px/1 'JetBrains Mono';color:var(--verm)}
+.dessous{position:absolute;left:0;right:0;bottom:0;background:var(--encre)}
+.pastille{position:absolute;right:32px;top:170px;padding:12px 18px;background:var(--encre);color:var(--clair);font:700 22px/1 'JetBrains Mono'}
+.v-fin{position:absolute;left:80px;right:80px;top:740px}
+.v-fin .titre{font-size:64px;margin-top:20px}
+.v-fin .bloc-texte{margin-top:36px}
+.v-fin .bloc-texte div{font:700 30px/1.3 'JetBrains Mono';margin-top:12px}
+.v-fin ul{list-style:none;display:grid;grid-template-columns:150px 1fr 120px 1fr;row-gap:12px;column-gap:16px;font:400 26px/1.25 'JetBrains Mono';margin-top:14px}
+.v-fin li{display:contents}.v-fin b{font-weight:700}.v-fin span{color:var(--gris)}
+</style></head><body><div id="scene">
+
+<section data-vues="demarrage pause pause-bebe souci fin"><div class="papier"></div><div class="v-encre"></div></section>
+
+<section data-vues="demarrage pause pause-bebe souci"><div class="marque v-marque"><svg viewBox="0 0 150 190" xmlns="http://www.w3.org/2000/svg"><rect x="35" y="20" width="80" height="120" rx="14" fill="#F2573A" stroke="#0B111A" stroke-width="7"/><rect x="50" y="140" width="18" height="30" rx="6" fill="#0B111A"/><rect x="82" y="140" width="18" height="30" rx="6" fill="#0B111A"/><circle cx="60" cy="68" r="10" fill="#fff" stroke="#0B111A" stroke-width="4"/><circle cx="92" cy="68" r="10" fill="#fff" stroke="#0B111A" stroke-width="4"/><circle cx="62" cy="70" r="5" fill="#0B111A"/><circle cx="94" cy="70" r="5" fill="#0B111A"/><path d="M62 100 Q76 114 90 100" fill="none" stroke="#0B111A" stroke-width="6" stroke-linecap="round"/><path d="M115 95 Q140 80 136 50" fill="none" stroke="#0B111A" stroke-width="7" stroke-linecap="round"/></svg><div>linedev<span>.fr</span></div></div></section>
+
+<section data-vues="demarrage"><div class="v-centre">
+  <div class="com">// le cours commence dans</div>
+  <div class="compte chiffres" data-compte data-fini="J’arrive">05:00</div>
+  <div class="code"><span class="k">const</span> cours = <span class="s">'<span data-live="titre"></span>'</span>;</div>
+</div><div class="v-barre"><i data-compte-barre></i></div></section>
+
+<section data-vues="pause"><div class="v-centre">
+  <div class="com">// pause café</div><div class="titre">Petite pause</div>
+  <div class="texte">Je reviens tout de suite. Le chat reste ouvert : pose tes questions.</div>
+  <div class="depuis">en pause depuis <span class="chiffres" data-depuis>00:00</span></div>
+</div></section>
+
+<section data-vues="pause-bebe"><div class="v-centre">
+  <div class="com">// pause bébé</div><div class="titre">Pause bébé</div>
+  <div class="texte">Le petit a besoin de moi. Je reviens très vite.</div>
+  <div class="depuis">en pause depuis <span class="chiffres" data-depuis>00:00</span></div>
+</div></section>
+
+<section data-vues="souci"><div class="v-centre">
+  <div class="com">// un instant</div><div class="titre">Souci technique</div>
+  <div class="texte">Je règle ça. Ne bouge pas, on revient tout de suite.</div>
+  <div class="depuis">depuis <span class="chiffres" data-depuis>00:00</span></div>
+</div></section>
+
+<!-- Fin : la caméra occupe le haut (0–700 px, posée par OBS) ; le texte dessous. -->
+<section data-vues="fin"><div class="cadre" style="left:0;top:0;width:1080px;height:700px"></div><div class="v-fin">
+  <div class="com">// fin du cours</div><div class="titre">Merci d’avoir codé avec moi</div>
+  <div class="bloc-texte"><div class="com">// prochain cours</div><div data-live="prochain" data-defaut="Abonne-toi pour ne rater aucun cours."></div></div>
+  <div class="bloc-texte"><div class="com">// retrouve-moi</div><ul>
+    <li><b>YouTube</b><span>@linedevfr</span></li><li><b>TikTok</b><span>@linedev_</span></li>
+    <li><b>Instagram</b><span>@linedev_yoan</span></li><li><b>Site</b><span>linedev.fr</span></li>
+  </ul></div>
+</div></section>
+
+<!-- Caméra en haut (0–540), le code dessous (604–1920), posés par OBS ; ici le bandeau du cours entre les deux. -->
+<section data-vues="pile"><div class="dessous" style="top:540px"></div><div class="bandeau" style="top:540px"><span class="titre-jour" data-live="titre" data-defaut="Cours en direct"></span><span class="etape" data-live="etape_n"></span></div></section>
+
+<!-- Questions : la caméra en plein écran (posée par OBS) ; juste une pastille. -->
+<section data-vues="discussion"><div class="pastille">// questions</div></section>
+
+</div></body></html>
