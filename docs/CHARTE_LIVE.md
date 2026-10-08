@@ -26,7 +26,10 @@ travail par-ci par-là », « je ne veux pas que ça se voie que c'est fait par 
 - Accent unique : cyan `#22D3EE`. Le violet `#A855F7` n'apparaît qu'en détail (le losange à côté du logo, l’anneau de l’avatar).
 - Polices : **Russo One** pour le mot LATSHOW et les grands titres en capitales ; **Inter** (400/700) pour tout le reste.
 - Signature : le mot LATSHOW en Russo One suivi d’un petit losange violet ; un losange cyan (10 px) devant les surtitres.
-- Cadres caméra : bordure 2 px `rgba(233,230,255,.22)`, coins droits (la caméra n'est pas masquée dans OBS), petite étiquette « LATSHOW » collée au cadre.
+- Cadres caméra : bordure 2 px `rgba(233,230,255,.22)`, coins droits (la caméra n'est pas masquée dans OBS). Plus d'étiquette
+  « LATSHOW » sur le cadre de la scène Jeu (le client n'en voulait pas, 2026-10-08) ; l'écran de Fin garde la sienne.
+- Couleurs de la caméra : neutres (le filtre « Couleurs » ne retire plus de bleu depuis le 2026-10-08 : le client se
+  trouvait jaune). Vérifier sur le mur blanc derrière lui, qui doit rester blanc.
 
 ## linedev — lives dev (YouTube linedev, format « j'apprends le dev simplement »)
 
