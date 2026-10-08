@@ -302,10 +302,11 @@ function remplir(alerte) {
   const carte = $('alerte');
   [...carte.classList].filter((c) => c.startsWith('theme-')).forEach((c) => carte.classList.remove(c));
   carte.classList.add(`theme-${alerte.cle || 'follow'}`);
-  if ($('titre')) lettres($('titre'), TITRES[alerte.cle] || alerte.type);
+  // titre, bulles et image propres à l'alerte (alertes TikTok : photo du spectateur, image du cadeau), sinon ceux du type
+  if ($('titre')) lettres($('titre'), alerte.titre || TITRES[alerte.cle] || alerte.type);
   if ($('type')) $('type').textContent = alerte.type;
-  if ($('bulle')) { const dev = document.querySelector('[data-marque=linedev]'); const choix = (dev && BULLES_DEV[alerte.cle]) || BULLES[alerte.cle] || BULLES.follow; $('bulle').textContent = choix[Math.floor(Math.random() * choix.length)]; }
-  if ($('avatar')) $('avatar').src = (reglages.avatar && String(reglages.avatar).trim()) || AVATAR_DEFAUT;
+  if ($('bulle')) { const dev = document.querySelector('[data-marque=linedev]'); const choix = alerte.bulles || (dev && BULLES_DEV[alerte.cle]) || BULLES[alerte.cle] || BULLES.follow; $('bulle').textContent = choix[Math.floor(Math.random() * choix.length)]; }
+  if ($('avatar')) $('avatar').src = alerte.image || (reglages.avatar && String(reglages.avatar).trim()) || AVATAR_DEFAUT;
   eclat();
   if ($('titre')) lettres($('pseudo'), alerte.nom); else $('pseudo').textContent = alerte.nom;
   $('detail').textContent = alerte.detail;
