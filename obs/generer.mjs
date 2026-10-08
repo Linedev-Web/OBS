@@ -252,7 +252,10 @@ function construireVertical(seance, com, canevas) {
     ajouter(com.alertesTikTok, plein, 'etirer');
     const hk = { 'OBSBasic.SelectScene': [] };
     for (const it of items) { hk[`libobs.show_scene_item.${it.id}`] = []; hk[`libobs.hide_scene_item.${it.id}`] = []; }
-    scenes.push({ ...source(nom, 'scene', { id_counter: n, custom_size: false, items, order: scenes.length, canvas_active: true }, { mixers: 0, hotkeys: hk }), canvas_uuid: canevas });
+    // Synchro voix / image sur TikTok : le son passe par Audio Monitor et le câble, l'image arrive directement par la
+    // caméra virtuelle ; on retarde l'image d'autant (vertical.retard_image_ms, mesuré au clap). 0 = pas de filtre.
+    const retard = VERT.retard_image_ms > 0 ? [filtre('Synchro avec le son', 'gpu_delay', 'gpu_delay', { delay_ms: VERT.retard_image_ms })] : [];
+    scenes.push({ ...source(nom, 'scene', { id_counter: n, custom_size: false, items, order: scenes.length, canvas_active: true }, { mixers: 0, hotkeys: hk, filters: retard }), canvas_uuid: canevas });
   }
   return { sources, scenes, lien: (sc) => [{ width: VW, height: VH, scene: parVue.get(vueVerticale(sc)) }] };
 }

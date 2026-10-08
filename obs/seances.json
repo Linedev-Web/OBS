@@ -390,6 +390,8 @@
       1920
     ],
     "piste_son": 6,
+    "retard_image_ms": 0,
+    "_note_retard": "Retard de l’image TikTok (ms, 0 à 500) pour qu’elle colle au son, qui passe par Audio Monitor et le câble : mesuré le 2026-10-08 avec une page de test, le son arrivait ~280 ms après l’image ; valeur réelle à fixer par un test au clap (voix et visage du client). 0 = pas de filtre.",
     "vues": {
       "demarrage": "demarrage",
       "principal": "pile",
