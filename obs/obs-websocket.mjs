@@ -1,28 +1,39 @@
-// Demande à OBS, par obs-websocket, le nom de la collection de scènes ouverte. Lecture seule.
+// Petit client obs-websocket v5 pour les outils du dépôt (générateur, régie).
 // Le mot de passe est lu dans la configuration locale d'OBS et n'est jamais affiché.
-// Renvoie undefined si OBS est fermé ou ne répond pas : l'appelant se rabat alors sur user.ini.
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 
 const CONFIG = path.join(process.env.APPDATA ?? '', 'obs-studio', 'plugin_config', 'obs-websocket', 'config.json');
 
-export function collectionOuverte(delaiMs = 1500) {
+/**
+ * Se connecte à OBS. Renvoie undefined si OBS est fermé ou ne répond pas dans le délai.
+ * Le client : req(type, données) → réponse obs-websocket ({ requestStatus, responseData }) ;
+ * vendeur(module, type, données) → réponse du module (CallVendorRequest), ou undefined s'il n'existe pas ; fermer().
+ */
+export function connecterObs(delaiMs = 1500) {
   let cfg;
   try { cfg = JSON.parse(fs.readFileSync(CONFIG, 'utf8')); } catch { return Promise.resolve(undefined); }
   return new Promise((resolve) => {
     let ws;
-    let fini = false;
-    const finir = (valeur) => {
-      if (fini) return;
-      fini = true;
-      clearTimeout(minuterie);
-      try { ws?.close(); } catch { /* déjà fermé */ }
-      resolve(valeur);
+    let n = 0;
+    const attente = new Map();
+    let pret = false;
+    const minuterie = setTimeout(() => { if (!pret) { try { ws?.close(); } catch { /* déjà fermé */ } resolve(undefined); } }, delaiMs);
+    const client = {
+      req(requestType, requestData = {}) {
+        const requestId = `r${++n}`;
+        return new Promise((ok) => { attente.set(requestId, ok); ws.send(JSON.stringify({ op: 6, d: { requestType, requestId, requestData } })); });
+      },
+      async vendeur(vendorName, requestType, requestData = {}) {
+        const r = await client.req('CallVendorRequest', { vendorName, requestType, requestData });
+        return r.requestStatus?.result ? (r.responseData?.responseData ?? {}) : undefined;
+      },
+      fermer() { try { ws.close(); } catch { /* déjà fermé */ } },
     };
-    const minuterie = setTimeout(() => finir(undefined), delaiMs);
-    try { ws = new WebSocket(`ws://127.0.0.1:${cfg.server_port}`); } catch { finir(undefined); return; }
-    ws.onerror = () => finir(undefined);
+    try { ws = new WebSocket(`ws://127.0.0.1:${cfg.server_port}`); } catch { clearTimeout(minuterie); resolve(undefined); return; }
+    ws.onerror = () => { if (!pret) { clearTimeout(minuterie); resolve(undefined); } };
+    ws.onclose = () => { for (const ok of attente.values()) ok({ requestStatus: { result: false, comment: 'OBS a fermé la connexion' } }); attente.clear(); };
     ws.onmessage = (ev) => {
       const m = JSON.parse(ev.data);
       if (m.op === 0) {
@@ -34,10 +45,20 @@ export function collectionOuverte(delaiMs = 1500) {
         }
         ws.send(JSON.stringify({ op: 1, d }));
       } else if (m.op === 2) {
-        ws.send(JSON.stringify({ op: 6, d: { requestType: 'GetSceneCollectionList', requestId: 'collection' } }));
-      } else if (m.op === 7 && m.d.requestId === 'collection') {
-        finir(m.d.responseData?.currentSceneCollectionName);
+        pret = true;
+        clearTimeout(minuterie);
+        resolve(client);
+      } else if (m.op === 7) {
+        const ok = attente.get(m.d.requestId);
+        if (ok) { attente.delete(m.d.requestId); ok(m.d); }
       }
     };
   });
+}
+
+/** Nom de la collection de scènes ouverte dans OBS, ou undefined si OBS est fermé (l'appelant lit alors user.ini). */
+export async function collectionOuverte(delaiMs = 1500) {
+  const obs = await connecterObs(delaiMs);
+  if (!obs) return undefined;
+  try { return (await obs.req('GetSceneCollectionList')).responseData?.currentSceneCollectionName; } finally { obs.fermer(); }
 }

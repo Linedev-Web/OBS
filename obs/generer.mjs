@@ -10,6 +10,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
+import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { collectionOuverte } from './obs-websocket.mjs';
 
@@ -40,6 +41,12 @@ const VERT = conf.vertical;
 const [VW, VH] = VERT.canevas;
 const CANEVAS_VERTICAL = 'Aitum Vertical'; // nom cherché par le module
 const ALIGNEMENT = { centre: 0, gauche: 1 }; // OBS_ALIGN_LEFT = 1 (centré en hauteur)
+// Piste audio TikTok : le mix du live plus les alertes TikTok, moins les alertes Twitch / YouTube. Le module Audio
+// Monitor l'envoie au câble VB-CABLE, que TikTok LIVE Studio prend comme micro (obs/regie.mjs son-tiktok).
+const BIT_TIKTOK = 1 << (VERT.piste_son - 1);
+const SANS_TIKTOK = 0x3f & ~BIT_TIKTOK; // les 6 pistes d'OBS sauf celle de TikTok
+// Périphériques choisis dans la régie (obs/peripheriques.json, écrit par obs/regie.mjs) : ils priment sur la référence.
+const PERIPHERIQUES = (() => { try { return JSON.parse(fs.readFileSync(path.join(ICI, 'peripheriques.json'), 'utf8')); } catch { return {}; } })();
 
 // Transition de scène « Tuiles 3D » (stinger, demande du client, 2026-10-07) : vidéo transparente rendue par
 // transitions/rendre.mjs. OBS change de scène à 620 ms, quand les tuiles couvrent tout l'écran. Son du whoosh dans le
@@ -100,7 +107,9 @@ function sourcesCommunes(seance) {
   });
 
   const micRef = refSource('Capture audio (entrée)');
-  const micro = source('Micro', 'wasapi_input_capture', micRef.settings, {
+  // Micro choisi dans la régie (obs/regie.mjs micro …, page Live du cockpit), sinon celui de la référence.
+  const micReglages = PERIPHERIQUES.micro?.id ? { ...micRef.settings, device_id: PERIPHERIQUES.micro.id } : micRef.settings;
+  const micro = source('Micro', 'wasapi_input_capture', micReglages, {
     mixers: 255, sync: micRef.sync, flags: micRef.flags,
     filters: [
       // Chaîne voix : bruit de fond retiré, silences adoucis (clavier), un peu moins de grave et plus de clarté,
@@ -128,20 +137,23 @@ function sourcesCommunes(seance) {
     const fen = refSource('Fenettre');
     s.capture = source('Fenêtre', 'window_capture', { ...fen.settings, method: 2, cursor: true, client_area: true }, { mixers: 0, hotkeys: {} });
     const pc = refSource('Capture audio (sortie)');
-    s.sonpc = source('Son du PC', 'wasapi_output_capture', pc.settings, { volume: 0.5, filters: [attenuation(), filtre('Limiteur', 'limiter_filter', 'limiter_filter', { threshold: -6, release_time: 60 })] });
+    // Périphérique par défaut de Windows : celui de la référence (« Casque (Bureau) ») était débranché, la source ne
+    // captait plus rien (constaté le 2026-10-08) ; « default » suit le casque ou les enceintes du moment.
+    s.sonpc = source('Son du PC', 'wasapi_output_capture', { ...pc.settings, device_id: 'default' }, { volume: 0.5, filters: [attenuation(), filtre('Limiteur', 'limiter_filter', 'limiter_filter', { threshold: -6, release_time: 60 })] });
   }
   const chatRef = refSource('Social chatting');
   s.chat = source('Chat', 'browser_source', { url: chatRef.settings.url, width: 440, height: 840, css: CSS_BASE, fps_custom: true, fps: 30 }, { mixers: 0, hotkeys: { ...vide(), 'ObsBrowser.Refresh': [] } });
   // Son des alertes : passé par OBS (sinon les spectateurs ne l'entendent pas) et écouté dans le casque (2 = écoute et sortie).
   // Taille de la page StreamElements (1920×1080), étirée sur tout le canevas dans les scènes : en 2560×1440, la page
   // restait collée en haut à gauche et l'alerte paraissait petite et décentrée (constaté le 2026-10-07).
-  s.alertes = source('Alertes', 'browser_source', { url: '', width: MW, height: MH, css: CSS_BASE, reroute_audio: true }, { volume: 0.8, monitoring: 2, hotkeys: { ...vide(), 'ObsBrowser.Refresh': [] } });
-  // Latshow diffuse aussi sur YouTube (multistream StreamElements) : la chaîne YouTube a son propre overlay d'alertes.
-  if (seance.marque === 'latshow') s.alertesYoutube = source('Alertes YouTube', 'browser_source', { url: '', width: MW, height: MH, css: CSS_BASE, reroute_audio: true }, { volume: 0.8, monitoring: 2, hotkeys: { ...vide(), 'ObsBrowser.Refresh': [] } });
-  // Alertes TikTok (TikFinity, alertes/tiktok/) dans l'image verticale. Leur son n'est pas passé par OBS : il sort
-  // directement par Windows, que TikTok LIVE Studio capte avec le son du PC (sinon il partirait aussi sur Twitch).
+  // Hors de la piste TikTok : une alerte Twitch ou YouTube s'entendrait sur TikTok sans s'y voir.
+  s.alertes = source('Alertes', 'browser_source', { url: '', width: MW, height: MH, css: CSS_BASE, reroute_audio: true }, { volume: 0.8, monitoring: 2, mixers: SANS_TIKTOK, hotkeys: { ...vide(), 'ObsBrowser.Refresh': [] } });
+  // Latshow diffuse aussi sur YouTube (multistream) : la chaîne YouTube a son propre overlay d'alertes.
+  if (seance.marque === 'latshow') s.alertesYoutube = source('Alertes YouTube', 'browser_source', { url: '', width: MW, height: MH, css: CSS_BASE, reroute_audio: true }, { volume: 0.8, monitoring: 2, mixers: SANS_TIKTOK, hotkeys: { ...vide(), 'ObsBrowser.Refresh': [] } });
+  // Alertes TikTok (TikFinity, alertes/tiktok/) dans l'image verticale. Leur son passe par OBS sur la piste TikTok
+  // seulement (envoyée à TikTok LIVE Studio par le câble audio, voir obs/regie.mjs), jamais sur Twitch ni YouTube.
   s.alertesTikTok = source('Alertes TikTok', 'browser_source', { is_local_file: true, local_file: `${ALERTES}/tiktok/${seance.marque}.html`,
-    width: VW, height: VH, css: CSS_BASE, fps_custom: true, fps: 30, reroute_audio: false, shutdown: false }, { mixers: 0, hotkeys: { ...vide(), 'ObsBrowser.Refresh': [] } });
+    width: VW, height: VH, css: CSS_BASE, fps_custom: true, fps: 30, reroute_audio: true, shutdown: false }, { volume: 0.8, monitoring: 2, mixers: BIT_TIKTOK, hotkeys: { ...vide(), 'ObsBrowser.Refresh': [] } });
   return s;
 }
 
@@ -293,9 +305,11 @@ function construire(seance, canevasVertical) {
 const FICHIERS = { gaming: 'Live_Gaming.json', montage: 'Live_Montage.json', dev: 'Live_Dev.json' };
 // Collection ouverte : demandée à OBS quand il tourne (user.ini n'est réécrit qu'à la fermeture d'OBS : après un
 // changement de collection, il désigne encore l'ancienne — constaté le 2026-10-07), sinon lue dans user.ini.
+// OBS absent de la liste des processus : rien n'est ouvert, les trois collections peuvent s'écrire.
 const ouverteDansObs = ECRIRE ? await collectionOuverte() : undefined;
+const obsLance = (() => { try { return execFileSync('tasklist', ['/FI', 'IMAGENAME eq obs64.exe', '/NH'], { encoding: 'utf8', windowsHide: true }).includes('obs64.exe'); } catch { return true; } })();
 const ouverte = (() => { try { return /SceneCollectionFile=(.+)/.exec(fs.readFileSync(path.join(process.env.APPDATA, 'obs-studio', 'user.ini'), 'utf8'))?.[1]?.trim(); } catch { return undefined; } })();
-const estOuverte = (seance) => (ouverteDansObs ? ouverteDansObs === seance.nom : ouverte === FICHIERS[seance.id]);
+const estOuverte = (seance) => (ouverteDansObs ? ouverteDansObs === seance.nom : obsLance && ouverte === FICHIERS[seance.id]);
 const horodatage = new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-');
 // Identifiant du canevas Aitum Vertical déjà créé par le module dans la collection : on le garde.
 function canevasVerticalExistant(fichier) {

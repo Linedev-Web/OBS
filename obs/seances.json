@@ -389,6 +389,7 @@
       1080,
       1920
     ],
+    "piste_son": 6,
     "vues": {
       "demarrage": "demarrage",
       "principal": "pile",
@@ -468,6 +469,7 @@
     "capture_alignee": {
       "latshow": "centre",
       "linedev": "gauche"
-    }
+    },
+    "_note_son": "Piste audio d’OBS réservée à TikTok (piste_son) : mix du live + alertes TikTok, sans les alertes Twitch / YouTube. Le module Audio Monitor l’envoie au câble VB-CABLE (« CABLE Input »), micro de TikTok LIVE Studio (« CABLE Output »). Réglé par node obs/regie.mjs son-tiktok, OBS fermé."
   }
 }

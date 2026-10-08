@@ -88,6 +88,26 @@ function copierObs() {
   }
 }
 
+// Réglages des modules ajoutés (image verticale, multistream, son TikTok) : leurs clés de stream sont vidées.
+const MODULES_REGLES = ['vertical-canvas', 'aitum-multistream', 'audio-monitor'];
+const CHAMP_CLE = /(?:^|_)key$|password|token|secret/i;
+function copierModules() {
+  for (const module of MODULES_REGLES) {
+    const fichier = path.join(OBS, 'plugin_config', module, 'config.json');
+    if (!fs.existsSync(fichier)) continue;
+    const vider = (valeur) => {
+      if (Array.isArray(valeur)) return valeur.map(vider);
+      if (!valeur || typeof valeur !== 'object') return valeur;
+      return Object.fromEntries(Object.entries(valeur).map(([cle, v]) => {
+        if (!CHAMP_CLE.test(cle) || typeof v !== 'string' || !v) return [cle, vider(v)];
+        aReposer.push({ ou: `OBS, module ${module}`, quoi: `réglage ${cle}` });
+        return [cle, ''];
+      }));
+    };
+    ecrire(path.join('obs', 'plugin_config', module, 'config.json'), vider(lireJson(fichier)));
+  }
+}
+
 function copierStreamDeck() {
   const destination = path.join(ICI, 'streamdeck', 'ProfilesV3');
   fs.rmSync(destination, { recursive: true, force: true });
@@ -132,6 +152,7 @@ function verifierSecrets(dossier) {
 }
 
 copierObs();
+copierModules();
 copierStreamDeck();
 const modules = fs.readdirSync(path.join(OBS_PROGRAMME, 'obs-plugins', '64bit')).filter((f) => f.endsWith('.dll')).map((f) => f.slice(0, -4));
 const modulesUtilisateur = fs.existsSync(path.join(OBS, 'plugins')) ? fs.readdirSync(path.join(OBS, 'plugins')) : [];
