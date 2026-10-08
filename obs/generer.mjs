@@ -71,6 +71,7 @@ function filtre(nom, id, versioned, settings, enabled = true) {
 // Baisse un son (jeu, son du PC) quand le micro parle : compresseur déclenché par le micro.
 const attenuation = () => filtre('Baisse quand tu parles', 'compressor_filter', 'compressor_filter', { ratio: 4, threshold: -32, attack_time: 10, release_time: 400, output_gain: 0, sidechain_source: 'Micro' });
 const CSS_BASE = 'body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden}';
+const COULEUR_NEUTRE = 0xffffffff; // multiplication par le blanc : ni rouge, ni vert, ni bleu retiré
 
 // ---------- Sources partagées d'une collection ----------
 function sourcesCommunes(seance) {
@@ -80,7 +81,9 @@ function sourcesCommunes(seance) {
   const camera = source('Caméra', 'dshow_input', camRef.settings, {
     mixers: camRef.mixers, versioned_id: camRef.versioned_id,
     filters: [
-      ...(couleur ? [filtre('Couleurs', couleur.id, couleur.versioned_id, couleur.settings)] : []),
+      // Couleurs neutres (2026-10-08, le client se trouvait « un peu jaune ») : le réglage de Plateau multipliait le bleu
+      // par 0,89 ; mesuré sur le mur blanc, la caméra est neutre d'elle-même. On garde gamma, contraste et saturation.
+      ...(couleur ? [filtre('Couleurs', couleur.id, couleur.versioned_id, { ...couleur.settings, color_multiply: COULEUR_NEUTRE })] : []),
       // Enregistrement séparé de la webcam pendant le live (module Source Record, réglages de Plateau) : voulu par le client.
       ...(enreg ? [filtre('Enregistrement caméra', enreg.id, enreg.versioned_id, enreg.settings, true)] : []),
     ],
