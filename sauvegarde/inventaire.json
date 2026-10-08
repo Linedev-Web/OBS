@@ -1,0 +1,127 @@
+{
+  "sauvegarde_le": "2026-10-08T10:21:56.578Z",
+  "obs": {
+    "version": "32.2.2",
+    "modules_ajoutes": [
+      "logi_obs_plugin_x64",
+      "move-transition",
+      "obs-advanced-masks",
+      "obs-backgroundremoval",
+      "obs-streamelements-core",
+      "se-crash-wer",
+      "sl-browser-plugin",
+      "source-record"
+    ],
+    "modules_utilisateur": [],
+    "profils": [
+      "Live_Latshow",
+      "Live_linedev"
+    ],
+    "collections": [
+      "Live_Gaming.json",
+      "Live_Montage.json",
+      "Live_Dev.json"
+    ]
+  },
+  "streamdeck": {
+    "version": "7.1.0.22321",
+    "modules": [
+      {
+        "dossier": "com.elgato.keycreator.sdPlugin",
+        "nom": "Stream Deck Icon Library",
+        "version": "2.2.0.170",
+        "auteur": "Elgato"
+      },
+      {
+        "dossier": "com.elgato.obsstudio.sdPlugin"
+      },
+      {
+        "dossier": "com.elgato.tutorial.sdPlugin",
+        "nom": " ",
+        "version": "1.0.4.3",
+        "auteur": "Elgato Systems"
+      },
+      {
+        "dossier": "com.elgato.weather.sdPlugin"
+      },
+      {
+        "dossier": "com.streamelements.obslive.sdPlugin",
+        "nom": "StreamElements SE.Live",
+        "version": "22.6.21.87",
+        "auteur": "StreamElements"
+      },
+      {
+        "dossier": "com.tiktok.livestudio.sdPlugin",
+        "nom": "TikTok LIVE Studio",
+        "version": "1.1.5",
+        "auteur": "TikTok LIVE Studio"
+      },
+      {
+        "dossier": "fr.twitchat.sdPlugin",
+        "nom": "Twitchat",
+        "version": "2.8.3.0",
+        "auteur": "Durss"
+      },
+      {
+        "dossier": "net.voicemod.windowsdesktop.sdPlugin",
+        "nom": "Voicemod",
+        "version": "6.0.8",
+        "auteur": "Voicemod Inc., Sucursal en España"
+      }
+    ]
+  },
+  "a_reposer": [
+    {
+      "ou": "OBS, collection Live_Gaming.json, source « Chat »",
+      "quoi": "adresse socialstream.ninja"
+    },
+    {
+      "ou": "OBS, collection Live_Gaming.json, source « Alertes »",
+      "quoi": "adresse streamelements.com"
+    },
+    {
+      "ou": "OBS, collection Live_Gaming.json, source « Alertes YouTube »",
+      "quoi": "adresse streamelements.com"
+    },
+    {
+      "ou": "OBS, collection Live_Montage.json, source « Chat »",
+      "quoi": "adresse socialstream.ninja"
+    },
+    {
+      "ou": "OBS, collection Live_Montage.json, source « Alertes »",
+      "quoi": "adresse streamelements.com"
+    },
+    {
+      "ou": "OBS, collection Live_Montage.json, source « Alertes YouTube »",
+      "quoi": "adresse streamelements.com"
+    },
+    {
+      "ou": "OBS, collection Live_Dev.json, source « Chat »",
+      "quoi": "adresse socialstream.ninja"
+    },
+    {
+      "ou": "OBS, collection Live_Dev.json, source « Alertes »",
+      "quoi": "adresse streamelements.com"
+    },
+    {
+      "ou": "OBS, collection Plateau_reference.json, source « Twitch Alerte »",
+      "quoi": "adresse dashboard.twitch.tv"
+    },
+    {
+      "ou": "OBS, collection Plateau_reference.json, source « Social »",
+      "quoi": "adresse socialstream.ninja"
+    },
+    {
+      "ou": "OBS, collection Plateau_reference.json, source « Social chatting »",
+      "quoi": "adresse socialstream.ninja"
+    },
+    {
+      "ou": "OBS, profil Live_Latshow, Paramètres → Stream",
+      "quoi": "clé de stream"
+    },
+    {
+      "ou": "OBS, global.ini",
+      "quoi": "réglage SlabsBrowserDocks"
+    }
+  ]
+}

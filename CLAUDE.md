@@ -19,6 +19,7 @@ textes des chaînes. Refonte complète le 2026-10-07 (demande du client : « com
 | `musique\` | 16 morceaux maison ACE-Step (`composer.py`, `catalogue.json` : graines, régénérables). Joués en boucle par les sources VLC des écrans Démarrage, Pause, Pause bébé, Fin. |
 | `chaines\` | Bannières, panneaux et textes Twitch / YouTube **à valider** : `chaines\A_VALIDER.md`. Rien n’est publié sans le oui du client. |
 | `docs\CHARTE_LIVE.md` | Règles de style (à lire avant de toucher un visuel). |
+| `sauvegarde\` | **Sauvegarde de la configuration qui vit hors de `D:\Stream`** (demande du client, 2026-10-08 : « pour ne rien perdre si un jour je change de PC ») : collections et profils OBS, `global.ini`/`user.ini`, référence des appareils (`_archives_live\Plateau_reference.json`), profil Stream Deck complet (`ProfilesV3`, images des touches comprises), `inventaire.json` (versions d'OBS et du Stream Deck, modules ajoutés, secrets à reposer). Refaite par `node sauvegarde/sauvegarder.mjs`, qui vide les secrets et s'arrête s'il en reste un. Restauration : `sauvegarde\RESTAURER.md`. |
 | `_archives/ancien-pack/` | Ancien pack (Gaming, GamingV2, Job, Matt, banner_generator.html, ancien README), archivé au ménage du 2026-10-07. Plus rien ne s’en sert dans OBS depuis le retrait de la collection Plateau (2026-10-07). |
 
 ## Règles
@@ -29,4 +30,5 @@ textes des chaînes. Refonte complète le 2026-10-07 (demande du client : « com
 - Ne jamais afficher ni versionner : clé de stream, adresse d’un overlay StreamElements (elle contient une clé), `.env`, `Sans_nom\`.
 - Twitch : la chaîne est **twitch.tv/latshow** (plus `latshow_` depuis 2026-10-07). TikTok gaming reste `@latshow_`.
 - **Dons** : page StreamElements de la chaîne Twitch, `https://streamelements.com/latshow_/tip` (StreamElements a gardé l’ancien nom Twitch comme alias), PayPal relié par le client le 2026-10-07 ; en euros, montants rapides 2, 5, 10, 20 €, messages grossiers masqués (l’alerte passe quand même). Lien du panneau « Soutenir » de Twitch. Si l’alias change un jour, mettre à jour ce panneau.
-- Médias (sons, images, polices) non versionnés : ils vivent sur le disque et sont sauvegardés par le NAS.
+- **Après tout changement dans OBS ou le Stream Deck** (collection, filtre, profil, touche) : `node sauvegarde/sauvegarder.mjs`, puis commit et push.
+- Médias (sons, musique, vidéos, images) non versionnés : ils vivent sur le disque. **`D:\Stream\OBS` n'est pas encore dans les tâches du NAS** (au 2026-10-08 : Pilotage, Rush, Montage, Dev seulement) : tâche à ajouter par le client, voir `sauvegarde\RESTAURER.md`. Les polices, que le filtre du NAS exclut, sont versionnées (exception du `.gitignore`, licence OFL).

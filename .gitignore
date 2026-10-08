@@ -22,6 +22,14 @@ _Archives_travail/
 musique/_composer.log
 __pycache__/
 
+# Exceptions (2026-10-08) : la sauvegarde de la configuration OBS et Stream Deck (sauvegarde/, images des touches
+# comprises) et les polices, que le filtre du NAS exclut (woff2, ttf) : sans git, elles ne seraient copiées nulle part.
+# Polices sous licence SIL OFL (Inter, Russo One, Archivo Black, JetBrains Mono) : redistribution permise.
+!sauvegarde/**
+!overlays/commun/polices/*
+!transitions/medias/*.woff2
+!transitions/medias/*.ttf
+
 # Secrets : jamais versionnés
 .env
 .env.*
