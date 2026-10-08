@@ -135,11 +135,13 @@ function sourcesCommunes(seance) {
       filtre('Limiteur', 'limiter_filter', 'limiter_filter', { threshold: -3, release_time: 60 })] });
   } else {
     const fen = refSource('Fenettre');
-    s.capture = source('Fenêtre', 'window_capture', { ...fen.settings, method: 2, cursor: true, client_area: true }, { mixers: 0, hotkeys: {} });
-    const pc = refSource('Capture audio (sortie)');
-    // Périphérique par défaut de Windows : celui de la référence (« Casque (Bureau) ») était débranché, la source ne
-    // captait plus rien (constaté le 2026-10-08) ; « default » suit le casque ou les enceintes du moment.
-    s.sonpc = source('Son du PC', 'wasapi_output_capture', { ...pc.settings, device_id: 'default' }, { volume: 0.5, filters: [attenuation(), filtre('Limiteur', 'limiter_filter', 'limiter_filter', { threshold: -6, release_time: 60 })] });
+    // Le son vient de la fenêtre capturée seulement (Premiere, l'éditeur, la page montrée), comme le jeu en gaming :
+    // Spotify, une vidéo dans un autre navigateur ou une notification ne partent jamais en live (demande du client,
+    // 2026-10-08). Remplace « Son du PC », qui captait tout ce que jouait Windows.
+    s.capture = source('Fenêtre', 'window_capture', { ...fen.settings, method: 2, cursor: true, client_area: true, capture_audio: true }, {
+      volume: 0.5, hotkeys: {},
+      filters: [attenuation(), filtre('Limiteur', 'limiter_filter', 'limiter_filter', { threshold: -6, release_time: 60 })],
+    });
   }
   const chatRef = refSource('Social chatting');
   s.chat = source('Chat', 'browser_source', { url: chatRef.settings.url, width: 440, height: 840, css: CSS_BASE, fps_custom: true, fps: 30 }, { mixers: 0, hotkeys: { ...vide(), 'ObsBrowser.Refresh': [] } });
@@ -276,7 +278,6 @@ function construire(seance, canevasVertical) {
     if (sc.chat) ajouter(com.chat, rectChat(cadres, sc), 'etirer');
     // Son : le micro n'est présent que là où l'on parle (Pause, Pause bébé, Souci technique le coupent d'office).
     if (!sc.micro_coupe) ajouter(com.micro);
-    if (sc.capture && com.sonpc) ajouter(com.sonpc);
     if (com.discord && (sc.capture || sc.id === 'discussion')) ajouter(com.discord);
     if (sc.musique) {
       if (!musiques.has(sc.musique)) { const m = musique(sc.musique); musiques.set(sc.musique, m); sources.push(m); }

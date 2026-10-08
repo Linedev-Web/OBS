@@ -8,8 +8,13 @@
 //   node obs/regie.mjs tiktok-on | tiktok-off    image verticale vers TikTok LIVE Studio (caméra virtuelle d'Aitum)
 //   node obs/regie.mjs micros                    micros que voit OBS
 //   node obs/regie.mjs micro "<id>"              change le micro des trois séances (et le garde pour le générateur)
+//   node obs/regie.mjs sorties                   où le son de Windows peut être joué (casque, écran…), sans le câble
+//   node obs/regie.mjs sortie "<id>"             là où tu écoutes : la sortie de Windows (son, multimédia, communications)
 //   node obs/regie.mjs son-tiktok                envoie la piste TikTok d'OBS au câble VB-CABLE (OBS fermé)
-//   --json   une seule ligne { ok, message, etat, micros? } : c'est ce que lit le cockpit
+//   --json   une seule ligne { ok, message, etat, micros?, sorties? } : c'est ce que lit le cockpit
+//
+// Le câble VB-CABLE ne sert qu'au son d'OBS vers TikTok : jamais sortie de Windows (sinon Spotify, le navigateur…
+// partiraient sur TikTok et le casque resterait muet). « demarrer-live » remet la sortie choisie s'il l'est devenu.
 //
 // L'ordre compte (constaté le 2026-10-08) : la caméra virtuelle d'Aitum Vertical 1.6.6 démarre celle d'OBS sans
 // préparer ses sorties ; lancée avant le live ou l'enregistrement, OBS (mode Avancé) refuse ensuite de les démarrer.
@@ -42,17 +47,51 @@ class Refus extends Error {}
 
 // ---------- Périphériques ----------
 
-/** Périphériques audio actifs de Windows (registre MMDevices), avec l'identifiant qu'OBS leur donne. */
-function peripheriquesWindows(sens) {
-  const script = `[Console]::OutputEncoding=[Text.Encoding]::UTF8; Get-ChildItem 'HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\MMDevices\\Audio\\${sens}' | ForEach-Object { $e = Get-ItemProperty $_.PSPath; if ($e.DeviceState -eq 1) { $p = Get-ItemProperty (Join-Path $_.PSPath 'Properties'); [pscustomobject]@{ cle = $_.PSChildName; nom = $p.'{a45c254e-df1c-4efd-8020-67d146a850e0},2'; carte = $p.'{b3f8fa53-0004-438e-9003-51a46e139bfc},6' } } } | ConvertTo-Json -Compress`;
+/**
+ * Audio de Windows (obs/audio-windows.ps1) : sorties et entrées actives, sorties par défaut ; `choisir` change la
+ * sortie par défaut. Lu une fois par lancement de la régie.
+ */
+let audioLu;
+function audioWindows(action = 'lister', id) {
+  if (action === 'lister' && audioLu) return audioLu;
+  const args = ['-NoProfile', '-NonInteractive', '-ExecutionPolicy', 'Bypass', '-File', path.join(ICI, 'audio-windows.ps1'), '-Action', action, ...(id ? ['-Id', id] : [])];
+  let sortie;
   try {
-    const sortie = execFileSync('powershell.exe', ['-NoProfile', '-NonInteractive', '-Command', script], { encoding: 'utf8', timeout: 15000, windowsHide: true }).trim();
-    const liste = sortie ? JSON.parse(sortie) : [];
-    return (Array.isArray(liste) ? liste : [liste]).map((d) => ({ id: `{0.0.${sens === 'Render' ? 0 : 1}.00000000}.${d.cle}`, nom: d.carte ? `${d.nom} (${d.carte})` : d.nom }));
-  } catch { return []; }
+    sortie = execFileSync('powershell.exe', args, { encoding: 'utf8', timeout: 30000, windowsHide: true, stdio: ['ignore', 'pipe', 'pipe'] }).trim();
+  } catch (erreur) {
+    if (action === 'choisir') throw new Refus(`Windows n'a pas changé de sortie : ${String(erreur.stderr || erreur.message).trim().split(/\r?\n/)[0]}`);
+    return { sorties: [], entrees: [], defaut: {} };
+  }
+  const j = JSON.parse(sortie || '{}');
+  audioLu = { sorties: [j.sorties ?? []].flat(), entrees: [j.entrees ?? []].flat(), defaut: j.defaut ?? {} };
+  return audioLu;
 }
 
-const cableVirtuel = () => peripheriquesWindows('Render').find((d) => d.nom?.startsWith(CABLE));
+const memeId = (a, b) => Boolean(a && b) && a.toLowerCase() === b.toLowerCase();
+const estCable = (peripherique) => /VB-Audio Virtual Cable/i.test(peripherique?.nom ?? '');
+const cableVirtuel = () => audioWindows().sorties.find((d) => d.nom?.startsWith(CABLE));
+
+/** Où Windows joue le son (ce que tu entends) : sortie par défaut et sortie des communications (Discord, appels). */
+function sortieWindows() {
+  const { sorties, defaut } = audioWindows();
+  const trouver = (id) => sorties.find((s) => memeId(s.id, id)) ?? (id ? { id, nom: id } : null);
+  const son = trouver(defaut.sortie);
+  const communication = trouver(defaut.communication);
+  return { son, communication, surCable: estCable(son) || estCable(communication) };
+}
+
+/**
+ * Le câble ne sert qu'à OBS → TikTok (demande du client, 2026-10-08) : s'il est devenu la sortie de Windows (son de
+ * Spotify, du navigateur… envoyé dans TikTok, et plus rien dans le casque), on remet la sortie choisie dans la régie.
+ */
+function protegerSortie() {
+  if (!sortieWindows().surCable) return null;
+  const choisie = lireJson(PERIPHERIQUES, {}).sortie;
+  const active = choisie && audioWindows().sorties.find((s) => memeId(s.id, choisie.id));
+  if (!active) throw new Refus('Windows envoie ton son dans le câble VB-CABLE (Spotify et ton navigateur partiraient sur TikTok) : choisis où tu écoutes dans la régie, puis relance.');
+  audioLu = audioWindows('choisir', active.id);
+  return active;
+}
 const lireJson = (fichier, defaut) => { try { return JSON.parse(fs.readFileSync(fichier, 'utf8')); } catch { return defaut; } };
 function ecrireJson(fichier, valeur, indentation = 2) {
   fs.mkdirSync(path.dirname(fichier), { recursive: true });
@@ -89,7 +128,12 @@ async function nomMicro(obs, id) {
 
 async function lireEtat(obs) {
   const cable = cableVirtuel();
-  const son = { piste: PISTE, cable: cable?.nom ?? null, ...etatAudioMonitor(cable) };
+  const ecoute = sortieWindows();
+  const son = {
+    piste: PISTE, cable: cable?.nom ?? null, ...etatAudioMonitor(cable),
+    // Ce que tu entends : la sortie de Windows. Elle ne doit jamais être le câble.
+    sortie: ecoute.son, communication: ecoute.communication, surCable: ecoute.surCable,
+  };
   const memorise = lireJson(PERIPHERIQUES, {}).micro ?? null;
   if (!obs) return { obs: { ouvert: false }, live: false, enregistrement: false, cameraObs: false, tiktok: { module: false, image: false, scene: null }, son, micro: memorise };
   const statut = await obs.vendeur(AITUM, 'status');
@@ -167,7 +211,7 @@ async function listeMicros(obs) {
 
 /** Change le micro : tout de suite dans la collection ouverte, dans les fichiers des deux autres, et pour le générateur. */
 async function changerMicro(obs, id) {
-  const micros = obs ? await listeMicros(obs) : peripheriquesWindows('Capture');
+  const micros = obs ? await listeMicros(obs) : audioWindows().entrees;
   const choisi = micros.find((m) => m.id === id);
   if (!choisi) throw new Refus("Ce micro n'est pas branché (ou OBS ne le voit pas).");
   const ouverte = obs ? (await obs.req('GetSceneCollectionList')).responseData?.currentSceneCollectionName : undefined;
@@ -217,10 +261,11 @@ function brancherSonTikTok() {
 const COMMANDES = {
   async etat() { return { message: 'État lu.' }; },
   async 'demarrer-live'(obs) {
+    const remise = protegerSortie();
     await demarrerSortie(obs, 'StartStream', 'GetStreamStatus', 'Le live');
     await demarrerSortie(obs, 'StartRecord', 'GetRecordStatus', "L'enregistrement");
     await lancerTikTok(obs);
-    return { message: 'Live, enregistrement et image TikTok lancés. Passe en direct dans TikTok LIVE Studio.' };
+    return { message: `Live, enregistrement et image TikTok lancés. Passe en direct dans TikTok LIVE Studio.${remise ? ` (Le son de Windows partait dans le câble : remis sur ${remise.nom}.)` : ''}` };
   },
   async 'terminer-live'(obs) {
     await arreterSortie(obs, 'StopStream', 'GetStreamStatus');
@@ -245,7 +290,19 @@ const COMMANDES = {
     return { message: (await couperTikTok(obs)) ? 'Image TikTok arrêtée.' : "L'image TikTok était déjà arrêtée." };
   },
   async micros(obs) {
-    return { message: 'Micros lus.', micros: obs ? await listeMicros(obs) : peripheriquesWindows('Capture') };
+    return { message: 'Micros lus.', micros: obs ? await listeMicros(obs) : audioWindows().entrees };
+  },
+  async sorties() {
+    return { message: 'Sorties lues.', sorties: audioWindows().sorties.filter((s) => !estCable(s)) };
+  },
+  async sortie(obs, id) {
+    if (!id) throw new Refus('Indique la sortie : node obs/regie.mjs sortie "<id>" (liste : node obs/regie.mjs sorties).');
+    const choisie = audioWindows().sorties.find((s) => memeId(s.id, id));
+    if (!choisie) throw new Refus("Cette sortie n'est pas branchée.");
+    if (estCable(choisie)) throw new Refus('Le câble VB-CABLE ne sert qu’à OBS pour TikTok : choisis ton casque ou tes enceintes.');
+    audioLu = audioWindows('choisir', choisie.id);
+    ecrireJson(PERIPHERIQUES, { ...lireJson(PERIPHERIQUES, {}), sortie: choisie });
+    return { message: `Tu écoutes maintenant sur ${choisie.nom} (son, multimédia et communications).` };
   },
   async micro(obs, id) {
     if (!id) throw new Refus('Indique le micro : node obs/regie.mjs micro "<id>" (liste : node obs/regie.mjs micros).');
@@ -257,12 +314,14 @@ const COMMANDES = {
     return { message: `Son TikTok branché : piste ${PISTE} d'OBS vers ${cable.nom}. Rouvre OBS ; dans TikTok LIVE Studio, choisis « CABLE Output » comme micro.` };
   },
 };
-const SANS_OBS = new Set(['etat', 'micros', 'micro', 'son-tiktok']);
+const SANS_OBS = new Set(['etat', 'micros', 'micro', 'sorties', 'sortie', 'son-tiktok']);
 
 function resumer(etat) {
   const oui = (b) => (b ? 'oui' : 'non');
-  if (!etat.obs.ouvert) return ['OBS : fermé'];
+  const ecoute = `Tu entends sur : ${etat.son.sortie?.nom ?? '—'}${etat.son.surCable ? ' — ATTENTION : le câble est une sortie de Windows' : ''}`;
+  if (!etat.obs.ouvert) return ['OBS : fermé', ecoute];
   return [
+    ecoute,
     `OBS : ${etat.obs.collection}, scène ${etat.obs.scene}`,
     `Live : ${oui(etat.live)} · Enregistrement : ${oui(etat.enregistrement)}`,
     `Image TikTok : ${etat.tiktok.image ? `oui (${etat.tiktok.scene})` : 'non'}${etat.cameraObs ? " · la caméra virtuelle d'OBS (image horizontale) tourne" : ''}`,
@@ -293,7 +352,7 @@ try {
 if (json) console.log(JSON.stringify(resultat));
 else {
   console.log(resultat.message);
-  if (resultat.micros) for (const m of resultat.micros) console.log(`  ${m.nom}  →  ${m.id}`);
+  for (const m of [...(resultat.micros ?? []), ...(resultat.sorties ?? [])]) console.log(`  ${m.nom}  →  ${m.id}`);
   if (resultat.etat) console.log(resumer(resultat.etat).map((l) => `  ${l}`).join('\n'));
 }
 process.exitCode = resultat.ok ? 0 : 1;
