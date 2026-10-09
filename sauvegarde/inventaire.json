@@ -1,5 +1,5 @@
 {
-  "sauvegarde_le": "2026-10-09T17:36:59.905Z",
+  "sauvegarde_le": "2026-10-09T17:37:28.318Z",
   "obs": {
     "version": "32.2.2",
     "modules_ajoutes": [
@@ -21,7 +21,8 @@
     "collections": [
       "Live_Gaming.json",
       "Live_Montage.json",
-      "Live_Dev.json"
+      "Live_Dev.json",
+      "Plateau.json"
     ]
   },
   "streamdeck": {

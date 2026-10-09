@@ -17,7 +17,7 @@ const OBS = path.join(process.env.APPDATA, 'obs-studio');
 const SD = path.join(process.env.APPDATA, 'Elgato', 'StreamDeck');
 const OBS_PROGRAMME = 'C:\\Program Files\\obs-studio';
 const PROFILS = ['Live_Latshow', 'Live_linedev'];
-const COLLECTIONS = ['Live_Gaming.json', 'Live_Montage.json', 'Live_Dev.json'];
+const COLLECTIONS = ['Live_Gaming.json', 'Live_Montage.json', 'Live_Dev.json', 'Plateau.json'];
 // Modules livrés avec OBS : tout le reste a été ajouté et doit être réinstallé sur un nouveau PC.
 const MODULES_OBS = new Set(['aja-output-ui', 'aja', 'chrome_elf', 'coreaudio-encoder', 'decklink-captions', 'decklink-output-ui', 'decklink',
   'frontend-tools', 'image-source', 'libEGL', 'libGLESv2', 'libcef', 'nv-filters', 'obs-browser', 'obs-ffmpeg', 'obs-filters', 'obs-nvenc',
