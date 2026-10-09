@@ -473,5 +473,18 @@
       "linedev": "gauche"
     },
     "_note_son": "Piste audio d’OBS réservée à TikTok (piste_son) : mix du live + alertes TikTok, sans les alertes Twitch / YouTube. Le module Audio Monitor l’envoie au câble VB-CABLE (« CABLE Input »), micro de TikTok LIVE Studio (« CABLE Output »). Réglé par node obs/regie.mjs son-tiktok, OBS fermé."
+  },
+  "plateau": {
+    "_note": "Collection de tournage des vidéos face caméra montées ensuite (pas de live), demande du client du 2026-10-09 : « quand je fait du montage c’est la qualité maximale qui me faut ». Écrite par obs/generer.mjs (Plateau.json), hors de la liste des séances : la page Live, la régie et le Stream Deck ne la voient pas. L’image du montage est le fichier de la webcam (Source Record, à la taille réelle de la caméra) ; l’enregistrement d’OBS sert au son et aux plans d’écran.",
+    "nom": "Plateau",
+    "camera": { "resolution": "3840x2160", "fps": 30 },
+    "_note_camera": "4K : 30 i/s au plus sur la MX Brio. Le 2026-10-01 elle avait saccadé (gels jusqu’à 0,3 s dans l’enregistrement) : à mesurer sur un essai avant de l’adopter, sinon revenir à 1920x1080 et 60 i/s.",
+    "enregistrement_webcam": { "dossier": "D:/Stream/Rush/_webcam", "cqp": 16, "preset": "p7" },
+    "micro_decalage_ms": 110,
+    "_note_micro": "Décalage du micro dans les fichiers d’OBS avec la caméra en 4K (mesuré le 2026-10-01, Dev/Plateau/TOURNAGE.md). Micro en direct, seul un limiteur à −3 dB : le nettoyage se fait au montage.",
+    "scenes": [
+      { "id": "plateau", "nom": "Plateau", "role": "Ta caméra en plein écran et ton micro : le tournage." },
+      { "id": "ecran", "nom": "Écran", "role": "Ton écran seul, sans webcam ni micro : les plans de la manip (B-roll)." }
+    ]
   }
 }

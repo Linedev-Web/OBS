@@ -1,7 +1,7 @@
 // Génère les collections de scènes OBS des lives à partir de obs/seances.json.
 //
 //   node obs/generer.mjs            simulation : ce qui serait écrit
-//   node obs/generer.mjs --ecrire   écrit Live_Gaming.json, Live_Montage.json, Live_Dev.json
+//   node obs/generer.mjs --ecrire   écrit Live_Gaming.json, Live_Montage.json, Live_Dev.json et Plateau.json (tournage)
 //                                   dans %APPDATA%\obs-studio\basic\scenes\ (ancienne version sauvegardée à côté)
 //
 // Les réglages des périphériques (caméra MX Brio et sa correction couleur, micro FIFINE, jeu, fenêtre, Discord, chat)
@@ -91,25 +91,32 @@ const CSS_BASE = 'body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden}'
 const COULEUR_NEUTRE = 0xffffffff; // multiplication par le blanc : ni rouge, ni vert, ni bleu retiré
 
 // ---------- Sources partagées d'une collection ----------
-function sourcesCommunes(seance) {
+// Caméra MX Brio avec ses réglages de référence ; `reglages` et `enregistrement` les complètent (Plateau en 4K).
+function cameraReference(reglages = {}, enregistrement = {}) {
   const camRef = refSource('Périphérique de capture vidéo');
   const couleur = (camRef.filters || []).find((f) => f.id === 'color_filter');
   const enreg = (camRef.filters || []).find((f) => f.id === 'source_record_filter');
-  const camera = source('Caméra', 'dshow_input', camRef.settings, {
+  return source('Caméra', 'dshow_input', { ...camRef.settings, ...reglages }, {
     mixers: camRef.mixers, versioned_id: camRef.versioned_id,
     filters: [
       // Couleurs neutres (2026-10-08, le client se trouvait « un peu jaune ») : le réglage de Plateau multipliait le bleu
       // par 0,89 ; mesuré sur le mur blanc, la caméra est neutre d'elle-même. On garde gamma, contraste et saturation.
       ...(couleur ? [filtre('Couleurs', couleur.id, couleur.versioned_id, { ...couleur.settings, color_multiply: COULEUR_NEUTRE })] : []),
       // Enregistrement séparé de la webcam pendant le live (module Source Record, réglages de Plateau) : voulu par le client.
-      ...(enreg ? [filtre('Enregistrement caméra', enreg.id, enreg.versioned_id, enreg.settings, true)] : []),
+      ...(enreg ? [filtre('Enregistrement caméra', enreg.id, enreg.versioned_id, { ...enreg.settings, ...enregistrement }, true)] : []),
     ],
     hotkeys: {},
   });
-
+}
+// Micro choisi dans la régie (obs/regie.mjs micro …, page Live du cockpit), sinon celui de la référence.
+function microReference() {
   const micRef = refSource('Capture audio (entrée)');
-  // Micro choisi dans la régie (obs/regie.mjs micro …, page Live du cockpit), sinon celui de la référence.
-  const micReglages = PERIPHERIQUES.micro?.id ? { ...micRef.settings, device_id: PERIPHERIQUES.micro.id } : micRef.settings;
+  return { micRef, reglages: PERIPHERIQUES.micro?.id ? { ...micRef.settings, device_id: PERIPHERIQUES.micro.id } : micRef.settings };
+}
+
+function sourcesCommunes(seance) {
+  const camera = cameraReference();
+  const { micRef, reglages: micReglages } = microReference();
   const micro = source('Micro', 'wasapi_input_capture', micReglages, {
     mixers: 255, sync: micRef.sync, flags: micRef.flags,
     filters: [
@@ -324,7 +331,46 @@ function construire(seance, canevasVertical) {
   };
 }
 
-const FICHIERS = { gaming: 'Live_Gaming.json', montage: 'Live_Montage.json', dev: 'Live_Dev.json' };
+// ---------- Plateau : tournage des vidéos face caméra, montées ensuite (pas de live) ----------
+// Demande du client, 2026-10-09 : « quand je fait du montage c'est la qualité maximale qui me faut ». Collection à part :
+// la caméra y passe à la résolution de seances.json (plateau.camera) sans toucher aux lives (1080p, 60 i/s). L'image du
+// montage est le fichier de la webcam (Source Record à la taille réelle de la caméra, qualité quasi sans perte) ;
+// l'enregistrement d'OBS sert au son et aux plans d'écran. Ni habillage, ni chat, ni alertes, ni image TikTok.
+function construirePlateau(plateau) {
+  const [cw, ch] = plateau.camera.resolution.split('x').map(Number);
+  const camera = cameraReference(
+    { resolution: plateau.camera.resolution, last_resolution: plateau.camera.resolution, res_type: 1, frame_interval: Math.round(1e7 / plateau.camera.fps) },
+    { scale: false, resolution: plateau.camera.resolution, width: cw, height: ch, rate_control: 'CQP', cqp: plateau.enregistrement_webcam.cqp,
+      preset: plateau.enregistrement_webcam.preset, path: plateau.enregistrement_webcam.dossier },
+  );
+  // Micro en direct (TOURNAGE.md du Plateau, 2026-09-30) : seul un limiteur évite la saturation, le nettoyage se fait au
+  // montage. Décalé pour que voix et lèvres coïncident dans les fichiers d'OBS (mesuré avec la caméra en 4K).
+  const { reglages } = microReference();
+  const micro = source('Micro', 'wasapi_input_capture', reglages, {
+    sync: plateau.micro_decalage_ms * 1e6,
+    filters: [filtre('Limiteur', 'limiter_filter', 'limiter_filter', { threshold: -3, release_time: 60 })],
+  });
+  const ecran = source('Écran', 'monitor_capture', refSource("Capture d'écran 2").settings, { mixers: 0, hotkeys: {} });
+  const plein = [0, 0, MW, MH];
+  const contenu = { plateau: [[camera, plein, 'exterieur'], [micro]], ecran: [[ecran, plein, 'interieur']] };
+  const scenes = plateau.scenes.map((sc) => {
+    const items = contenu[sc.id].map(([src, rect, aj], i) => element(src, i + 1, rect, aj));
+    const hk = { 'OBSBasic.SelectScene': [] };
+    for (const it of items) { hk[`libobs.show_scene_item.${it.id}`] = []; hk[`libobs.hide_scene_item.${it.id}`] = []; }
+    return { ...source(sc.nom, 'scene', { id_counter: items.length, custom_size: false, items }, { mixers: 0, hotkeys: hk }), canvas_uuid: CANEVAS };
+  });
+  return {
+    name: plateau.nom, groups: [],
+    scene_order: plateau.scenes.map((s) => ({ name: s.nom })),
+    current_scene: plateau.scenes[0].nom, current_program_scene: plateau.scenes[0].nom,
+    current_transition: 'Coupure', transition_duration: 300, transitions: [], quick_transitions: [],
+    saved_projectors: [], preview_locked: false, scaling_enabled: false, scaling_level: 0, scaling_off_x: 0, scaling_off_y: 0,
+    modules: {}, resolution: { x: W, y: H }, version: ref.version ?? 2,
+    sources: [camera, micro, ecran, ...scenes],
+  };
+}
+
+const FICHIERS = { gaming: 'Live_Gaming.json', montage: 'Live_Montage.json', dev: 'Live_Dev.json', plateau: 'Plateau.json' };
 // Collection ouverte : demandée à OBS quand il tourne (user.ini n'est réécrit qu'à la fermeture d'OBS : après un
 // changement de collection, il désigne encore l'ancienne — constaté le 2026-10-07), sinon lue dans user.ini.
 // OBS absent de la liste des processus : rien n'est ouvert, les trois collections peuvent s'écrire.
@@ -337,10 +383,15 @@ const horodatage = new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-');
 function canevasVerticalExistant(fichier) {
   try { return JSON.parse(fs.readFileSync(fichier, 'utf8')).canvases?.find((c) => c.info?.name === CANEVAS_VERTICAL)?.info?.uuid; } catch { return undefined; }
 }
-for (const seance of conf.seances) {
+const collections = [
+  ...conf.seances.map((seance) => ({ seance, fabriquer: (fichier) => construire(seance, canevasVerticalExistant(fichier) ?? crypto.randomUUID()) })),
+  ...(conf.plateau ? [{ seance: { id: 'plateau', nom: conf.plateau.nom }, fabriquer: () => construirePlateau(conf.plateau) }] : []),
+];
+for (const { seance, fabriquer } of collections) {
   const fichier = path.join(SCENES_OBS, FICHIERS[seance.id]);
-  const col = construire(seance, canevasVerticalExistant(fichier) ?? crypto.randomUUID());
-  const resume = col.scene_order.map((s) => s.name).join(' | ') + ` ; vertical : ${col.sources.filter((s) => s.canvas_uuid && s.canvas_uuid !== CANEVAS).map((s) => s.name).join(' | ')}`;
+  const col = fabriquer(fichier);
+  const verticales = col.sources.filter((s) => s.canvas_uuid && s.canvas_uuid !== CANEVAS).map((s) => s.name);
+  const resume = col.scene_order.map((s) => s.name).join(' | ') + (verticales.length ? ` ; vertical : ${verticales.join(' | ')}` : '');
   if (!ECRIRE) { console.log(`[simulation] ${FICHIERS[seance.id]} — ${seance.nom} : ${resume} (${col.sources.length} sources)`); continue; }
   if (estOuverte(seance)) { console.log(`IGNORÉ ${FICHIERS[seance.id]} : collection ouverte dans OBS, change de collection puis relance.`); continue; }
   if (fs.existsSync(fichier)) {
