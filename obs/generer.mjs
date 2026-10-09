@@ -13,6 +13,7 @@ import crypto from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { collectionOuverte } from './obs-websocket.mjs';
+import { adresseChat, cssChat } from './chat.mjs';
 
 const ICI = path.dirname(fileURLToPath(import.meta.url));
 const RACINE = path.resolve(ICI, '..');
@@ -143,8 +144,6 @@ function sourcesCommunes(seance) {
       filters: [attenuation(), filtre('Limiteur', 'limiter_filter', 'limiter_filter', { threshold: -6, release_time: 60 })],
     });
   }
-  const chatRef = refSource('Social chatting');
-  s.chat = source('Chat', 'browser_source', { url: chatRef.settings.url, width: 440, height: 840, css: CSS_BASE, fps_custom: true, fps: 30 }, { mixers: 0, hotkeys: { ...vide(), 'ObsBrowser.Refresh': [] } });
   // Son des alertes : passé par OBS (sinon les spectateurs ne l'entendent pas) et écouté dans le casque (2 = écoute et sortie).
   // Taille de la page StreamElements (1920×1080), étirée sur tout le canevas dans les scènes : en 2560×1440, la page
   // restait collée en haut à gauche et l'alerte paraissait petite et décentrée (constaté le 2026-10-07).
@@ -208,10 +207,19 @@ function element(src, id, rect, ajustement = 'interieur', { k = K, aligner = 0, 
   };
 }
 
-function rectChat(cadres, scene) {
-  if (scene.id === 'discussion') return cadres['chat.discussion'];
-  if (scene.camera === 'colonne') return cadres['chat.colonne'];
-  return cadres['chat.attente'];
+// Le chat (Social Stream Ninja, obs/chat.mjs) : une source par disposition, à la taille exacte de son cadre. Une seule
+// source de 440 × 840 étirée partout grossissait le texte (× 1,33) et le déformait en Discussion (constaté le 2026-10-09).
+const NOMS_CHAT = { attente: 'Chat', discussion: 'Chat — Discussion', colonne: 'Chat — Colonne' };
+function cadreChat(cadres, scene) {
+  if (scene.id === 'discussion') return ['discussion', cadres['chat.discussion']];
+  if (scene.camera === 'colonne') return ['colonne', cadres['chat.colonne']];
+  return ['attente', cadres['chat.attente']];
+}
+function sourceChat(seance, cle, [, , w, h]) {
+  return source(NOMS_CHAT[cle], 'browser_source', {
+    url: adresseChat(refSource('Social chatting').settings.url, seance.marque), width: Math.round(w * K), height: Math.round(h * K),
+    css: `${CSS_BASE} ${cssChat(seance.marque)}`, fps_custom: true, fps: 30,
+  }, { mixers: 0, hotkeys: { ...vide(), 'ObsBrowser.Refresh': [] } });
 }
 function rectCapture(cadres, scene) {
   if (scene.camera === 'colonne') return cadres['capture.cadree'];
@@ -265,6 +273,11 @@ function construire(seance, canevasVertical) {
   const com = sourcesCommunes(seance);
   const sources = Object.values(com);
   const musiques = new Map();
+  const chats = new Map();
+  const chatPour = (cle, rect) => {
+    if (!chats.has(cle)) { const s = sourceChat(seance, cle, rect); chats.set(cle, s); sources.push(s); }
+    return chats.get(cle);
+  };
   const scenes = [];
   const vertical = construireVertical(seance, com, canevasVertical);
   for (const sc of seance.scenes) {
@@ -278,7 +291,7 @@ function construire(seance, canevasVertical) {
     if (pleinEcran) { ajouter(com.capture, rectCapture(cadres, sc), 'interieur'); if (ov) ajouter(ov); }
     else { if (ov) ajouter(ov); if (sc.capture) ajouter(com.capture, rectCapture(cadres, sc), 'interieur'); }
     if (sc.camera) ajouter(com.camera, cadres[`camera.${sc.camera}`], 'exterieur');
-    if (sc.chat) ajouter(com.chat, rectChat(cadres, sc), 'etirer');
+    if (sc.chat) { const [cle, rect] = cadreChat(cadres, sc); ajouter(chatPour(cle, rect), rect, 'etirer'); }
     // Son : le micro n'est présent que là où l'on parle (Pause, Pause bébé, Souci technique le coupent d'office).
     if (!sc.micro_coupe) ajouter(com.micro);
     if (com.discord && (sc.capture || sc.id === 'discussion')) ajouter(com.discord);

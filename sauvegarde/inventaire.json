@@ -1,5 +1,5 @@
 {
-  "sauvegarde_le": "2026-10-08T18:23:44.371Z",
+  "sauvegarde_le": "2026-10-09T12:13:44.323Z",
   "obs": {
     "version": "32.2.2",
     "modules_ajoutes": [
@@ -85,10 +85,6 @@
       "quoi": "adresse streamelements.com"
     },
     {
-      "ou": "OBS, collection Live_Montage.json, source « Chat »",
-      "quoi": "adresse socialstream.ninja"
-    },
-    {
       "ou": "OBS, collection Live_Montage.json, source « Alertes »",
       "quoi": "adresse streamelements.com"
     },
@@ -97,12 +93,32 @@
       "quoi": "adresse streamelements.com"
     },
     {
-      "ou": "OBS, collection Live_Dev.json, source « Chat »",
+      "ou": "OBS, collection Live_Montage.json, source « Chat »",
+      "quoi": "adresse socialstream.ninja"
+    },
+    {
+      "ou": "OBS, collection Live_Montage.json, source « Chat — Colonne »",
+      "quoi": "adresse socialstream.ninja"
+    },
+    {
+      "ou": "OBS, collection Live_Montage.json, source « Chat — Discussion »",
       "quoi": "adresse socialstream.ninja"
     },
     {
       "ou": "OBS, collection Live_Dev.json, source « Alertes »",
       "quoi": "adresse streamelements.com"
+    },
+    {
+      "ou": "OBS, collection Live_Dev.json, source « Chat »",
+      "quoi": "adresse socialstream.ninja"
+    },
+    {
+      "ou": "OBS, collection Live_Dev.json, source « Chat — Colonne »",
+      "quoi": "adresse socialstream.ninja"
+    },
+    {
+      "ou": "OBS, collection Live_Dev.json, source « Chat — Discussion »",
+      "quoi": "adresse socialstream.ninja"
     },
     {
       "ou": "OBS, collection Plateau_reference.json, source « Twitch Alerte »",

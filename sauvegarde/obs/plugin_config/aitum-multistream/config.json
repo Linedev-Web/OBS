@@ -2,7 +2,8 @@
   "partner_block": 0,
   "profiles": [
     {
-      "name": "Live Latshow"
+      "name": "Live Latshow",
+      "video_encoder_description0": "2560x1440 60fps 8000Kbps"
     }
   ]
 }

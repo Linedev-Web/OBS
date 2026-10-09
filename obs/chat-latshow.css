@@ -1,0 +1,13 @@
+/* Chat des lives Latshow (page dock.html de Social Stream Ninja, CSS posé dans la source OBS par obs/generer.mjs).
+   Demande du client, 2026-10-09 : « un chat clean avec la bonne typo », moins gros. Inter, pseudo cyan, texte clair,
+   petit logo de la plateforme ; ni bande, ni contour, ni menu. La source a la taille exacte de son cadre (pas d'étirement). */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+#menu,#context-menu{display:none!important}
+html,body,#output{background:transparent!important}
+/* La page décale la liste de 32 px vers la gauche (ascenseur caché) : rognait les logos et les lignes. */
+#output{left:0!important;right:0!important;width:auto!important;box-sizing:border-box!important;padding:0 16px 12px!important}
+.highlight-chat{background:transparent!important;border:0!important;box-shadow:none!important;padding:5px 0!important;margin:0!important}
+.hl-message{display:block!important;font:400 22px/1.4 'Inter',sans-serif!important;color:#E9E6FF!important;text-shadow:none!important;-webkit-text-stroke:0!important;letter-spacing:0!important;text-indent:0!important;padding:0!important;margin:0!important;overflow:visible!important}
+.hl-source-type{width:18px!important;height:18px!important;vertical-align:-3px!important;margin:0 8px 0 0!important;opacity:.9}
+.hl-name{display:inline!important;font:700 22px/1.4 'Inter',sans-serif!important;color:#22D3EE!important;margin-right:8px!important;text-shadow:none!important;-webkit-text-stroke:0!important}
+.hl-content{display:inline!important;font:400 22px/1.4 'Inter',sans-serif!important;color:#E9E6FF!important;text-shadow:none!important;-webkit-text-stroke:0!important}

@@ -17,17 +17,20 @@
       "enabled": false
     },
     {
-      "enabled": true,
       "devices": [
         {
           "id": "{0.0.0.00000000}.{b0b73b8e-4150-4fd9-9350-b12e8940599f}",
-          "deviceName": "CABLE Input (VB-Audio Virtual Cable)",
-          "name": "CABLE Input (VB-Audio Virtual Cable)",
-          "volume": 100,
+          "locked": false,
           "muted": false,
-          "locked": false
+          "volume": 100,
+          "name": "CABLE Input (VB-Audio Virtual Cable)"
         }
-      ]
+      ],
+      "enabled": true
     }
-  ]
+  ],
+  "reset_hotkey": [],
+  "showOutputSlider": false,
+  "showOnlyActive": false,
+  "showSliderNames": false
 }

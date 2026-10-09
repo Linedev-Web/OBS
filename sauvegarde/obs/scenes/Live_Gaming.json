@@ -312,9 +312,9 @@
       "versioned_id": "game_capture",
       "settings": {
         "capture_audio": true,
-        "window": "How to Fish:UnityWndClass:How to Fish.exe",
         "capture_mode": "window",
-        "anti_cheat_hook": true
+        "anti_cheat_hook": true,
+        "window": "Rocket League (64-bit, DX11, Cooked):LaunchUnrealUWindowsClient:RocketLeague.exe"
       },
       "mixers": 255,
       "sync": 0,
@@ -618,7 +618,7 @@
         "reroute_audio": true
       },
       "mixers": 32,
-      "sync": 0,
+      "sync": -2000000,
       "flags": 0,
       "volume": 0.800000011920929,
       "balance": 0.5,
@@ -4519,7 +4519,7 @@
       "id": "scene",
       "versioned_id": "scene",
       "settings": {
-        "id_counter": 4,
+        "id_counter": 6,
         "custom_size": false,
         "items": [
           {
@@ -4744,7 +4744,7 @@
           }
         ],
         "order": 1,
-        "canvas_active": true
+        "canvas_active": false
       },
       "mixers": 0,
       "sync": 0,
@@ -5805,7 +5805,7 @@
           }
         ],
         "order": 7,
-        "canvas_active": false
+        "canvas_active": true
       },
       "mixers": 0,
       "sync": 0,
@@ -5861,8 +5861,8 @@
       "name": "Fin"
     }
   ],
-  "current_scene": "Jeu",
-  "current_program_scene": "Jeu",
+  "current_scene": "Fin",
+  "current_program_scene": "Fin",
   "canvases": [
     {
       "info": {
