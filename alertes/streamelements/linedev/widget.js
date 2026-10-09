@@ -52,6 +52,7 @@ window.addEventListener('onWidgetLoad', (obj) => {
   if (reglages.devise && String(reglages.devise).trim()) devise = String(reglages.devise).trim().toUpperCase();
   plateforme = choisirPlateforme(reglages.plateforme, d.channel);
   document.documentElement.style.setProperty('--haut', `${nombre('haut', 40)}px`);
+  envoyerSession(d.session);
 });
 
 window.addEventListener('onEventReceived', (obj) => {
@@ -61,6 +62,7 @@ window.addEventListener('onEventReceived', (obj) => {
   if (ecouteur === 'event:skip') return passer();
   if (ecouteur === 'alertService:toggleSound') { sonCoupe = !sonCoupe; return; }
   if (estBoutonTester(ecouteur, evt)) return demonstration();
+  if (!evt.isTest) relayerSoutien(ecouteur, evt);
   const alerte = construire(ecouteur, evt);
   if (!alerte) return;
   alerte.cle = cleDe(ecouteur, alerte);
@@ -166,6 +168,56 @@ function cleDe(ecouteur, alerte) {
     case 'superchat-latest': return 'superchat';
     default: return 'follow';
   }
+}
+
+// ---------- Soutiens du live (obs/soutiens.mjs) ----------
+// Chaque follow, abonnement ou don part aussi vers le service local des soutiens (lancé par OBS), qui en fait la liste
+// du live : bandeau au-dessus de la caméra, bandeau vertical, écrans de fin. S'il ne répond pas, l'alerte n'en souffre pas.
+
+const SOUTIENS = 'http://127.0.0.1:21310/soutien';
+
+function envoyerSoutien(message) {
+  try {
+    fetch(SOUTIENS, { method: 'POST', mode: 'cors', keepalive: true, headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify(message) }).catch(() => {});
+  } catch { /* hors d'OBS (aperçu, test) : rien à envoyer */ }
+}
+
+// Qui soutient : l'abonné YouTube est l'équivalent du follow ; un abonnement offert compte pour celui qui l'offre.
+function soutienDe(ecouteur, e) {
+  const nom = pseudo(e.displayName || e.name);
+  const offreur = pseudo(e.sender);
+  const montant = Number(e.amount) || 0;
+  switch (ecouteur) {
+    case 'follower-latest': return { genre: 'follow', nom };
+    case 'subscriber-latest':
+      if (plateforme === 'youtube') return { genre: 'follow', nom };
+      return { genre: 'abonnement', nom: (e.gifted || e.bulkGifted) && offreur ? offreur : nom };
+    case 'sponsor-latest': return { genre: 'abonnement', nom: e.gifted && offreur ? offreur : nom };
+    case 'tip-latest':
+    case 'superchat-latest': return { genre: 'don', nom, montant, devise };
+    case 'cheer-latest': return { genre: 'don', nom, montant, devise: 'BITS' };
+    default: return null;
+  }
+}
+
+function relayerSoutien(ecouteur, e) {
+  const s = soutienDe(ecouteur, e);
+  if (s && s.nom) envoyerSoutien({ type: 'soutien', plateforme, ...s });
+}
+
+// Au chargement : ce qui s'est passé depuis le début de la session StreamElements (le service garde ce qui date du live).
+const RECENTS = [['follower-recent', 'follower-latest'], ['subscriber-recent', 'subscriber-latest'], ['tip-recent', 'tip-latest'],
+  ['cheer-recent', 'cheer-latest'], ['sponsor-recent', 'sponsor-latest'], ['superchat-recent', 'superchat-latest']];
+function envoyerSession(session) {
+  const donnees = (session && session.data) || {};
+  const liste = [];
+  for (const [cle, ecouteur] of RECENTS) {
+    for (const e of Array.isArray(donnees[cle]) ? donnees[cle] : []) {
+      const s = soutienDe(ecouteur, e || {});
+      if (s && s.nom) liste.push({ ...s, plateforme, quand: e.createdAt });
+    }
+  }
+  if (liste.length) envoyerSoutien({ type: 'session', plateforme, liste });
 }
 
 function abonneYoutube(nom) {

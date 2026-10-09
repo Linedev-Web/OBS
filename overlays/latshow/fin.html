@@ -1,14 +1,26 @@
 <!doctype html><html lang="fr"><head><meta charset="utf-8"><title>Fin</title>
-<link rel="stylesheet" href="latshow.css"><script src="../commun/scene.js"></script>
-<style>.prochain{margin-top:64px}.prochain small{display:flex;align-items:center;gap:14px;font:700 18px/1 'Inter';letter-spacing:.2em;text-transform:uppercase;color:var(--texte-2)}.prochain small::before{content:"";width:8px;height:8px;background:var(--cyan);transform:rotate(45deg)}.chaines{position:absolute;left:1240px;top:672px;width:576px}.chaines small{display:flex;align-items:center;gap:14px;font:700 18px/1 'Inter';letter-spacing:.2em;text-transform:uppercase;color:var(--texte-2);margin-bottom:18px}.chaines small::before{content:"";width:8px;height:8px;background:var(--cyan);transform:rotate(45deg)}.chaines ul{list-style:none;display:grid;grid-template-columns:176px 1fr;row-gap:12px;font:400 26px/1.2 'Inter'}.chaines li{display:contents}.chaines b{font-weight:700;color:var(--texte)}.chaines span{color:var(--texte-2)}.prochain div{font:700 40px/1.2 'Inter';margin-top:14px;max-width:960px}</style></head><body><div id="scene">
+<link rel="stylesheet" href="latshow.css"><script src="../commun/scene.js"></script><script src="../commun/soutiens.js"></script>
+<style>
+.prochain{margin-top:56px}
+.prochain div{font:700 40px/1.2 'Inter';margin-top:14px;max-width:960px}
+small{display:block;font:700 18px/1 'Inter';letter-spacing:.2em;text-transform:uppercase;color:var(--texte-2)}
+/* Les soutiens du live (follows, abonnements, dons), sous le titre : là où le regard tombe en fin de live. */
+.merci{position:absolute;left:120px;top:770px;width:1040px}
+.merci [data-soutiens]{margin-top:16px;height:156px;font-size:26px}
+.chaines{position:absolute;left:1240px;top:672px;width:576px}
+.chaines small{margin-bottom:18px}
+.chaines ul{list-style:none;display:grid;grid-template-columns:176px 1fr;row-gap:12px;font:400 26px/1.2 'Inter'}
+.chaines li{display:contents}.chaines b{font-weight:700;color:var(--texte)}.chaines span{color:var(--texte-2)}
+</style></head><body><div id="scene">
 <div class="fond"></div><div class="filigrane">LATSHOW</div>
 <div class="marque">LATSHOW</div>
 <div class="bloc"><div class="surtitre">Fin du live</div>
 <div class="titre">Merci d’être<br>passé</div>
 <div class="prochain"><small>Prochain live</small><div data-live="prochain" data-defaut="Suis la chaîne pour ne pas le rater."></div></div></div>
+<div class="merci"><small>Merci à vous</small><div data-soutiens="liste" data-vide="Un follow, un abonnement : ton pseudo s'affiche ici au prochain live."></div></div>
+<!-- La caméra (posée par OBS) : un cadre, plus d'étiquette « LATSHOW » au-dessus (demande du client, 2026-10-09). -->
 <div class="zone" style="left:1240px;top:300px;width:576px;height:324px"></div>
 <div class="cadre" style="left:1238px;top:298px;width:580px;height:328px"></div>
-<div class="etiquette" style="left:1238px;top:265px">LATSHOW</div>
 <div class="chaines"><small>Retrouve-moi</small><ul>
 <li><b>Twitch</b><span>latshow</span></li>
 <li><b>YouTube</b><span>@Latshow-y</span></li>

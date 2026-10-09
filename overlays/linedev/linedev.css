@@ -10,7 +10,10 @@ body{color:var(--encre);font-family:'JetBrains Mono',monospace;font-variant-liga
 .marque svg{width:34px;height:auto}
 .com{font:400 24px/1 'JetBrains Mono';color:var(--gris)}
 .titre{font:400 104px/1 'Archivo Black';letter-spacing:-.03em;margin-top:22px;position:relative;display:inline-block}
-.titre::after{content:"";display:inline-block;width:.15em;height:.15em;background:var(--verm);margin-left:.05em}
+/* Plus de point vermillon après les titres : aucune forme à côté d'un texte (demande du client, 2026-10-09). */
+/* Soutiens du live (commun/soutiens.js) : mono, encre, logo de la plateforme devant le pseudo. */
+[data-soutiens]{font:700 22px/1.25 'JetBrains Mono';color:var(--encre)}
+.soutien-genre{color:var(--gris)}
 .texte{font:400 30px/1.5 'JetBrains Mono';margin-top:52px;max-width:1100px}
 .texte b{color:var(--verm);font-weight:700}
 .bloc{position:absolute;left:160px;top:250px}

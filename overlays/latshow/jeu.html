@@ -1,6 +1,14 @@
 <!doctype html><html lang="fr"><head><meta charset="utf-8"><title>Jeu</title>
-<link rel="stylesheet" href="latshow.css"><script src="../commun/scene.js"></script></head><body><div id="scene">
-<!-- Transparent : seul le cadre de la caméra (camera.coin 1504,836,384,216) -->
+<link rel="stylesheet" href="latshow.css"><script src="../commun/scene.js"></script><script src="../commun/soutiens.js"></script>
+<style>
+/* Soutiens du live au-dessus de la caméra (demande du client, 2026-10-09) : discret mais lisible, au-dessus plutôt
+   qu'en dessous pour rester loin de la barre de lecture des plateformes. */
+.merci{position:absolute;display:flex;align-items:center;gap:12px;padding:0 12px;background:rgba(7,6,15,.78)}
+.merci [data-soutiens]{flex:1;min-width:0;height:100%;font-size:17px}
+.merci:has(.soutiens-vide) .soutiens-titre{display:none}
+</style></head><body><div id="scene">
+<!-- Transparent : le cadre de la caméra (camera.coin 1504,836,384,216) et, au-dessus, la barre des soutiens.
+     Plus d'étiquette « LATSHOW » sur le cadre : le client n'en voulait pas (2026-10-08). -->
 <div class="cadre" style="left:1502px;top:834px;width:388px;height:220px"></div>
-<!-- Plus d'étiquette « LATSHOW » sur le cadre : le client n'en voulait pas (2026-10-08). -->
+<div class="merci" style="left:1502px;top:798px;width:388px;height:36px"><span class="soutiens-titre">Merci</span><div data-soutiens="defile" data-vide="Un follow et ton pseudo s'affiche ici"></div></div>
 </div></body></html>

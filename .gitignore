@@ -37,3 +37,6 @@ __pycache__/
 Sans_nom/
 alertes/sons/_Archives_travail/
 alertes/sons/_composer.log
+# Soutiens du live (obs/soutiens.mjs) : la liste du live en cours, refaite à chaque live
+obs/soutiens-session.json
+overlays/soutiens.js

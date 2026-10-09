@@ -7,9 +7,8 @@ body{color:var(--texte);font-family:'Inter',sans-serif}
 .filigrane{position:absolute;left:96px;bottom:-60px;font:400 300px/1 'Russo One';letter-spacing:.02em;color:transparent;-webkit-text-stroke:1.5px rgba(233,230,255,.05);white-space:nowrap}
 .marque{position:absolute;left:120px;top:96px;font:400 30px/1 'Russo One';letter-spacing:.04em}
 .marque{display:flex;align-items:center;gap:14px}
-.marque::after{content:"";width:9px;height:9px;background:var(--violet);transform:rotate(45deg)}
+/* Aucune forme à côté d'un texte (ni trait, ni point, ni losange : demande du client, 2026-10-09). */
 .surtitre{display:flex;align-items:center;gap:18px;font:700 20px/1 'Inter';letter-spacing:.22em;text-transform:uppercase;color:var(--cyan)}
-.surtitre::before{content:"";width:10px;height:10px;background:var(--cyan);transform:rotate(45deg);margin-right:2px}
 .titre{font:400 116px/1 'Russo One';text-transform:uppercase;letter-spacing:.01em;margin-top:30px}
 .texte{font:400 34px/1.35 'Inter';color:var(--texte-2);margin-top:28px;max-width:1080px}
 .texte b{color:var(--texte);font-weight:700}
@@ -28,4 +27,7 @@ body{color:var(--texte);font-family:'Inter',sans-serif}
 .bloc,.marque,.pied{opacity:0;transform:translateY(12px);transition:opacity .9s ease,transform .9s ease}
 .pret .bloc,.pret .marque,.pret .pied{opacity:1;transform:none}
 .pret .pied{transition-delay:.25s}
+/* Soutiens du live (commun/soutiens.js) : texte clair, logo de la plateforme devant le pseudo. */
+[data-soutiens]{font:600 18px/1.2 'Inter';color:var(--texte)}
+.soutiens-titre{font:700 15px/1 'Inter';letter-spacing:.2em;text-transform:uppercase;color:var(--texte-2)}
 [hidden]{display:none!important}

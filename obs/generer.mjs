@@ -301,7 +301,9 @@ function construire(seance, canevasVertical) {
     canvases: [{ info: { name: CANEVAS_VERTICAL, uuid: canevasVertical, private: false, flags: 14 } }],
     current_transition: TRANSITION, transition_duration: 300, transitions: [transition(seance.marque)], quick_transitions: [],
     saved_projectors: [], preview_locked: false, scaling_enabled: false, scaling_level: 0, scaling_off_x: 0, scaling_off_y: 0,
-    modules: {}, resolution: { x: W, y: H }, version: ref.version ?? 2,
+    // Script OBS qui lance le service des soutiens du live (obs/soutiens.lua → obs/soutiens.mjs) à l'ouverture.
+    modules: { 'scripts-tool': [{ path: `${RACINE.replaceAll('\\', '/')}/obs/soutiens.lua`, settings: {} }] },
+    resolution: { x: W, y: H }, version: ref.version ?? 2,
     sources: [...sources, ...vertical.sources, ...scenes, ...vertical.scenes],
   };
 }

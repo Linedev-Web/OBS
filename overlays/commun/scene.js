@@ -25,7 +25,8 @@
   // du chargement de la page : la vue est relue quand une feuille arrive dans <head>.
   function montrerVue() {
     const vue = params.get('vue') || getComputedStyle(document.documentElement).getPropertyValue('--vue').trim().replace(/["']/g, '');
-    if (!vue || document.documentElement.dataset.vue === vue) return;
+    // Réappliquée à chaque appel : un appel pendant le chargement arrive avant les écrans (<body> pas encore lu).
+    if (!vue) return;
     document.documentElement.dataset.vue = vue;
     document.querySelectorAll('[data-vues]').forEach((b) => b.classList.toggle('vue-active', b.dataset.vues.split(' ').includes(vue)));
   }

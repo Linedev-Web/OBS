@@ -2,5 +2,9 @@
   "sortie": {
     "id": "{0.0.0.00000000}.{1b47e749-a923-42e4-9e22-5fe5fbe7addc}",
     "nom": "Casque (WH-1000XM5)"
+  },
+  "micro": {
+    "id": "{0.0.1.00000000}.{cae08b20-c542-448b-936c-063d9a33a2d0}",
+    "nom": "Microphone (FIFINE K658 Microphone)"
   }
 }

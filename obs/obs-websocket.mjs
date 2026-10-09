@@ -10,8 +10,10 @@ const CONFIG = path.join(process.env.APPDATA ?? '', 'obs-studio', 'plugin_config
  * Se connecte à OBS. Renvoie undefined si OBS est fermé ou ne répond pas dans le délai.
  * Le client : req(type, données) → réponse obs-websocket ({ requestStatus, responseData }) ;
  * vendeur(module, type, données) → réponse du module (CallVendorRequest), ou undefined s'il n'existe pas ; fermer().
+ * Options : `evenements` (masque des catégories d'événements d'obs-websocket, 0 par défaut), `surEvenement(type,
+ * données)`, et `surFermeture()` quand OBS coupe la connexion après qu'elle a été établie.
  */
-export function connecterObs(delaiMs = 1500) {
+export function connecterObs(delaiMs = 1500, { evenements = 0, surEvenement, surFermeture } = {}) {
   let cfg;
   try { cfg = JSON.parse(fs.readFileSync(CONFIG, 'utf8')); } catch { return Promise.resolve(undefined); }
   return new Promise((resolve) => {
@@ -33,11 +35,15 @@ export function connecterObs(delaiMs = 1500) {
     };
     try { ws = new WebSocket(`ws://127.0.0.1:${cfg.server_port}`); } catch { clearTimeout(minuterie); resolve(undefined); return; }
     ws.onerror = () => { if (!pret) { clearTimeout(minuterie); resolve(undefined); } };
-    ws.onclose = () => { for (const ok of attente.values()) ok({ requestStatus: { result: false, comment: 'OBS a fermé la connexion' } }); attente.clear(); };
+    ws.onclose = () => {
+      for (const ok of attente.values()) ok({ requestStatus: { result: false, comment: 'OBS a fermé la connexion' } });
+      attente.clear();
+      if (pret) surFermeture?.();
+    };
     ws.onmessage = (ev) => {
       const m = JSON.parse(ev.data);
       if (m.op === 0) {
-        const d = { rpcVersion: 1, eventSubscriptions: 0 };
+        const d = { rpcVersion: 1, eventSubscriptions: evenements };
         if (m.d.authentication) {
           const { challenge, salt } = m.d.authentication;
           const secret = crypto.createHash('sha256').update(cfg.server_password + salt).digest('base64');
@@ -51,6 +57,8 @@ export function connecterObs(delaiMs = 1500) {
       } else if (m.op === 7) {
         const ok = attente.get(m.d.requestId);
         if (ok) { attente.delete(m.d.requestId); ok(m.d); }
+      } else if (m.op === 5) {
+        surEvenement?.(m.d.eventType, m.d.eventData);
       }
     };
   });

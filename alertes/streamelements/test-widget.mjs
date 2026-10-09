@@ -41,8 +41,10 @@ function environnement() {
   const creer = () => ({ className: '', textContent: '', style: { setProperty() {} } });
   const ecouteurs = {};
   const affichees = [];
+  const soutiens = []; // ce que le widget envoie au service local des soutiens (obs/soutiens.mjs)
   const contexte = {
-    console, Intl, Promise, Number, String, Math, Boolean, Error,
+    console, Intl, Promise, Number, String, Math, Boolean, Error, JSON, Array,
+    fetch: (url, options) => { soutiens.push({ url, ...JSON.parse(options.body) }); return Promise.resolve(); },
     setTimeout: (f, ms = 0) => { minuteurs.push({ t: maintenant + ms, f }); return minuteurs.length; },
     clearTimeout: () => {},
     document: { getElementById: element, documentElement: element('racine'), createElement: creer, querySelector: () => null },
@@ -56,9 +58,9 @@ function environnement() {
   contexte.__noter = (a) => affichees.push(`${a.type}|${a.nom}|${a.detail}|${a.message || ''}`.replace(/[  ]/g, ' '));
   vm.runInContext('const __r = remplir; remplir = (a) => { __noter(a); __r(a); };', contexte);
   assert.ok(ancienRemplir);
-  const charger = (fieldData = {}, provider = 'twitch') => ecouteurs.onWidgetLoad({ detail: { fieldData, channel: { provider }, currency: { code: 'EUR' } } });
+  const charger = (fieldData = {}, provider = 'twitch', session) => ecouteurs.onWidgetLoad({ detail: { fieldData, channel: { provider }, currency: { code: 'EUR' }, session } });
   const envoyer = (listener, event = {}) => ecouteurs.onEventReceived({ detail: { listener, event } });
-  return { avancer, charger, envoyer, affichees, element };
+  return { avancer, charger, envoyer, affichees, element, soutiens };
 }
 
 const vider = async (env, ms) => { for (let i = 0; i < ms / 50; i++) { env.avancer(50); await new Promise((r) => setImmediate(r)); } };
@@ -146,4 +148,32 @@ const vider = async (env, ms) => { for (let i = 0; i < ms / 50; i++) { env.avanc
   assert.equal(yt.affichees.length, 4);
 }
 
-console.log('widget.js : 5 scénarios OK');
+// 6. Soutiens du live : chaque follow, abonnement ou don part vers le service local ; l'abonnement offert compte pour
+//    celui qui l'offre ; les alertes de test et les raids ne comptent pas ; la session est envoyée au chargement.
+{
+  const env = environnement();
+  const session = { data: { 'follower-recent': [{ name: 'Ancien', createdAt: '2026-10-09T20:00:00Z' }], 'tip-recent': [{ name: 'Donneur', amount: 3, createdAt: '2026-10-09T20:01:00Z' }] } };
+  env.charger({ duree: 3, entre: 0, filtrer: false }, 'twitch', session);
+  env.envoyer('follower-latest', { name: 'Kev' });
+  env.envoyer('subscriber-latest', { name: 'Recu', sender: 'Genereux', gifted: true });
+  env.envoyer('cheer-latest', { name: 'Fan', amount: 500 });
+  env.envoyer('follower-latest', { name: 'Essai', isTest: true });
+  env.envoyer('raid-latest', { name: 'Rats', amount: 42 });
+  assert.equal(env.soutiens[0].url, 'http://127.0.0.1:21310/soutien');
+  assert.deepEqual(env.soutiens.map(({ url, ...m }) => m), [
+    { type: 'session', plateforme: 'twitch', liste: [
+      { genre: 'follow', nom: 'Ancien', plateforme: 'twitch', quand: '2026-10-09T20:00:00Z' },
+      { genre: 'don', nom: 'Donneur', montant: 3, devise: 'EUR', plateforme: 'twitch', quand: '2026-10-09T20:01:00Z' },
+    ] },
+    { type: 'soutien', plateforme: 'twitch', genre: 'follow', nom: 'Kev' },
+    { type: 'soutien', plateforme: 'twitch', genre: 'abonnement', nom: 'Genereux' },
+    { type: 'soutien', plateforme: 'twitch', genre: 'don', nom: 'Fan', montant: 500, devise: 'BITS' },
+  ]);
+  const yt = environnement();
+  yt.charger({ plateforme: 'youtube' });
+  yt.envoyer('subscriber-latest', { name: 'Marie' });
+  yt.envoyer('sponsor-latest', { name: 'Paul', amount: 1 });
+  assert.deepEqual(yt.soutiens.map((m) => `${m.plateforme}|${m.genre}|${m.nom}`), ['youtube|follow|Marie', 'youtube|abonnement|Paul']);
+}
+
+console.log('widget.js : 6 scénarios OK');

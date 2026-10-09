@@ -6,6 +6,20 @@ html,body{width:100%;height:100%;overflow:hidden;background:transparent}
 /* Pages verticales (image TikTok) : maquette 1080 × 1920, une seule vue affichée (choisie par --vue, voir scene.js). */
 [data-format=vertical] #scene{width:1080px;height:1920px}
 [data-format=vertical] [data-vues]:not(.vue-active){display:none}
+/* Soutiens du live (commun/soutiens.js) : la page donne la police, la taille et les couleurs. */
+[data-soutiens]{overflow:hidden;white-space:nowrap}
+[data-soutiens="defile"]{display:flex;align-items:center;-webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)}
+.soutiens-piste{display:inline-flex;align-items:center;column-gap:1.6em;flex:none}
+.soutien{display:inline-flex;align-items:center;gap:.4em;flex:none}
+.soutien-icone{display:inline-flex;width:1em;height:1em;flex:none;opacity:.8}
+.soutien-icone svg{width:100%;height:100%}
+.soutien-genre{opacity:.6;font-weight:400;font-size:.85em}
+[data-soutiens="liste"]{display:flex;flex-direction:column;row-gap:.6em;white-space:normal}
+[data-soutiens="liste"].en-boucle{-webkit-mask-image:linear-gradient(180deg,transparent,#000 18%,#000 82%,transparent);mask-image:linear-gradient(180deg,transparent,#000 18%,#000 82%,transparent)}
+.soutiens-bloc{display:flex;flex-wrap:wrap;gap:.55em 1.6em}
+.soutiens-vide{opacity:.7}
+@keyframes soutiens-defile{to{transform:translateX(var(--distance))}}
+@keyframes soutiens-monte{to{transform:translateY(var(--distance))}}
 .abs{position:absolute}
 .trou{position:absolute}           /* zone laissée transparente : caméra, capture ou chat posés dessous dans OBS */
 .chiffres{font-variant-numeric:tabular-nums}

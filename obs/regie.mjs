@@ -21,7 +21,7 @@
 // Quand rien ne tourne encore, la régie coupe donc l'image TikTok le temps de lancer, puis la relance.
 import fs from 'node:fs';
 import path from 'node:path';
-import { execFileSync } from 'node:child_process';
+import { execFileSync, spawn } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { connecterObs } from './obs-websocket.mjs';
 
@@ -256,12 +256,22 @@ function brancherSonTikTok() {
   return cable;
 }
 
+/** Le service des soutiens du live (obs/soutiens.mjs) : OBS le lance (obs/soutiens.lua) ; sinon, la régie le démarre. */
+async function assurerSoutiens() {
+  try {
+    const r = await fetch('http://127.0.0.1:21310/soutiens', { signal: AbortSignal.timeout(800) });
+    if (r.ok) return;
+  } catch { /* pas lancé */ }
+  spawn(process.execPath, [path.join(ICI, 'soutiens.mjs')], { cwd: ICI, detached: true, stdio: 'ignore', windowsHide: true }).unref();
+}
+
 // ---------- Programme ----------
 
 const COMMANDES = {
   async etat() { return { message: 'État lu.' }; },
   async 'demarrer-live'(obs) {
     const remise = protegerSortie();
+    await assurerSoutiens();
     await demarrerSortie(obs, 'StartStream', 'GetStreamStatus', 'Le live');
     await demarrerSortie(obs, 'StartRecord', 'GetRecordStatus', "L'enregistrement");
     await lancerTikTok(obs);

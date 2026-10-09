@@ -15,19 +15,24 @@ travail par-ci par-là », « je ne veux pas que ça se voie que c'est fait par 
   **Exception aussi : la transition de scène** (demande du client, 2026-10-07 : « une animation en mode élément en 3D »)
   — tuiles qui se retournent en 3D, nom de la chaîne en relief, une seule couleur d'accent en vague. Sans néon ni particules.
 - Plus de deux tailles de titre par écran, plus d'une couleur d'accent par écran.
-- **Aucun trait décoratif à côté ou sous un texte** (demande du client, 2026-10-07 : « ça fait IA, les traits, tout le monde en a ») :
-  un point ou une petite forme géométrique (losange, carré) à la place. Les lignes de structure (bord d'un cadre, séparation
-  de zones) et la barre de progression du compte à rebours restent.
+- **Aucune forme décorative à côté, devant, après ou sous un texte** : ni trait (2026-10-07 : « ça fait IA, les traits, tout
+  le monde en a »), ni point, ni losange, ni pastille de couleur (2026-10-09 : « on vire tout ça, j'en veux plus de
+  pastille », « je veux le truc plus simple, plus sobre »). La hiérarchie vient de la taille, de la graisse, de la couleur du
+  texte et de l'espace. Restent : les lignes de structure (bord d'un cadre, séparation de zones), la barre de progression du
+  compte à rebours, et le logo d'une plateforme devant un pseudo quand il informe (soutiens du live).
 
 ## Latshow — lives gaming et montage (Twitch latshow + YouTube Latshow)
 
 - Fond : `#07060F` (nuit), surfaces `#0F0E1A`, traits `rgba(233,230,255,.14)`.
 - Texte : `#E9E6FF` ; texte secondaire `rgba(233,230,255,.62)`.
-- Accent unique : cyan `#22D3EE`. Le violet `#A855F7` n'apparaît qu'en détail (le losange à côté du logo, l’anneau de l’avatar).
+- Accent unique : cyan `#22D3EE` (surtitres, compte à rebours). Le violet `#A855F7` n'apparaît que dans les alertes.
 - Polices : **Russo One** pour le mot LATSHOW et les grands titres en capitales ; **Inter** (400/700) pour tout le reste.
-- Signature : le mot LATSHOW en Russo One suivi d’un petit losange violet ; un losange cyan (10 px) devant les surtitres.
-- Cadres caméra : bordure 2 px `rgba(233,230,255,.22)`, coins droits (la caméra n'est pas masquée dans OBS). Plus d'étiquette
-  « LATSHOW » sur le cadre de la scène Jeu (le client n'en voulait pas, 2026-10-08) ; l'écran de Fin garde la sienne.
+- Signature : le mot LATSHOW en Russo One, seul (plus de losange depuis le 2026-10-09).
+- Cadres caméra : bordure 2 px `rgba(233,230,255,.22)`, coins droits (la caméra n'est pas masquée dans OBS). Aucune étiquette
+  « LATSHOW » sur un cadre (Jeu : 2026-10-08 ; Fin : 2026-10-09).
+- **Soutiens du live** (2026-10-09) : au-dessus de la caméra de la scène Jeu, dans le bandeau vertical et sur les écrans de
+  fin, les pseudos du live (follow, abonnement, don) avec le logo de la plateforme, sans autre forme. Service
+  `obs/soutiens.mjs`, affichage `overlays/commun/soutiens.js`.
 - Couleurs de la caméra : neutres (le filtre « Couleurs » ne retire plus de bleu depuis le 2026-10-08 : le client se
   trouvait jaune). Vérifier sur le mur blanc derrière lui, qui doit rester blanc.
 
@@ -36,7 +41,7 @@ travail par-ci par-là », « je ne veux pas que ça se voie que c'est fait par 
 - Charte « La Ligne » de linedev.fr (déjà sur la chaîne, `D:\Stream\Pilotage\docs\chaine_linedev\`) :
   papier `#EFE9DD`, grille `#DCD4C3` (pas de 60 px), encre `#14130F`, vermillon `#F4471B`, clair `#FBF8F1`, gris `#8C8677`.
 - Polices : **Archivo Black** (titres, « linedev.fr »), **JetBrains Mono** (tout le reste).
-- Signature : la gouttière de numéros de ligne à gauche (ligne active en vermillon), un point carré vermillon en fin de titre (comme le point de « linedev.fr »), la
+- Signature : la gouttière de numéros de ligne à gauche (ligne active en vermillon), plus de point carré en fin de titre (2026-10-09), la
   mascotte Curseur (SVG de `banniere.html`), des blocs de code sombres (`#14130F`, mots-clés vermillon, chaînes `#F2D46B`).
 - Format des cours : titre du cours + étape « 02/05 » toujours visibles en bas pendant la scène Cours.
 

@@ -1,8 +1,9 @@
 <!doctype html><html lang="fr" data-format="vertical"><head><meta charset="utf-8"><title>Vertical</title>
 <!-- Image verticale TikTok (1080 × 1920), Latshow : une page, une vue par scène (--vue posée par obs/generer.mjs).
      TikTok affiche ton nom et les spectateurs en haut (jusqu'à ~150 px), les commentaires et la saisie en bas (à partir
-     de ~1300 px) : le texte important reste entre les deux. Maquettes validées par le client le 2026-10-08. -->
-<link rel="stylesheet" href="latshow.css"><script src="../commun/scene.js"></script>
+     de ~1300 px) : le texte important reste entre les deux. Maquettes validées par le client le 2026-10-08 ; bandeau des
+     soutiens à la place de « LIVE GAMING / LATSHOW » et plus aucune pastille (2026-10-09). -->
+<link rel="stylesheet" href="latshow.css"><script src="../commun/scene.js"></script><script src="../commun/soutiens.js"></script>
 <style>
 .v-marque{left:0;right:0;top:400px;justify-content:center}
 .v-centre{position:absolute;left:80px;right:80px;top:530px;text-align:center}
@@ -13,21 +14,20 @@
 .v-centre .depuis{margin-top:56px;font-size:26px}
 .v-barre{position:absolute;left:240px;right:240px;top:1170px;height:4px;background:var(--trait)}
 .v-barre i{display:block;height:100%;background:var(--cyan);transform-origin:0 50%;transform:scaleX(0)}
+/* Bandeau entre la caméra et le jeu : les soutiens du live, qui défilent en boucle. */
 .bandeau{position:absolute;left:0;right:0;height:60px;display:flex;align-items:center;gap:18px;padding:0 40px;background:var(--nuit)}
-.bandeau .losange{width:14px;height:14px;background:var(--cyan);transform:rotate(45deg);flex:none}
-.bandeau .titre-jour{font:400 32px/1 'Russo One';text-transform:uppercase;letter-spacing:.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.bandeau .signature{margin-left:auto;flex:none;font:400 24px/1 'Russo One';letter-spacing:.04em;color:var(--texte-2);display:flex;align-items:center;gap:10px}
-.bandeau .signature::after{content:"";width:9px;height:9px;background:var(--violet);transform:rotate(45deg)}
-.pastille{position:absolute;right:32px;top:170px;display:flex;align-items:center;gap:12px;padding:12px 18px;background:rgba(7,6,15,.72);font:700 22px/1 'Inter';letter-spacing:.16em;text-transform:uppercase}
-.pastille::before{content:"";width:10px;height:10px;background:var(--cyan);transform:rotate(45deg)}
-.v-fin{position:absolute;left:80px;right:80px;top:770px}
-.v-fin .titre{font-size:76px;margin-top:22px}
-.v-fin .prochain{margin-top:40px}
-.v-fin small{display:flex;align-items:center;gap:14px;font:700 18px/1 'Inter';letter-spacing:.2em;text-transform:uppercase;color:var(--texte-2)}
-.v-fin small::before{content:"";width:8px;height:8px;background:var(--cyan);transform:rotate(45deg)}
-.v-fin .prochain div{font:700 34px/1.25 'Inter';margin-top:14px}
-.v-fin ul{list-style:none;display:grid;grid-template-columns:200px 1fr;row-gap:10px;font:400 28px/1.2 'Inter';margin-top:18px}
-.v-fin li{display:contents}.v-fin b{font-weight:700}.v-fin span{color:var(--texte-2)}
+.bandeau [data-soutiens]{flex:1;min-width:0;height:100%;font-size:26px}
+.bandeau:has(.soutiens-vide) .soutiens-titre{display:none}
+.etiquette-vue{position:absolute;right:32px;top:170px;padding:12px 18px;background:rgba(7,6,15,.72);font:700 22px/1 'Inter';letter-spacing:.16em;text-transform:uppercase}
+.v-fin{position:absolute;left:80px;right:80px;top:750px}
+.v-fin .titre{font-size:76px;margin-top:20px}
+.v-fin small{display:block;font:700 18px/1 'Inter';letter-spacing:.2em;text-transform:uppercase;color:var(--texte-2)}
+.v-fin .merci{margin-top:36px}
+.v-fin .merci [data-soutiens]{margin-top:14px;height:160px;font-size:28px}
+.v-fin .prochain{margin-top:30px}
+.v-fin .prochain div{font:700 34px/1.25 'Inter';margin-top:12px}
+.v-fin .aussi{margin-top:22px;font:400 24px/1.3 'Inter';color:var(--texte-2)}
+.v-fin .aussi b{color:var(--texte);font-weight:700}
 </style></head><body><div id="scene">
 
 <section data-vues="demarrage pause pause-bebe souci fin pile plein"><div class="fond"></div></section>
@@ -59,30 +59,27 @@
   <div class="depuis">Depuis <span class="chiffres" data-depuis>00:00</span></div>
 </div></section>
 
-<!-- Fin : la caméra occupe le haut (0–700 px, posée par OBS) ; le texte dessous. -->
+<!-- Fin : la caméra occupe le haut (0–700 px, posée par OBS) ; dessous, merci et soutiens du live, avant les commentaires. -->
 <section data-vues="fin"><div class="cadre" style="left:0;top:0;width:1080px;height:700px"></div><div class="v-fin">
   <div class="surtitre">Fin du live</div><div class="titre">Merci d’être passé</div>
+  <div class="merci"><small>Merci à vous</small><div data-soutiens="liste" data-vide="Un follow, un abonnement : ton pseudo s'affiche ici au prochain live."></div></div>
   <div class="prochain"><small>Prochain live</small><div data-live="prochain" data-defaut="Suis la chaîne pour ne pas le rater."></div></div>
-  <div class="prochain"><small>Retrouve-moi</small><ul>
-    <li><b>Twitch</b><span>latshow</span></li><li><b>YouTube</b><span>@Latshow-y</span></li>
-    <li><b>TikTok</b><span>@latshow_</span></li><li><b>Instagram</b><span>latshow.y</span></li>
-  </ul></div>
+  <div class="aussi">Aussi en live sur <b>Twitch</b> latshow et <b>YouTube</b> @Latshow-y</div>
 </div></section>
 
-<!-- Caméra en haut (0–540), jeu ou fenêtre dessous (600–1920), posés par OBS ; ici le bandeau entre les deux. -->
-<section data-vues="pile"><div class="bandeau" style="top:540px"><span class="losange"></span><span class="titre-jour" data-live="titre" data-defaut-genre></span><span class="signature">LATSHOW</span></div></section>
+<!-- Caméra en haut (0–540), jeu ou fenêtre dessous (600–1920), posés par OBS ; entre les deux, les soutiens du live. -->
+<section data-vues="pile"><div class="bandeau" style="top:540px"><span class="soutiens-titre">Merci</span><div data-soutiens="defile" data-vide="Un follow et ton pseudo s'affiche ici"></div></div></section>
 
-<!-- Jeu sans caméra : la marque, le bandeau, puis le jeu entier (16:9, 500–1108 px, posé par OBS), au milieu de la zone libre. -->
-<section data-vues="plein"><div class="marque v-marque" style="top:340px">LATSHOW</div><div class="bandeau" style="top:440px"><span class="losange"></span><span class="titre-jour" data-live="titre" data-defaut-genre></span><span class="signature">LATSHOW</span></div></section>
+<!-- Jeu sans caméra : la marque, les soutiens, puis le jeu entier (16:9, 500–1108 px, posé par OBS). -->
+<section data-vues="plein"><div class="marque v-marque" style="top:340px">LATSHOW</div><div class="bandeau" style="top:440px"><span class="soutiens-titre">Merci</span><div data-soutiens="defile" data-vide="Un follow et ton pseudo s'affiche ici"></div></div></section>
 
-<!-- Discussion : la caméra en plein écran (posée par OBS) ; juste une pastille. -->
-<section data-vues="discussion"><div class="pastille">Discussion</div></section>
+<!-- Discussion : la caméra en plein écran (posée par OBS) ; juste le mot, sans forme à côté. -->
+<section data-vues="discussion"><div class="etiquette-vue">Discussion</div></section>
 
 </div><script>
-// Gaming ou montage : surtitre du démarrage et texte par défaut du bandeau.
+// Gaming ou montage : surtitre de l'écran de démarrage.
 document.addEventListener('live', () => {
   const montage = document.documentElement.dataset.seance === 'montage';
   document.querySelectorAll('[data-genre]').forEach((el) => { el.textContent = montage ? 'Live montage' : 'Live gaming'; });
-  document.querySelectorAll('[data-defaut-genre]').forEach((el) => { if (!el.textContent) el.textContent = montage ? 'Montage en direct' : 'Live gaming'; });
 });
 </script></body></html>
