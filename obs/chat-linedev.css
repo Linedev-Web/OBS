@@ -4,9 +4,9 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
 #menu,#context-menu{display:none!important}
 html,body,#output{background:transparent!important}
-#output{left:0!important;right:0!important;width:auto!important;box-sizing:border-box!important;padding:0 16px 12px!important}
-.highlight-chat{background:transparent!important;border:0!important;box-shadow:none!important;padding:5px 0!important;margin:0!important}
-.hl-message{display:block!important;font:400 20px/1.45 'JetBrains Mono',monospace!important;color:#14130F!important;text-shadow:none!important;-webkit-text-stroke:0!important;letter-spacing:0!important;text-indent:0!important;padding:0!important;margin:0!important;overflow:visible!important}
-.hl-source-type{width:17px!important;height:17px!important;vertical-align:-3px!important;margin:0 8px 0 0!important;opacity:.9}
-.hl-name{display:inline!important;font:700 20px/1.45 'JetBrains Mono',monospace!important;color:#C93A12!important;margin-right:8px!important;text-shadow:none!important;-webkit-text-stroke:0!important}
-.hl-content{display:inline!important;font:400 20px/1.45 'JetBrains Mono',monospace!important;color:#14130F!important;text-shadow:none!important;-webkit-text-stroke:0!important}
+#output{left:0!important;right:0!important;width:auto!important;box-sizing:border-box!important;padding:0 12px 10px!important}
+.highlight-chat{background:transparent!important;border:0!important;box-shadow:none!important;padding:3px 0!important;margin:0!important}
+.hl-message{display:block!important;font:400 16px/1.4 'JetBrains Mono',monospace!important;color:#14130F!important;text-shadow:none!important;-webkit-text-stroke:0!important;letter-spacing:0!important;text-indent:0!important;padding:0!important;margin:0!important;overflow:visible!important}
+.hl-source-type{width:14px!important;height:14px!important;vertical-align:-2px!important;margin:0 6px 0 0!important;opacity:.9}
+.hl-name{display:inline!important;font:700 16px/1.4 'JetBrains Mono',monospace!important;color:#C93A12!important;margin-right:6px!important;text-shadow:none!important;-webkit-text-stroke:0!important}
+.hl-content{display:inline!important;font:400 16px/1.4 'JetBrains Mono',monospace!important;color:#14130F!important;text-shadow:none!important;-webkit-text-stroke:0!important}
