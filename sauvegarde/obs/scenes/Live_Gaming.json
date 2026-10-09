@@ -1,10 +1,86 @@
 {
   "name": "Live — Gaming",
+  "groups": [],
+  "scene_order": [
+    {
+      "name": "Démarrage"
+    },
+    {
+      "name": "Jeu"
+    },
+    {
+      "name": "Jeu sans caméra"
+    },
+    {
+      "name": "Discussion"
+    },
+    {
+      "name": "Pause"
+    },
+    {
+      "name": "Pause bébé"
+    },
+    {
+      "name": "Souci technique"
+    },
+    {
+      "name": "Fin"
+    }
+  ],
+  "current_scene": "Démarrage",
+  "current_program_scene": "Démarrage",
+  "canvases": [
+    {
+      "info": {
+        "name": "Aitum Vertical",
+        "uuid": "6bad365f-88c2-4cb4-9dde-e2f19ee74325",
+        "private": false,
+        "flags": 14
+      }
+    }
+  ],
+  "current_transition": "Tuiles 3D",
+  "transition_duration": 300,
+  "transitions": [
+    {
+      "name": "Tuiles 3D",
+      "id": "obs_stinger_transition",
+      "settings": {
+        "path": "D:/Stream/OBS/transitions/transition_latshow.webm",
+        "tp_type": 0,
+        "transition_point": 620,
+        "audio_monitoring": 2,
+        "audio_fade_style": 1,
+        "hw_decode": false,
+        "preload": false
+      }
+    }
+  ],
+  "quick_transitions": [],
+  "saved_projectors": [],
+  "preview_locked": false,
+  "scaling_enabled": false,
+  "scaling_level": 0,
+  "scaling_off_x": 0,
+  "scaling_off_y": 0,
+  "modules": {
+    "scripts-tool": [
+      {
+        "path": "D:/Stream/OBS/obs/soutiens.lua",
+        "settings": {}
+      }
+    ]
+  },
+  "resolution": {
+    "x": 2560,
+    "y": 1440
+  },
+  "version": 2,
   "sources": [
     {
       "prev_ver": 537001986,
       "name": "Caméra",
-      "uuid": "7057d42f-b80f-42b0-a743-5a164273d4f5",
+      "uuid": "9a9ac0ee-cc5c-419d-9d0d-b39d6e310680",
       "id": "dshow_input",
       "versioned_id": "dshow_input",
       "settings": {
@@ -30,18 +106,7 @@
       "push-to-mute-delay": 0,
       "push-to-talk": false,
       "push-to-talk-delay": 0,
-      "hotkeys": {
-        "libobs.mute": [],
-        "libobs.unmute": [],
-        "libobs.push-to-mute": [],
-        "libobs.push-to-talk": [],
-        "source_record.enable": [],
-        "source_record.disable": [],
-        "source_record.PauseRecording": [],
-        "source_record.UnpauseRecording": [],
-        "source_record.SplitRecording": [],
-        "source_record.AddChapterMarker": []
-      },
+      "hotkeys": {},
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
@@ -50,7 +115,7 @@
         {
           "prev_ver": 537001986,
           "name": "Couleurs",
-          "uuid": "2d02bb4c-34ff-48eb-8087-039d1e01259f",
+          "uuid": "7ab372e1-e981-4c44-9083-025c8c73577d",
           "id": "color_filter",
           "versioned_id": "color_filter_v2",
           "settings": {
@@ -80,7 +145,7 @@
         {
           "prev_ver": 537001986,
           "name": "Enregistrement caméra",
-          "uuid": "a72e04e7-f320-4fd6-b4d0-aa6777f2087a",
+          "uuid": "060a1809-6cca-4e7f-80d7-dc1cda1e9e57",
           "id": "source_record_filter",
           "versioned_id": "source_record_filter",
           "settings": {
@@ -118,7 +183,7 @@
     {
       "prev_ver": 537001986,
       "name": "Micro",
-      "uuid": "c3ddaaf2-f570-4fa8-9f40-d393216b1c61",
+      "uuid": "33fd8529-905c-4fe1-8631-e907a1b45978",
       "id": "wasapi_input_capture",
       "versioned_id": "wasapi_input_capture",
       "settings": {
@@ -141,6 +206,8 @@
           {
             "control": true,
             "alt": true,
+            "shift": false,
+            "command": false,
             "key": "OBS_KEY_F9"
           }
         ],
@@ -148,6 +215,8 @@
           {
             "control": true,
             "alt": true,
+            "shift": false,
+            "command": false,
             "key": "OBS_KEY_F10"
           }
         ],
@@ -162,7 +231,7 @@
         {
           "prev_ver": 537001986,
           "name": "Réduction du bruit",
-          "uuid": "6d42aa9a-fd5b-4341-a1be-7f8801253ca9",
+          "uuid": "05fd23ce-3eaf-4de0-a897-d3c8fb37de29",
           "id": "noise_suppress_filter",
           "versioned_id": "noise_suppress_filter_v2",
           "settings": {
@@ -188,7 +257,7 @@
         {
           "prev_ver": 537001986,
           "name": "Expandeur",
-          "uuid": "b3f603e6-de8d-4d5d-835b-5799f8ad7c92",
+          "uuid": "018227e8-18f7-4027-8cab-cc88fe177286",
           "id": "expander_filter",
           "versioned_id": "expander_filter",
           "settings": {
@@ -220,7 +289,7 @@
         {
           "prev_ver": 537001986,
           "name": "Égaliseur",
-          "uuid": "435a1eb6-748f-4cf8-8774-f51d840f1f14",
+          "uuid": "a6309724-7ab4-45d8-9745-ddbf3578091c",
           "id": "basic_eq_filter",
           "versioned_id": "basic_eq_filter",
           "settings": {
@@ -248,7 +317,7 @@
         {
           "prev_ver": 537001986,
           "name": "Compresseur",
-          "uuid": "1e344f8d-aed3-4a00-bd9c-fc945f56b3be",
+          "uuid": "78860bcf-0c12-4cf6-bbe5-122fca798e65",
           "id": "compressor_filter",
           "versioned_id": "compressor_filter",
           "settings": {
@@ -278,7 +347,7 @@
         {
           "prev_ver": 537001986,
           "name": "Limiteur",
-          "uuid": "9b5193cc-5fb2-4ff9-b682-f6aa4e4e3939",
+          "uuid": "e0af68e0-25b4-43be-8f59-8c40ee6676c8",
           "id": "limiter_filter",
           "versioned_id": "limiter_filter",
           "settings": {
@@ -307,19 +376,19 @@
     {
       "prev_ver": 537001986,
       "name": "Capture du jeu",
-      "uuid": "3fd5f407-c4c1-4651-971f-4700bf14cc26",
+      "uuid": "efd29d4f-42f3-45cf-a82e-ed4abef06522",
       "id": "game_capture",
       "versioned_id": "game_capture",
       "settings": {
         "capture_audio": true,
+        "window": "How to Fish:UnityWndClass:How to Fish.exe",
         "capture_mode": "window",
-        "anti_cheat_hook": true,
-        "window": "Rocket League (64-bit, DX11, Cooked):LaunchUnrealUWindowsClient:RocketLeague.exe"
+        "anti_cheat_hook": true
       },
       "mixers": 255,
       "sync": 0,
       "flags": 0,
-      "volume": 0.3199999928474426,
+      "volume": 0.32,
       "balance": 0.5,
       "enabled": true,
       "muted": false,
@@ -343,7 +412,7 @@
         {
           "prev_ver": 537001986,
           "name": "Baisse quand tu parles",
-          "uuid": "e1f8be56-1a13-4193-831d-10bea4b7018d",
+          "uuid": "a4c1a451-6e53-4bb9-9245-a7eb38465167",
           "id": "compressor_filter",
           "versioned_id": "compressor_filter",
           "settings": {
@@ -374,7 +443,7 @@
         {
           "prev_ver": 537001986,
           "name": "Limiteur",
-          "uuid": "fd598640-35fc-44f0-a2ff-910ec234bb09",
+          "uuid": "aea711c1-40a2-4ff2-8c3a-9186c6156e30",
           "id": "limiter_filter",
           "versioned_id": "limiter_filter",
           "settings": {
@@ -403,7 +472,7 @@
     {
       "prev_ver": 537001986,
       "name": "Discord",
-      "uuid": "aabca855-59be-4c8b-947d-5f4dbf23ff46",
+      "uuid": "ec3d88e9-a8cb-425f-b92d-59b7c89c587c",
       "id": "wasapi_process_output_capture",
       "versioned_id": "wasapi_process_output_capture",
       "settings": {
@@ -413,7 +482,7 @@
       "mixers": 255,
       "sync": 0,
       "flags": 0,
-      "volume": 0.8500000238418579,
+      "volume": 0.85,
       "balance": 0.5,
       "enabled": true,
       "muted": false,
@@ -435,7 +504,7 @@
         {
           "prev_ver": 537001986,
           "name": "Compresseur",
-          "uuid": "196ee836-e82e-4938-a380-eaf78c915048",
+          "uuid": "0e845e87-8766-40e3-a5e9-766e807d285b",
           "id": "compressor_filter",
           "versioned_id": "compressor_filter",
           "settings": {
@@ -465,7 +534,7 @@
         {
           "prev_ver": 537001986,
           "name": "Limiteur",
-          "uuid": "2fccc8b6-09b1-4c1e-9c44-6793695c1363",
+          "uuid": "96ed1345-b091-47bf-b319-5fe913024d46",
           "id": "limiter_filter",
           "versioned_id": "limiter_filter",
           "settings": {
@@ -493,17 +562,133 @@
     },
     {
       "prev_ver": 537001986,
-      "name": "Chat",
-      "uuid": "2aa4906f-6ded-4e16-8544-64f9d512c077",
+      "name": "Alertes",
+      "uuid": "962442a3-983d-4c81-a746-15f4dc1e4d8f",
       "id": "browser_source",
       "versioned_id": "browser_source",
       "settings": {
         "url": "",
-        "width": 440,
-        "height": 840,
-        "fps": 30,
+        "width": 1920,
+        "height": 1080,
+        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden}",
+        "reroute_audio": true
+      },
+      "mixers": 31,
+      "sync": 0,
+      "flags": 0,
+      "volume": 0.8,
+      "balance": 0.5,
+      "enabled": true,
+      "muted": false,
+      "push-to-mute": false,
+      "push-to-mute-delay": 0,
+      "push-to-talk": false,
+      "push-to-talk-delay": 0,
+      "hotkeys": {
+        "libobs.mute": [],
+        "libobs.unmute": [],
+        "libobs.push-to-mute": [],
+        "libobs.push-to-talk": [],
+        "ObsBrowser.Refresh": []
+      },
+      "deinterlace_mode": 0,
+      "deinterlace_field_order": 0,
+      "monitoring_type": 2,
+      "private_settings": {}
+    },
+    {
+      "prev_ver": 537001986,
+      "name": "Alertes YouTube",
+      "uuid": "7ad61c01-5806-496e-a39c-734f666d747d",
+      "id": "browser_source",
+      "versioned_id": "browser_source",
+      "settings": {
+        "url": "",
+        "width": 1920,
+        "height": 1080,
+        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden}",
+        "reroute_audio": true
+      },
+      "mixers": 31,
+      "sync": 0,
+      "flags": 0,
+      "volume": 0.8,
+      "balance": 0.5,
+      "enabled": true,
+      "muted": false,
+      "push-to-mute": false,
+      "push-to-mute-delay": 0,
+      "push-to-talk": false,
+      "push-to-talk-delay": 0,
+      "hotkeys": {
+        "libobs.mute": [],
+        "libobs.unmute": [],
+        "libobs.push-to-mute": [],
+        "libobs.push-to-talk": [],
+        "ObsBrowser.Refresh": []
+      },
+      "deinterlace_mode": 0,
+      "deinterlace_field_order": 0,
+      "monitoring_type": 2,
+      "private_settings": {}
+    },
+    {
+      "prev_ver": 537001986,
+      "name": "Alertes TikTok",
+      "uuid": "328e951d-82ad-4530-a4de-dfdc1ac35b1e",
+      "id": "browser_source",
+      "versioned_id": "browser_source",
+      "settings": {
+        "is_local_file": true,
+        "local_file": "D:/Stream/OBS/alertes/tiktok/latshow.html",
+        "width": 1080,
+        "height": 1920,
+        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden}",
         "fps_custom": true,
-        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden}"
+        "fps": 30,
+        "reroute_audio": true,
+        "shutdown": false
+      },
+      "mixers": 32,
+      "sync": 0,
+      "flags": 0,
+      "volume": 0.8,
+      "balance": 0.5,
+      "enabled": true,
+      "muted": false,
+      "push-to-mute": false,
+      "push-to-mute-delay": 0,
+      "push-to-talk": false,
+      "push-to-talk-delay": 0,
+      "hotkeys": {
+        "libobs.mute": [],
+        "libobs.unmute": [],
+        "libobs.push-to-mute": [],
+        "libobs.push-to-talk": [],
+        "ObsBrowser.Refresh": []
+      },
+      "deinterlace_mode": 0,
+      "deinterlace_field_order": 0,
+      "monitoring_type": 2,
+      "private_settings": {}
+    },
+    {
+      "prev_ver": 537001986,
+      "name": "Habillage — Démarrage",
+      "uuid": "fefba016-1e74-42f3-8d9e-25c2c9fc4bbc",
+      "id": "browser_source",
+      "versioned_id": "browser_source",
+      "settings": {
+        "is_local_file": true,
+        "local_file": "D:/Stream/OBS/overlays/latshow/demarrage.html",
+        "width": 2560,
+        "height": 1440,
+        "fps_custom": true,
+        "fps": 30,
+        "restart_when_active": true,
+        "shutdown": false,
+        "reroute_audio": false,
+        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} :root{--seance:gaming}"
       },
       "mixers": 0,
       "sync": 0,
@@ -530,133 +715,17 @@
     },
     {
       "prev_ver": 537001986,
-      "name": "Alertes",
-      "uuid": "5481791c-982e-4709-b379-67069f672df1",
+      "name": "Chat",
+      "uuid": "b08353ab-a87d-4c4f-937b-a7cb11a6ff35",
       "id": "browser_source",
       "versioned_id": "browser_source",
       "settings": {
         "url": "",
-        "width": 1920,
-        "height": 1080,
-        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden}",
-        "reroute_audio": true
-      },
-      "mixers": 31,
-      "sync": 0,
-      "flags": 0,
-      "volume": 0.800000011920929,
-      "balance": 0.5,
-      "enabled": true,
-      "muted": false,
-      "push-to-mute": false,
-      "push-to-mute-delay": 0,
-      "push-to-talk": false,
-      "push-to-talk-delay": 0,
-      "hotkeys": {
-        "libobs.mute": [],
-        "libobs.unmute": [],
-        "libobs.push-to-mute": [],
-        "libobs.push-to-talk": [],
-        "ObsBrowser.Refresh": []
-      },
-      "deinterlace_mode": 0,
-      "deinterlace_field_order": 0,
-      "monitoring_type": 2,
-      "private_settings": {}
-    },
-    {
-      "prev_ver": 537001986,
-      "name": "Alertes YouTube",
-      "uuid": "67e74cf2-1eb1-4dbc-815c-b29eaeb23c3f",
-      "id": "browser_source",
-      "versioned_id": "browser_source",
-      "settings": {
-        "url": "",
-        "width": 1920,
-        "height": 1080,
-        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden}",
-        "reroute_audio": true
-      },
-      "mixers": 31,
-      "sync": 0,
-      "flags": 0,
-      "volume": 0.800000011920929,
-      "balance": 0.5,
-      "enabled": true,
-      "muted": false,
-      "push-to-mute": false,
-      "push-to-mute-delay": 0,
-      "push-to-talk": false,
-      "push-to-talk-delay": 0,
-      "hotkeys": {
-        "libobs.mute": [],
-        "libobs.unmute": [],
-        "libobs.push-to-mute": [],
-        "libobs.push-to-talk": [],
-        "ObsBrowser.Refresh": []
-      },
-      "deinterlace_mode": 0,
-      "deinterlace_field_order": 0,
-      "monitoring_type": 2,
-      "private_settings": {}
-    },
-    {
-      "prev_ver": 537001986,
-      "name": "Alertes TikTok",
-      "uuid": "8cfbf0b5-c92d-437b-adbe-c946ac9d80c5",
-      "id": "browser_source",
-      "versioned_id": "browser_source",
-      "settings": {
-        "is_local_file": true,
-        "local_file": "D:/Stream/OBS/alertes/tiktok/latshow.html",
-        "width": 1080,
-        "height": 1920,
-        "fps": 30,
+        "width": 587,
+        "height": 1120,
+        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} /* Chat des lives Latshow (page dock.html de Social Stream Ninja, CSS posé dans la source OBS par obs/generer.mjs).\n   Demande du client, 2026-10-09 : « un chat clean avec la bonne typo », moins gros. Inter, pseudo cyan, texte clair,\n   petit logo de la plateforme ; ni bande, ni contour, ni menu. La source a la taille exacte de son cadre (pas d'étirement). */\n@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');\n#menu,#context-menu{display:none!important}\nhtml,body,#output{background:transparent!important}\n/* La page décale la liste de 32 px vers la gauche (ascenseur caché) : rognait les logos et les lignes. */\n#output{left:0!important;right:0!important;width:auto!important;box-sizing:border-box!important;padding:0 12px 10px!important}\n.highlight-chat{background:transparent!important;border:0!important;box-shadow:none!important;padding:3px 0!important;margin:0!important}\n.hl-message{display:block!important;font:400 18px/1.35 'Inter',sans-serif!important;color:#E9E6FF!important;text-shadow:none!important;-webkit-text-stroke:0!important;letter-spacing:0!important;text-indent:0!important;padding:0!important;margin:0!important;overflow:visible!important}\n.hl-source-type{width:15px!important;height:15px!important;vertical-align:-2px!important;margin:0 6px 0 0!important;opacity:.9}\n.hl-name{display:inline!important;font:700 18px/1.35 'Inter',sans-serif!important;color:#22D3EE!important;margin-right:6px!important;text-shadow:none!important;-webkit-text-stroke:0!important}\n.hl-content{display:inline!important;font:400 18px/1.35 'Inter',sans-serif!important;color:#E9E6FF!important;text-shadow:none!important;-webkit-text-stroke:0!important}\n",
         "fps_custom": true,
-        "shutdown": false,
-        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden}",
-        "reroute_audio": true
-      },
-      "mixers": 32,
-      "sync": -2000000,
-      "flags": 0,
-      "volume": 0.800000011920929,
-      "balance": 0.5,
-      "enabled": true,
-      "muted": false,
-      "push-to-mute": false,
-      "push-to-mute-delay": 0,
-      "push-to-talk": false,
-      "push-to-talk-delay": 0,
-      "hotkeys": {
-        "libobs.mute": [],
-        "libobs.unmute": [],
-        "libobs.push-to-mute": [],
-        "libobs.push-to-talk": [],
-        "ObsBrowser.Refresh": []
-      },
-      "deinterlace_mode": 0,
-      "deinterlace_field_order": 0,
-      "monitoring_type": 2,
-      "private_settings": {}
-    },
-    {
-      "prev_ver": 537001986,
-      "name": "Habillage — Démarrage",
-      "uuid": "acc268ea-7b0c-4a6f-a5f7-02f28a732aa8",
-      "id": "browser_source",
-      "versioned_id": "browser_source",
-      "settings": {
-        "is_local_file": true,
-        "local_file": "D:/Stream/OBS/overlays/latshow/demarrage.html",
-        "width": 2560,
-        "height": 1440,
-        "fps": 30,
-        "fps_custom": true,
-        "shutdown": false,
-        "restart_when_active": true,
-        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} :root{--seance:gaming}",
-        "reroute_audio": false
+        "fps": 30
       },
       "mixers": 0,
       "sync": 0,
@@ -684,7 +753,7 @@
     {
       "prev_ver": 537001986,
       "name": "Musique — latshow demarrage",
-      "uuid": "17136a06-e23c-47f2-a899-c37228c65130",
+      "uuid": "758146ab-6de3-45e4-94a7-4554a7d6915a",
       "id": "vlc_source",
       "versioned_id": "vlc_source",
       "settings": {
@@ -703,7 +772,7 @@
       "mixers": 255,
       "sync": 0,
       "flags": 0,
-      "volume": 0.6000000238418579,
+      "volume": 0.6,
       "balance": 0.5,
       "enabled": true,
       "muted": false,
@@ -716,11 +785,11 @@
         "libobs.unmute": [],
         "libobs.push-to-mute": [],
         "libobs.push-to-talk": [],
-        "VLCSource.PlayPause": [],
-        "VLCSource.Restart": [],
-        "VLCSource.Stop": [],
-        "VLCSource.PlaylistNext": [],
-        "VLCSource.PlaylistPrev": []
+        "VLC_PLAY_PAUSE": [],
+        "VLC_RESTART": [],
+        "VLC_STOP": [],
+        "VLC_PLAYLIST_NEXT": [],
+        "VLC_PLAYLIST_PREV": []
       },
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
@@ -730,7 +799,7 @@
     {
       "prev_ver": 537001986,
       "name": "Habillage — Jeu",
-      "uuid": "e96682b2-75c4-422f-bee9-5363cbf720a1",
+      "uuid": "a5ec2693-b239-430c-a411-aaff44097bd3",
       "id": "browser_source",
       "versioned_id": "browser_source",
       "settings": {
@@ -738,12 +807,12 @@
         "local_file": "D:/Stream/OBS/overlays/latshow/jeu.html",
         "width": 2560,
         "height": 1440,
-        "fps": 30,
         "fps_custom": true,
-        "shutdown": false,
+        "fps": 30,
         "restart_when_active": false,
-        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} :root{--seance:gaming}",
-        "reroute_audio": false
+        "shutdown": false,
+        "reroute_audio": false,
+        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} :root{--seance:gaming}"
       },
       "mixers": 0,
       "sync": 0,
@@ -771,7 +840,7 @@
     {
       "prev_ver": 537001986,
       "name": "Habillage — Discussion",
-      "uuid": "2657fa6b-6fc2-4277-9bb7-003cb5518cf7",
+      "uuid": "699b320c-5be8-4eea-9df0-9f21fc6ecdb0",
       "id": "browser_source",
       "versioned_id": "browser_source",
       "settings": {
@@ -779,12 +848,49 @@
         "local_file": "D:/Stream/OBS/overlays/latshow/discussion.html",
         "width": 2560,
         "height": 1440,
-        "fps": 30,
         "fps_custom": true,
-        "shutdown": false,
+        "fps": 30,
         "restart_when_active": false,
-        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} :root{--seance:gaming}",
-        "reroute_audio": false
+        "shutdown": false,
+        "reroute_audio": false,
+        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} :root{--seance:gaming}"
+      },
+      "mixers": 0,
+      "sync": 0,
+      "flags": 0,
+      "volume": 1,
+      "balance": 0.5,
+      "enabled": true,
+      "muted": false,
+      "push-to-mute": false,
+      "push-to-mute-delay": 0,
+      "push-to-talk": false,
+      "push-to-talk-delay": 0,
+      "hotkeys": {
+        "libobs.mute": [],
+        "libobs.unmute": [],
+        "libobs.push-to-mute": [],
+        "libobs.push-to-talk": [],
+        "ObsBrowser.Refresh": []
+      },
+      "deinterlace_mode": 0,
+      "deinterlace_field_order": 0,
+      "monitoring_type": 0,
+      "private_settings": {}
+    },
+    {
+      "prev_ver": 537001986,
+      "name": "Chat — Discussion",
+      "uuid": "f96dd35b-1a60-427b-94d3-cf7049df4e45",
+      "id": "browser_source",
+      "versioned_id": "browser_source",
+      "settings": {
+        "url": "",
+        "width": 640,
+        "height": 960,
+        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} /* Chat des lives Latshow (page dock.html de Social Stream Ninja, CSS posé dans la source OBS par obs/generer.mjs).\n   Demande du client, 2026-10-09 : « un chat clean avec la bonne typo », moins gros. Inter, pseudo cyan, texte clair,\n   petit logo de la plateforme ; ni bande, ni contour, ni menu. La source a la taille exacte de son cadre (pas d'étirement). */\n@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');\n#menu,#context-menu{display:none!important}\nhtml,body,#output{background:transparent!important}\n/* La page décale la liste de 32 px vers la gauche (ascenseur caché) : rognait les logos et les lignes. */\n#output{left:0!important;right:0!important;width:auto!important;box-sizing:border-box!important;padding:0 12px 10px!important}\n.highlight-chat{background:transparent!important;border:0!important;box-shadow:none!important;padding:3px 0!important;margin:0!important}\n.hl-message{display:block!important;font:400 18px/1.35 'Inter',sans-serif!important;color:#E9E6FF!important;text-shadow:none!important;-webkit-text-stroke:0!important;letter-spacing:0!important;text-indent:0!important;padding:0!important;margin:0!important;overflow:visible!important}\n.hl-source-type{width:15px!important;height:15px!important;vertical-align:-2px!important;margin:0 6px 0 0!important;opacity:.9}\n.hl-name{display:inline!important;font:700 18px/1.35 'Inter',sans-serif!important;color:#22D3EE!important;margin-right:6px!important;text-shadow:none!important;-webkit-text-stroke:0!important}\n.hl-content{display:inline!important;font:400 18px/1.35 'Inter',sans-serif!important;color:#E9E6FF!important;text-shadow:none!important;-webkit-text-stroke:0!important}\n",
+        "fps_custom": true,
+        "fps": 30
       },
       "mixers": 0,
       "sync": 0,
@@ -812,7 +918,7 @@
     {
       "prev_ver": 537001986,
       "name": "Habillage — Pause",
-      "uuid": "0686780e-0605-4043-91b5-770dcae532d7",
+      "uuid": "9de3b4a5-d93a-42f5-9216-6b8d5d4cfe9d",
       "id": "browser_source",
       "versioned_id": "browser_source",
       "settings": {
@@ -820,12 +926,12 @@
         "local_file": "D:/Stream/OBS/overlays/latshow/pause.html",
         "width": 2560,
         "height": 1440,
-        "fps": 30,
         "fps_custom": true,
-        "shutdown": false,
+        "fps": 30,
         "restart_when_active": true,
-        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} :root{--seance:gaming}",
-        "reroute_audio": false
+        "shutdown": false,
+        "reroute_audio": false,
+        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} :root{--seance:gaming}"
       },
       "mixers": 0,
       "sync": 0,
@@ -853,7 +959,7 @@
     {
       "prev_ver": 537001986,
       "name": "Musique — latshow pause",
-      "uuid": "6043696b-9b4c-4b3d-8225-ed92d5bca191",
+      "uuid": "f44897f7-a8e1-4f5d-80f3-cda00c66a864",
       "id": "vlc_source",
       "versioned_id": "vlc_source",
       "settings": {
@@ -872,7 +978,7 @@
       "mixers": 255,
       "sync": 0,
       "flags": 0,
-      "volume": 0.6000000238418579,
+      "volume": 0.6,
       "balance": 0.5,
       "enabled": true,
       "muted": false,
@@ -885,11 +991,11 @@
         "libobs.unmute": [],
         "libobs.push-to-mute": [],
         "libobs.push-to-talk": [],
-        "VLCSource.PlayPause": [],
-        "VLCSource.Restart": [],
-        "VLCSource.Stop": [],
-        "VLCSource.PlaylistNext": [],
-        "VLCSource.PlaylistPrev": []
+        "VLC_PLAY_PAUSE": [],
+        "VLC_RESTART": [],
+        "VLC_STOP": [],
+        "VLC_PLAYLIST_NEXT": [],
+        "VLC_PLAYLIST_PREV": []
       },
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
@@ -899,7 +1005,7 @@
     {
       "prev_ver": 537001986,
       "name": "Habillage — Pause bébé",
-      "uuid": "daddf7d8-1d6b-467e-a165-bc9ad178cba4",
+      "uuid": "7e234bd8-1554-447b-916f-164bcfd14aa2",
       "id": "browser_source",
       "versioned_id": "browser_source",
       "settings": {
@@ -907,12 +1013,12 @@
         "local_file": "D:/Stream/OBS/overlays/latshow/pause-bebe.html",
         "width": 2560,
         "height": 1440,
-        "fps": 30,
         "fps_custom": true,
-        "shutdown": false,
+        "fps": 30,
         "restart_when_active": true,
-        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} :root{--seance:gaming}",
-        "reroute_audio": false
+        "shutdown": false,
+        "reroute_audio": false,
+        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} :root{--seance:gaming}"
       },
       "mixers": 0,
       "sync": 0,
@@ -940,7 +1046,7 @@
     {
       "prev_ver": 537001986,
       "name": "Musique — latshow bebe",
-      "uuid": "1f5eeb23-f2c2-4821-9f53-f58513ef6ec4",
+      "uuid": "3cc0f7d9-6068-458d-8ce8-c611b27ae86d",
       "id": "vlc_source",
       "versioned_id": "vlc_source",
       "settings": {
@@ -959,7 +1065,7 @@
       "mixers": 255,
       "sync": 0,
       "flags": 0,
-      "volume": 0.6000000238418579,
+      "volume": 0.6,
       "balance": 0.5,
       "enabled": true,
       "muted": false,
@@ -972,11 +1078,11 @@
         "libobs.unmute": [],
         "libobs.push-to-mute": [],
         "libobs.push-to-talk": [],
-        "VLCSource.PlayPause": [],
-        "VLCSource.Restart": [],
-        "VLCSource.Stop": [],
-        "VLCSource.PlaylistNext": [],
-        "VLCSource.PlaylistPrev": []
+        "VLC_PLAY_PAUSE": [],
+        "VLC_RESTART": [],
+        "VLC_STOP": [],
+        "VLC_PLAYLIST_NEXT": [],
+        "VLC_PLAYLIST_PREV": []
       },
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
@@ -986,7 +1092,7 @@
     {
       "prev_ver": 537001986,
       "name": "Habillage — Souci technique",
-      "uuid": "9f6cc158-6c79-45fb-87e8-6a4618c9f71c",
+      "uuid": "f591a25d-ed07-49cd-9030-7bcb52914a33",
       "id": "browser_source",
       "versioned_id": "browser_source",
       "settings": {
@@ -994,12 +1100,12 @@
         "local_file": "D:/Stream/OBS/overlays/latshow/souci.html",
         "width": 2560,
         "height": 1440,
-        "fps": 30,
         "fps_custom": true,
-        "shutdown": false,
+        "fps": 30,
         "restart_when_active": true,
-        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} :root{--seance:gaming}",
-        "reroute_audio": false
+        "shutdown": false,
+        "reroute_audio": false,
+        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} :root{--seance:gaming}"
       },
       "mixers": 0,
       "sync": 0,
@@ -1027,7 +1133,7 @@
     {
       "prev_ver": 537001986,
       "name": "Habillage — Fin",
-      "uuid": "2938ea87-1e4e-45ad-a9d0-63ac642d80a6",
+      "uuid": "4ed67a2d-3790-48cb-af22-e723d9e2b433",
       "id": "browser_source",
       "versioned_id": "browser_source",
       "settings": {
@@ -1035,12 +1141,12 @@
         "local_file": "D:/Stream/OBS/overlays/latshow/fin.html",
         "width": 2560,
         "height": 1440,
-        "fps": 30,
         "fps_custom": true,
-        "shutdown": false,
+        "fps": 30,
         "restart_when_active": false,
-        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} :root{--seance:gaming}",
-        "reroute_audio": false
+        "shutdown": false,
+        "reroute_audio": false,
+        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} :root{--seance:gaming}"
       },
       "mixers": 0,
       "sync": 0,
@@ -1068,7 +1174,7 @@
     {
       "prev_ver": 537001986,
       "name": "Musique — latshow fin",
-      "uuid": "4ef26a1f-a0f2-4b3a-b504-f5dfae3a6dbe",
+      "uuid": "52daea73-34c8-437b-9aad-fd68f3223018",
       "id": "vlc_source",
       "versioned_id": "vlc_source",
       "settings": {
@@ -1087,7 +1193,7 @@
       "mixers": 255,
       "sync": 0,
       "flags": 0,
-      "volume": 0.6000000238418579,
+      "volume": 0.6,
       "balance": 0.5,
       "enabled": true,
       "muted": false,
@@ -1100,11 +1206,11 @@
         "libobs.unmute": [],
         "libobs.push-to-mute": [],
         "libobs.push-to-talk": [],
-        "VLCSource.PlayPause": [],
-        "VLCSource.Restart": [],
-        "VLCSource.Stop": [],
-        "VLCSource.PlaylistNext": [],
-        "VLCSource.PlaylistPrev": []
+        "VLC_PLAY_PAUSE": [],
+        "VLC_RESTART": [],
+        "VLC_STOP": [],
+        "VLC_PLAYLIST_NEXT": [],
+        "VLC_PLAYLIST_PREV": []
       },
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
@@ -1114,7 +1220,7 @@
     {
       "prev_ver": 537001986,
       "name": "Habillage TikTok — Démarrage",
-      "uuid": "dca9f139-c412-48b8-9ad3-7423c676e1e1",
+      "uuid": "98ffa7f0-151f-4288-aa31-bd62fb43b0a4",
       "id": "browser_source",
       "versioned_id": "browser_source",
       "settings": {
@@ -1122,12 +1228,12 @@
         "local_file": "D:/Stream/OBS/overlays/latshow/vertical.html",
         "width": 1080,
         "height": 1920,
-        "fps": 30,
         "fps_custom": true,
-        "shutdown": false,
+        "fps": 30,
         "restart_when_active": true,
-        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} :root{--seance:gaming;--vue:demarrage}",
-        "reroute_audio": false
+        "shutdown": false,
+        "reroute_audio": false,
+        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} :root{--seance:gaming;--vue:demarrage}"
       },
       "mixers": 0,
       "sync": 0,
@@ -1155,7 +1261,7 @@
     {
       "prev_ver": 537001986,
       "name": "Habillage TikTok — Jeu",
-      "uuid": "171f8824-cff9-4231-800f-42988d4fd0be",
+      "uuid": "f2545eb4-de66-447e-bf4d-bd9cef542872",
       "id": "browser_source",
       "versioned_id": "browser_source",
       "settings": {
@@ -1163,12 +1269,12 @@
         "local_file": "D:/Stream/OBS/overlays/latshow/vertical.html",
         "width": 1080,
         "height": 1920,
-        "fps": 30,
         "fps_custom": true,
-        "shutdown": false,
+        "fps": 30,
         "restart_when_active": false,
-        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} :root{--seance:gaming;--vue:pile}",
-        "reroute_audio": false
+        "shutdown": false,
+        "reroute_audio": false,
+        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} :root{--seance:gaming;--vue:pile}"
       },
       "mixers": 0,
       "sync": 0,
@@ -1196,7 +1302,7 @@
     {
       "prev_ver": 537001986,
       "name": "Habillage TikTok — Jeu sans caméra",
-      "uuid": "40081988-1f29-448f-b8ff-b2e1fa6fe705",
+      "uuid": "a23fd0e8-02f8-4ecb-a5a0-f460e620ce7a",
       "id": "browser_source",
       "versioned_id": "browser_source",
       "settings": {
@@ -1204,12 +1310,12 @@
         "local_file": "D:/Stream/OBS/overlays/latshow/vertical.html",
         "width": 1080,
         "height": 1920,
-        "fps": 30,
         "fps_custom": true,
-        "shutdown": false,
+        "fps": 30,
         "restart_when_active": false,
-        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} :root{--seance:gaming;--vue:plein}",
-        "reroute_audio": false
+        "shutdown": false,
+        "reroute_audio": false,
+        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} :root{--seance:gaming;--vue:plein}"
       },
       "mixers": 0,
       "sync": 0,
@@ -1237,7 +1343,7 @@
     {
       "prev_ver": 537001986,
       "name": "Habillage TikTok — Discussion",
-      "uuid": "9ce6596b-748f-442a-8f3f-fc3d223d06bf",
+      "uuid": "a3148a2f-5274-44e8-9bb1-4af58624068d",
       "id": "browser_source",
       "versioned_id": "browser_source",
       "settings": {
@@ -1245,12 +1351,12 @@
         "local_file": "D:/Stream/OBS/overlays/latshow/vertical.html",
         "width": 1080,
         "height": 1920,
-        "fps": 30,
         "fps_custom": true,
-        "shutdown": false,
+        "fps": 30,
         "restart_when_active": false,
-        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} :root{--seance:gaming;--vue:discussion}",
-        "reroute_audio": false
+        "shutdown": false,
+        "reroute_audio": false,
+        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} :root{--seance:gaming;--vue:discussion}"
       },
       "mixers": 0,
       "sync": 0,
@@ -1278,7 +1384,7 @@
     {
       "prev_ver": 537001986,
       "name": "Habillage TikTok — Pause",
-      "uuid": "fdb905fb-f08a-4732-a1fc-9f0b91360aa3",
+      "uuid": "f1e31512-71f4-4b3c-b900-63ea076c539d",
       "id": "browser_source",
       "versioned_id": "browser_source",
       "settings": {
@@ -1286,12 +1392,12 @@
         "local_file": "D:/Stream/OBS/overlays/latshow/vertical.html",
         "width": 1080,
         "height": 1920,
-        "fps": 30,
         "fps_custom": true,
-        "shutdown": false,
+        "fps": 30,
         "restart_when_active": true,
-        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} :root{--seance:gaming;--vue:pause}",
-        "reroute_audio": false
+        "shutdown": false,
+        "reroute_audio": false,
+        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} :root{--seance:gaming;--vue:pause}"
       },
       "mixers": 0,
       "sync": 0,
@@ -1319,7 +1425,7 @@
     {
       "prev_ver": 537001986,
       "name": "Habillage TikTok — Pause bébé",
-      "uuid": "9e3a956e-8198-4233-a9ed-b4760a075f5b",
+      "uuid": "3f7abc27-ba55-434d-8492-0531a0a5ec3d",
       "id": "browser_source",
       "versioned_id": "browser_source",
       "settings": {
@@ -1327,12 +1433,12 @@
         "local_file": "D:/Stream/OBS/overlays/latshow/vertical.html",
         "width": 1080,
         "height": 1920,
-        "fps": 30,
         "fps_custom": true,
-        "shutdown": false,
+        "fps": 30,
         "restart_when_active": true,
-        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} :root{--seance:gaming;--vue:pause-bebe}",
-        "reroute_audio": false
+        "shutdown": false,
+        "reroute_audio": false,
+        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} :root{--seance:gaming;--vue:pause-bebe}"
       },
       "mixers": 0,
       "sync": 0,
@@ -1360,7 +1466,7 @@
     {
       "prev_ver": 537001986,
       "name": "Habillage TikTok — Souci technique",
-      "uuid": "2e1830e4-c7e1-4538-8f3d-c442626073c3",
+      "uuid": "5680a619-00b1-4d82-a806-d4fbb9b020a2",
       "id": "browser_source",
       "versioned_id": "browser_source",
       "settings": {
@@ -1368,12 +1474,12 @@
         "local_file": "D:/Stream/OBS/overlays/latshow/vertical.html",
         "width": 1080,
         "height": 1920,
-        "fps": 30,
         "fps_custom": true,
-        "shutdown": false,
+        "fps": 30,
         "restart_when_active": true,
-        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} :root{--seance:gaming;--vue:souci}",
-        "reroute_audio": false
+        "shutdown": false,
+        "reroute_audio": false,
+        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} :root{--seance:gaming;--vue:souci}"
       },
       "mixers": 0,
       "sync": 0,
@@ -1401,7 +1507,7 @@
     {
       "prev_ver": 537001986,
       "name": "Habillage TikTok — Fin",
-      "uuid": "ac0808a9-400b-446d-b17d-da92ade86eef",
+      "uuid": "dd16cd05-2fd2-4dd2-81c3-592f8e42a0b9",
       "id": "browser_source",
       "versioned_id": "browser_source",
       "settings": {
@@ -1409,12 +1515,12 @@
         "local_file": "D:/Stream/OBS/overlays/latshow/vertical.html",
         "width": 1080,
         "height": 1920,
-        "fps": 30,
         "fps_custom": true,
-        "shutdown": false,
+        "fps": 30,
         "restart_when_active": false,
-        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} :root{--seance:gaming;--vue:fin}",
-        "reroute_audio": false
+        "shutdown": false,
+        "reroute_audio": false,
+        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} :root{--seance:gaming;--vue:fin}"
       },
       "mixers": 0,
       "sync": 0,
@@ -1442,7 +1548,7 @@
     {
       "prev_ver": 537001986,
       "name": "Démarrage",
-      "uuid": "30ddaa74-66fd-437b-a762-a8e21dab6174",
+      "uuid": "a6fd3f00-29f0-4107-b420-b84117a73a54",
       "id": "scene",
       "versioned_id": "scene",
       "settings": {
@@ -1451,14 +1557,10 @@
         "items": [
           {
             "name": "Habillage — Démarrage",
-            "source_uuid": "acc268ea-7b0c-4a6f-a5f7-02f28a732aa8",
+            "source_uuid": "fefba016-1e74-42f3-8d9e-25c2c9fc4bbc",
             "visible": true,
             "locked": true,
             "rot": 0,
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
             "align": 5,
             "bounds_type": 0,
             "bounds_align": 0,
@@ -1473,23 +1575,11 @@
               "x": 0,
               "y": 0
             },
-            "pos_rel": {
-              "x": -1.7777777910232544,
-              "y": -1
-            },
             "scale": {
               "x": 1,
               "y": 1
             },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
             "bounds": {
-              "x": 0,
-              "y": 0
-            },
-            "bounds_rel": {
               "x": 0,
               "y": 0
             },
@@ -1502,18 +1592,30 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
-          },
-          {
-            "name": "Chat",
-            "source_uuid": "2aa4906f-6ded-4e16-8544-64f9d512c077",
-            "visible": true,
-            "locked": true,
-            "rot": 0,
+            "private_settings": {},
             "scale_ref": {
               "x": 2560,
               "y": 1440
             },
+            "pos_rel": {
+              "x": -1.7777777777777777,
+              "y": -1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 0,
+              "y": 0
+            }
+          },
+          {
+            "name": "Chat",
+            "source_uuid": "b08353ab-a87d-4c4f-937b-a7cb11a6ff35",
+            "visible": true,
+            "locked": true,
+            "rot": 0,
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -1528,25 +1630,13 @@
               "x": 1888,
               "y": 160
             },
-            "pos_rel": {
-              "x": 0.8444444537162781,
-              "y": -0.7777777910232544
-            },
             "scale": {
               "x": 1,
               "y": 1
             },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
             "bounds": {
-              "x": 586.5,
+              "x": 586.6666666666666,
               "y": 1120
-            },
-            "bounds_rel": {
-              "x": 0.8148148059844971,
-              "y": 1.5555555820465088
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -1557,18 +1647,30 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
-          },
-          {
-            "name": "Micro",
-            "source_uuid": "c3ddaaf2-f570-4fa8-9f40-d393216b1c61",
-            "visible": true,
-            "locked": true,
-            "rot": 0,
+            "private_settings": {},
             "scale_ref": {
               "x": 2560,
               "y": 1440
             },
+            "pos_rel": {
+              "x": 0.8444444444444444,
+              "y": -0.7777777777777778
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 0.8148148148148148,
+              "y": 1.5555555555555556
+            }
+          },
+          {
+            "name": "Micro",
+            "source_uuid": "33fd8529-905c-4fe1-8631-e907a1b45978",
+            "visible": true,
+            "locked": true,
+            "rot": 0,
             "align": 5,
             "bounds_type": 0,
             "bounds_align": 0,
@@ -1583,23 +1685,11 @@
               "x": 0,
               "y": 0
             },
-            "pos_rel": {
-              "x": -1.7777777910232544,
-              "y": -1
-            },
             "scale": {
               "x": 1,
               "y": 1
             },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
             "bounds": {
-              "x": 0,
-              "y": 0
-            },
-            "bounds_rel": {
               "x": 0,
               "y": 0
             },
@@ -1612,18 +1702,30 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
-          },
-          {
-            "name": "Musique — latshow demarrage",
-            "source_uuid": "17136a06-e23c-47f2-a899-c37228c65130",
-            "visible": true,
-            "locked": true,
-            "rot": 0,
+            "private_settings": {},
             "scale_ref": {
               "x": 2560,
               "y": 1440
             },
+            "pos_rel": {
+              "x": -1.7777777777777777,
+              "y": -1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 0,
+              "y": 0
+            }
+          },
+          {
+            "name": "Musique — latshow demarrage",
+            "source_uuid": "758146ab-6de3-45e4-94a7-4554a7d6915a",
+            "visible": true,
+            "locked": true,
+            "rot": 0,
             "align": 5,
             "bounds_type": 0,
             "bounds_align": 0,
@@ -1638,23 +1740,11 @@
               "x": 0,
               "y": 0
             },
-            "pos_rel": {
-              "x": -1.7777777910232544,
-              "y": -1
-            },
             "scale": {
               "x": 1,
               "y": 1
             },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
             "bounds": {
-              "x": 0,
-              "y": 0
-            },
-            "bounds_rel": {
               "x": 0,
               "y": 0
             },
@@ -1667,18 +1757,30 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
-          },
-          {
-            "name": "Alertes",
-            "source_uuid": "5481791c-982e-4709-b379-67069f672df1",
-            "visible": true,
-            "locked": true,
-            "rot": 0,
+            "private_settings": {},
             "scale_ref": {
               "x": 2560,
               "y": 1440
             },
+            "pos_rel": {
+              "x": -1.7777777777777777,
+              "y": -1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 0,
+              "y": 0
+            }
+          },
+          {
+            "name": "Alertes",
+            "source_uuid": "962442a3-983d-4c81-a746-15f4dc1e4d8f",
+            "visible": true,
+            "locked": true,
+            "rot": 0,
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -1693,25 +1795,13 @@
               "x": 0,
               "y": 0
             },
-            "pos_rel": {
-              "x": -1.7777777910232544,
-              "y": -1
-            },
             "scale": {
-              "x": 1,
-              "y": 1
-            },
-            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
               "x": 2560,
               "y": 1440
-            },
-            "bounds_rel": {
-              "x": 3.555555582046509,
-              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -1722,18 +1812,30 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
-          },
-          {
-            "name": "Alertes YouTube",
-            "source_uuid": "67e74cf2-1eb1-4dbc-815c-b29eaeb23c3f",
-            "visible": true,
-            "locked": true,
-            "rot": 0,
+            "private_settings": {},
             "scale_ref": {
               "x": 2560,
               "y": 1440
             },
+            "pos_rel": {
+              "x": -1.7777777777777777,
+              "y": -1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 3.5555555555555554,
+              "y": 2
+            }
+          },
+          {
+            "name": "Alertes YouTube",
+            "source_uuid": "7ad61c01-5806-496e-a39c-734f666d747d",
+            "visible": true,
+            "locked": true,
+            "rot": 0,
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -1748,25 +1850,13 @@
               "x": 0,
               "y": 0
             },
-            "pos_rel": {
-              "x": -1.7777777910232544,
-              "y": -1
-            },
             "scale": {
-              "x": 1,
-              "y": 1
-            },
-            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
               "x": 2560,
               "y": 1440
-            },
-            "bounds_rel": {
-              "x": 3.555555582046509,
-              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -1777,7 +1867,23 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
+            "private_settings": {},
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
+            "pos_rel": {
+              "x": -1.7777777777777777,
+              "y": -1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 3.5555555555555554,
+              "y": 2
+            }
           }
         ],
         "canvas": [
@@ -1804,6 +1910,8 @@
           {
             "control": true,
             "alt": true,
+            "shift": false,
+            "command": false,
             "key": "OBS_KEY_F1"
           }
         ],
@@ -1823,13 +1931,13 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
-      "canvas_uuid": "6c69626f-6273-4c00-9d88-c5136d61696e",
-      "private_settings": {}
+      "private_settings": {},
+      "canvas_uuid": "6c69626f-6273-4c00-9d88-c5136d61696e"
     },
     {
       "prev_ver": 537001986,
       "name": "Jeu",
-      "uuid": "3e86f0a9-6493-4df8-91ea-488b4222f36d",
+      "uuid": "c0487b4b-5757-4c54-9638-c7c345c74f9b",
       "id": "scene",
       "versioned_id": "scene",
       "settings": {
@@ -1838,14 +1946,10 @@
         "items": [
           {
             "name": "Capture du jeu",
-            "source_uuid": "3fd5f407-c4c1-4651-971f-4700bf14cc26",
+            "source_uuid": "efd29d4f-42f3-45cf-a82e-ed4abef06522",
             "visible": true,
             "locked": true,
             "rot": 0,
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
             "align": 5,
             "bounds_type": 2,
             "bounds_align": 0,
@@ -1860,25 +1964,13 @@
               "x": 0,
               "y": 0
             },
-            "pos_rel": {
-              "x": -1.7777777910232544,
-              "y": -1
-            },
             "scale": {
-              "x": 1,
-              "y": 1
-            },
-            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
               "x": 2560,
               "y": 1440
-            },
-            "bounds_rel": {
-              "x": 3.555555582046509,
-              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -1889,18 +1981,30 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
-          },
-          {
-            "name": "Habillage — Jeu",
-            "source_uuid": "e96682b2-75c4-422f-bee9-5363cbf720a1",
-            "visible": true,
-            "locked": true,
-            "rot": 0,
+            "private_settings": {},
             "scale_ref": {
               "x": 2560,
               "y": 1440
             },
+            "pos_rel": {
+              "x": -1.7777777777777777,
+              "y": -1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 3.5555555555555554,
+              "y": 2
+            }
+          },
+          {
+            "name": "Habillage — Jeu",
+            "source_uuid": "a5ec2693-b239-430c-a411-aaff44097bd3",
+            "visible": true,
+            "locked": true,
+            "rot": 0,
             "align": 5,
             "bounds_type": 0,
             "bounds_align": 0,
@@ -1915,23 +2019,11 @@
               "x": 0,
               "y": 0
             },
-            "pos_rel": {
-              "x": -1.7777777910232544,
-              "y": -1
-            },
             "scale": {
               "x": 1,
               "y": 1
             },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
             "bounds": {
-              "x": 0,
-              "y": 0
-            },
-            "bounds_rel": {
               "x": 0,
               "y": 0
             },
@@ -1944,18 +2036,30 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
-          },
-          {
-            "name": "Caméra",
-            "source_uuid": "7057d42f-b80f-42b0-a743-5a164273d4f5",
-            "visible": true,
-            "locked": true,
-            "rot": 0,
+            "private_settings": {},
             "scale_ref": {
               "x": 2560,
               "y": 1440
             },
+            "pos_rel": {
+              "x": -1.7777777777777777,
+              "y": -1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 0,
+              "y": 0
+            }
+          },
+          {
+            "name": "Caméra",
+            "source_uuid": "9a9ac0ee-cc5c-419d-9d0d-b39d6e310680",
+            "visible": true,
+            "locked": true,
+            "rot": 0,
             "align": 5,
             "bounds_type": 3,
             "bounds_align": 0,
@@ -1967,28 +2071,16 @@
             "id": 3,
             "group_item_backup": false,
             "pos": {
-              "x": 2005.5,
-              "y": 1114.5
-            },
-            "pos_rel": {
-              "x": 1.0074074268341064,
-              "y": 0.5481481552124023
+              "x": 2005.3333333333333,
+              "y": 1114.6666666666665
             },
             "scale": {
-              "x": 1,
-              "y": 1
-            },
-            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
               "x": 512,
               "y": 288
-            },
-            "bounds_rel": {
-              "x": 0.7111111283302307,
-              "y": 0.4000000059604645
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -1999,18 +2091,30 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
-          },
-          {
-            "name": "Micro",
-            "source_uuid": "c3ddaaf2-f570-4fa8-9f40-d393216b1c61",
-            "visible": true,
-            "locked": true,
-            "rot": 0,
+            "private_settings": {},
             "scale_ref": {
               "x": 2560,
               "y": 1440
             },
+            "pos_rel": {
+              "x": 1.0074074074074073,
+              "y": 0.5481481481481479
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 0.7111111111111111,
+              "y": 0.4
+            }
+          },
+          {
+            "name": "Micro",
+            "source_uuid": "33fd8529-905c-4fe1-8631-e907a1b45978",
+            "visible": true,
+            "locked": true,
+            "rot": 0,
             "align": 5,
             "bounds_type": 0,
             "bounds_align": 0,
@@ -2025,23 +2129,11 @@
               "x": 0,
               "y": 0
             },
-            "pos_rel": {
-              "x": -1.7777777910232544,
-              "y": -1
-            },
             "scale": {
               "x": 1,
               "y": 1
             },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
             "bounds": {
-              "x": 0,
-              "y": 0
-            },
-            "bounds_rel": {
               "x": 0,
               "y": 0
             },
@@ -2054,18 +2146,30 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
-          },
-          {
-            "name": "Discord",
-            "source_uuid": "aabca855-59be-4c8b-947d-5f4dbf23ff46",
-            "visible": true,
-            "locked": true,
-            "rot": 0,
+            "private_settings": {},
             "scale_ref": {
               "x": 2560,
               "y": 1440
             },
+            "pos_rel": {
+              "x": -1.7777777777777777,
+              "y": -1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 0,
+              "y": 0
+            }
+          },
+          {
+            "name": "Discord",
+            "source_uuid": "ec3d88e9-a8cb-425f-b92d-59b7c89c587c",
+            "visible": true,
+            "locked": true,
+            "rot": 0,
             "align": 5,
             "bounds_type": 0,
             "bounds_align": 0,
@@ -2080,23 +2184,11 @@
               "x": 0,
               "y": 0
             },
-            "pos_rel": {
-              "x": -1.7777777910232544,
-              "y": -1
-            },
             "scale": {
               "x": 1,
               "y": 1
             },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
             "bounds": {
-              "x": 0,
-              "y": 0
-            },
-            "bounds_rel": {
               "x": 0,
               "y": 0
             },
@@ -2109,18 +2201,30 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
-          },
-          {
-            "name": "Alertes",
-            "source_uuid": "5481791c-982e-4709-b379-67069f672df1",
-            "visible": true,
-            "locked": true,
-            "rot": 0,
+            "private_settings": {},
             "scale_ref": {
               "x": 2560,
               "y": 1440
             },
+            "pos_rel": {
+              "x": -1.7777777777777777,
+              "y": -1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 0,
+              "y": 0
+            }
+          },
+          {
+            "name": "Alertes",
+            "source_uuid": "962442a3-983d-4c81-a746-15f4dc1e4d8f",
+            "visible": true,
+            "locked": true,
+            "rot": 0,
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -2135,25 +2239,13 @@
               "x": 0,
               "y": 0
             },
-            "pos_rel": {
-              "x": -1.7777777910232544,
-              "y": -1
-            },
             "scale": {
-              "x": 1,
-              "y": 1
-            },
-            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
               "x": 2560,
               "y": 1440
-            },
-            "bounds_rel": {
-              "x": 3.555555582046509,
-              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -2164,18 +2256,30 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
-          },
-          {
-            "name": "Alertes YouTube",
-            "source_uuid": "67e74cf2-1eb1-4dbc-815c-b29eaeb23c3f",
-            "visible": true,
-            "locked": true,
-            "rot": 0,
+            "private_settings": {},
             "scale_ref": {
               "x": 2560,
               "y": 1440
             },
+            "pos_rel": {
+              "x": -1.7777777777777777,
+              "y": -1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 3.5555555555555554,
+              "y": 2
+            }
+          },
+          {
+            "name": "Alertes YouTube",
+            "source_uuid": "7ad61c01-5806-496e-a39c-734f666d747d",
+            "visible": true,
+            "locked": true,
+            "rot": 0,
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -2190,25 +2294,13 @@
               "x": 0,
               "y": 0
             },
-            "pos_rel": {
-              "x": -1.7777777910232544,
-              "y": -1
-            },
             "scale": {
-              "x": 1,
-              "y": 1
-            },
-            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
               "x": 2560,
               "y": 1440
-            },
-            "bounds_rel": {
-              "x": 3.555555582046509,
-              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -2219,7 +2311,23 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
+            "private_settings": {},
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
+            "pos_rel": {
+              "x": -1.7777777777777777,
+              "y": -1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 3.5555555555555554,
+              "y": 2
+            }
           }
         ],
         "canvas": [
@@ -2246,6 +2354,8 @@
           {
             "control": true,
             "alt": true,
+            "shift": false,
+            "command": false,
             "key": "OBS_KEY_F2"
           }
         ],
@@ -2267,13 +2377,13 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
-      "canvas_uuid": "6c69626f-6273-4c00-9d88-c5136d61696e",
-      "private_settings": {}
+      "private_settings": {},
+      "canvas_uuid": "6c69626f-6273-4c00-9d88-c5136d61696e"
     },
     {
       "prev_ver": 537001986,
       "name": "Jeu sans caméra",
-      "uuid": "24749fe6-7354-4a64-bdc3-4e840cc66480",
+      "uuid": "9874da1e-5424-489f-accf-e4efbd2c2b9e",
       "id": "scene",
       "versioned_id": "scene",
       "settings": {
@@ -2282,14 +2392,10 @@
         "items": [
           {
             "name": "Capture du jeu",
-            "source_uuid": "3fd5f407-c4c1-4651-971f-4700bf14cc26",
+            "source_uuid": "efd29d4f-42f3-45cf-a82e-ed4abef06522",
             "visible": true,
             "locked": true,
             "rot": 0,
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
             "align": 5,
             "bounds_type": 2,
             "bounds_align": 0,
@@ -2304,25 +2410,13 @@
               "x": 0,
               "y": 0
             },
-            "pos_rel": {
-              "x": -1.7777777910232544,
-              "y": -1
-            },
             "scale": {
-              "x": 1,
-              "y": 1
-            },
-            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
               "x": 2560,
               "y": 1440
-            },
-            "bounds_rel": {
-              "x": 3.555555582046509,
-              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -2333,18 +2427,30 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
-          },
-          {
-            "name": "Micro",
-            "source_uuid": "c3ddaaf2-f570-4fa8-9f40-d393216b1c61",
-            "visible": true,
-            "locked": true,
-            "rot": 0,
+            "private_settings": {},
             "scale_ref": {
               "x": 2560,
               "y": 1440
             },
+            "pos_rel": {
+              "x": -1.7777777777777777,
+              "y": -1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 3.5555555555555554,
+              "y": 2
+            }
+          },
+          {
+            "name": "Micro",
+            "source_uuid": "33fd8529-905c-4fe1-8631-e907a1b45978",
+            "visible": true,
+            "locked": true,
+            "rot": 0,
             "align": 5,
             "bounds_type": 0,
             "bounds_align": 0,
@@ -2359,23 +2465,11 @@
               "x": 0,
               "y": 0
             },
-            "pos_rel": {
-              "x": -1.7777777910232544,
-              "y": -1
-            },
             "scale": {
               "x": 1,
               "y": 1
             },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
             "bounds": {
-              "x": 0,
-              "y": 0
-            },
-            "bounds_rel": {
               "x": 0,
               "y": 0
             },
@@ -2388,18 +2482,30 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
-          },
-          {
-            "name": "Discord",
-            "source_uuid": "aabca855-59be-4c8b-947d-5f4dbf23ff46",
-            "visible": true,
-            "locked": true,
-            "rot": 0,
+            "private_settings": {},
             "scale_ref": {
               "x": 2560,
               "y": 1440
             },
+            "pos_rel": {
+              "x": -1.7777777777777777,
+              "y": -1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 0,
+              "y": 0
+            }
+          },
+          {
+            "name": "Discord",
+            "source_uuid": "ec3d88e9-a8cb-425f-b92d-59b7c89c587c",
+            "visible": true,
+            "locked": true,
+            "rot": 0,
             "align": 5,
             "bounds_type": 0,
             "bounds_align": 0,
@@ -2414,23 +2520,11 @@
               "x": 0,
               "y": 0
             },
-            "pos_rel": {
-              "x": -1.7777777910232544,
-              "y": -1
-            },
             "scale": {
               "x": 1,
               "y": 1
             },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
             "bounds": {
-              "x": 0,
-              "y": 0
-            },
-            "bounds_rel": {
               "x": 0,
               "y": 0
             },
@@ -2443,18 +2537,30 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
-          },
-          {
-            "name": "Alertes",
-            "source_uuid": "5481791c-982e-4709-b379-67069f672df1",
-            "visible": true,
-            "locked": true,
-            "rot": 0,
+            "private_settings": {},
             "scale_ref": {
               "x": 2560,
               "y": 1440
             },
+            "pos_rel": {
+              "x": -1.7777777777777777,
+              "y": -1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 0,
+              "y": 0
+            }
+          },
+          {
+            "name": "Alertes",
+            "source_uuid": "962442a3-983d-4c81-a746-15f4dc1e4d8f",
+            "visible": true,
+            "locked": true,
+            "rot": 0,
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -2469,25 +2575,13 @@
               "x": 0,
               "y": 0
             },
-            "pos_rel": {
-              "x": -1.7777777910232544,
-              "y": -1
-            },
             "scale": {
-              "x": 1,
-              "y": 1
-            },
-            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
               "x": 2560,
               "y": 1440
-            },
-            "bounds_rel": {
-              "x": 3.555555582046509,
-              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -2498,18 +2592,30 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
-          },
-          {
-            "name": "Alertes YouTube",
-            "source_uuid": "67e74cf2-1eb1-4dbc-815c-b29eaeb23c3f",
-            "visible": true,
-            "locked": true,
-            "rot": 0,
+            "private_settings": {},
             "scale_ref": {
               "x": 2560,
               "y": 1440
             },
+            "pos_rel": {
+              "x": -1.7777777777777777,
+              "y": -1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 3.5555555555555554,
+              "y": 2
+            }
+          },
+          {
+            "name": "Alertes YouTube",
+            "source_uuid": "7ad61c01-5806-496e-a39c-734f666d747d",
+            "visible": true,
+            "locked": true,
+            "rot": 0,
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -2524,25 +2630,13 @@
               "x": 0,
               "y": 0
             },
-            "pos_rel": {
-              "x": -1.7777777910232544,
-              "y": -1
-            },
             "scale": {
-              "x": 1,
-              "y": 1
-            },
-            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
               "x": 2560,
               "y": 1440
-            },
-            "bounds_rel": {
-              "x": 3.555555582046509,
-              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -2553,7 +2647,23 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
+            "private_settings": {},
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
+            "pos_rel": {
+              "x": -1.7777777777777777,
+              "y": -1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 3.5555555555555554,
+              "y": 2
+            }
           }
         ],
         "canvas": [
@@ -2580,6 +2690,8 @@
           {
             "control": true,
             "alt": true,
+            "shift": false,
+            "command": false,
             "key": "OBS_KEY_F3"
           }
         ],
@@ -2597,13 +2709,13 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
-      "canvas_uuid": "6c69626f-6273-4c00-9d88-c5136d61696e",
-      "private_settings": {}
+      "private_settings": {},
+      "canvas_uuid": "6c69626f-6273-4c00-9d88-c5136d61696e"
     },
     {
       "prev_ver": 537001986,
       "name": "Discussion",
-      "uuid": "1784e718-c35c-4e03-8d0d-3d7063ddae14",
+      "uuid": "93353fae-40f0-4715-b926-1a76673dd11d",
       "id": "scene",
       "versioned_id": "scene",
       "settings": {
@@ -2612,14 +2724,10 @@
         "items": [
           {
             "name": "Habillage — Discussion",
-            "source_uuid": "2657fa6b-6fc2-4277-9bb7-003cb5518cf7",
+            "source_uuid": "699b320c-5be8-4eea-9df0-9f21fc6ecdb0",
             "visible": true,
             "locked": true,
             "rot": 0,
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
             "align": 5,
             "bounds_type": 0,
             "bounds_align": 0,
@@ -2634,23 +2742,11 @@
               "x": 0,
               "y": 0
             },
-            "pos_rel": {
-              "x": -1.7777777910232544,
-              "y": -1
-            },
             "scale": {
               "x": 1,
               "y": 1
             },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
             "bounds": {
-              "x": 0,
-              "y": 0
-            },
-            "bounds_rel": {
               "x": 0,
               "y": 0
             },
@@ -2663,18 +2759,30 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
-          },
-          {
-            "name": "Caméra",
-            "source_uuid": "7057d42f-b80f-42b0-a743-5a164273d4f5",
-            "visible": true,
-            "locked": true,
-            "rot": 0,
+            "private_settings": {},
             "scale_ref": {
               "x": 2560,
               "y": 1440
             },
+            "pos_rel": {
+              "x": -1.7777777777777777,
+              "y": -1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 0,
+              "y": 0
+            }
+          },
+          {
+            "name": "Caméra",
+            "source_uuid": "9a9ac0ee-cc5c-419d-9d0d-b39d6e310680",
+            "visible": true,
+            "locked": true,
+            "rot": 0,
             "align": 5,
             "bounds_type": 3,
             "bounds_align": 0,
@@ -2686,28 +2794,16 @@
             "id": 2,
             "group_item_backup": false,
             "pos": {
-              "x": 85.5,
-              "y": 202.5
-            },
-            "pos_rel": {
-              "x": -1.6592592000961304,
-              "y": -0.7185184955596924
+              "x": 85.33333333333333,
+              "y": 202.66666666666666
             },
             "scale": {
               "x": 1,
               "y": 1
             },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
             "bounds": {
-              "x": 1706.5,
+              "x": 1706.6666666666665,
               "y": 960
-            },
-            "bounds_rel": {
-              "x": 2.370370388031006,
-              "y": 1.3333333730697632
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -2718,18 +2814,30 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
-          },
-          {
-            "name": "Chat",
-            "source_uuid": "2aa4906f-6ded-4e16-8544-64f9d512c077",
-            "visible": true,
-            "locked": true,
-            "rot": 0,
+            "private_settings": {},
             "scale_ref": {
               "x": 2560,
               "y": 1440
             },
+            "pos_rel": {
+              "x": -1.6592592592592594,
+              "y": -0.7185185185185186
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 2.3703703703703702,
+              "y": 1.3333333333333333
+            }
+          },
+          {
+            "name": "Chat — Discussion",
+            "source_uuid": "f96dd35b-1a60-427b-94d3-cf7049df4e45",
+            "visible": true,
+            "locked": true,
+            "rot": 0,
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -2741,28 +2849,16 @@
             "id": 3,
             "group_item_backup": false,
             "pos": {
-              "x": 1834.5,
-              "y": 202.5
-            },
-            "pos_rel": {
-              "x": 0.770370364189148,
-              "y": -0.7185184955596924
+              "x": 1834.6666666666665,
+              "y": 202.66666666666666
             },
             "scale": {
-              "x": 1,
-              "y": 1
-            },
-            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
               "x": 640,
               "y": 960
-            },
-            "bounds_rel": {
-              "x": 0.8888888955116272,
-              "y": 1.3333333730697632
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -2773,18 +2869,30 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
-          },
-          {
-            "name": "Micro",
-            "source_uuid": "c3ddaaf2-f570-4fa8-9f40-d393216b1c61",
-            "visible": true,
-            "locked": true,
-            "rot": 0,
+            "private_settings": {},
             "scale_ref": {
               "x": 2560,
               "y": 1440
             },
+            "pos_rel": {
+              "x": 0.7703703703703701,
+              "y": -0.7185185185185186
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 0.8888888888888888,
+              "y": 1.3333333333333333
+            }
+          },
+          {
+            "name": "Micro",
+            "source_uuid": "33fd8529-905c-4fe1-8631-e907a1b45978",
+            "visible": true,
+            "locked": true,
+            "rot": 0,
             "align": 5,
             "bounds_type": 0,
             "bounds_align": 0,
@@ -2799,23 +2907,11 @@
               "x": 0,
               "y": 0
             },
-            "pos_rel": {
-              "x": -1.7777777910232544,
-              "y": -1
-            },
             "scale": {
               "x": 1,
               "y": 1
             },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
             "bounds": {
-              "x": 0,
-              "y": 0
-            },
-            "bounds_rel": {
               "x": 0,
               "y": 0
             },
@@ -2828,18 +2924,30 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
-          },
-          {
-            "name": "Discord",
-            "source_uuid": "aabca855-59be-4c8b-947d-5f4dbf23ff46",
-            "visible": true,
-            "locked": true,
-            "rot": 0,
+            "private_settings": {},
             "scale_ref": {
               "x": 2560,
               "y": 1440
             },
+            "pos_rel": {
+              "x": -1.7777777777777777,
+              "y": -1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 0,
+              "y": 0
+            }
+          },
+          {
+            "name": "Discord",
+            "source_uuid": "ec3d88e9-a8cb-425f-b92d-59b7c89c587c",
+            "visible": true,
+            "locked": true,
+            "rot": 0,
             "align": 5,
             "bounds_type": 0,
             "bounds_align": 0,
@@ -2854,23 +2962,11 @@
               "x": 0,
               "y": 0
             },
-            "pos_rel": {
-              "x": -1.7777777910232544,
-              "y": -1
-            },
             "scale": {
               "x": 1,
               "y": 1
             },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
             "bounds": {
-              "x": 0,
-              "y": 0
-            },
-            "bounds_rel": {
               "x": 0,
               "y": 0
             },
@@ -2883,18 +2979,30 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
-          },
-          {
-            "name": "Alertes",
-            "source_uuid": "5481791c-982e-4709-b379-67069f672df1",
-            "visible": true,
-            "locked": true,
-            "rot": 0,
+            "private_settings": {},
             "scale_ref": {
               "x": 2560,
               "y": 1440
             },
+            "pos_rel": {
+              "x": -1.7777777777777777,
+              "y": -1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 0,
+              "y": 0
+            }
+          },
+          {
+            "name": "Alertes",
+            "source_uuid": "962442a3-983d-4c81-a746-15f4dc1e4d8f",
+            "visible": true,
+            "locked": true,
+            "rot": 0,
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -2909,25 +3017,13 @@
               "x": 0,
               "y": 0
             },
-            "pos_rel": {
-              "x": -1.7777777910232544,
-              "y": -1
-            },
             "scale": {
-              "x": 1,
-              "y": 1
-            },
-            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
               "x": 2560,
               "y": 1440
-            },
-            "bounds_rel": {
-              "x": 3.555555582046509,
-              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -2938,18 +3034,30 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
-          },
-          {
-            "name": "Alertes YouTube",
-            "source_uuid": "67e74cf2-1eb1-4dbc-815c-b29eaeb23c3f",
-            "visible": true,
-            "locked": true,
-            "rot": 0,
+            "private_settings": {},
             "scale_ref": {
               "x": 2560,
               "y": 1440
             },
+            "pos_rel": {
+              "x": -1.7777777777777777,
+              "y": -1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 3.5555555555555554,
+              "y": 2
+            }
+          },
+          {
+            "name": "Alertes YouTube",
+            "source_uuid": "7ad61c01-5806-496e-a39c-734f666d747d",
+            "visible": true,
+            "locked": true,
+            "rot": 0,
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -2964,25 +3072,13 @@
               "x": 0,
               "y": 0
             },
-            "pos_rel": {
-              "x": -1.7777777910232544,
-              "y": -1
-            },
             "scale": {
-              "x": 1,
-              "y": 1
-            },
-            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
               "x": 2560,
               "y": 1440
-            },
-            "bounds_rel": {
-              "x": 3.555555582046509,
-              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -2993,7 +3089,23 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
+            "private_settings": {},
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
+            "pos_rel": {
+              "x": -1.7777777777777777,
+              "y": -1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 3.5555555555555554,
+              "y": 2
+            }
           }
         ],
         "canvas": [
@@ -3020,6 +3132,8 @@
           {
             "control": true,
             "alt": true,
+            "shift": false,
+            "command": false,
             "key": "OBS_KEY_F4"
           }
         ],
@@ -3041,13 +3155,13 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
-      "canvas_uuid": "6c69626f-6273-4c00-9d88-c5136d61696e",
-      "private_settings": {}
+      "private_settings": {},
+      "canvas_uuid": "6c69626f-6273-4c00-9d88-c5136d61696e"
     },
     {
       "prev_ver": 537001986,
       "name": "Pause",
-      "uuid": "9153febb-5492-4469-932b-fa3a357bea47",
+      "uuid": "becc193e-89f9-4256-965c-9a254f6370f8",
       "id": "scene",
       "versioned_id": "scene",
       "settings": {
@@ -3056,14 +3170,10 @@
         "items": [
           {
             "name": "Habillage — Pause",
-            "source_uuid": "0686780e-0605-4043-91b5-770dcae532d7",
+            "source_uuid": "9de3b4a5-d93a-42f5-9216-6b8d5d4cfe9d",
             "visible": true,
             "locked": true,
             "rot": 0,
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
             "align": 5,
             "bounds_type": 0,
             "bounds_align": 0,
@@ -3078,23 +3188,11 @@
               "x": 0,
               "y": 0
             },
-            "pos_rel": {
-              "x": -1.7777777910232544,
-              "y": -1
-            },
             "scale": {
               "x": 1,
               "y": 1
             },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
             "bounds": {
-              "x": 0,
-              "y": 0
-            },
-            "bounds_rel": {
               "x": 0,
               "y": 0
             },
@@ -3107,18 +3205,30 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
-          },
-          {
-            "name": "Chat",
-            "source_uuid": "2aa4906f-6ded-4e16-8544-64f9d512c077",
-            "visible": true,
-            "locked": true,
-            "rot": 0,
+            "private_settings": {},
             "scale_ref": {
               "x": 2560,
               "y": 1440
             },
+            "pos_rel": {
+              "x": -1.7777777777777777,
+              "y": -1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 0,
+              "y": 0
+            }
+          },
+          {
+            "name": "Chat",
+            "source_uuid": "b08353ab-a87d-4c4f-937b-a7cb11a6ff35",
+            "visible": true,
+            "locked": true,
+            "rot": 0,
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -3133,25 +3243,13 @@
               "x": 1888,
               "y": 160
             },
-            "pos_rel": {
-              "x": 0.8444444537162781,
-              "y": -0.7777777910232544
-            },
             "scale": {
               "x": 1,
               "y": 1
             },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
             "bounds": {
-              "x": 586.5,
+              "x": 586.6666666666666,
               "y": 1120
-            },
-            "bounds_rel": {
-              "x": 0.8148148059844971,
-              "y": 1.5555555820465088
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -3162,18 +3260,30 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
-          },
-          {
-            "name": "Musique — latshow pause",
-            "source_uuid": "6043696b-9b4c-4b3d-8225-ed92d5bca191",
-            "visible": true,
-            "locked": true,
-            "rot": 0,
+            "private_settings": {},
             "scale_ref": {
               "x": 2560,
               "y": 1440
             },
+            "pos_rel": {
+              "x": 0.8444444444444444,
+              "y": -0.7777777777777778
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 0.8148148148148148,
+              "y": 1.5555555555555556
+            }
+          },
+          {
+            "name": "Musique — latshow pause",
+            "source_uuid": "f44897f7-a8e1-4f5d-80f3-cda00c66a864",
+            "visible": true,
+            "locked": true,
+            "rot": 0,
             "align": 5,
             "bounds_type": 0,
             "bounds_align": 0,
@@ -3188,23 +3298,11 @@
               "x": 0,
               "y": 0
             },
-            "pos_rel": {
-              "x": -1.7777777910232544,
-              "y": -1
-            },
             "scale": {
               "x": 1,
               "y": 1
             },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
             "bounds": {
-              "x": 0,
-              "y": 0
-            },
-            "bounds_rel": {
               "x": 0,
               "y": 0
             },
@@ -3217,18 +3315,30 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
-          },
-          {
-            "name": "Alertes",
-            "source_uuid": "5481791c-982e-4709-b379-67069f672df1",
-            "visible": true,
-            "locked": true,
-            "rot": 0,
+            "private_settings": {},
             "scale_ref": {
               "x": 2560,
               "y": 1440
             },
+            "pos_rel": {
+              "x": -1.7777777777777777,
+              "y": -1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 0,
+              "y": 0
+            }
+          },
+          {
+            "name": "Alertes",
+            "source_uuid": "962442a3-983d-4c81-a746-15f4dc1e4d8f",
+            "visible": true,
+            "locked": true,
+            "rot": 0,
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -3243,25 +3353,13 @@
               "x": 0,
               "y": 0
             },
-            "pos_rel": {
-              "x": -1.7777777910232544,
-              "y": -1
-            },
             "scale": {
-              "x": 1,
-              "y": 1
-            },
-            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
               "x": 2560,
               "y": 1440
-            },
-            "bounds_rel": {
-              "x": 3.555555582046509,
-              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -3272,18 +3370,30 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
-          },
-          {
-            "name": "Alertes YouTube",
-            "source_uuid": "67e74cf2-1eb1-4dbc-815c-b29eaeb23c3f",
-            "visible": true,
-            "locked": true,
-            "rot": 0,
+            "private_settings": {},
             "scale_ref": {
               "x": 2560,
               "y": 1440
             },
+            "pos_rel": {
+              "x": -1.7777777777777777,
+              "y": -1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 3.5555555555555554,
+              "y": 2
+            }
+          },
+          {
+            "name": "Alertes YouTube",
+            "source_uuid": "7ad61c01-5806-496e-a39c-734f666d747d",
+            "visible": true,
+            "locked": true,
+            "rot": 0,
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -3298,25 +3408,13 @@
               "x": 0,
               "y": 0
             },
-            "pos_rel": {
-              "x": -1.7777777910232544,
-              "y": -1
-            },
             "scale": {
-              "x": 1,
-              "y": 1
-            },
-            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
               "x": 2560,
               "y": 1440
-            },
-            "bounds_rel": {
-              "x": 3.555555582046509,
-              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -3327,7 +3425,23 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
+            "private_settings": {},
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
+            "pos_rel": {
+              "x": -1.7777777777777777,
+              "y": -1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 3.5555555555555554,
+              "y": 2
+            }
           }
         ],
         "canvas": [
@@ -3354,6 +3468,8 @@
           {
             "control": true,
             "alt": true,
+            "shift": false,
+            "command": false,
             "key": "OBS_KEY_F5"
           }
         ],
@@ -3371,13 +3487,13 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
-      "canvas_uuid": "6c69626f-6273-4c00-9d88-c5136d61696e",
-      "private_settings": {}
+      "private_settings": {},
+      "canvas_uuid": "6c69626f-6273-4c00-9d88-c5136d61696e"
     },
     {
       "prev_ver": 537001986,
       "name": "Pause bébé",
-      "uuid": "9a77529a-04d3-4476-895c-96b0adf9afcb",
+      "uuid": "a3173fbc-867e-4767-bdb5-f69b2c97e2d2",
       "id": "scene",
       "versioned_id": "scene",
       "settings": {
@@ -3386,14 +3502,10 @@
         "items": [
           {
             "name": "Habillage — Pause bébé",
-            "source_uuid": "daddf7d8-1d6b-467e-a165-bc9ad178cba4",
+            "source_uuid": "7e234bd8-1554-447b-916f-164bcfd14aa2",
             "visible": true,
             "locked": true,
             "rot": 0,
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
             "align": 5,
             "bounds_type": 0,
             "bounds_align": 0,
@@ -3408,23 +3520,11 @@
               "x": 0,
               "y": 0
             },
-            "pos_rel": {
-              "x": -1.7777777910232544,
-              "y": -1
-            },
             "scale": {
               "x": 1,
               "y": 1
             },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
             "bounds": {
-              "x": 0,
-              "y": 0
-            },
-            "bounds_rel": {
               "x": 0,
               "y": 0
             },
@@ -3437,18 +3537,30 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
-          },
-          {
-            "name": "Chat",
-            "source_uuid": "2aa4906f-6ded-4e16-8544-64f9d512c077",
-            "visible": true,
-            "locked": true,
-            "rot": 0,
+            "private_settings": {},
             "scale_ref": {
               "x": 2560,
               "y": 1440
             },
+            "pos_rel": {
+              "x": -1.7777777777777777,
+              "y": -1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 0,
+              "y": 0
+            }
+          },
+          {
+            "name": "Chat",
+            "source_uuid": "b08353ab-a87d-4c4f-937b-a7cb11a6ff35",
+            "visible": true,
+            "locked": true,
+            "rot": 0,
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -3463,25 +3575,13 @@
               "x": 1888,
               "y": 160
             },
-            "pos_rel": {
-              "x": 0.8444444537162781,
-              "y": -0.7777777910232544
-            },
             "scale": {
               "x": 1,
               "y": 1
             },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
             "bounds": {
-              "x": 586.5,
+              "x": 586.6666666666666,
               "y": 1120
-            },
-            "bounds_rel": {
-              "x": 0.8148148059844971,
-              "y": 1.5555555820465088
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -3492,18 +3592,30 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
-          },
-          {
-            "name": "Musique — latshow bebe",
-            "source_uuid": "1f5eeb23-f2c2-4821-9f53-f58513ef6ec4",
-            "visible": true,
-            "locked": true,
-            "rot": 0,
+            "private_settings": {},
             "scale_ref": {
               "x": 2560,
               "y": 1440
             },
+            "pos_rel": {
+              "x": 0.8444444444444444,
+              "y": -0.7777777777777778
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 0.8148148148148148,
+              "y": 1.5555555555555556
+            }
+          },
+          {
+            "name": "Musique — latshow bebe",
+            "source_uuid": "3cc0f7d9-6068-458d-8ce8-c611b27ae86d",
+            "visible": true,
+            "locked": true,
+            "rot": 0,
             "align": 5,
             "bounds_type": 0,
             "bounds_align": 0,
@@ -3518,23 +3630,11 @@
               "x": 0,
               "y": 0
             },
-            "pos_rel": {
-              "x": -1.7777777910232544,
-              "y": -1
-            },
             "scale": {
               "x": 1,
               "y": 1
             },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
             "bounds": {
-              "x": 0,
-              "y": 0
-            },
-            "bounds_rel": {
               "x": 0,
               "y": 0
             },
@@ -3547,18 +3647,30 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
-          },
-          {
-            "name": "Alertes",
-            "source_uuid": "5481791c-982e-4709-b379-67069f672df1",
-            "visible": true,
-            "locked": true,
-            "rot": 0,
+            "private_settings": {},
             "scale_ref": {
               "x": 2560,
               "y": 1440
             },
+            "pos_rel": {
+              "x": -1.7777777777777777,
+              "y": -1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 0,
+              "y": 0
+            }
+          },
+          {
+            "name": "Alertes",
+            "source_uuid": "962442a3-983d-4c81-a746-15f4dc1e4d8f",
+            "visible": true,
+            "locked": true,
+            "rot": 0,
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -3573,25 +3685,13 @@
               "x": 0,
               "y": 0
             },
-            "pos_rel": {
-              "x": -1.7777777910232544,
-              "y": -1
-            },
             "scale": {
-              "x": 1,
-              "y": 1
-            },
-            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
               "x": 2560,
               "y": 1440
-            },
-            "bounds_rel": {
-              "x": 3.555555582046509,
-              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -3602,18 +3702,30 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
-          },
-          {
-            "name": "Alertes YouTube",
-            "source_uuid": "67e74cf2-1eb1-4dbc-815c-b29eaeb23c3f",
-            "visible": true,
-            "locked": true,
-            "rot": 0,
+            "private_settings": {},
             "scale_ref": {
               "x": 2560,
               "y": 1440
             },
+            "pos_rel": {
+              "x": -1.7777777777777777,
+              "y": -1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 3.5555555555555554,
+              "y": 2
+            }
+          },
+          {
+            "name": "Alertes YouTube",
+            "source_uuid": "7ad61c01-5806-496e-a39c-734f666d747d",
+            "visible": true,
+            "locked": true,
+            "rot": 0,
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -3628,25 +3740,13 @@
               "x": 0,
               "y": 0
             },
-            "pos_rel": {
-              "x": -1.7777777910232544,
-              "y": -1
-            },
             "scale": {
-              "x": 1,
-              "y": 1
-            },
-            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
               "x": 2560,
               "y": 1440
-            },
-            "bounds_rel": {
-              "x": 3.555555582046509,
-              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -3657,7 +3757,23 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
+            "private_settings": {},
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
+            "pos_rel": {
+              "x": -1.7777777777777777,
+              "y": -1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 3.5555555555555554,
+              "y": 2
+            }
           }
         ],
         "canvas": [
@@ -3684,6 +3800,8 @@
           {
             "control": true,
             "alt": true,
+            "shift": false,
+            "command": false,
             "key": "OBS_KEY_F6"
           }
         ],
@@ -3701,13 +3819,13 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
-      "canvas_uuid": "6c69626f-6273-4c00-9d88-c5136d61696e",
-      "private_settings": {}
+      "private_settings": {},
+      "canvas_uuid": "6c69626f-6273-4c00-9d88-c5136d61696e"
     },
     {
       "prev_ver": 537001986,
       "name": "Souci technique",
-      "uuid": "1f3c52b5-d986-4c8f-b6c5-bbf51f22e06e",
+      "uuid": "577b9774-e7d2-4cd7-99f4-b61372d0442a",
       "id": "scene",
       "versioned_id": "scene",
       "settings": {
@@ -3716,14 +3834,10 @@
         "items": [
           {
             "name": "Habillage — Souci technique",
-            "source_uuid": "9f6cc158-6c79-45fb-87e8-6a4618c9f71c",
+            "source_uuid": "f591a25d-ed07-49cd-9030-7bcb52914a33",
             "visible": true,
             "locked": true,
             "rot": 0,
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
             "align": 5,
             "bounds_type": 0,
             "bounds_align": 0,
@@ -3738,23 +3852,11 @@
               "x": 0,
               "y": 0
             },
-            "pos_rel": {
-              "x": -1.7777777910232544,
-              "y": -1
-            },
             "scale": {
               "x": 1,
               "y": 1
             },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
             "bounds": {
-              "x": 0,
-              "y": 0
-            },
-            "bounds_rel": {
               "x": 0,
               "y": 0
             },
@@ -3767,18 +3869,30 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
-          },
-          {
-            "name": "Musique — latshow pause",
-            "source_uuid": "6043696b-9b4c-4b3d-8225-ed92d5bca191",
-            "visible": true,
-            "locked": true,
-            "rot": 0,
+            "private_settings": {},
             "scale_ref": {
               "x": 2560,
               "y": 1440
             },
+            "pos_rel": {
+              "x": -1.7777777777777777,
+              "y": -1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 0,
+              "y": 0
+            }
+          },
+          {
+            "name": "Musique — latshow pause",
+            "source_uuid": "f44897f7-a8e1-4f5d-80f3-cda00c66a864",
+            "visible": true,
+            "locked": true,
+            "rot": 0,
             "align": 5,
             "bounds_type": 0,
             "bounds_align": 0,
@@ -3793,23 +3907,11 @@
               "x": 0,
               "y": 0
             },
-            "pos_rel": {
-              "x": -1.7777777910232544,
-              "y": -1
-            },
             "scale": {
               "x": 1,
               "y": 1
             },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
             "bounds": {
-              "x": 0,
-              "y": 0
-            },
-            "bounds_rel": {
               "x": 0,
               "y": 0
             },
@@ -3822,18 +3924,30 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
-          },
-          {
-            "name": "Alertes",
-            "source_uuid": "5481791c-982e-4709-b379-67069f672df1",
-            "visible": true,
-            "locked": true,
-            "rot": 0,
+            "private_settings": {},
             "scale_ref": {
               "x": 2560,
               "y": 1440
             },
+            "pos_rel": {
+              "x": -1.7777777777777777,
+              "y": -1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 0,
+              "y": 0
+            }
+          },
+          {
+            "name": "Alertes",
+            "source_uuid": "962442a3-983d-4c81-a746-15f4dc1e4d8f",
+            "visible": true,
+            "locked": true,
+            "rot": 0,
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -3848,25 +3962,13 @@
               "x": 0,
               "y": 0
             },
-            "pos_rel": {
-              "x": -1.7777777910232544,
-              "y": -1
-            },
             "scale": {
-              "x": 1,
-              "y": 1
-            },
-            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
               "x": 2560,
               "y": 1440
-            },
-            "bounds_rel": {
-              "x": 3.555555582046509,
-              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -3877,18 +3979,30 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
-          },
-          {
-            "name": "Alertes YouTube",
-            "source_uuid": "67e74cf2-1eb1-4dbc-815c-b29eaeb23c3f",
-            "visible": true,
-            "locked": true,
-            "rot": 0,
+            "private_settings": {},
             "scale_ref": {
               "x": 2560,
               "y": 1440
             },
+            "pos_rel": {
+              "x": -1.7777777777777777,
+              "y": -1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 3.5555555555555554,
+              "y": 2
+            }
+          },
+          {
+            "name": "Alertes YouTube",
+            "source_uuid": "7ad61c01-5806-496e-a39c-734f666d747d",
+            "visible": true,
+            "locked": true,
+            "rot": 0,
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -3903,25 +4017,13 @@
               "x": 0,
               "y": 0
             },
-            "pos_rel": {
-              "x": -1.7777777910232544,
-              "y": -1
-            },
             "scale": {
-              "x": 1,
-              "y": 1
-            },
-            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
               "x": 2560,
               "y": 1440
-            },
-            "bounds_rel": {
-              "x": 3.555555582046509,
-              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -3932,7 +4034,23 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
+            "private_settings": {},
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
+            "pos_rel": {
+              "x": -1.7777777777777777,
+              "y": -1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 3.5555555555555554,
+              "y": 2
+            }
           }
         ],
         "canvas": [
@@ -3959,6 +4077,8 @@
           {
             "control": true,
             "alt": true,
+            "shift": false,
+            "command": false,
             "key": "OBS_KEY_F7"
           }
         ],
@@ -3974,13 +4094,13 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
-      "canvas_uuid": "6c69626f-6273-4c00-9d88-c5136d61696e",
-      "private_settings": {}
+      "private_settings": {},
+      "canvas_uuid": "6c69626f-6273-4c00-9d88-c5136d61696e"
     },
     {
       "prev_ver": 537001986,
       "name": "Fin",
-      "uuid": "cfb87d00-72dd-4e12-9141-da15d136ef26",
+      "uuid": "e64935d4-8c52-49fc-9abc-e87a84c06325",
       "id": "scene",
       "versioned_id": "scene",
       "settings": {
@@ -3989,14 +4109,10 @@
         "items": [
           {
             "name": "Habillage — Fin",
-            "source_uuid": "2938ea87-1e4e-45ad-a9d0-63ac642d80a6",
+            "source_uuid": "4ed67a2d-3790-48cb-af22-e723d9e2b433",
             "visible": true,
             "locked": true,
             "rot": 0,
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
             "align": 5,
             "bounds_type": 0,
             "bounds_align": 0,
@@ -4011,23 +4127,11 @@
               "x": 0,
               "y": 0
             },
-            "pos_rel": {
-              "x": -1.7777777910232544,
-              "y": -1
-            },
             "scale": {
               "x": 1,
               "y": 1
             },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
             "bounds": {
-              "x": 0,
-              "y": 0
-            },
-            "bounds_rel": {
               "x": 0,
               "y": 0
             },
@@ -4040,18 +4144,30 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
-          },
-          {
-            "name": "Caméra",
-            "source_uuid": "7057d42f-b80f-42b0-a743-5a164273d4f5",
-            "visible": true,
-            "locked": true,
-            "rot": 0,
+            "private_settings": {},
             "scale_ref": {
               "x": 2560,
               "y": 1440
             },
+            "pos_rel": {
+              "x": -1.7777777777777777,
+              "y": -1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 0,
+              "y": 0
+            }
+          },
+          {
+            "name": "Caméra",
+            "source_uuid": "9a9ac0ee-cc5c-419d-9d0d-b39d6e310680",
+            "visible": true,
+            "locked": true,
+            "rot": 0,
             "align": 5,
             "bounds_type": 3,
             "bounds_align": 0,
@@ -4063,28 +4179,16 @@
             "id": 2,
             "group_item_backup": false,
             "pos": {
-              "x": 1653.5,
+              "x": 1653.3333333333333,
               "y": 400
             },
-            "pos_rel": {
-              "x": 0.5185185074806213,
-              "y": -0.4444444477558136
-            },
             "scale": {
-              "x": 1,
-              "y": 1
-            },
-            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
               "x": 768,
               "y": 432
-            },
-            "bounds_rel": {
-              "x": 1.0666667222976685,
-              "y": 0.6000000238418579
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -4095,18 +4199,30 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
-          },
-          {
-            "name": "Micro",
-            "source_uuid": "c3ddaaf2-f570-4fa8-9f40-d393216b1c61",
-            "visible": true,
-            "locked": true,
-            "rot": 0,
+            "private_settings": {},
             "scale_ref": {
               "x": 2560,
               "y": 1440
             },
+            "pos_rel": {
+              "x": 0.5185185185185184,
+              "y": -0.4444444444444444
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 1.0666666666666667,
+              "y": 0.6
+            }
+          },
+          {
+            "name": "Micro",
+            "source_uuid": "33fd8529-905c-4fe1-8631-e907a1b45978",
+            "visible": true,
+            "locked": true,
+            "rot": 0,
             "align": 5,
             "bounds_type": 0,
             "bounds_align": 0,
@@ -4121,23 +4237,11 @@
               "x": 0,
               "y": 0
             },
-            "pos_rel": {
-              "x": -1.7777777910232544,
-              "y": -1
-            },
             "scale": {
               "x": 1,
               "y": 1
             },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
             "bounds": {
-              "x": 0,
-              "y": 0
-            },
-            "bounds_rel": {
               "x": 0,
               "y": 0
             },
@@ -4150,18 +4254,30 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
-          },
-          {
-            "name": "Musique — latshow fin",
-            "source_uuid": "4ef26a1f-a0f2-4b3a-b504-f5dfae3a6dbe",
-            "visible": true,
-            "locked": true,
-            "rot": 0,
+            "private_settings": {},
             "scale_ref": {
               "x": 2560,
               "y": 1440
             },
+            "pos_rel": {
+              "x": -1.7777777777777777,
+              "y": -1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 0,
+              "y": 0
+            }
+          },
+          {
+            "name": "Musique — latshow fin",
+            "source_uuid": "52daea73-34c8-437b-9aad-fd68f3223018",
+            "visible": true,
+            "locked": true,
+            "rot": 0,
             "align": 5,
             "bounds_type": 0,
             "bounds_align": 0,
@@ -4176,23 +4292,11 @@
               "x": 0,
               "y": 0
             },
-            "pos_rel": {
-              "x": -1.7777777910232544,
-              "y": -1
-            },
             "scale": {
               "x": 1,
               "y": 1
             },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
             "bounds": {
-              "x": 0,
-              "y": 0
-            },
-            "bounds_rel": {
               "x": 0,
               "y": 0
             },
@@ -4205,18 +4309,30 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
-          },
-          {
-            "name": "Alertes",
-            "source_uuid": "5481791c-982e-4709-b379-67069f672df1",
-            "visible": true,
-            "locked": true,
-            "rot": 0,
+            "private_settings": {},
             "scale_ref": {
               "x": 2560,
               "y": 1440
             },
+            "pos_rel": {
+              "x": -1.7777777777777777,
+              "y": -1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 0,
+              "y": 0
+            }
+          },
+          {
+            "name": "Alertes",
+            "source_uuid": "962442a3-983d-4c81-a746-15f4dc1e4d8f",
+            "visible": true,
+            "locked": true,
+            "rot": 0,
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -4231,25 +4347,13 @@
               "x": 0,
               "y": 0
             },
-            "pos_rel": {
-              "x": -1.7777777910232544,
-              "y": -1
-            },
             "scale": {
-              "x": 1,
-              "y": 1
-            },
-            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
               "x": 2560,
               "y": 1440
-            },
-            "bounds_rel": {
-              "x": 3.555555582046509,
-              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -4260,18 +4364,30 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
-          },
-          {
-            "name": "Alertes YouTube",
-            "source_uuid": "67e74cf2-1eb1-4dbc-815c-b29eaeb23c3f",
-            "visible": true,
-            "locked": true,
-            "rot": 0,
+            "private_settings": {},
             "scale_ref": {
               "x": 2560,
               "y": 1440
             },
+            "pos_rel": {
+              "x": -1.7777777777777777,
+              "y": -1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 3.5555555555555554,
+              "y": 2
+            }
+          },
+          {
+            "name": "Alertes YouTube",
+            "source_uuid": "7ad61c01-5806-496e-a39c-734f666d747d",
+            "visible": true,
+            "locked": true,
+            "rot": 0,
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -4286,25 +4402,13 @@
               "x": 0,
               "y": 0
             },
-            "pos_rel": {
-              "x": -1.7777777910232544,
-              "y": -1
-            },
             "scale": {
-              "x": 1,
-              "y": 1
-            },
-            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
               "x": 2560,
               "y": 1440
-            },
-            "bounds_rel": {
-              "x": 3.555555582046509,
-              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -4315,7 +4419,23 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
+            "private_settings": {},
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
+            "pos_rel": {
+              "x": -1.7777777777777777,
+              "y": -1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 3.5555555555555554,
+              "y": 2
+            }
           }
         ],
         "canvas": [
@@ -4342,6 +4462,8 @@
           {
             "control": true,
             "alt": true,
+            "shift": false,
+            "command": false,
             "key": "OBS_KEY_F8"
           }
         ],
@@ -4361,13 +4483,13 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
-      "canvas_uuid": "6c69626f-6273-4c00-9d88-c5136d61696e",
-      "private_settings": {}
+      "private_settings": {},
+      "canvas_uuid": "6c69626f-6273-4c00-9d88-c5136d61696e"
     },
     {
       "prev_ver": 537001986,
       "name": "TikTok — Démarrage",
-      "uuid": "b9efb098-4fa5-4ae5-bde7-a72ce5641167",
+      "uuid": "7efbb91a-8a86-48fc-9bbb-3f4a189cbc36",
       "id": "scene",
       "versioned_id": "scene",
       "settings": {
@@ -4376,14 +4498,10 @@
         "items": [
           {
             "name": "Habillage TikTok — Démarrage",
-            "source_uuid": "dca9f139-c412-48b8-9ad3-7423c676e1e1",
+            "source_uuid": "98ffa7f0-151f-4288-aa31-bd62fb43b0a4",
             "visible": true,
             "locked": true,
             "rot": 0,
-            "scale_ref": {
-              "x": 1080,
-              "y": 1920
-            },
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -4398,25 +4516,13 @@
               "x": 0,
               "y": 0
             },
-            "pos_rel": {
-              "x": -0.5625,
-              "y": -1
-            },
             "scale": {
-              "x": 1,
-              "y": 1
-            },
-            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
               "x": 1080,
               "y": 1920
-            },
-            "bounds_rel": {
-              "x": 1.125,
-              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -4427,18 +4533,30 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
-          },
-          {
-            "name": "Alertes TikTok",
-            "source_uuid": "8cfbf0b5-c92d-437b-adbe-c946ac9d80c5",
-            "visible": true,
-            "locked": true,
-            "rot": 0,
+            "private_settings": {},
             "scale_ref": {
               "x": 1080,
               "y": 1920
             },
+            "pos_rel": {
+              "x": -0.5625,
+              "y": -1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 1.125,
+              "y": 2
+            }
+          },
+          {
+            "name": "Alertes TikTok",
+            "source_uuid": "328e951d-82ad-4530-a4de-dfdc1ac35b1e",
+            "visible": true,
+            "locked": true,
+            "rot": 0,
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -4453,25 +4571,13 @@
               "x": 0,
               "y": 0
             },
-            "pos_rel": {
-              "x": -0.5625,
-              "y": -1
-            },
             "scale": {
-              "x": 1,
-              "y": 1
-            },
-            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
               "x": 1080,
               "y": 1920
-            },
-            "bounds_rel": {
-              "x": 1.125,
-              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -4482,11 +4588,27 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
+            "private_settings": {},
+            "scale_ref": {
+              "x": 1080,
+              "y": 1920
+            },
+            "pos_rel": {
+              "x": -0.5625,
+              "y": -1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 1.125,
+              "y": 2
+            }
           }
         ],
         "order": 0,
-        "canvas_active": false
+        "canvas_active": true
       },
       "mixers": 0,
       "sync": 0,
@@ -4500,38 +4622,35 @@
       "push-to-talk": false,
       "push-to-talk-delay": 0,
       "hotkeys": {
+        "OBSBasic.SelectScene": [],
         "libobs.show_scene_item.1": [],
         "libobs.hide_scene_item.1": [],
         "libobs.show_scene_item.2": [],
-        "libobs.hide_scene_item.2": [],
-        "OBSBasic.SelectScene": []
+        "libobs.hide_scene_item.2": []
       },
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
-      "canvas_uuid": "6bad365f-88c2-4cb4-9dde-e2f19ee74325",
-      "private_settings": {}
+      "private_settings": {},
+      "filters": [],
+      "canvas_uuid": "6bad365f-88c2-4cb4-9dde-e2f19ee74325"
     },
     {
       "prev_ver": 537001986,
       "name": "TikTok — Jeu",
-      "uuid": "e9841f6b-8538-47fc-b2cd-0f3cd5871e43",
+      "uuid": "5ac79d02-0556-4f2e-8624-f39e04d3579a",
       "id": "scene",
       "versioned_id": "scene",
       "settings": {
-        "id_counter": 6,
+        "id_counter": 4,
         "custom_size": false,
         "items": [
           {
             "name": "Habillage TikTok — Jeu",
-            "source_uuid": "171f8824-cff9-4231-800f-42988d4fd0be",
+            "source_uuid": "f2545eb4-de66-447e-bf4d-bd9cef542872",
             "visible": true,
             "locked": true,
             "rot": 0,
-            "scale_ref": {
-              "x": 1080,
-              "y": 1920
-            },
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -4546,25 +4665,13 @@
               "x": 0,
               "y": 0
             },
-            "pos_rel": {
-              "x": -0.5625,
-              "y": -1
-            },
             "scale": {
-              "x": 1,
-              "y": 1
-            },
-            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
               "x": 1080,
               "y": 1920
-            },
-            "bounds_rel": {
-              "x": 1.125,
-              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -4575,18 +4682,30 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
-          },
-          {
-            "name": "Caméra",
-            "source_uuid": "7057d42f-b80f-42b0-a743-5a164273d4f5",
-            "visible": true,
-            "locked": true,
-            "rot": 0,
+            "private_settings": {},
             "scale_ref": {
               "x": 1080,
               "y": 1920
             },
+            "pos_rel": {
+              "x": -0.5625,
+              "y": -1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 1.125,
+              "y": 2
+            }
+          },
+          {
+            "name": "Caméra",
+            "source_uuid": "9a9ac0ee-cc5c-419d-9d0d-b39d6e310680",
+            "visible": true,
+            "locked": true,
+            "rot": 0,
             "align": 5,
             "bounds_type": 3,
             "bounds_align": 0,
@@ -4601,25 +4720,13 @@
               "x": 0,
               "y": 0
             },
-            "pos_rel": {
-              "x": -0.5625,
-              "y": -1
-            },
             "scale": {
-              "x": 1,
-              "y": 1
-            },
-            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
               "x": 1080,
               "y": 540
-            },
-            "bounds_rel": {
-              "x": 1.125,
-              "y": 0.5625
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -4630,18 +4737,30 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
-          },
-          {
-            "name": "Capture du jeu",
-            "source_uuid": "3fd5f407-c4c1-4651-971f-4700bf14cc26",
-            "visible": true,
-            "locked": true,
-            "rot": 0,
+            "private_settings": {},
             "scale_ref": {
               "x": 1080,
               "y": 1920
             },
+            "pos_rel": {
+              "x": -0.5625,
+              "y": -1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 1.125,
+              "y": 0.5625
+            }
+          },
+          {
+            "name": "Capture du jeu",
+            "source_uuid": "efd29d4f-42f3-45cf-a82e-ed4abef06522",
+            "visible": true,
+            "locked": true,
+            "rot": 0,
             "align": 5,
             "bounds_type": 3,
             "bounds_align": 0,
@@ -4656,25 +4775,13 @@
               "x": 0,
               "y": 600
             },
-            "pos_rel": {
-              "x": -0.5625,
-              "y": -0.375
-            },
             "scale": {
-              "x": 1,
-              "y": 1
-            },
-            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
               "x": 1080,
               "y": 1320
-            },
-            "bounds_rel": {
-              "x": 1.125,
-              "y": 1.375
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -4685,18 +4792,30 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
-          },
-          {
-            "name": "Alertes TikTok",
-            "source_uuid": "8cfbf0b5-c92d-437b-adbe-c946ac9d80c5",
-            "visible": true,
-            "locked": true,
-            "rot": 0,
+            "private_settings": {},
             "scale_ref": {
               "x": 1080,
               "y": 1920
             },
+            "pos_rel": {
+              "x": -0.5625,
+              "y": -0.375
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 1.125,
+              "y": 1.375
+            }
+          },
+          {
+            "name": "Alertes TikTok",
+            "source_uuid": "328e951d-82ad-4530-a4de-dfdc1ac35b1e",
+            "visible": true,
+            "locked": true,
+            "rot": 0,
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -4711,25 +4830,13 @@
               "x": 0,
               "y": 0
             },
-            "pos_rel": {
-              "x": -0.5625,
-              "y": -1
-            },
             "scale": {
-              "x": 1,
-              "y": 1
-            },
-            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
               "x": 1080,
               "y": 1920
-            },
-            "bounds_rel": {
-              "x": 1.125,
-              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -4740,11 +4847,27 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
+            "private_settings": {},
+            "scale_ref": {
+              "x": 1080,
+              "y": 1920
+            },
+            "pos_rel": {
+              "x": -0.5625,
+              "y": -1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 1.125,
+              "y": 2
+            }
           }
         ],
         "order": 1,
-        "canvas_active": false
+        "canvas_active": true
       },
       "mixers": 0,
       "sync": 0,
@@ -4758,6 +4881,7 @@
       "push-to-talk": false,
       "push-to-talk-delay": 0,
       "hotkeys": {
+        "OBSBasic.SelectScene": [],
         "libobs.show_scene_item.1": [],
         "libobs.hide_scene_item.1": [],
         "libobs.show_scene_item.2": [],
@@ -4765,19 +4889,19 @@
         "libobs.show_scene_item.3": [],
         "libobs.hide_scene_item.3": [],
         "libobs.show_scene_item.4": [],
-        "libobs.hide_scene_item.4": [],
-        "OBSBasic.SelectScene": []
+        "libobs.hide_scene_item.4": []
       },
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
-      "canvas_uuid": "6bad365f-88c2-4cb4-9dde-e2f19ee74325",
-      "private_settings": {}
+      "private_settings": {},
+      "filters": [],
+      "canvas_uuid": "6bad365f-88c2-4cb4-9dde-e2f19ee74325"
     },
     {
       "prev_ver": 537001986,
       "name": "TikTok — Jeu sans caméra",
-      "uuid": "c4ddb243-0174-4626-bd54-6b68725df3d8",
+      "uuid": "e88c0a6c-3c5c-4441-af5b-4a84c7aa5b2c",
       "id": "scene",
       "versioned_id": "scene",
       "settings": {
@@ -4786,14 +4910,10 @@
         "items": [
           {
             "name": "Habillage TikTok — Jeu sans caméra",
-            "source_uuid": "40081988-1f29-448f-b8ff-b2e1fa6fe705",
+            "source_uuid": "a23fd0e8-02f8-4ecb-a5a0-f460e620ce7a",
             "visible": true,
             "locked": true,
             "rot": 0,
-            "scale_ref": {
-              "x": 1080,
-              "y": 1920
-            },
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -4808,25 +4928,13 @@
               "x": 0,
               "y": 0
             },
-            "pos_rel": {
-              "x": -0.5625,
-              "y": -1
-            },
             "scale": {
-              "x": 1,
-              "y": 1
-            },
-            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
               "x": 1080,
               "y": 1920
-            },
-            "bounds_rel": {
-              "x": 1.125,
-              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -4837,18 +4945,30 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
-          },
-          {
-            "name": "Capture du jeu",
-            "source_uuid": "3fd5f407-c4c1-4651-971f-4700bf14cc26",
-            "visible": true,
-            "locked": true,
-            "rot": 0,
+            "private_settings": {},
             "scale_ref": {
               "x": 1080,
               "y": 1920
             },
+            "pos_rel": {
+              "x": -0.5625,
+              "y": -1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 1.125,
+              "y": 2
+            }
+          },
+          {
+            "name": "Capture du jeu",
+            "source_uuid": "efd29d4f-42f3-45cf-a82e-ed4abef06522",
+            "visible": true,
+            "locked": true,
+            "rot": 0,
             "align": 5,
             "bounds_type": 2,
             "bounds_align": 0,
@@ -4863,25 +4983,13 @@
               "x": 0,
               "y": 500
             },
-            "pos_rel": {
-              "x": -0.5625,
-              "y": -0.4791666567325592
-            },
             "scale": {
-              "x": 1,
-              "y": 1
-            },
-            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
               "x": 1080,
               "y": 608
-            },
-            "bounds_rel": {
-              "x": 1.125,
-              "y": 0.6333333253860474
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -4892,18 +5000,30 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
-          },
-          {
-            "name": "Alertes TikTok",
-            "source_uuid": "8cfbf0b5-c92d-437b-adbe-c946ac9d80c5",
-            "visible": true,
-            "locked": true,
-            "rot": 0,
+            "private_settings": {},
             "scale_ref": {
               "x": 1080,
               "y": 1920
             },
+            "pos_rel": {
+              "x": -0.5625,
+              "y": -0.4791666666666667
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 1.125,
+              "y": 0.6333333333333333
+            }
+          },
+          {
+            "name": "Alertes TikTok",
+            "source_uuid": "328e951d-82ad-4530-a4de-dfdc1ac35b1e",
+            "visible": true,
+            "locked": true,
+            "rot": 0,
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -4918,25 +5038,13 @@
               "x": 0,
               "y": 0
             },
-            "pos_rel": {
-              "x": -0.5625,
-              "y": -1
-            },
             "scale": {
-              "x": 1,
-              "y": 1
-            },
-            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
               "x": 1080,
               "y": 1920
-            },
-            "bounds_rel": {
-              "x": 1.125,
-              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -4947,11 +5055,27 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
+            "private_settings": {},
+            "scale_ref": {
+              "x": 1080,
+              "y": 1920
+            },
+            "pos_rel": {
+              "x": -0.5625,
+              "y": -1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 1.125,
+              "y": 2
+            }
           }
         ],
         "order": 2,
-        "canvas_active": false
+        "canvas_active": true
       },
       "mixers": 0,
       "sync": 0,
@@ -4965,24 +5089,25 @@
       "push-to-talk": false,
       "push-to-talk-delay": 0,
       "hotkeys": {
+        "OBSBasic.SelectScene": [],
         "libobs.show_scene_item.1": [],
         "libobs.hide_scene_item.1": [],
         "libobs.show_scene_item.2": [],
         "libobs.hide_scene_item.2": [],
         "libobs.show_scene_item.3": [],
-        "libobs.hide_scene_item.3": [],
-        "OBSBasic.SelectScene": []
+        "libobs.hide_scene_item.3": []
       },
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
-      "canvas_uuid": "6bad365f-88c2-4cb4-9dde-e2f19ee74325",
-      "private_settings": {}
+      "private_settings": {},
+      "filters": [],
+      "canvas_uuid": "6bad365f-88c2-4cb4-9dde-e2f19ee74325"
     },
     {
       "prev_ver": 537001986,
       "name": "TikTok — Discussion",
-      "uuid": "246e3173-98f3-47b5-bb0c-1766028e1e27",
+      "uuid": "1e433a00-7c0d-46bf-97c9-68c12ffcf747",
       "id": "scene",
       "versioned_id": "scene",
       "settings": {
@@ -4991,14 +5116,10 @@
         "items": [
           {
             "name": "Caméra",
-            "source_uuid": "7057d42f-b80f-42b0-a743-5a164273d4f5",
+            "source_uuid": "9a9ac0ee-cc5c-419d-9d0d-b39d6e310680",
             "visible": true,
             "locked": true,
             "rot": 0,
-            "scale_ref": {
-              "x": 1080,
-              "y": 1920
-            },
             "align": 5,
             "bounds_type": 3,
             "bounds_align": 0,
@@ -5013,25 +5134,13 @@
               "x": 0,
               "y": 0
             },
-            "pos_rel": {
-              "x": -0.5625,
-              "y": -1
-            },
             "scale": {
-              "x": 1,
-              "y": 1
-            },
-            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
               "x": 1080,
               "y": 1920
-            },
-            "bounds_rel": {
-              "x": 1.125,
-              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -5042,18 +5151,30 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
-          },
-          {
-            "name": "Habillage TikTok — Discussion",
-            "source_uuid": "9ce6596b-748f-442a-8f3f-fc3d223d06bf",
-            "visible": true,
-            "locked": true,
-            "rot": 0,
+            "private_settings": {},
             "scale_ref": {
               "x": 1080,
               "y": 1920
             },
+            "pos_rel": {
+              "x": -0.5625,
+              "y": -1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 1.125,
+              "y": 2
+            }
+          },
+          {
+            "name": "Habillage TikTok — Discussion",
+            "source_uuid": "a3148a2f-5274-44e8-9bb1-4af58624068d",
+            "visible": true,
+            "locked": true,
+            "rot": 0,
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -5068,25 +5189,13 @@
               "x": 0,
               "y": 0
             },
-            "pos_rel": {
-              "x": -0.5625,
-              "y": -1
-            },
             "scale": {
-              "x": 1,
-              "y": 1
-            },
-            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
               "x": 1080,
               "y": 1920
-            },
-            "bounds_rel": {
-              "x": 1.125,
-              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -5097,18 +5206,30 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
-          },
-          {
-            "name": "Alertes TikTok",
-            "source_uuid": "8cfbf0b5-c92d-437b-adbe-c946ac9d80c5",
-            "visible": true,
-            "locked": true,
-            "rot": 0,
+            "private_settings": {},
             "scale_ref": {
               "x": 1080,
               "y": 1920
             },
+            "pos_rel": {
+              "x": -0.5625,
+              "y": -1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 1.125,
+              "y": 2
+            }
+          },
+          {
+            "name": "Alertes TikTok",
+            "source_uuid": "328e951d-82ad-4530-a4de-dfdc1ac35b1e",
+            "visible": true,
+            "locked": true,
+            "rot": 0,
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -5123,25 +5244,13 @@
               "x": 0,
               "y": 0
             },
-            "pos_rel": {
-              "x": -0.5625,
-              "y": -1
-            },
             "scale": {
-              "x": 1,
-              "y": 1
-            },
-            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
               "x": 1080,
               "y": 1920
-            },
-            "bounds_rel": {
-              "x": 1.125,
-              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -5152,11 +5261,27 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
+            "private_settings": {},
+            "scale_ref": {
+              "x": 1080,
+              "y": 1920
+            },
+            "pos_rel": {
+              "x": -0.5625,
+              "y": -1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 1.125,
+              "y": 2
+            }
           }
         ],
         "order": 3,
-        "canvas_active": false
+        "canvas_active": true
       },
       "mixers": 0,
       "sync": 0,
@@ -5170,24 +5295,25 @@
       "push-to-talk": false,
       "push-to-talk-delay": 0,
       "hotkeys": {
+        "OBSBasic.SelectScene": [],
         "libobs.show_scene_item.1": [],
         "libobs.hide_scene_item.1": [],
         "libobs.show_scene_item.2": [],
         "libobs.hide_scene_item.2": [],
         "libobs.show_scene_item.3": [],
-        "libobs.hide_scene_item.3": [],
-        "OBSBasic.SelectScene": []
+        "libobs.hide_scene_item.3": []
       },
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
-      "canvas_uuid": "6bad365f-88c2-4cb4-9dde-e2f19ee74325",
-      "private_settings": {}
+      "private_settings": {},
+      "filters": [],
+      "canvas_uuid": "6bad365f-88c2-4cb4-9dde-e2f19ee74325"
     },
     {
       "prev_ver": 537001986,
       "name": "TikTok — Pause",
-      "uuid": "c1c0cfe3-2382-49b1-984f-ab1b9fab2bb7",
+      "uuid": "b91bf358-f1e6-44f3-961c-f6acd5b1b9d2",
       "id": "scene",
       "versioned_id": "scene",
       "settings": {
@@ -5196,14 +5322,10 @@
         "items": [
           {
             "name": "Habillage TikTok — Pause",
-            "source_uuid": "fdb905fb-f08a-4732-a1fc-9f0b91360aa3",
+            "source_uuid": "f1e31512-71f4-4b3c-b900-63ea076c539d",
             "visible": true,
             "locked": true,
             "rot": 0,
-            "scale_ref": {
-              "x": 1080,
-              "y": 1920
-            },
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -5218,25 +5340,13 @@
               "x": 0,
               "y": 0
             },
-            "pos_rel": {
-              "x": -0.5625,
-              "y": -1
-            },
             "scale": {
-              "x": 1,
-              "y": 1
-            },
-            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
               "x": 1080,
               "y": 1920
-            },
-            "bounds_rel": {
-              "x": 1.125,
-              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -5247,18 +5357,30 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
-          },
-          {
-            "name": "Alertes TikTok",
-            "source_uuid": "8cfbf0b5-c92d-437b-adbe-c946ac9d80c5",
-            "visible": true,
-            "locked": true,
-            "rot": 0,
+            "private_settings": {},
             "scale_ref": {
               "x": 1080,
               "y": 1920
             },
+            "pos_rel": {
+              "x": -0.5625,
+              "y": -1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 1.125,
+              "y": 2
+            }
+          },
+          {
+            "name": "Alertes TikTok",
+            "source_uuid": "328e951d-82ad-4530-a4de-dfdc1ac35b1e",
+            "visible": true,
+            "locked": true,
+            "rot": 0,
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -5273,25 +5395,13 @@
               "x": 0,
               "y": 0
             },
-            "pos_rel": {
-              "x": -0.5625,
-              "y": -1
-            },
             "scale": {
-              "x": 1,
-              "y": 1
-            },
-            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
               "x": 1080,
               "y": 1920
-            },
-            "bounds_rel": {
-              "x": 1.125,
-              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -5302,11 +5412,27 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
+            "private_settings": {},
+            "scale_ref": {
+              "x": 1080,
+              "y": 1920
+            },
+            "pos_rel": {
+              "x": -0.5625,
+              "y": -1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 1.125,
+              "y": 2
+            }
           }
         ],
         "order": 4,
-        "canvas_active": false
+        "canvas_active": true
       },
       "mixers": 0,
       "sync": 0,
@@ -5320,22 +5446,23 @@
       "push-to-talk": false,
       "push-to-talk-delay": 0,
       "hotkeys": {
+        "OBSBasic.SelectScene": [],
         "libobs.show_scene_item.1": [],
         "libobs.hide_scene_item.1": [],
         "libobs.show_scene_item.2": [],
-        "libobs.hide_scene_item.2": [],
-        "OBSBasic.SelectScene": []
+        "libobs.hide_scene_item.2": []
       },
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
-      "canvas_uuid": "6bad365f-88c2-4cb4-9dde-e2f19ee74325",
-      "private_settings": {}
+      "private_settings": {},
+      "filters": [],
+      "canvas_uuid": "6bad365f-88c2-4cb4-9dde-e2f19ee74325"
     },
     {
       "prev_ver": 537001986,
       "name": "TikTok — Pause bébé",
-      "uuid": "96ecc1d2-6f14-4022-bc84-0408b6b0540b",
+      "uuid": "c04bf712-690a-4e2a-9930-fd359f577841",
       "id": "scene",
       "versioned_id": "scene",
       "settings": {
@@ -5344,14 +5471,10 @@
         "items": [
           {
             "name": "Habillage TikTok — Pause bébé",
-            "source_uuid": "9e3a956e-8198-4233-a9ed-b4760a075f5b",
+            "source_uuid": "3f7abc27-ba55-434d-8492-0531a0a5ec3d",
             "visible": true,
             "locked": true,
             "rot": 0,
-            "scale_ref": {
-              "x": 1080,
-              "y": 1920
-            },
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -5366,25 +5489,13 @@
               "x": 0,
               "y": 0
             },
-            "pos_rel": {
-              "x": -0.5625,
-              "y": -1
-            },
             "scale": {
-              "x": 1,
-              "y": 1
-            },
-            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
               "x": 1080,
               "y": 1920
-            },
-            "bounds_rel": {
-              "x": 1.125,
-              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -5395,18 +5506,30 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
-          },
-          {
-            "name": "Alertes TikTok",
-            "source_uuid": "8cfbf0b5-c92d-437b-adbe-c946ac9d80c5",
-            "visible": true,
-            "locked": true,
-            "rot": 0,
+            "private_settings": {},
             "scale_ref": {
               "x": 1080,
               "y": 1920
             },
+            "pos_rel": {
+              "x": -0.5625,
+              "y": -1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 1.125,
+              "y": 2
+            }
+          },
+          {
+            "name": "Alertes TikTok",
+            "source_uuid": "328e951d-82ad-4530-a4de-dfdc1ac35b1e",
+            "visible": true,
+            "locked": true,
+            "rot": 0,
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -5421,25 +5544,13 @@
               "x": 0,
               "y": 0
             },
-            "pos_rel": {
-              "x": -0.5625,
-              "y": -1
-            },
             "scale": {
-              "x": 1,
-              "y": 1
-            },
-            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
               "x": 1080,
               "y": 1920
-            },
-            "bounds_rel": {
-              "x": 1.125,
-              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -5450,11 +5561,27 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
+            "private_settings": {},
+            "scale_ref": {
+              "x": 1080,
+              "y": 1920
+            },
+            "pos_rel": {
+              "x": -0.5625,
+              "y": -1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 1.125,
+              "y": 2
+            }
           }
         ],
         "order": 5,
-        "canvas_active": false
+        "canvas_active": true
       },
       "mixers": 0,
       "sync": 0,
@@ -5468,22 +5595,23 @@
       "push-to-talk": false,
       "push-to-talk-delay": 0,
       "hotkeys": {
+        "OBSBasic.SelectScene": [],
         "libobs.show_scene_item.1": [],
         "libobs.hide_scene_item.1": [],
         "libobs.show_scene_item.2": [],
-        "libobs.hide_scene_item.2": [],
-        "OBSBasic.SelectScene": []
+        "libobs.hide_scene_item.2": []
       },
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
-      "canvas_uuid": "6bad365f-88c2-4cb4-9dde-e2f19ee74325",
-      "private_settings": {}
+      "private_settings": {},
+      "filters": [],
+      "canvas_uuid": "6bad365f-88c2-4cb4-9dde-e2f19ee74325"
     },
     {
       "prev_ver": 537001986,
       "name": "TikTok — Souci technique",
-      "uuid": "aeaad885-b6cc-4f0c-9f07-33cb535e05a4",
+      "uuid": "4c447a56-49cf-4d53-b846-cdc468e84bb8",
       "id": "scene",
       "versioned_id": "scene",
       "settings": {
@@ -5492,14 +5620,10 @@
         "items": [
           {
             "name": "Habillage TikTok — Souci technique",
-            "source_uuid": "2e1830e4-c7e1-4538-8f3d-c442626073c3",
+            "source_uuid": "5680a619-00b1-4d82-a806-d4fbb9b020a2",
             "visible": true,
             "locked": true,
             "rot": 0,
-            "scale_ref": {
-              "x": 1080,
-              "y": 1920
-            },
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -5514,25 +5638,13 @@
               "x": 0,
               "y": 0
             },
-            "pos_rel": {
-              "x": -0.5625,
-              "y": -1
-            },
             "scale": {
-              "x": 1,
-              "y": 1
-            },
-            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
               "x": 1080,
               "y": 1920
-            },
-            "bounds_rel": {
-              "x": 1.125,
-              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -5543,18 +5655,30 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
-          },
-          {
-            "name": "Alertes TikTok",
-            "source_uuid": "8cfbf0b5-c92d-437b-adbe-c946ac9d80c5",
-            "visible": true,
-            "locked": true,
-            "rot": 0,
+            "private_settings": {},
             "scale_ref": {
               "x": 1080,
               "y": 1920
             },
+            "pos_rel": {
+              "x": -0.5625,
+              "y": -1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 1.125,
+              "y": 2
+            }
+          },
+          {
+            "name": "Alertes TikTok",
+            "source_uuid": "328e951d-82ad-4530-a4de-dfdc1ac35b1e",
+            "visible": true,
+            "locked": true,
+            "rot": 0,
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -5569,25 +5693,13 @@
               "x": 0,
               "y": 0
             },
-            "pos_rel": {
-              "x": -0.5625,
-              "y": -1
-            },
             "scale": {
-              "x": 1,
-              "y": 1
-            },
-            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
               "x": 1080,
               "y": 1920
-            },
-            "bounds_rel": {
-              "x": 1.125,
-              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -5598,11 +5710,27 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
+            "private_settings": {},
+            "scale_ref": {
+              "x": 1080,
+              "y": 1920
+            },
+            "pos_rel": {
+              "x": -0.5625,
+              "y": -1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 1.125,
+              "y": 2
+            }
           }
         ],
         "order": 6,
-        "canvas_active": false
+        "canvas_active": true
       },
       "mixers": 0,
       "sync": 0,
@@ -5616,22 +5744,23 @@
       "push-to-talk": false,
       "push-to-talk-delay": 0,
       "hotkeys": {
+        "OBSBasic.SelectScene": [],
         "libobs.show_scene_item.1": [],
         "libobs.hide_scene_item.1": [],
         "libobs.show_scene_item.2": [],
-        "libobs.hide_scene_item.2": [],
-        "OBSBasic.SelectScene": []
+        "libobs.hide_scene_item.2": []
       },
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
-      "canvas_uuid": "6bad365f-88c2-4cb4-9dde-e2f19ee74325",
-      "private_settings": {}
+      "private_settings": {},
+      "filters": [],
+      "canvas_uuid": "6bad365f-88c2-4cb4-9dde-e2f19ee74325"
     },
     {
       "prev_ver": 537001986,
       "name": "TikTok — Fin",
-      "uuid": "5b2ad76e-a2dc-4d8a-b000-89d371960b2b",
+      "uuid": "46109a74-1dca-4397-bbb4-5b94fdf55ca8",
       "id": "scene",
       "versioned_id": "scene",
       "settings": {
@@ -5640,14 +5769,10 @@
         "items": [
           {
             "name": "Habillage TikTok — Fin",
-            "source_uuid": "ac0808a9-400b-446d-b17d-da92ade86eef",
+            "source_uuid": "dd16cd05-2fd2-4dd2-81c3-592f8e42a0b9",
             "visible": true,
             "locked": true,
             "rot": 0,
-            "scale_ref": {
-              "x": 1080,
-              "y": 1920
-            },
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -5662,25 +5787,13 @@
               "x": 0,
               "y": 0
             },
-            "pos_rel": {
-              "x": -0.5625,
-              "y": -1
-            },
             "scale": {
-              "x": 1,
-              "y": 1
-            },
-            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
               "x": 1080,
               "y": 1920
-            },
-            "bounds_rel": {
-              "x": 1.125,
-              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -5691,18 +5804,30 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
-          },
-          {
-            "name": "Caméra",
-            "source_uuid": "7057d42f-b80f-42b0-a743-5a164273d4f5",
-            "visible": true,
-            "locked": true,
-            "rot": 0,
+            "private_settings": {},
             "scale_ref": {
               "x": 1080,
               "y": 1920
             },
+            "pos_rel": {
+              "x": -0.5625,
+              "y": -1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 1.125,
+              "y": 2
+            }
+          },
+          {
+            "name": "Caméra",
+            "source_uuid": "9a9ac0ee-cc5c-419d-9d0d-b39d6e310680",
+            "visible": true,
+            "locked": true,
+            "rot": 0,
             "align": 5,
             "bounds_type": 3,
             "bounds_align": 0,
@@ -5717,25 +5842,13 @@
               "x": 0,
               "y": 0
             },
-            "pos_rel": {
-              "x": -0.5625,
-              "y": -1
-            },
             "scale": {
-              "x": 1,
-              "y": 1
-            },
-            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
               "x": 1080,
               "y": 700
-            },
-            "bounds_rel": {
-              "x": 1.125,
-              "y": 0.7291666865348816
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -5746,18 +5859,30 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
-          },
-          {
-            "name": "Alertes TikTok",
-            "source_uuid": "8cfbf0b5-c92d-437b-adbe-c946ac9d80c5",
-            "visible": true,
-            "locked": true,
-            "rot": 0,
+            "private_settings": {},
             "scale_ref": {
               "x": 1080,
               "y": 1920
             },
+            "pos_rel": {
+              "x": -0.5625,
+              "y": -1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 1.125,
+              "y": 0.7291666666666666
+            }
+          },
+          {
+            "name": "Alertes TikTok",
+            "source_uuid": "328e951d-82ad-4530-a4de-dfdc1ac35b1e",
+            "visible": true,
+            "locked": true,
+            "rot": 0,
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -5772,25 +5897,13 @@
               "x": 0,
               "y": 0
             },
-            "pos_rel": {
-              "x": -0.5625,
-              "y": -1
-            },
             "scale": {
-              "x": 1,
-              "y": 1
-            },
-            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
               "x": 1080,
               "y": 1920
-            },
-            "bounds_rel": {
-              "x": 1.125,
-              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -5801,7 +5914,23 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {}
+            "private_settings": {},
+            "scale_ref": {
+              "x": 1080,
+              "y": 1920
+            },
+            "pos_rel": {
+              "x": -0.5625,
+              "y": -1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 1.125,
+              "y": 2
+            }
           }
         ],
         "order": 7,
@@ -5819,117 +5948,20 @@
       "push-to-talk": false,
       "push-to-talk-delay": 0,
       "hotkeys": {
+        "OBSBasic.SelectScene": [],
         "libobs.show_scene_item.1": [],
         "libobs.hide_scene_item.1": [],
         "libobs.show_scene_item.2": [],
         "libobs.hide_scene_item.2": [],
         "libobs.show_scene_item.3": [],
-        "libobs.hide_scene_item.3": [],
-        "OBSBasic.SelectScene": []
+        "libobs.hide_scene_item.3": []
       },
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
-      "canvas_uuid": "6bad365f-88c2-4cb4-9dde-e2f19ee74325",
-      "private_settings": {}
+      "private_settings": {},
+      "filters": [],
+      "canvas_uuid": "6bad365f-88c2-4cb4-9dde-e2f19ee74325"
     }
-  ],
-  "groups": [],
-  "scene_order": [
-    {
-      "name": "Démarrage"
-    },
-    {
-      "name": "Jeu"
-    },
-    {
-      "name": "Jeu sans caméra"
-    },
-    {
-      "name": "Discussion"
-    },
-    {
-      "name": "Pause"
-    },
-    {
-      "name": "Pause bébé"
-    },
-    {
-      "name": "Souci technique"
-    },
-    {
-      "name": "Fin"
-    }
-  ],
-  "current_scene": "Fin",
-  "current_program_scene": "Fin",
-  "canvases": [
-    {
-      "info": {
-        "name": "Aitum Vertical",
-        "uuid": "6bad365f-88c2-4cb4-9dde-e2f19ee74325",
-        "private": false,
-        "flags": 14
-      }
-    }
-  ],
-  "current_transition": "Tuiles 3D",
-  "transition_duration": 300,
-  "transitions": [
-    {
-      "name": "Tuiles 3D",
-      "id": "obs_stinger_transition",
-      "settings": {
-        "path": "D:/Stream/OBS/transitions/transition_latshow.webm",
-        "tp_type": 0,
-        "transition_point": 620,
-        "audio_monitoring": 2,
-        "audio_fade_style": 1,
-        "preload": false,
-        "hw_decode": false
-      }
-    }
-  ],
-  "quick_transitions": [],
-  "saved_projectors": [],
-  "preview_locked": false,
-  "scaling_enabled": false,
-  "scaling_level": -16,
-  "scaling_off_x": 0,
-  "scaling_off_y": 0,
-  "virtual-camera": {
-    "type2": 3
-  },
-  "modules": {
-    "scripts-tool": [],
-    "output-timer": {
-      "streamTimerHours": 0,
-      "streamTimerMinutes": 0,
-      "streamTimerSeconds": 0,
-      "recordTimerHours": 0,
-      "recordTimerMinutes": 0,
-      "recordTimerSeconds": 0,
-      "autoStartStreamTimer": false,
-      "autoStartRecordTimer": false,
-      "pauseRecordTimer": false
-    },
-    "auto-scene-switcher": {
-      "interval": 300,
-      "non_matching_scene": "",
-      "switch_if_not_matching": false,
-      "active": false,
-      "switches": []
-    },
-    "captions": {
-      "source": "",
-      "enabled": false,
-      "lang_id": 1036,
-      "provider": "mssapi"
-    }
-  },
-  "resolution": {
-    "x": 2560,
-    "y": 1440
-  },
-  "version": 2
+  ]
 }

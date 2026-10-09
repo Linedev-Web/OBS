@@ -1,5 +1,5 @@
 {
-  "sauvegarde_le": "2026-10-09T12:31:20.075Z",
+  "sauvegarde_le": "2026-10-09T12:34:55.611Z",
   "obs": {
     "version": "32.2.2",
     "modules_ajoutes": [
@@ -73,16 +73,20 @@
   },
   "a_reposer": [
     {
-      "ou": "OBS, collection Live_Gaming.json, source « Chat »",
-      "quoi": "adresse socialstream.ninja"
-    },
-    {
       "ou": "OBS, collection Live_Gaming.json, source « Alertes »",
       "quoi": "adresse streamelements.com"
     },
     {
       "ou": "OBS, collection Live_Gaming.json, source « Alertes YouTube »",
       "quoi": "adresse streamelements.com"
+    },
+    {
+      "ou": "OBS, collection Live_Gaming.json, source « Chat »",
+      "quoi": "adresse socialstream.ninja"
+    },
+    {
+      "ou": "OBS, collection Live_Gaming.json, source « Chat — Discussion »",
+      "quoi": "adresse socialstream.ninja"
     },
     {
       "ou": "OBS, collection Live_Montage.json, source « Alertes »",
