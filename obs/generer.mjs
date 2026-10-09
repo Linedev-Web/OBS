@@ -204,6 +204,9 @@ function element(src, id, rect, ajustement = 'interieur', { k = K, aligner = 0, 
     ...base, pos, bounds, ...relatif(pos, bounds, canevas), bounds_align: aligner,
     // intérieur : tout est visible (capture) ; extérieur : remplit le cadre en rognant (caméra) ; étirer : taille exacte (navigateur)
     bounds_type: ajustement === 'exterieur' ? 3 : ajustement === 'etirer' ? 1 : 2, bounds_crop: ajustement === 'exterieur',
+    // Caméra et captures sont réduites (1080p dans un cadre de 534 px de haut en Montage) : sans filtre, OBS les échantillonne
+    // en bilinéaire et l'image crénelle (« pixelisé », 2026-10-09). « Area » est le filtre d'OBS fait pour réduire.
+    scale_filter: ajustement === 'etirer' ? 'disable' : 'area',
   };
 }
 
