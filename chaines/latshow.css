@@ -15,3 +15,5 @@ html,body{background:var(--nuit);color:var(--texte);font-family:'Inter',sans-ser
 
 /* 2026-10-07 : ni traits ni équerres décoratives (« ça fait IA ») */
 .coins{display:none}
+/* 2026-10-09 : plus de losange à côté du nom (« j'en veux plus de pastille », « plus simple, plus sobre »). */
+.barre{display:none}
