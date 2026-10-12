@@ -45,7 +45,18 @@ const ALIGNEMENT = { centre: 0, gauche: 1 }; // OBS_ALIGN_LEFT = 1 (centré en h
 // Piste audio TikTok : le mix du live plus les alertes TikTok, moins les alertes Twitch / YouTube. Le module Audio
 // Monitor l'envoie au câble VB-CABLE, que TikTok LIVE Studio prend comme micro (obs/regie.mjs son-tiktok).
 const BIT_TIKTOK = 1 << (VERT.piste_son - 1);
-const SANS_TIKTOK = 0x3f & ~BIT_TIKTOK; // les 6 pistes d'OBS sauf celle de TikTok
+// Pistes audio d'OBS (l'enregistrement garde les pistes 1 à 4, RecTracks=15 dans les profils) : 1 = le mélange du live
+// (Twitch, YouTube), 2 = ta voix seule, 3 = le jeu ou la fenêtre seuls, 4 = Discord seul, 6 = TikTok. La session Montage
+// sépare voix, jeu et amis grâce aux pistes 2 à 4 ; toutes cochées depuis la refonte du 2026-10-07 (mixers 255), elles
+// mélangeaient tout (signalé le 2026-10-12). Musique et alertes ne vont jamais sur une piste isolée.
+const piste = (n) => 1 << (n - 1);
+const PISTES = {
+  micro: piste(1) | piste(2) | BIT_TIKTOK, // 35
+  capture: piste(1) | piste(3) | BIT_TIKTOK, // 37 : le jeu (gaming) ou la fenêtre (montage, dev)
+  discord: piste(1) | piste(4) | BIT_TIKTOK, // 41
+  musique: piste(1) | BIT_TIKTOK,
+  alertes: piste(1), // alertes Twitch / YouTube : ni sur TikTok, ni sur les pistes isolées
+};
 // Périphériques choisis dans la régie (obs/peripheriques.json, écrit par obs/regie.mjs) : ils priment sur la référence.
 const PERIPHERIQUES = (() => { try { return JSON.parse(fs.readFileSync(path.join(ICI, 'peripheriques.json'), 'utf8')); } catch { return {}; } })();
 
@@ -118,7 +129,7 @@ function sourcesCommunes(seance) {
   const camera = cameraReference();
   const { micRef, reglages: micReglages } = microReference();
   const micro = source('Micro', 'wasapi_input_capture', micReglages, {
-    mixers: 255, sync: micRef.sync, flags: micRef.flags,
+    mixers: PISTES.micro, sync: micRef.sync, flags: micRef.flags,
     filters: [
       // Chaîne voix : bruit de fond retiré, silences adoucis (clavier), un peu moins de grave et plus de clarté,
       // niveau égalisé, plafond de sécurité. Le micro FIFINE K658 est dynamique : pas besoin d'une porte dure.
@@ -134,11 +145,11 @@ function sourcesCommunes(seance) {
   const s = { camera, micro };
   if (seance.id === 'gaming') {
     const jeuRef = refSource('Capture de jeu');
-    s.capture = source('Capture du jeu', 'game_capture', { ...jeuRef.settings, capture_audio: true, anti_cheat_hook: true }, { volume: 0.32, mixers: 255, hotkeys: { ...vide(), hotkey_start: [], hotkey_stop: [] },
+    s.capture = source('Capture du jeu', 'game_capture', { ...jeuRef.settings, capture_audio: true, anti_cheat_hook: true }, { volume: 0.32, mixers: PISTES.capture, hotkeys: { ...vide(), hotkey_start: [], hotkey_stop: [] },
       filters: [attenuation(), filtre('Limiteur', 'limiter_filter', 'limiter_filter', { threshold: -6, release_time: 60 })] });
     const disco = refSource('Discord');
     // Discord : les voix des amis ramenées au même niveau, sans les faire baisser quand tu parles.
-    s.discord = source('Discord', 'wasapi_process_output_capture', disco.settings, { volume: 0.85, filters: [
+    s.discord = source('Discord', 'wasapi_process_output_capture', disco.settings, { volume: 0.85, mixers: PISTES.discord, filters: [
       filtre('Compresseur', 'compressor_filter', 'compressor_filter', { ratio: 3, threshold: -24, attack_time: 6, release_time: 80, output_gain: 2 }),
       filtre('Limiteur', 'limiter_filter', 'limiter_filter', { threshold: -3, release_time: 60 })] });
   } else {
@@ -147,17 +158,17 @@ function sourcesCommunes(seance) {
     // Spotify, une vidéo dans un autre navigateur ou une notification ne partent jamais en live (demande du client,
     // 2026-10-08). Remplace « Son du PC », qui captait tout ce que jouait Windows.
     s.capture = source('Fenêtre', 'window_capture', { ...fen.settings, method: 2, cursor: true, client_area: true, capture_audio: true }, {
-      volume: 0.5, hotkeys: {},
+      volume: 0.5, mixers: PISTES.capture, hotkeys: {},
       filters: [attenuation(), filtre('Limiteur', 'limiter_filter', 'limiter_filter', { threshold: -6, release_time: 60 })],
     });
   }
   // Son des alertes : passé par OBS (sinon les spectateurs ne l'entendent pas) et écouté dans le casque (2 = écoute et sortie).
   // Taille de la page StreamElements (1920×1080), étirée sur tout le canevas dans les scènes : en 2560×1440, la page
   // restait collée en haut à gauche et l'alerte paraissait petite et décentrée (constaté le 2026-10-07).
-  // Hors de la piste TikTok : une alerte Twitch ou YouTube s'entendrait sur TikTok sans s'y voir.
-  s.alertes = source('Alertes', 'browser_source', { url: '', width: MW, height: MH, css: CSS_BASE, reroute_audio: true }, { volume: 0.8, monitoring: 2, mixers: SANS_TIKTOK, hotkeys: { ...vide(), 'ObsBrowser.Refresh': [] } });
+  // Piste 1 seulement : sur TikTok, une alerte Twitch ou YouTube s'entendrait sans s'y voir.
+  s.alertes = source('Alertes', 'browser_source', { url: '', width: MW, height: MH, css: CSS_BASE, reroute_audio: true }, { volume: 0.8, monitoring: 2, mixers: PISTES.alertes, hotkeys: { ...vide(), 'ObsBrowser.Refresh': [] } });
   // Latshow diffuse aussi sur YouTube (multistream) : la chaîne YouTube a son propre overlay d'alertes.
-  if (seance.marque === 'latshow') s.alertesYoutube = source('Alertes YouTube', 'browser_source', { url: '', width: MW, height: MH, css: CSS_BASE, reroute_audio: true }, { volume: 0.8, monitoring: 2, mixers: SANS_TIKTOK, hotkeys: { ...vide(), 'ObsBrowser.Refresh': [] } });
+  if (seance.marque === 'latshow') s.alertesYoutube = source('Alertes YouTube', 'browser_source', { url: '', width: MW, height: MH, css: CSS_BASE, reroute_audio: true }, { volume: 0.8, monitoring: 2, mixers: PISTES.alertes, hotkeys: { ...vide(), 'ObsBrowser.Refresh': [] } });
   // Alertes TikTok (TikFinity, alertes/tiktok/) dans l'image verticale. Leur son passe par OBS sur la piste TikTok
   // seulement (envoyée à TikTok LIVE Studio par le câble audio, voir obs/regie.mjs), jamais sur Twitch ni YouTube.
   s.alertesTikTok = source('Alertes TikTok', 'browser_source', { is_local_file: true, local_file: `${ALERTES}/tiktok/${seance.marque}.html`,
@@ -184,7 +195,7 @@ function musique(cle) {
   const dossier = `${MUSIQUE}/${cle}`;
   return source(`Musique — ${cle.replace('/', ' ')}`, 'vlc_source', {
     playlist: [{ value: dossier, hidden: false, selected: false }], loop: true, shuffle: true, playback_behavior: 'stop_restart', network_caching: 400,
-  }, { volume: 0.6, hotkeys: { ...vide(), 'VLC_PLAY_PAUSE': [], 'VLC_RESTART': [], 'VLC_STOP': [], 'VLC_PLAYLIST_NEXT': [], 'VLC_PLAYLIST_PREV': [] } });
+  }, { volume: 0.6, mixers: PISTES.musique, hotkeys: { ...vide(), 'VLC_PLAY_PAUSE': [], 'VLC_RESTART': [], 'VLC_STOP': [], 'VLC_PLAYLIST_NEXT': [], 'VLC_PLAYLIST_PREV': [] } });
 }
 
 // ---------- Éléments de scène ----------
@@ -347,7 +358,7 @@ function construirePlateau(plateau) {
   // montage. Décalé pour que voix et lèvres coïncident dans les fichiers d'OBS (mesuré avec la caméra en 4K).
   const { reglages } = microReference();
   const micro = source('Micro', 'wasapi_input_capture', reglages, {
-    sync: plateau.micro_decalage_ms * 1e6,
+    sync: plateau.micro_decalage_ms * 1e6, mixers: piste(1) | piste(2), // pas de TikTok au Plateau
     filters: [filtre('Limiteur', 'limiter_filter', 'limiter_filter', { threshold: -3, release_time: 60 })],
   });
   const ecran = source('Écran', 'monitor_capture', refSource("Capture d'écran 2").settings, { mixers: 0, hotkeys: {} });
