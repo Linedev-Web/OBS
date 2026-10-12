@@ -125,7 +125,7 @@
         "device_id": "{0.0.1.00000000}.{cae08b20-c542-448b-936c-063d9a33a2d0}",
         "use_device_timing": false
       },
-      "mixers": 255,
+      "mixers": 195,
       "sync": 110000000,
       "flags": 0,
       "volume": 1,

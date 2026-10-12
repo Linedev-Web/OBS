@@ -80,7 +80,7 @@
     {
       "prev_ver": 537001986,
       "name": "Caméra",
-      "uuid": "31e7235d-ba9a-4adc-8cec-2884aae10139",
+      "uuid": "ba75891d-b8bd-4222-9ccd-1ccfb123101b",
       "id": "dshow_input",
       "versioned_id": "dshow_input",
       "settings": {
@@ -115,7 +115,7 @@
         {
           "prev_ver": 537001986,
           "name": "Couleurs",
-          "uuid": "c81491ba-7d1e-4ab3-ac58-4f1b9e00eb45",
+          "uuid": "31efe12d-109d-41e4-981d-5b7c11bf1f9b",
           "id": "color_filter",
           "versioned_id": "color_filter_v2",
           "settings": {
@@ -145,7 +145,7 @@
         {
           "prev_ver": 537001986,
           "name": "Enregistrement caméra",
-          "uuid": "0e57d44d-a897-4c33-bcde-3805988d9486",
+          "uuid": "fb621bb6-2eab-4b9c-859b-e23a0a5abafb",
           "id": "source_record_filter",
           "versioned_id": "source_record_filter",
           "settings": {
@@ -183,7 +183,7 @@
     {
       "prev_ver": 537001986,
       "name": "Micro",
-      "uuid": "4043981a-3cf4-41c0-b21b-f322c0e462c0",
+      "uuid": "99799e49-e7ad-48f3-a7c5-b995fbe8b0fb",
       "id": "wasapi_input_capture",
       "versioned_id": "wasapi_input_capture",
       "settings": {
@@ -231,7 +231,7 @@
         {
           "prev_ver": 537001986,
           "name": "Réduction du bruit",
-          "uuid": "ddbb9a4a-9767-47a8-9ce6-b4f0bba34f79",
+          "uuid": "62535c13-cc0a-4503-8675-2a58d950519a",
           "id": "noise_suppress_filter",
           "versioned_id": "noise_suppress_filter_v2",
           "settings": {
@@ -257,7 +257,7 @@
         {
           "prev_ver": 537001986,
           "name": "Expandeur",
-          "uuid": "f18a7236-9810-4ee1-833f-e735ccb064ff",
+          "uuid": "46a1cfa1-bdf3-457f-ab20-39b79133af4c",
           "id": "expander_filter",
           "versioned_id": "expander_filter",
           "settings": {
@@ -289,7 +289,7 @@
         {
           "prev_ver": 537001986,
           "name": "Égaliseur",
-          "uuid": "10b65bff-9f15-44ad-a5c8-acf79d381b3e",
+          "uuid": "1a913275-38a5-441b-9062-dd02b5f9b78a",
           "id": "basic_eq_filter",
           "versioned_id": "basic_eq_filter",
           "settings": {
@@ -317,7 +317,7 @@
         {
           "prev_ver": 537001986,
           "name": "Compresseur",
-          "uuid": "57e81aa8-cbf5-4e01-ba10-70c93dae74f5",
+          "uuid": "081468b3-f719-4dd3-b5c6-260ca9c759ea",
           "id": "compressor_filter",
           "versioned_id": "compressor_filter",
           "settings": {
@@ -347,7 +347,7 @@
         {
           "prev_ver": 537001986,
           "name": "Limiteur",
-          "uuid": "6e33a5bc-9ca4-4de2-b2d8-8cdeeee12a6b",
+          "uuid": "d92c3f24-b412-400d-8cc9-31215151fdc7",
           "id": "limiter_filter",
           "versioned_id": "limiter_filter",
           "settings": {
@@ -376,7 +376,7 @@
     {
       "prev_ver": 537001986,
       "name": "Fenêtre",
-      "uuid": "792db17c-76c1-493b-b9f7-625071f90d50",
+      "uuid": "bb09b847-413c-4374-a61a-4b63bb23695c",
       "id": "window_capture",
       "versioned_id": "window_capture",
       "settings": {
@@ -406,7 +406,7 @@
         {
           "prev_ver": 537001986,
           "name": "Baisse quand tu parles",
-          "uuid": "fcb70244-65e0-422f-a665-ab2042b1f32e",
+          "uuid": "67dd82e2-0c90-473f-9a47-ec95e3ca3db6",
           "id": "compressor_filter",
           "versioned_id": "compressor_filter",
           "settings": {
@@ -437,7 +437,7 @@
         {
           "prev_ver": 537001986,
           "name": "Limiteur",
-          "uuid": "a82d803b-1607-499b-a595-a5e639a5e3eb",
+          "uuid": "c72cbe07-bc28-48b1-853c-aa2e32578f6e",
           "id": "limiter_filter",
           "versioned_id": "limiter_filter",
           "settings": {
@@ -466,7 +466,7 @@
     {
       "prev_ver": 537001986,
       "name": "Alertes",
-      "uuid": "a609ee3e-7397-4396-831f-5775dd21269b",
+      "uuid": "c0d3a4bb-1b14-43fb-a16e-0bd7cdfc05de",
       "id": "browser_source",
       "versioned_id": "browser_source",
       "settings": {
@@ -502,7 +502,7 @@
     {
       "prev_ver": 537001986,
       "name": "Alertes TikTok",
-      "uuid": "49f4323d-4ea1-4db9-ba34-0895e9d6e693",
+      "uuid": "b6e02ebe-d64f-4147-a723-a671815aa139",
       "id": "browser_source",
       "versioned_id": "browser_source",
       "settings": {
@@ -542,7 +542,7 @@
     {
       "prev_ver": 537001986,
       "name": "Habillage — Démarrage",
-      "uuid": "c0b36ec3-9cdf-4da2-901a-cedaeed435ac",
+      "uuid": "1ecb72c5-7e57-4471-97cd-1c9cc31dfe87",
       "id": "browser_source",
       "versioned_id": "browser_source",
       "settings": {
@@ -583,7 +583,7 @@
     {
       "prev_ver": 537001986,
       "name": "Chat",
-      "uuid": "dcf58817-8cde-4068-9950-53e8e4c2fa0f",
+      "uuid": "3ab9b272-51d4-4a7d-b47d-470384ae3d7c",
       "id": "browser_source",
       "versioned_id": "browser_source",
       "settings": {
@@ -620,7 +620,7 @@
     {
       "prev_ver": 537001986,
       "name": "Musique — linedev demarrage",
-      "uuid": "3734150e-0aff-42f1-9831-1eb0729b14c5",
+      "uuid": "8e729da8-ca48-40f2-8da6-1d988e9ddf34",
       "id": "vlc_source",
       "versioned_id": "vlc_source",
       "settings": {
@@ -666,7 +666,7 @@
     {
       "prev_ver": 537001986,
       "name": "Habillage — Cours",
-      "uuid": "a8d3b2e4-cabe-4672-b0e5-94003160ce29",
+      "uuid": "58696d4f-4bbe-46ba-a768-7ec342ac77ab",
       "id": "browser_source",
       "versioned_id": "browser_source",
       "settings": {
@@ -707,7 +707,7 @@
     {
       "prev_ver": 537001986,
       "name": "Chat — Colonne",
-      "uuid": "ec1e5d3b-d4e1-4152-b1d5-cd83850cbf5c",
+      "uuid": "12cffcc3-5cfb-416b-8c55-1a43bf6371b4",
       "id": "browser_source",
       "versioned_id": "browser_source",
       "settings": {
@@ -744,7 +744,7 @@
     {
       "prev_ver": 537001986,
       "name": "Habillage — Face à face",
-      "uuid": "a26742a8-051c-4a25-b359-0fb119769556",
+      "uuid": "ea5a18a7-39c9-429f-961c-44a731637c3d",
       "id": "browser_source",
       "versioned_id": "browser_source",
       "settings": {
@@ -785,7 +785,7 @@
     {
       "prev_ver": 537001986,
       "name": "Habillage — Questions",
-      "uuid": "63190505-4b39-4d6a-97b5-688be8b9f9bc",
+      "uuid": "3fb47340-ca22-4db6-aa27-882c5d74c892",
       "id": "browser_source",
       "versioned_id": "browser_source",
       "settings": {
@@ -826,7 +826,7 @@
     {
       "prev_ver": 537001986,
       "name": "Chat — Discussion",
-      "uuid": "57b8fb27-2927-4027-afa6-ff8507f8f138",
+      "uuid": "97c0fa1d-2046-48f2-876a-3a0297215650",
       "id": "browser_source",
       "versioned_id": "browser_source",
       "settings": {
@@ -863,7 +863,7 @@
     {
       "prev_ver": 537001986,
       "name": "Habillage — Pause",
-      "uuid": "2ee1c9cd-a4f3-4da1-bd4e-77ac6c81fc08",
+      "uuid": "7354bdbb-c9e6-429f-8cb5-015617f12993",
       "id": "browser_source",
       "versioned_id": "browser_source",
       "settings": {
@@ -904,7 +904,7 @@
     {
       "prev_ver": 537001986,
       "name": "Musique — linedev pause",
-      "uuid": "6f90c26f-988e-47b0-9485-109720ca4d78",
+      "uuid": "1d81b93e-071b-4a5a-8508-5fd598edc482",
       "id": "vlc_source",
       "versioned_id": "vlc_source",
       "settings": {
@@ -950,7 +950,7 @@
     {
       "prev_ver": 537001986,
       "name": "Habillage — Pause bébé",
-      "uuid": "fc611e2d-31ba-43e9-b514-e9a3878593ec",
+      "uuid": "d4f3732a-4009-464c-be89-0f05d6ca3e80",
       "id": "browser_source",
       "versioned_id": "browser_source",
       "settings": {
@@ -991,7 +991,7 @@
     {
       "prev_ver": 537001986,
       "name": "Musique — linedev bebe",
-      "uuid": "4092dd69-543f-4ad5-b35e-bb56fcfb810c",
+      "uuid": "9466784f-df99-46a1-9e94-1352ea74dd94",
       "id": "vlc_source",
       "versioned_id": "vlc_source",
       "settings": {
@@ -1037,7 +1037,7 @@
     {
       "prev_ver": 537001986,
       "name": "Habillage — Souci technique",
-      "uuid": "77d8726e-59f2-4b18-a0a8-04e4a4133c3f",
+      "uuid": "17c4f2b7-2029-4fcf-ba3b-2763cd18e2c7",
       "id": "browser_source",
       "versioned_id": "browser_source",
       "settings": {
@@ -1078,7 +1078,7 @@
     {
       "prev_ver": 537001986,
       "name": "Habillage — Fin",
-      "uuid": "f210ec7f-6a49-49c0-92fe-9aa736fbc733",
+      "uuid": "f3c48bc6-e5d4-4cf0-85ec-934661704725",
       "id": "browser_source",
       "versioned_id": "browser_source",
       "settings": {
@@ -1119,7 +1119,7 @@
     {
       "prev_ver": 537001986,
       "name": "Musique — linedev fin",
-      "uuid": "73dd8da2-647a-4458-b737-961611af72cd",
+      "uuid": "120dad97-e257-43f5-a76b-089642d1c036",
       "id": "vlc_source",
       "versioned_id": "vlc_source",
       "settings": {
@@ -1165,7 +1165,7 @@
     {
       "prev_ver": 537001986,
       "name": "Habillage TikTok — Démarrage",
-      "uuid": "bfc3c111-ffb5-47a2-b979-3481a1472eac",
+      "uuid": "19e69bfc-c6a0-485a-9711-9a03796459bb",
       "id": "browser_source",
       "versioned_id": "browser_source",
       "settings": {
@@ -1206,7 +1206,7 @@
     {
       "prev_ver": 537001986,
       "name": "Habillage TikTok — Cours",
-      "uuid": "eb946dc4-a202-4198-ba8d-416a0862d940",
+      "uuid": "cec49675-2110-4789-8e22-bba3d73ea74f",
       "id": "browser_source",
       "versioned_id": "browser_source",
       "settings": {
@@ -1247,7 +1247,7 @@
     {
       "prev_ver": 537001986,
       "name": "Habillage TikTok — Questions",
-      "uuid": "cf5e28fd-a6c8-4f81-9146-0f104a589b26",
+      "uuid": "144b42de-cf9f-40ab-89a4-f5a3b561de53",
       "id": "browser_source",
       "versioned_id": "browser_source",
       "settings": {
@@ -1288,7 +1288,7 @@
     {
       "prev_ver": 537001986,
       "name": "Habillage TikTok — Pause",
-      "uuid": "56940da1-6e0d-4a44-b460-79c71c7357c0",
+      "uuid": "6a9fb030-d92c-4791-9626-92ea56d1cf32",
       "id": "browser_source",
       "versioned_id": "browser_source",
       "settings": {
@@ -1329,7 +1329,7 @@
     {
       "prev_ver": 537001986,
       "name": "Habillage TikTok — Pause bébé",
-      "uuid": "055d8a67-5ae9-4067-8376-6f859c635d79",
+      "uuid": "5b4c507a-aaa9-4589-87d2-d5f0ec5fe248",
       "id": "browser_source",
       "versioned_id": "browser_source",
       "settings": {
@@ -1370,7 +1370,7 @@
     {
       "prev_ver": 537001986,
       "name": "Habillage TikTok — Souci technique",
-      "uuid": "13f1538a-f0f3-4b81-8e9d-dc26a0d9696d",
+      "uuid": "1eeab15a-4324-4ddb-8da7-283d1e60608a",
       "id": "browser_source",
       "versioned_id": "browser_source",
       "settings": {
@@ -1411,7 +1411,7 @@
     {
       "prev_ver": 537001986,
       "name": "Habillage TikTok — Fin",
-      "uuid": "a686b076-5de6-4f56-bf8f-83917ae40623",
+      "uuid": "09dfca42-5a97-4eb4-8d07-d11cf1bdd1f4",
       "id": "browser_source",
       "versioned_id": "browser_source",
       "settings": {
@@ -1452,7 +1452,7 @@
     {
       "prev_ver": 537001986,
       "name": "Démarrage",
-      "uuid": "a4edf741-79d7-47e5-8b65-4fd0ada6eac4",
+      "uuid": "77b6233d-47e4-4686-a4cb-fc972a921ad0",
       "id": "scene",
       "versioned_id": "scene",
       "settings": {
@@ -1461,7 +1461,7 @@
         "items": [
           {
             "name": "Habillage — Démarrage",
-            "source_uuid": "c0b36ec3-9cdf-4da2-901a-cedaeed435ac",
+            "source_uuid": "1ecb72c5-7e57-4471-97cd-1c9cc31dfe87",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -1516,7 +1516,7 @@
           },
           {
             "name": "Chat",
-            "source_uuid": "dcf58817-8cde-4068-9950-53e8e4c2fa0f",
+            "source_uuid": "3ab9b272-51d4-4a7d-b47d-470384ae3d7c",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -1571,7 +1571,7 @@
           },
           {
             "name": "Micro",
-            "source_uuid": "4043981a-3cf4-41c0-b21b-f322c0e462c0",
+            "source_uuid": "99799e49-e7ad-48f3-a7c5-b995fbe8b0fb",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -1626,7 +1626,7 @@
           },
           {
             "name": "Musique — linedev demarrage",
-            "source_uuid": "3734150e-0aff-42f1-9831-1eb0729b14c5",
+            "source_uuid": "8e729da8-ca48-40f2-8da6-1d988e9ddf34",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -1681,7 +1681,7 @@
           },
           {
             "name": "Alertes",
-            "source_uuid": "a609ee3e-7397-4396-831f-5775dd21269b",
+            "source_uuid": "c0d3a4bb-1b14-43fb-a16e-0bd7cdfc05de",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -1784,7 +1784,7 @@
     {
       "prev_ver": 537001986,
       "name": "Cours",
-      "uuid": "e5050ac8-bbd8-41fd-979a-98bf08436a0e",
+      "uuid": "244a67e7-2824-418d-bd4a-3163769d55ec",
       "id": "scene",
       "versioned_id": "scene",
       "settings": {
@@ -1793,7 +1793,7 @@
         "items": [
           {
             "name": "Habillage — Cours",
-            "source_uuid": "a8d3b2e4-cabe-4672-b0e5-94003160ce29",
+            "source_uuid": "58696d4f-4bbe-46ba-a768-7ec342ac77ab",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -1848,7 +1848,7 @@
           },
           {
             "name": "Fenêtre",
-            "source_uuid": "792db17c-76c1-493b-b9f7-625071f90d50",
+            "source_uuid": "bb09b847-413c-4374-a61a-4b63bb23695c",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -1903,7 +1903,7 @@
           },
           {
             "name": "Caméra",
-            "source_uuid": "31e7235d-ba9a-4adc-8cec-2884aae10139",
+            "source_uuid": "ba75891d-b8bd-4222-9ccd-1ccfb123101b",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -1958,7 +1958,7 @@
           },
           {
             "name": "Chat — Colonne",
-            "source_uuid": "ec1e5d3b-d4e1-4152-b1d5-cd83850cbf5c",
+            "source_uuid": "12cffcc3-5cfb-416b-8c55-1a43bf6371b4",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -2013,7 +2013,7 @@
           },
           {
             "name": "Micro",
-            "source_uuid": "4043981a-3cf4-41c0-b21b-f322c0e462c0",
+            "source_uuid": "99799e49-e7ad-48f3-a7c5-b995fbe8b0fb",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -2068,7 +2068,7 @@
           },
           {
             "name": "Alertes",
-            "source_uuid": "a609ee3e-7397-4396-831f-5775dd21269b",
+            "source_uuid": "c0d3a4bb-1b14-43fb-a16e-0bd7cdfc05de",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -2173,7 +2173,7 @@
     {
       "prev_ver": 537001986,
       "name": "Face à face",
-      "uuid": "cd4f2f39-b523-4681-ac5a-cb7017e98c68",
+      "uuid": "1cb0b6cc-ae07-4ca0-8888-78dca61ec19d",
       "id": "scene",
       "versioned_id": "scene",
       "settings": {
@@ -2182,7 +2182,7 @@
         "items": [
           {
             "name": "Habillage — Face à face",
-            "source_uuid": "a26742a8-051c-4a25-b359-0fb119769556",
+            "source_uuid": "ea5a18a7-39c9-429f-961c-44a731637c3d",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -2237,7 +2237,7 @@
           },
           {
             "name": "Fenêtre",
-            "source_uuid": "792db17c-76c1-493b-b9f7-625071f90d50",
+            "source_uuid": "bb09b847-413c-4374-a61a-4b63bb23695c",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -2292,7 +2292,7 @@
           },
           {
             "name": "Caméra",
-            "source_uuid": "31e7235d-ba9a-4adc-8cec-2884aae10139",
+            "source_uuid": "ba75891d-b8bd-4222-9ccd-1ccfb123101b",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -2347,7 +2347,7 @@
           },
           {
             "name": "Micro",
-            "source_uuid": "4043981a-3cf4-41c0-b21b-f322c0e462c0",
+            "source_uuid": "99799e49-e7ad-48f3-a7c5-b995fbe8b0fb",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -2402,7 +2402,7 @@
           },
           {
             "name": "Alertes",
-            "source_uuid": "a609ee3e-7397-4396-831f-5775dd21269b",
+            "source_uuid": "c0d3a4bb-1b14-43fb-a16e-0bd7cdfc05de",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -2505,7 +2505,7 @@
     {
       "prev_ver": 537001986,
       "name": "Questions",
-      "uuid": "11f1e037-1f5a-4829-8705-2a315463f05f",
+      "uuid": "e74c6b38-8a62-4311-b7cf-67c7f0953364",
       "id": "scene",
       "versioned_id": "scene",
       "settings": {
@@ -2514,7 +2514,7 @@
         "items": [
           {
             "name": "Habillage — Questions",
-            "source_uuid": "63190505-4b39-4d6a-97b5-688be8b9f9bc",
+            "source_uuid": "3fb47340-ca22-4db6-aa27-882c5d74c892",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -2569,7 +2569,7 @@
           },
           {
             "name": "Caméra",
-            "source_uuid": "31e7235d-ba9a-4adc-8cec-2884aae10139",
+            "source_uuid": "ba75891d-b8bd-4222-9ccd-1ccfb123101b",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -2624,7 +2624,7 @@
           },
           {
             "name": "Chat — Discussion",
-            "source_uuid": "57b8fb27-2927-4027-afa6-ff8507f8f138",
+            "source_uuid": "97c0fa1d-2046-48f2-876a-3a0297215650",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -2679,7 +2679,7 @@
           },
           {
             "name": "Micro",
-            "source_uuid": "4043981a-3cf4-41c0-b21b-f322c0e462c0",
+            "source_uuid": "99799e49-e7ad-48f3-a7c5-b995fbe8b0fb",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -2734,7 +2734,7 @@
           },
           {
             "name": "Alertes",
-            "source_uuid": "a609ee3e-7397-4396-831f-5775dd21269b",
+            "source_uuid": "c0d3a4bb-1b14-43fb-a16e-0bd7cdfc05de",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -2837,7 +2837,7 @@
     {
       "prev_ver": 537001986,
       "name": "Pause",
-      "uuid": "34e8fd02-45a6-49de-b20c-9291ac0a58fa",
+      "uuid": "6d932051-a09a-4fc3-acf3-d864108716d6",
       "id": "scene",
       "versioned_id": "scene",
       "settings": {
@@ -2846,7 +2846,7 @@
         "items": [
           {
             "name": "Habillage — Pause",
-            "source_uuid": "2ee1c9cd-a4f3-4da1-bd4e-77ac6c81fc08",
+            "source_uuid": "7354bdbb-c9e6-429f-8cb5-015617f12993",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -2901,7 +2901,7 @@
           },
           {
             "name": "Chat",
-            "source_uuid": "dcf58817-8cde-4068-9950-53e8e4c2fa0f",
+            "source_uuid": "3ab9b272-51d4-4a7d-b47d-470384ae3d7c",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -2956,7 +2956,7 @@
           },
           {
             "name": "Musique — linedev pause",
-            "source_uuid": "6f90c26f-988e-47b0-9485-109720ca4d78",
+            "source_uuid": "1d81b93e-071b-4a5a-8508-5fd598edc482",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -3011,7 +3011,7 @@
           },
           {
             "name": "Alertes",
-            "source_uuid": "a609ee3e-7397-4396-831f-5775dd21269b",
+            "source_uuid": "c0d3a4bb-1b14-43fb-a16e-0bd7cdfc05de",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -3112,7 +3112,7 @@
     {
       "prev_ver": 537001986,
       "name": "Pause bébé",
-      "uuid": "b963d1c0-2a07-4e14-963c-63dcde511b54",
+      "uuid": "93e26632-adb9-4408-bfc8-39efb63886c8",
       "id": "scene",
       "versioned_id": "scene",
       "settings": {
@@ -3121,7 +3121,7 @@
         "items": [
           {
             "name": "Habillage — Pause bébé",
-            "source_uuid": "fc611e2d-31ba-43e9-b514-e9a3878593ec",
+            "source_uuid": "d4f3732a-4009-464c-be89-0f05d6ca3e80",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -3176,7 +3176,7 @@
           },
           {
             "name": "Chat",
-            "source_uuid": "dcf58817-8cde-4068-9950-53e8e4c2fa0f",
+            "source_uuid": "3ab9b272-51d4-4a7d-b47d-470384ae3d7c",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -3231,7 +3231,7 @@
           },
           {
             "name": "Musique — linedev bebe",
-            "source_uuid": "4092dd69-543f-4ad5-b35e-bb56fcfb810c",
+            "source_uuid": "9466784f-df99-46a1-9e94-1352ea74dd94",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -3286,7 +3286,7 @@
           },
           {
             "name": "Alertes",
-            "source_uuid": "a609ee3e-7397-4396-831f-5775dd21269b",
+            "source_uuid": "c0d3a4bb-1b14-43fb-a16e-0bd7cdfc05de",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -3387,7 +3387,7 @@
     {
       "prev_ver": 537001986,
       "name": "Souci technique",
-      "uuid": "d2d81758-8b02-488d-94d9-2f2f11ac5979",
+      "uuid": "461cfb0a-4a49-4ec2-89f2-deaaa8afe8ca",
       "id": "scene",
       "versioned_id": "scene",
       "settings": {
@@ -3396,7 +3396,7 @@
         "items": [
           {
             "name": "Habillage — Souci technique",
-            "source_uuid": "77d8726e-59f2-4b18-a0a8-04e4a4133c3f",
+            "source_uuid": "17c4f2b7-2029-4fcf-ba3b-2763cd18e2c7",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -3451,7 +3451,7 @@
           },
           {
             "name": "Musique — linedev pause",
-            "source_uuid": "6f90c26f-988e-47b0-9485-109720ca4d78",
+            "source_uuid": "1d81b93e-071b-4a5a-8508-5fd598edc482",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -3506,7 +3506,7 @@
           },
           {
             "name": "Alertes",
-            "source_uuid": "a609ee3e-7397-4396-831f-5775dd21269b",
+            "source_uuid": "c0d3a4bb-1b14-43fb-a16e-0bd7cdfc05de",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -3605,7 +3605,7 @@
     {
       "prev_ver": 537001986,
       "name": "Fin",
-      "uuid": "752ed980-cc9b-48cc-aa14-ef7ac75ebc25",
+      "uuid": "6fc68033-8e80-472a-bca7-7b00030c2806",
       "id": "scene",
       "versioned_id": "scene",
       "settings": {
@@ -3614,7 +3614,7 @@
         "items": [
           {
             "name": "Habillage — Fin",
-            "source_uuid": "f210ec7f-6a49-49c0-92fe-9aa736fbc733",
+            "source_uuid": "f3c48bc6-e5d4-4cf0-85ec-934661704725",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -3669,7 +3669,7 @@
           },
           {
             "name": "Caméra",
-            "source_uuid": "31e7235d-ba9a-4adc-8cec-2884aae10139",
+            "source_uuid": "ba75891d-b8bd-4222-9ccd-1ccfb123101b",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -3724,7 +3724,7 @@
           },
           {
             "name": "Micro",
-            "source_uuid": "4043981a-3cf4-41c0-b21b-f322c0e462c0",
+            "source_uuid": "99799e49-e7ad-48f3-a7c5-b995fbe8b0fb",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -3779,7 +3779,7 @@
           },
           {
             "name": "Musique — linedev fin",
-            "source_uuid": "73dd8da2-647a-4458-b737-961611af72cd",
+            "source_uuid": "120dad97-e257-43f5-a76b-089642d1c036",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -3834,7 +3834,7 @@
           },
           {
             "name": "Alertes",
-            "source_uuid": "a609ee3e-7397-4396-831f-5775dd21269b",
+            "source_uuid": "c0d3a4bb-1b14-43fb-a16e-0bd7cdfc05de",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -3937,7 +3937,7 @@
     {
       "prev_ver": 537001986,
       "name": "TikTok — Démarrage",
-      "uuid": "f07e2b3d-c923-474a-a27f-93f6a1099f1c",
+      "uuid": "36c4690f-b70e-4398-b510-4eb46b199b30",
       "id": "scene",
       "versioned_id": "scene",
       "settings": {
@@ -3946,7 +3946,7 @@
         "items": [
           {
             "name": "Habillage TikTok — Démarrage",
-            "source_uuid": "bfc3c111-ffb5-47a2-b979-3481a1472eac",
+            "source_uuid": "19e69bfc-c6a0-485a-9711-9a03796459bb",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -4001,7 +4001,7 @@
           },
           {
             "name": "Alertes TikTok",
-            "source_uuid": "49f4323d-4ea1-4db9-ba34-0895e9d6e693",
+            "source_uuid": "b6e02ebe-d64f-4147-a723-a671815aa139",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -4086,7 +4086,7 @@
     {
       "prev_ver": 537001986,
       "name": "TikTok — Cours",
-      "uuid": "bf3e4339-c4c8-4194-88cd-c6f0a1675c62",
+      "uuid": "4205e6e2-6d10-48d0-ac24-d60824ee0f9d",
       "id": "scene",
       "versioned_id": "scene",
       "settings": {
@@ -4095,7 +4095,7 @@
         "items": [
           {
             "name": "Habillage TikTok — Cours",
-            "source_uuid": "eb946dc4-a202-4198-ba8d-416a0862d940",
+            "source_uuid": "cec49675-2110-4789-8e22-bba3d73ea74f",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -4150,7 +4150,7 @@
           },
           {
             "name": "Caméra",
-            "source_uuid": "31e7235d-ba9a-4adc-8cec-2884aae10139",
+            "source_uuid": "ba75891d-b8bd-4222-9ccd-1ccfb123101b",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -4205,7 +4205,7 @@
           },
           {
             "name": "Fenêtre",
-            "source_uuid": "792db17c-76c1-493b-b9f7-625071f90d50",
+            "source_uuid": "bb09b847-413c-4374-a61a-4b63bb23695c",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -4260,7 +4260,7 @@
           },
           {
             "name": "Alertes TikTok",
-            "source_uuid": "49f4323d-4ea1-4db9-ba34-0895e9d6e693",
+            "source_uuid": "b6e02ebe-d64f-4147-a723-a671815aa139",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -4349,7 +4349,7 @@
     {
       "prev_ver": 537001986,
       "name": "TikTok — Questions",
-      "uuid": "5158f8d0-f6fb-4e7a-8b0c-174a0cf2bd8e",
+      "uuid": "2410c844-3a17-439a-932e-c0eb4c5f6ff3",
       "id": "scene",
       "versioned_id": "scene",
       "settings": {
@@ -4358,7 +4358,7 @@
         "items": [
           {
             "name": "Caméra",
-            "source_uuid": "31e7235d-ba9a-4adc-8cec-2884aae10139",
+            "source_uuid": "ba75891d-b8bd-4222-9ccd-1ccfb123101b",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -4413,7 +4413,7 @@
           },
           {
             "name": "Habillage TikTok — Questions",
-            "source_uuid": "cf5e28fd-a6c8-4f81-9146-0f104a589b26",
+            "source_uuid": "144b42de-cf9f-40ab-89a4-f5a3b561de53",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -4468,7 +4468,7 @@
           },
           {
             "name": "Alertes TikTok",
-            "source_uuid": "49f4323d-4ea1-4db9-ba34-0895e9d6e693",
+            "source_uuid": "b6e02ebe-d64f-4147-a723-a671815aa139",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -4555,7 +4555,7 @@
     {
       "prev_ver": 537001986,
       "name": "TikTok — Pause",
-      "uuid": "43b6f9fd-e751-4934-916c-c9ef295b3092",
+      "uuid": "10639a51-6c23-470f-a1ab-fe80fcd0ae08",
       "id": "scene",
       "versioned_id": "scene",
       "settings": {
@@ -4564,7 +4564,7 @@
         "items": [
           {
             "name": "Habillage TikTok — Pause",
-            "source_uuid": "56940da1-6e0d-4a44-b460-79c71c7357c0",
+            "source_uuid": "6a9fb030-d92c-4791-9626-92ea56d1cf32",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -4619,7 +4619,7 @@
           },
           {
             "name": "Alertes TikTok",
-            "source_uuid": "49f4323d-4ea1-4db9-ba34-0895e9d6e693",
+            "source_uuid": "b6e02ebe-d64f-4147-a723-a671815aa139",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -4704,7 +4704,7 @@
     {
       "prev_ver": 537001986,
       "name": "TikTok — Pause bébé",
-      "uuid": "559f3b71-c8e5-4737-836c-dd6ead3b5e3f",
+      "uuid": "f9af4386-1d4e-444a-97ed-0d0becc8ca0a",
       "id": "scene",
       "versioned_id": "scene",
       "settings": {
@@ -4713,7 +4713,7 @@
         "items": [
           {
             "name": "Habillage TikTok — Pause bébé",
-            "source_uuid": "055d8a67-5ae9-4067-8376-6f859c635d79",
+            "source_uuid": "5b4c507a-aaa9-4589-87d2-d5f0ec5fe248",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -4768,7 +4768,7 @@
           },
           {
             "name": "Alertes TikTok",
-            "source_uuid": "49f4323d-4ea1-4db9-ba34-0895e9d6e693",
+            "source_uuid": "b6e02ebe-d64f-4147-a723-a671815aa139",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -4853,7 +4853,7 @@
     {
       "prev_ver": 537001986,
       "name": "TikTok — Souci technique",
-      "uuid": "1b369d98-55b7-4fc8-bd17-51946c0cd3b5",
+      "uuid": "187ebbca-7fad-4c24-b0f6-42679b6c6cd3",
       "id": "scene",
       "versioned_id": "scene",
       "settings": {
@@ -4862,7 +4862,7 @@
         "items": [
           {
             "name": "Habillage TikTok — Souci technique",
-            "source_uuid": "13f1538a-f0f3-4b81-8e9d-dc26a0d9696d",
+            "source_uuid": "1eeab15a-4324-4ddb-8da7-283d1e60608a",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -4917,7 +4917,7 @@
           },
           {
             "name": "Alertes TikTok",
-            "source_uuid": "49f4323d-4ea1-4db9-ba34-0895e9d6e693",
+            "source_uuid": "b6e02ebe-d64f-4147-a723-a671815aa139",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -5002,7 +5002,7 @@
     {
       "prev_ver": 537001986,
       "name": "TikTok — Fin",
-      "uuid": "57e86bc7-2d8c-43ae-84c6-475d90c1f0f8",
+      "uuid": "ba9c210d-ebd8-4c7b-9ad0-235714839d22",
       "id": "scene",
       "versioned_id": "scene",
       "settings": {
@@ -5011,7 +5011,7 @@
         "items": [
           {
             "name": "Habillage TikTok — Fin",
-            "source_uuid": "a686b076-5de6-4f56-bf8f-83917ae40623",
+            "source_uuid": "09dfca42-5a97-4eb4-8d07-d11cf1bdd1f4",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -5066,7 +5066,7 @@
           },
           {
             "name": "Caméra",
-            "source_uuid": "31e7235d-ba9a-4adc-8cec-2884aae10139",
+            "source_uuid": "ba75891d-b8bd-4222-9ccd-1ccfb123101b",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -5121,7 +5121,7 @@
           },
           {
             "name": "Alertes TikTok",
-            "source_uuid": "49f4323d-4ea1-4db9-ba34-0895e9d6e693",
+            "source_uuid": "b6e02ebe-d64f-4147-a723-a671815aa139",
             "visible": true,
             "locked": true,
             "rot": 0,

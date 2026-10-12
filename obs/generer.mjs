@@ -144,8 +144,10 @@ function sourcesCommunes(seance) {
 
   const s = { camera, micro };
   if (seance.id === 'gaming') {
-    const jeuRef = refSource('Capture de jeu');
-    s.capture = source('Capture du jeu', 'game_capture', { ...jeuRef.settings, capture_audio: true, anti_cheat_hook: true }, { volume: 0.32, mixers: PISTES.capture, hotkeys: { ...vide(), hotkey_start: [], hotkey_stop: [] },
+    // N'importe quel jeu en plein écran (sans bordure compris) : la référence visait la fenêtre de How to Fish, et chaque
+    // régénération écrasait le jeu choisi dans OBS (No Man's Sky, constaté le 2026-10-12).
+    const { window: _fenetre, ...jeuRef } = refSource('Capture de jeu').settings;
+    s.capture = source('Capture du jeu', 'game_capture', { ...jeuRef, capture_mode: 'any_fullscreen', capture_audio: true, anti_cheat_hook: true }, { volume: 0.32, mixers: PISTES.capture, hotkeys: { ...vide(), hotkey_start: [], hotkey_stop: [] },
       filters: [attenuation(), filtre('Limiteur', 'limiter_filter', 'limiter_filter', { threshold: -6, release_time: 60 })] });
     const disco = refSource('Discord');
     // Discord : les voix des amis ramenées au même niveau, sans les faire baisser quand tu parles.
