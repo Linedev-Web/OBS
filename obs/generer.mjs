@@ -179,17 +179,20 @@ function sourcesCommunes(seance) {
 }
 
 const RELANCE = new Set(['demarrage', 'pause', 'pause-bebe', 'souci']); // chronos qui repartent à chaque affichage
+// Un habillage s'arrête tant que sa scène est cachée (shutdown) : 16 pages qui tournaient en permanence, dont 7 en
+// 2560×1440, chargeaient la carte graphique déjà pleine pendant un live (97 %, 2026-10-13). Rechargé (page locale) au
+// changement de scène, pendant la transition. Alertes et chats, eux, tournent toujours (historique des messages).
 function overlay(seance, scene) {
   return source(`Habillage — ${scene.nom}`, 'browser_source', {
     is_local_file: true, local_file: `${OVERLAYS}/${scene.overlay}`, width: W, height: H, fps_custom: true, fps: 30,
-    restart_when_active: RELANCE.has(scene.id), shutdown: false, reroute_audio: false,
+    restart_when_active: RELANCE.has(scene.id), shutdown: true, reroute_audio: false,
     css: `${CSS_BASE} :root{--seance:${seance.id}}`,
   }, { mixers: 0, hotkeys: { ...vide(), 'ObsBrowser.Refresh': [] } });
 }
 function overlayVertical(seance, vue, nom) {
   return source(`Habillage TikTok — ${nom}`, 'browser_source', {
     is_local_file: true, local_file: `${OVERLAYS}/${seance.marque}/vertical.html`, width: VW, height: VH, fps_custom: true, fps: 30,
-    restart_when_active: RELANCE.has(vue), shutdown: false, reroute_audio: false,
+    restart_when_active: RELANCE.has(vue), shutdown: true, reroute_audio: false,
     css: `${CSS_BASE} :root{--seance:${seance.id};--vue:${vue}}`,
   }, { mixers: 0, hotkeys: { ...vide(), 'ObsBrowser.Refresh': [] } });
 }
@@ -220,13 +223,15 @@ function element(src, id, rect, ajustement = 'interieur', { k = K, aligner = 0, 
   const [x, y, w, h] = rect;
   const pos = { x: x * k, y: y * k };
   const bounds = { x: w * k, y: h * k };
+  const pleinCanevas = pos.x === 0 && pos.y === 0 && bounds.x === canevas[0] && bounds.y === canevas[1];
   return {
     ...base, pos, bounds, ...relatif(pos, bounds, canevas), bounds_align: aligner,
     // intérieur : tout est visible (capture) ; extérieur : remplit le cadre en rognant (caméra) ; étirer : taille exacte (navigateur)
     bounds_type: ajustement === 'exterieur' ? 3 : ajustement === 'etirer' ? 1 : 2, bounds_crop: ajustement === 'exterieur',
     // Caméra et captures sont réduites (1080p dans un cadre de 534 px de haut en Montage) : sans filtre, OBS les échantillonne
-    // en bilinéaire et l'image crénelle (« pixelisé », 2026-10-09). « Area » est le filtre d'OBS fait pour réduire.
-    scale_filter: ajustement === 'etirer' ? 'disable' : 'area',
+    // en bilinéaire et l'image crénelle (« pixelisé », 2026-10-09). « Area » est le filtre d'OBS fait pour réduire. Pas sur
+    // une capture plein canevas (le jeu, déjà à la bonne taille) : ce serait un rendu complet de plus à chaque image.
+    scale_filter: ajustement === 'etirer' || pleinCanevas ? 'disable' : 'area',
   };
 }
 
