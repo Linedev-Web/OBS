@@ -31,7 +31,7 @@
     {
       "prev_ver": 537001986,
       "name": "Caméra",
-      "uuid": "92aecd93-d499-4bd2-a51f-8968d02e9541",
+      "uuid": "9b188cbd-082a-43f1-ad35-3659a5c8db97",
       "id": "dshow_input",
       "versioned_id": "dshow_input",
       "settings": {
@@ -66,7 +66,7 @@
         {
           "prev_ver": 537001986,
           "name": "Couleurs",
-          "uuid": "55cbc25d-7b7c-42eb-9fab-d9c8985f0dba",
+          "uuid": "39262e80-0686-4079-ba61-523ab8657a7e",
           "id": "color_filter",
           "versioned_id": "color_filter_v2",
           "settings": {
@@ -96,7 +96,7 @@
         {
           "prev_ver": 537001986,
           "name": "Enregistrement caméra",
-          "uuid": "159d9532-11f7-4398-8b8f-9bce555f0628",
+          "uuid": "b6c4bad4-03d2-4bbe-ab70-a52bcc1cd214",
           "id": "source_record_filter",
           "versioned_id": "source_record_filter",
           "settings": {
@@ -134,7 +134,7 @@
     {
       "prev_ver": 537001986,
       "name": "Micro",
-      "uuid": "e9842bf1-57c5-4a22-b60f-d80c7e9a5bcc",
+      "uuid": "30f2d855-f999-40e7-b457-6d37fb19f950",
       "id": "wasapi_input_capture",
       "versioned_id": "wasapi_input_capture",
       "settings": {
@@ -166,7 +166,7 @@
         {
           "prev_ver": 537001986,
           "name": "Limiteur",
-          "uuid": "f1e8a94e-62a0-47f0-b48a-98c355c7619c",
+          "uuid": "4a40798d-6387-4c70-9b71-0198b2d9a7bf",
           "id": "limiter_filter",
           "versioned_id": "limiter_filter",
           "settings": {
@@ -195,7 +195,7 @@
     {
       "prev_ver": 537001986,
       "name": "Écran",
-      "uuid": "f66c2ae4-4168-4ec6-9703-a81167b488a6",
+      "uuid": "db746800-01f9-4fa5-9568-8d26cf7bc0ff",
       "id": "monitor_capture",
       "versioned_id": "monitor_capture",
       "settings": {
@@ -221,7 +221,7 @@
     {
       "prev_ver": 537001986,
       "name": "Plateau",
-      "uuid": "c4e31fa7-09df-428e-b8ed-33d76f8c512d",
+      "uuid": "d85f9c2a-aadc-4817-9410-22e40b6fd0c3",
       "id": "scene",
       "versioned_id": "scene",
       "settings": {
@@ -230,7 +230,7 @@
         "items": [
           {
             "name": "Caméra",
-            "source_uuid": "92aecd93-d499-4bd2-a51f-8968d02e9541",
+            "source_uuid": "9b188cbd-082a-43f1-ad35-3659a5c8db97",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -285,7 +285,7 @@
           },
           {
             "name": "Micro",
-            "source_uuid": "e9842bf1-57c5-4a22-b60f-d80c7e9a5bcc",
+            "source_uuid": "30f2d855-f999-40e7-b457-6d37fb19f950",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -367,7 +367,7 @@
     {
       "prev_ver": 537001986,
       "name": "Écran",
-      "uuid": "4a764d26-9497-4050-b434-363c9ea9af19",
+      "uuid": "7c94cee4-94e2-4996-a18a-d9b618a7aa76",
       "id": "scene",
       "versioned_id": "scene",
       "settings": {
@@ -376,7 +376,7 @@
         "items": [
           {
             "name": "Écran",
-            "source_uuid": "f66c2ae4-4168-4ec6-9703-a81167b488a6",
+            "source_uuid": "db746800-01f9-4fa5-9568-8d26cf7bc0ff",
             "visible": true,
             "locked": true,
             "rot": 0,
