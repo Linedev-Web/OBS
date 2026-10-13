@@ -1,5 +1,5 @@
 {
-  "sauvegarde_le": "2026-10-13T11:07:05.181Z",
+  "sauvegarde_le": "2026-10-13T13:26:06.207Z",
   "obs": {
     "version": "32.2.2",
     "modules_ajoutes": [
@@ -144,6 +144,10 @@
     {
       "ou": "OBS, global.ini",
       "quoi": "réglage SlabsBrowserDocks"
+    },
+    {
+      "ou": "OBS, module aitum-multistream",
+      "quoi": "réglage stream_key"
     }
   ]
 }

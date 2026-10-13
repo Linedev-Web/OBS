@@ -3,7 +3,20 @@
   "profiles": [
     {
       "name": "Live Latshow",
-      "video_encoder_description0": "2560x1440 60fps 8000Kbps"
+      "video_encoder_description0": "2560x1440 60fps 8000Kbps",
+      "outputs": [
+        {
+          "name": "YouTube Latshow",
+          "stream_server": "rtmps://a.rtmps.youtube.com:443/live2",
+          "stream_key": "",
+          "scale_type": 3,
+          "audio_encoder_settings": {
+            "bitrate": 128
+          },
+          "audio_encoder": "ffmpeg_aac",
+          "expanded": true
+        }
+      ]
     }
   ]
 }
