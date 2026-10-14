@@ -482,9 +482,15 @@
     "enregistrement_webcam": { "dossier": "D:/Stream/Rush/_webcam", "cqp": 16, "preset": "p7" },
     "micro_decalage_ms": 110,
     "_note_micro": "Décalage du micro dans les fichiers d’OBS avec la caméra en 4K (mesuré le 2026-10-01, Dev/Plateau/TOURNAGE.md). Micro en direct, seul un limiteur à −3 dB : le nettoyage se fait au montage.",
+    "cadres": { "camera.coin": [1504, 836, 384, 216] },
+    "_note_cadres": "Rectangles en unités de maquette 1920x1080, comme les cadres des lives. Caméra en bas à droite des scènes « … et caméra », à la même place que pendant le live Gaming.",
+    "profil": "Live Latshow",
+    "_note_fenetres": "« Page web » (navigateur, Arc par défaut comme dans l’ancienne collection) et « Code » (PhpStorm) sont des captures de fenêtre : la fenêtre choisie dans OBS (Propriétés de la source) est gardée d’une régénération à l’autre. La webcam est enregistrée à part en 4K dans toutes les scènes (filtre de la caméra), pour la remonter autrement au montage.",
     "scenes": [
       { "id": "plateau", "nom": "Plateau", "role": "Ta caméra en plein écran et ton micro : le tournage." },
-      { "id": "ecran", "nom": "Écran", "role": "Ton écran seul, sans webcam ni micro : les plans de la manip (B-roll)." }
+      { "id": "ecran", "nom": "Écran", "role": "Ton écran seul, sans webcam ni micro : les plans de la manip (B-roll)." },
+      { "id": "web-camera", "nom": "Page web et caméra", "role": "La fenêtre de ton navigateur en grand, ta caméra en bas à droite et ton micro : pour montrer un site ou un thème (Rainbow, ZodPress…)." },
+      { "id": "code-camera", "nom": "Code et caméra", "role": "La fenêtre de ton IDE en grand, ta caméra en bas à droite et ton micro : pour expliquer le code." }
     ]
   }
 }

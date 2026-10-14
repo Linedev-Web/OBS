@@ -7,6 +7,12 @@
     },
     {
       "name": "Écran"
+    },
+    {
+      "name": "Page web et caméra"
+    },
+    {
+      "name": "Code et caméra"
     }
   ],
   "current_scene": "Plateau",
@@ -31,7 +37,7 @@
     {
       "prev_ver": 537001986,
       "name": "Caméra",
-      "uuid": "e2f8da73-4559-4e9e-9dd0-c09e2eb348fe",
+      "uuid": "1fbcad7c-fc61-4671-a58a-6dbc4a5253e6",
       "id": "dshow_input",
       "versioned_id": "dshow_input",
       "settings": {
@@ -66,7 +72,7 @@
         {
           "prev_ver": 537001986,
           "name": "Couleurs",
-          "uuid": "5a59e697-096c-4f74-b472-0d94d5b45426",
+          "uuid": "c1cf0cc0-2e74-4ef3-8fc1-118d5a78cf8d",
           "id": "color_filter",
           "versioned_id": "color_filter_v2",
           "settings": {
@@ -96,7 +102,7 @@
         {
           "prev_ver": 537001986,
           "name": "Enregistrement caméra",
-          "uuid": "a41e14dc-ccfd-4a86-94fd-905ab0db7381",
+          "uuid": "2773684e-73c1-4c6b-8571-9ae18e9128ec",
           "id": "source_record_filter",
           "versioned_id": "source_record_filter",
           "settings": {
@@ -134,7 +140,7 @@
     {
       "prev_ver": 537001986,
       "name": "Micro",
-      "uuid": "c3a8eff1-6753-4293-97d5-09d5014a15dd",
+      "uuid": "ba8beff3-e5ec-4ec9-afe7-57b1e5518a2a",
       "id": "wasapi_input_capture",
       "versioned_id": "wasapi_input_capture",
       "settings": {
@@ -166,7 +172,7 @@
         {
           "prev_ver": 537001986,
           "name": "Limiteur",
-          "uuid": "85497f2a-d695-49a3-8445-86eb2b6ba987",
+          "uuid": "e99b4c9b-f912-45e8-9cac-a17447f7fa46",
           "id": "limiter_filter",
           "versioned_id": "limiter_filter",
           "settings": {
@@ -195,7 +201,7 @@
     {
       "prev_ver": 537001986,
       "name": "Écran",
-      "uuid": "14b36336-3b50-463b-b859-4b6db13135c8",
+      "uuid": "d48ab187-54f3-4376-be1f-32394103776d",
       "id": "monitor_capture",
       "versioned_id": "monitor_capture",
       "settings": {
@@ -220,8 +226,70 @@
     },
     {
       "prev_ver": 537001986,
+      "name": "Page web",
+      "uuid": "30333d29-ab35-4929-a8ec-027153a55301",
+      "id": "window_capture",
+      "versioned_id": "window_capture",
+      "settings": {
+        "window": "Arc:WinUIDesktopWin32WindowClass:Arc.exe",
+        "method": 2,
+        "priority": 2,
+        "cursor": true,
+        "client_area": true,
+        "capture_audio": false
+      },
+      "mixers": 0,
+      "sync": 0,
+      "flags": 0,
+      "volume": 1,
+      "balance": 0.5,
+      "enabled": true,
+      "muted": false,
+      "push-to-mute": false,
+      "push-to-mute-delay": 0,
+      "push-to-talk": false,
+      "push-to-talk-delay": 0,
+      "hotkeys": {},
+      "deinterlace_mode": 0,
+      "deinterlace_field_order": 0,
+      "monitoring_type": 0,
+      "private_settings": {}
+    },
+    {
+      "prev_ver": 537001986,
+      "name": "Code",
+      "uuid": "7c335db1-a6ab-40e1-bce9-c1fd11f32a48",
+      "id": "window_capture",
+      "versioned_id": "window_capture",
+      "settings": {
+        "window": "Serveurliste – Commit#3A index.php:SunAwtFrame:phpstorm64.exe",
+        "method": 2,
+        "priority": 2,
+        "cursor": true,
+        "client_area": true,
+        "capture_audio": false
+      },
+      "mixers": 0,
+      "sync": 0,
+      "flags": 0,
+      "volume": 1,
+      "balance": 0.5,
+      "enabled": true,
+      "muted": false,
+      "push-to-mute": false,
+      "push-to-mute-delay": 0,
+      "push-to-talk": false,
+      "push-to-talk-delay": 0,
+      "hotkeys": {},
+      "deinterlace_mode": 0,
+      "deinterlace_field_order": 0,
+      "monitoring_type": 0,
+      "private_settings": {}
+    },
+    {
+      "prev_ver": 537001986,
       "name": "Plateau",
-      "uuid": "1e11a0c8-d09b-491a-959a-9c69268b7baf",
+      "uuid": "b20b4c5d-971b-47aa-863e-15aa559061e8",
       "id": "scene",
       "versioned_id": "scene",
       "settings": {
@@ -230,7 +298,7 @@
         "items": [
           {
             "name": "Caméra",
-            "source_uuid": "e2f8da73-4559-4e9e-9dd0-c09e2eb348fe",
+            "source_uuid": "1fbcad7c-fc61-4671-a58a-6dbc4a5253e6",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -285,7 +353,7 @@
           },
           {
             "name": "Micro",
-            "source_uuid": "c3a8eff1-6753-4293-97d5-09d5014a15dd",
+            "source_uuid": "ba8beff3-e5ec-4ec9-afe7-57b1e5518a2a",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -367,7 +435,7 @@
     {
       "prev_ver": 537001986,
       "name": "Écran",
-      "uuid": "a6ffd3d6-d38c-4dc6-a0c9-b54000e2c134",
+      "uuid": "89e1dabd-f564-46a8-8108-2c3b255a884a",
       "id": "scene",
       "versioned_id": "scene",
       "settings": {
@@ -376,7 +444,7 @@
         "items": [
           {
             "name": "Écran",
-            "source_uuid": "14b36336-3b50-463b-b859-4b6db13135c8",
+            "source_uuid": "d48ab187-54f3-4376-be1f-32394103776d",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -446,6 +514,412 @@
         "OBSBasic.SelectScene": [],
         "libobs.show_scene_item.1": [],
         "libobs.hide_scene_item.1": []
+      },
+      "deinterlace_mode": 0,
+      "deinterlace_field_order": 0,
+      "monitoring_type": 0,
+      "private_settings": {},
+      "canvas_uuid": "6c69626f-6273-4c00-9d88-c5136d61696e"
+    },
+    {
+      "prev_ver": 537001986,
+      "name": "Page web et caméra",
+      "uuid": "41bfa68b-5eb0-4f0a-bee9-58d11b72b87c",
+      "id": "scene",
+      "versioned_id": "scene",
+      "settings": {
+        "id_counter": 3,
+        "custom_size": false,
+        "items": [
+          {
+            "name": "Page web",
+            "source_uuid": "30333d29-ab35-4929-a8ec-027153a55301",
+            "visible": true,
+            "locked": true,
+            "rot": 0,
+            "align": 5,
+            "bounds_type": 2,
+            "bounds_align": 0,
+            "bounds_crop": false,
+            "crop_left": 0,
+            "crop_top": 0,
+            "crop_right": 0,
+            "crop_bottom": 0,
+            "id": 1,
+            "group_item_backup": false,
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "scale": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds": {
+              "x": 2560,
+              "y": 1440
+            },
+            "scale_filter": "disable",
+            "blend_method": "default",
+            "blend_type": "normal",
+            "show_transition": {
+              "duration": 0
+            },
+            "hide_transition": {
+              "duration": 0
+            },
+            "private_settings": {},
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
+            "pos_rel": {
+              "x": -1.7777777777777777,
+              "y": -1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 3.5555555555555554,
+              "y": 2
+            }
+          },
+          {
+            "name": "Caméra",
+            "source_uuid": "1fbcad7c-fc61-4671-a58a-6dbc4a5253e6",
+            "visible": true,
+            "locked": true,
+            "rot": 0,
+            "align": 5,
+            "bounds_type": 3,
+            "bounds_align": 0,
+            "bounds_crop": true,
+            "crop_left": 0,
+            "crop_top": 0,
+            "crop_right": 0,
+            "crop_bottom": 0,
+            "id": 2,
+            "group_item_backup": false,
+            "pos": {
+              "x": 2005.3333333333333,
+              "y": 1114.6666666666665
+            },
+            "scale": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds": {
+              "x": 512,
+              "y": 288
+            },
+            "scale_filter": "area",
+            "blend_method": "default",
+            "blend_type": "normal",
+            "show_transition": {
+              "duration": 0
+            },
+            "hide_transition": {
+              "duration": 0
+            },
+            "private_settings": {},
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
+            "pos_rel": {
+              "x": 1.0074074074074073,
+              "y": 0.5481481481481479
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 0.7111111111111111,
+              "y": 0.4
+            }
+          },
+          {
+            "name": "Micro",
+            "source_uuid": "ba8beff3-e5ec-4ec9-afe7-57b1e5518a2a",
+            "visible": true,
+            "locked": true,
+            "rot": 0,
+            "align": 5,
+            "bounds_type": 0,
+            "bounds_align": 0,
+            "bounds_crop": false,
+            "crop_left": 0,
+            "crop_top": 0,
+            "crop_right": 0,
+            "crop_bottom": 0,
+            "id": 3,
+            "group_item_backup": false,
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "scale": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds": {
+              "x": 0,
+              "y": 0
+            },
+            "scale_filter": "disable",
+            "blend_method": "default",
+            "blend_type": "normal",
+            "show_transition": {
+              "duration": 0
+            },
+            "hide_transition": {
+              "duration": 0
+            },
+            "private_settings": {},
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
+            "pos_rel": {
+              "x": -1.7777777777777777,
+              "y": -1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 0,
+              "y": 0
+            }
+          }
+        ]
+      },
+      "mixers": 0,
+      "sync": 0,
+      "flags": 0,
+      "volume": 1,
+      "balance": 0.5,
+      "enabled": true,
+      "muted": false,
+      "push-to-mute": false,
+      "push-to-mute-delay": 0,
+      "push-to-talk": false,
+      "push-to-talk-delay": 0,
+      "hotkeys": {
+        "OBSBasic.SelectScene": [],
+        "libobs.show_scene_item.1": [],
+        "libobs.hide_scene_item.1": [],
+        "libobs.show_scene_item.2": [],
+        "libobs.hide_scene_item.2": [],
+        "libobs.show_scene_item.3": [],
+        "libobs.hide_scene_item.3": []
+      },
+      "deinterlace_mode": 0,
+      "deinterlace_field_order": 0,
+      "monitoring_type": 0,
+      "private_settings": {},
+      "canvas_uuid": "6c69626f-6273-4c00-9d88-c5136d61696e"
+    },
+    {
+      "prev_ver": 537001986,
+      "name": "Code et caméra",
+      "uuid": "c19e85a5-75f2-4ba6-b438-0c1bec505177",
+      "id": "scene",
+      "versioned_id": "scene",
+      "settings": {
+        "id_counter": 3,
+        "custom_size": false,
+        "items": [
+          {
+            "name": "Code",
+            "source_uuid": "7c335db1-a6ab-40e1-bce9-c1fd11f32a48",
+            "visible": true,
+            "locked": true,
+            "rot": 0,
+            "align": 5,
+            "bounds_type": 2,
+            "bounds_align": 0,
+            "bounds_crop": false,
+            "crop_left": 0,
+            "crop_top": 0,
+            "crop_right": 0,
+            "crop_bottom": 0,
+            "id": 1,
+            "group_item_backup": false,
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "scale": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds": {
+              "x": 2560,
+              "y": 1440
+            },
+            "scale_filter": "disable",
+            "blend_method": "default",
+            "blend_type": "normal",
+            "show_transition": {
+              "duration": 0
+            },
+            "hide_transition": {
+              "duration": 0
+            },
+            "private_settings": {},
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
+            "pos_rel": {
+              "x": -1.7777777777777777,
+              "y": -1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 3.5555555555555554,
+              "y": 2
+            }
+          },
+          {
+            "name": "Caméra",
+            "source_uuid": "1fbcad7c-fc61-4671-a58a-6dbc4a5253e6",
+            "visible": true,
+            "locked": true,
+            "rot": 0,
+            "align": 5,
+            "bounds_type": 3,
+            "bounds_align": 0,
+            "bounds_crop": true,
+            "crop_left": 0,
+            "crop_top": 0,
+            "crop_right": 0,
+            "crop_bottom": 0,
+            "id": 2,
+            "group_item_backup": false,
+            "pos": {
+              "x": 2005.3333333333333,
+              "y": 1114.6666666666665
+            },
+            "scale": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds": {
+              "x": 512,
+              "y": 288
+            },
+            "scale_filter": "area",
+            "blend_method": "default",
+            "blend_type": "normal",
+            "show_transition": {
+              "duration": 0
+            },
+            "hide_transition": {
+              "duration": 0
+            },
+            "private_settings": {},
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
+            "pos_rel": {
+              "x": 1.0074074074074073,
+              "y": 0.5481481481481479
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 0.7111111111111111,
+              "y": 0.4
+            }
+          },
+          {
+            "name": "Micro",
+            "source_uuid": "ba8beff3-e5ec-4ec9-afe7-57b1e5518a2a",
+            "visible": true,
+            "locked": true,
+            "rot": 0,
+            "align": 5,
+            "bounds_type": 0,
+            "bounds_align": 0,
+            "bounds_crop": false,
+            "crop_left": 0,
+            "crop_top": 0,
+            "crop_right": 0,
+            "crop_bottom": 0,
+            "id": 3,
+            "group_item_backup": false,
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "scale": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds": {
+              "x": 0,
+              "y": 0
+            },
+            "scale_filter": "disable",
+            "blend_method": "default",
+            "blend_type": "normal",
+            "show_transition": {
+              "duration": 0
+            },
+            "hide_transition": {
+              "duration": 0
+            },
+            "private_settings": {},
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
+            "pos_rel": {
+              "x": -1.7777777777777777,
+              "y": -1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds_rel": {
+              "x": 0,
+              "y": 0
+            }
+          }
+        ]
+      },
+      "mixers": 0,
+      "sync": 0,
+      "flags": 0,
+      "volume": 1,
+      "balance": 0.5,
+      "enabled": true,
+      "muted": false,
+      "push-to-mute": false,
+      "push-to-mute-delay": 0,
+      "push-to-talk": false,
+      "push-to-talk-delay": 0,
+      "hotkeys": {
+        "OBSBasic.SelectScene": [],
+        "libobs.show_scene_item.1": [],
+        "libobs.hide_scene_item.1": [],
+        "libobs.show_scene_item.2": [],
+        "libobs.hide_scene_item.2": [],
+        "libobs.show_scene_item.3": [],
+        "libobs.hide_scene_item.3": []
       },
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,

@@ -369,8 +369,20 @@ function construirePlateau(plateau) {
     filters: [filtre('Limiteur', 'limiter_filter', 'limiter_filter', { threshold: -3, release_time: 60 })],
   });
   const ecran = source('Écran', 'monitor_capture', refSource("Capture d'écran 2").settings, { mixers: 0, hotkeys: {} });
+  // Vidéos d'explication (2026-10-14) : une fenêtre plutôt que tout l'écran, tantôt le navigateur, tantôt l'IDE. Reprises
+  // des captures de l'ancienne collection (Arc, PhpStorm) ; titre exact, sinon n'importe quelle fenêtre du même programme
+  // (priority 2). Capture Windows (method 2) : Chromium et Java y sont nets. Le choix fait dans OBS est gardé à la régénération.
+  const fenetre = (nom, ref) => source(nom, 'window_capture', { ...refSource(ref).settings, method: 2, priority: 2, cursor: true, client_area: true, capture_audio: false }, { mixers: 0, hotkeys: {} });
+  const web = fenetre('Page web', 'Capture WEB');
+  const code = fenetre('Code', 'Phpstorm Full');
   const plein = [0, 0, MW, MH];
-  const contenu = { plateau: [[camera, plein, 'exterieur'], [micro]], ecran: [[ecran, plein, 'interieur']] };
+  const coin = plateau.cadres['camera.coin'];
+  const contenu = {
+    plateau: [[camera, plein, 'exterieur'], [micro]],
+    ecran: [[ecran, plein, 'interieur']],
+    'web-camera': [[web, plein, 'interieur'], [camera, coin, 'exterieur'], [micro]],
+    'code-camera': [[code, plein, 'interieur'], [camera, coin, 'exterieur'], [micro]],
+  };
   const scenes = plateau.scenes.map((sc) => {
     const items = contenu[sc.id].map(([src, rect, aj], i) => element(src, i + 1, rect, aj));
     const hk = { 'OBSBasic.SelectScene': [] };
@@ -384,7 +396,7 @@ function construirePlateau(plateau) {
     current_transition: 'Coupure', transition_duration: 300, transitions: [], quick_transitions: [],
     saved_projectors: [], preview_locked: false, scaling_enabled: false, scaling_level: 0, scaling_off_x: 0, scaling_off_y: 0,
     modules: {}, resolution: { x: W, y: H }, version: ref.version ?? 2,
-    sources: [camera, micro, ecran, ...scenes],
+    sources: [camera, micro, ecran, web, code, ...scenes],
   };
 }
 
@@ -419,6 +431,12 @@ for (const { seance, fabriquer } of collections) {
       const ancienne = avant.find((s) => s.name === nom)?.settings?.url;
       const neuve = col.sources.find((s) => s.name === nom);
       if (ancienne && neuve) neuve.settings.url = ancienne;
+    }
+    // La fenêtre choisie dans OBS pour une capture de fenêtre (navigateur, IDE, Premiere…) est gardée aussi : avant le
+    // 2026-10-14, chaque régénération la remettait sur celle de la collection de référence.
+    for (const neuve of col.sources.filter((s) => s.id === 'window_capture')) {
+      const ancienne = avant.find((s) => s.name === neuve.name && s.id === 'window_capture')?.settings?.window;
+      if (ancienne) neuve.settings.window = ancienne;
     }
     const archives = path.join(SCENES_OBS, '_archives_live');
     fs.mkdirSync(archives, { recursive: true });

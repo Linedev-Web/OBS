@@ -1,4 +1,4 @@
-// Pages Stream Deck des lives : une touche « Live » sur la page d'accueil, qui ouvre Gaming, Montage et Dev.
+// Pages Stream Deck des lives : une touche « Live » sur la page d'accueil, qui ouvre Gaming, Montage, Dev et Plateau.
 //
 //   node streamdeck/generer.mjs            rend les icônes (streamdeck/icones/) et affiche les pages, n'écrit rien dans le Stream Deck
 //   node streamdeck/generer.mjs --ecrire   ferme le logiciel Stream Deck, sauvegarde le profil, écrit nos pages, relance le logiciel
@@ -55,12 +55,15 @@ function action(uuid, nom, plugin, settings, images, etat = 0) {
 const retour = (m) => action('com.elgato.streamdeck.profile.backtoparent', null, null, {}, [icone(`retour-${m}`, { m, t: 'Retour', f: 'rond' })]);
 const dossier = (m, id, texte, cible, p = '') => action('com.elgato.streamdeck.profile.openchild', null, null, { ProfileUUID: cible.toLowerCase() }, [icone(id, { m, t: texte, f: 'triangle', p })]);
 const site = (m, id, texte, url) => action('com.elgato.streamdeck.system.website', null, null, { openInBrowser: true, path: url }, [icone(id, { m, t: texte, f: 'carre' })]);
-const scene = (m, sc) => action('com.elgato.obsstudio.scene', 'Scene', OBS, { scene: sc.nom, target: 'program' },
-  [icone(`scene-${m}-${sc.id}-${sc.nom}-on`, { m, t: sc.nom, e: 'actif', p: sc.touche.replace('Ctrl+Alt+', '') }), icone(`scene-${m}-${sc.id}-${sc.nom}`, { m, t: sc.nom, p: sc.touche.replace('Ctrl+Alt+', '') })], 1);
+// Raccourci affiché sous le nom (F1…F8 des lives) ; les scènes du Plateau n'en ont pas.
+const scene = (m, sc) => { const p = (sc.touche ?? '').replace('Ctrl+Alt+', ''); return action('com.elgato.obsstudio.scene', 'Scene', OBS, { scene: sc.nom, target: 'program' },
+  [icone(`scene-${m}-${sc.id}-${sc.nom}-on`, { m, t: sc.nom, e: 'actif', p }), icone(`scene-${m}-${sc.id}-${sc.nom}`, { m, t: sc.nom, p })], 1); };
+const enregistrer = (m) => action('com.elgato.obsstudio.record', 'Record', OBS, { isInMultiAction: false }, [icone(`enreg-${m}-on`, { m, t: 'Enreg.\nen cours', e: 'actif', f: 'rond' }), icone(`enreg-${m}`, { m, t: 'Enregis-\ntrer', f: 'rond' })], 1);
 const muet = (m, id, source, texte, coupe) => action('com.elgato.obsstudio.mixeraudio', 'Mixer Audio', OBS, { source, type: 'mute', mode: 'toggle', isInMultiAction: false },
   [icone(`${id}-${m}`, { m, t: texte, f: 'rond' }), icone(`${id}-${m}-coupe`, { m, t: coupe, e: 'actif', f: 'rond' })]);
 function charger(m, seance) {
-  const routine = action('com.elgato.streamdeck.multiactions.routine', null, null, {}, [icone(`charger-${seance.id}`, { m, t: 'Charger\nla séance', f: 'losange', p: seance.id === 'dev' ? 'linedev' : 'Latshow' })]);
+  const p = { dev: 'linedev', plateau: 'Tournage' }[seance.id] ?? 'Latshow';
+  const routine = action('com.elgato.streamdeck.multiactions.routine', null, null, {}, [icone(`charger-${seance.id}`, { m, t: 'Charger\nla séance', f: 'losange', p })]);
   const pas = (a) => { const { _images, ...propre } = a; propre.States = [{}, {}]; return { Actions: [propre] }; };
   routine.Actions = [
     pas(action('com.elgato.obsstudio.profile', 'Profile', OBS, { profile: seance.profil }, [], 1)),
@@ -78,12 +81,24 @@ function pageSeance(seance) {
     '0,1': charger(m, seance), '1,1': scene(m, sc.pause), '2,1': scene(m, sc['pause-bebe']), '3,1': scene(m, sc.souci), '4,1': scene(m, sc.fin),
     '0,2': muet(m, 'micro', 'Micro', 'Micro', 'Micro\ncoupé'), '1,2': muet(m, 'son', son[0], son[1], son[2]),
     '2,2': action('com.elgato.obsstudio.replaybuffer.save', 'Replay Buffer Save', OBS, { isInMultiAction: false }, [icone(`garder-${m}`, { m, t: 'Garder\n60 s', f: 'losange', p: 'moment fort' })]),
-    '3,2': action('com.elgato.obsstudio.record', 'Record', OBS, { isInMultiAction: false }, [icone(`enreg-${m}-on`, { m, t: 'Enreg.\nen cours', e: 'actif', f: 'rond' }), icone(`enreg-${m}`, { m, t: 'Enregis-\ntrer', f: 'rond' })], 1),
+    '3,2': enregistrer(m),
     '4,2': action('com.elgato.obsstudio.stream', 'Stream', OBS, { isInMultiAction: false, longpress: true }, [icone(`live-${m}-on`, { m, t: 'En\ndirect', e: 'actif', f: 'triangle', p: 'appui long' }), icone(`live-${m}`, { m, t: 'Live', f: 'triangle', p: 'appui long' })], 1),
   };
 }
 
-const PAGES = { racine: uuidDe('racine'), gaming: uuidDe('gaming'), montage: uuidDe('montage'), dev: uuidDe('dev') };
+// Page « Plateau » (tournages face caméra et vidéos d'explication, 2026-10-14) : ses quatre scènes, le micro, l'enregistrement.
+// La webcam s'enregistre à part d'elle-même dès que l'enregistrement d'OBS tourne.
+function pagePlateau(plateau) {
+  const m = 'linedev';
+  const sc = Object.fromEntries(plateau.scenes.map((s) => [s.id, s]));
+  return {
+    '0,0': retour(m), '1,0': scene(m, sc.plateau), '2,0': scene(m, sc['web-camera']), '3,0': scene(m, sc['code-camera']), '4,0': scene(m, sc.ecran),
+    '0,1': charger(m, { id: 'plateau', nom: plateau.nom, profil: plateau.profil }),
+    '0,2': muet(m, 'micro', 'Micro', 'Micro', 'Micro\ncoupé'), '3,2': enregistrer(m),
+  };
+}
+
+const PAGES = { racine: uuidDe('racine'), gaming: uuidDe('gaming'), montage: uuidDe('montage'), dev: uuidDe('dev'), plateau: uuidDe('plateau') };
 function construire() {
   const pages = { [PAGES.racine]: {
     '0,0': retour('latshow'),
@@ -91,12 +106,14 @@ function construire() {
     '2,0': dossier('latshow', 'dossier-montage', 'Montage', PAGES.montage, 'Twitch + YT'),
     '3,0': dossier('linedev', 'dossier-dev', 'Dev', PAGES.dev, 'YouTube'),
     '4,0': site('latshow', 'site-cockpit', 'Cockpit\nLive', 'http://localhost:3000/live'),
+    '0,1': dossier('linedev', 'dossier-plateau', 'Plateau', PAGES.plateau, 'Tournage'),
     '1,1': site('latshow', 'site-twitch', 'Twitch\ntableau', 'https://dashboard.twitch.tv/u/latshow/stream-manager'),
     '2,1': site('latshow', 'site-yt-latshow', 'YouTube\nLatshow', 'https://studio.youtube.com/channel/UCDMQOxCe9IdkQlsuuSQwXhg/livestreaming'),
     '3,1': site('linedev', 'site-yt-linedev', 'YouTube\nlinedev', 'https://studio.youtube.com/channel/UCxzv_XUVN-bGx9FCZNIxetA/livestreaming'),
     '4,1': site('latshow', 'site-se', 'Stream\nElements', 'https://streamelements.com/dashboard'),
   } };
   for (const s of conf.seances) pages[PAGES[s.id]] = pageSeance(s);
+  if (conf.plateau) pages[PAGES.plateau] = pagePlateau(conf.plateau);
   return pages;
 }
 
