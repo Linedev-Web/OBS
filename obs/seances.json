@@ -488,8 +488,8 @@
     "_note_fenetres": "« Page web » (navigateur, Arc par défaut comme dans l’ancienne collection) et « Code » (PhpStorm) sont des captures de fenêtre : la fenêtre choisie dans OBS (Propriétés de la source) est gardée d’une régénération à l’autre. La webcam est enregistrée à part en 4K dans toutes les scènes (filtre de la caméra), pour la remonter autrement au montage.",
     "scenes": [
       { "id": "plateau", "nom": "Plateau", "role": "Ta caméra en plein écran et ton micro : le tournage." },
-      { "id": "ecran", "nom": "Écran", "role": "Ton écran seul, sans webcam ni micro : les plans de la manip (B-roll)." },
-      { "id": "web-camera", "nom": "Page web et caméra", "role": "La fenêtre de ton navigateur en grand, ta caméra en bas à droite et ton micro : pour montrer un site ou un thème (Rainbow, ZodPress…)." },
+      { "id": "ecran", "nom": "Écran", "role": "Ton écran seul, sans webcam ni micro, avec le son du PC (tout ce qu’il joue) : les plans de la manip (B-roll)." },
+      { "id": "web-camera", "nom": "Page web et caméra", "role": "La fenêtre de ton navigateur en grand, avec son son, ta caméra en bas à droite et ton micro : pour montrer un site ou un thème (Rainbow, ZodPress…)." },
       { "id": "code-camera", "nom": "Code et caméra", "role": "La fenêtre de ton IDE en grand, ta caméra en bas à droite et ton micro : pour expliquer le code." }
     ]
   }

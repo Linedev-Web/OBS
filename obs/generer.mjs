@@ -368,18 +368,25 @@ function construirePlateau(plateau) {
     sync: plateau.micro_decalage_ms * 1e6, mixers: piste(1) | piste(2), // pas de TikTok au Plateau
     filters: [filtre('Limiteur', 'limiter_filter', 'limiter_filter', { threshold: -3, release_time: 60 })],
   });
-  const ecran = source('Écran', 'monitor_capture', refSource("Capture d'écran 2").settings, { mixers: 0, hotkeys: {} });
+  // Pas le même nom que la scène « Écran » : OBS ne savait plus laquelle on lui demandait, et le bouton du Stream Deck
+  // ne changeait pas de scène (2026-10-14).
+  const ecran = source('Capture de l’écran', 'monitor_capture', refSource("Capture d'écran 2").settings, { mixers: 0, hotkeys: {} });
+  // Le son de ce qu'on montre, sur la piste 3 de l'enregistrement (la voix reste seule sur la 2) : tout ce que joue le PC
+  // pour l'écran entier, seulement le navigateur pour la page web (demande du client, 2026-10-14).
+  const contenuSon = piste(1) | piste(3);
+  const sonPc = source('Son du PC', 'wasapi_output_capture', { device_id: 'default' }, { mixers: contenuSon });
   // Vidéos d'explication (2026-10-14) : une fenêtre plutôt que tout l'écran, tantôt le navigateur, tantôt l'IDE. Reprises
   // des captures de l'ancienne collection (Arc, PhpStorm) ; titre exact, sinon n'importe quelle fenêtre du même programme
   // (priority 2). Capture Windows (method 2) : Chromium et Java y sont nets. Le choix fait dans OBS est gardé à la régénération.
-  const fenetre = (nom, ref) => source(nom, 'window_capture', { ...refSource(ref).settings, method: 2, priority: 2, cursor: true, client_area: true, capture_audio: false }, { mixers: 0, hotkeys: {} });
-  const web = fenetre('Page web', 'Capture WEB');
-  const code = fenetre('Code', 'Phpstorm Full');
+  const fenetre = (nom, ref, son) => source(nom, 'window_capture', { ...refSource(ref).settings, method: 2, priority: 2, cursor: true, client_area: true, capture_audio: son },
+    { mixers: son ? contenuSon : 0, hotkeys: {} });
+  const web = fenetre('Page web', 'Capture WEB', true);
+  const code = fenetre('Code', 'Phpstorm Full', false);
   const plein = [0, 0, MW, MH];
   const coin = plateau.cadres['camera.coin'];
   const contenu = {
     plateau: [[camera, plein, 'exterieur'], [micro]],
-    ecran: [[ecran, plein, 'interieur']],
+    ecran: [[ecran, plein, 'interieur'], [sonPc]],
     'web-camera': [[web, plein, 'interieur'], [camera, coin, 'exterieur'], [micro]],
     'code-camera': [[code, plein, 'interieur'], [camera, coin, 'exterieur'], [micro]],
   };
@@ -396,7 +403,7 @@ function construirePlateau(plateau) {
     current_transition: 'Coupure', transition_duration: 300, transitions: [], quick_transitions: [],
     saved_projectors: [], preview_locked: false, scaling_enabled: false, scaling_level: 0, scaling_off_x: 0, scaling_off_y: 0,
     modules: {}, resolution: { x: W, y: H }, version: ref.version ?? 2,
-    sources: [camera, micro, ecran, web, code, ...scenes],
+    sources: [camera, micro, ecran, sonPc, web, code, ...scenes],
   };
 }
 
