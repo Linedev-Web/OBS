@@ -31,6 +31,10 @@ function Ouvrir($appli) {
   }
 }
 
+# TikFinity et Social Stream Ninja (Electron) s'accrochent sinon à la console invisible du Stream Deck,
+# qui reste ouverte tant qu'ils tournent (une de plus à chaque appui ; constaté le 2026-10-15).
+$env:ELECTRON_NO_ATTACH_CONSOLE = '1'
+
 $verrou = New-Object System.Threading.Mutex($false, 'Local\StreamDeck-OuvrirLesApplis')
 if (-not $verrou.WaitOne(0)) { 'Un appui précédent est encore en cours : rien de plus.'; exit }
 try {
