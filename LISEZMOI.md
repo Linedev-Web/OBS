@@ -36,3 +36,5 @@ Le détail de chaque scène (à quoi elle sert) est sur la page **Live** du cock
 ## Stream Deck
 
 Touche **Live** en haut à gauche de ta page d’accueil → **Gaming**, **Montage** ou **Dev**. Dans chaque dossier : les 8 scènes (celle à l’antenne est allumée), **Charger la séance** (bonne collection et bon profil d’un coup), **Micro** et **Son** (allumés quand ils sont coupés), **Garder 60 s** (enregistre le dernier moment fort dans `D:StreamRush`, pour en faire un short), **Enregistrer**, et **Live** : appui long pour lancer ou couper le direct.
+
+Avant le live, sur la page **Live** en bas à gauche : **Ouvrir les applis**. Elle ouvre OBS, TikTok LIVE Studio, TikFinity et Social Stream Ninja, mais seulement celles qui ne sont pas déjà ouvertes : tu peux appuyer sans risque de doublon. Windows te demande l’accord pour OBS (il tourne en administrateur) ; si tu refuses, les autres s’ouvrent quand même. Ce qu’a fait le dernier appui : `%TEMP%\lancer-applis.log`. Ajouter une application : une ligne dans `streamdeck/lancer-applis.ps1`.

@@ -1,4 +1,5 @@
-// Pages Stream Deck des lives : une touche « Live » sur la page d'accueil, qui ouvre Gaming, Montage, Dev et Plateau.
+// Pages Stream Deck des lives : une touche « Live » sur la page d'accueil, qui ouvre Gaming, Montage, Dev et Plateau,
+// et « Ouvrir les applis » (OBS, TikTok LIVE Studio, TikFinity, Social Stream Ninja : streamdeck/lancer-applis.ps1).
 //
 //   node streamdeck/generer.mjs            rend les icônes (streamdeck/icones/) et affiche les pages, n'écrit rien dans le Stream Deck
 //   node streamdeck/generer.mjs --ecrire   ferme le logiciel Stream Deck, sauvegarde le profil, écrit nos pages, relance le logiciel
@@ -18,6 +19,7 @@ const ECRIRE = process.argv.includes('--ecrire');
 const SD = path.join(process.env.APPDATA, 'Elgato', 'StreamDeck');
 const LOGICIEL = 'C:\\Program Files\\Elgato\\StreamDeck\\StreamDeck.exe';
 const CHROME = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe';
+const CONHOST = path.join(process.env.WINDIR, 'System32', 'conhost.exe');
 const ICONES = path.join(ICI, 'icones');
 const conf = JSON.parse(fs.readFileSync(path.join(RACINE, 'obs', 'seances.json'), 'utf8'));
 
@@ -55,6 +57,10 @@ function action(uuid, nom, plugin, settings, images, etat = 0) {
 const retour = (m) => action('com.elgato.streamdeck.profile.backtoparent', null, null, {}, [icone(`retour-${m}`, { m, t: 'Retour', f: 'rond' })]);
 const dossier = (m, id, texte, cible, p = '') => action('com.elgato.streamdeck.profile.openchild', null, null, { ProfileUUID: cible.toLowerCase() }, [icone(id, { m, t: texte, f: 'triangle', p })]);
 const site = (m, id, texte, url) => action('com.elgato.streamdeck.system.website', null, null, { openInBrowser: true, path: url }, [icone(id, { m, t: texte, f: 'carre' })]);
+// Script PowerShell de ce dossier, sans fenêtre (conhost --headless : ni console ni Terminal qui clignote).
+// L'action « Ouvrir » prend le programme entre guillemets, puis ses arguments.
+const commande = (m, id, texte, p, script) => action('com.elgato.streamdeck.system.open', null, null,
+  { path: `"${CONHOST}" --headless powershell.exe -NoProfile -ExecutionPolicy Bypass -File "${path.join(ICI, script)}"` }, [icone(id, { m, t: texte, f: 'losange', p })]);
 // Raccourci affiché sous le nom (F1…F8 des lives) ; les scènes du Plateau n'en ont pas.
 const scene = (m, sc) => { const p = (sc.touche ?? '').replace('Ctrl+Alt+', ''); return action('com.elgato.obsstudio.scene', 'Scene', OBS, { scene: sc.nom, target: 'program' },
   [icone(`scene-${m}-${sc.id}-${sc.nom}-on`, { m, t: sc.nom, e: 'actif', p }), icone(`scene-${m}-${sc.id}-${sc.nom}`, { m, t: sc.nom, p })], 1); };
@@ -111,6 +117,7 @@ function construire() {
     '2,1': site('latshow', 'site-yt-latshow', 'YouTube\nLatshow', 'https://studio.youtube.com/channel/UCDMQOxCe9IdkQlsuuSQwXhg/livestreaming'),
     '3,1': site('linedev', 'site-yt-linedev', 'YouTube\nlinedev', 'https://studio.youtube.com/channel/UCxzv_XUVN-bGx9FCZNIxetA/livestreaming'),
     '4,1': site('latshow', 'site-se', 'Stream\nElements', 'https://streamelements.com/dashboard'),
+    '0,2': commande('latshow', 'ouvrir-applis', 'Ouvrir\nles applis', 'avant le live', 'lancer-applis.ps1'),
   } };
   for (const s of conf.seances) pages[PAGES[s.id]] = pageSeance(s);
   if (conf.plateau) pages[PAGES.plateau] = pagePlateau(conf.plateau);
