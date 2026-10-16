@@ -1,9 +1,9 @@
 // Régie du live (2026-10-08, demande du client : « une interface pour contrôler tout ça, si le périphérique change ») :
 // l'état d'OBS et des commandes sûres, appelées par la page Live du cockpit, le Stream Deck ou une session.
 //
-//   node obs/regie.mjs etat                      OBS, live, enregistrement, image et son TikTok, micro
-//   node obs/regie.mjs demarrer-live             live (Twitch, YouTube), puis enregistrement, puis image TikTok
-//   node obs/regie.mjs terminer-live             arrête le live, l'enregistrement et l'image TikTok
+//   node obs/regie.mjs etat                      OBS, live, YouTube (Aitum Multistream), enregistrement, image et son TikTok, micro
+//   node obs/regie.mjs demarrer-live             live, puis YouTube (Aitum Multistream), enregistrement, image TikTok
+//   node obs/regie.mjs terminer-live             arrête YouTube (Aitum Multistream), le live, l'enregistrement et l'image TikTok
 //   node obs/regie.mjs enregistrer | arreter-enregistrement
 //   node obs/regie.mjs tiktok-on | tiktok-off    image verticale vers TikTok LIVE Studio (caméra virtuelle d'Aitum)
 //   node obs/regie.mjs micros                    micros que voit OBS
@@ -19,6 +19,11 @@
 // L'ordre compte (constaté le 2026-10-08) : la caméra virtuelle d'Aitum Vertical 1.6.6 démarre celle d'OBS sans
 // préparer ses sorties ; lancée avant le live ou l'enregistrement, OBS (mode Avancé) refuse ensuite de les démarrer.
 // Quand rien ne tourne encore, la régie coupe donc l'image TikTok le temps de lancer, puis la relance.
+//
+// YouTube Latshow part par Aitum Multistream (2026-10-16, demande du client : « j'ai que Twitch qui se lance ») : ses
+// sorties reprennent l'encodeur du live principal, elles démarrent donc après lui, et s'arrêtent avant (sinon YouTube
+// continue seul). Les commandes websocket du module (`start_output`, `stop_output`) n'existent qu'après sa 1.0.8
+// publiée en mai 2026 : avec elle, la régie ne peut que dire de cliquer « Stream » dans le panneau Aitum Multistream.
 import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync, spawn } from 'node:child_process';
@@ -30,6 +35,8 @@ const OBS = path.join(process.env.APPDATA ?? '', 'obs-studio');
 const conf = JSON.parse(fs.readFileSync(path.join(ICI, 'seances.json'), 'utf8'));
 const PISTE = conf.vertical.piste_son;
 const AITUM = 'aitum-vertical-canvas';
+const MULTISTREAM = 'aitum-multistream';
+const CONFIG_MULTISTREAM = path.join(OBS, 'plugin_config', 'aitum-multistream', 'config.json');
 const PERIPHERIQUES = path.join(ICI, 'peripheriques.json');
 const AUDIO_MONITOR = {
   config: path.join(OBS, 'plugin_config', 'audio-monitor', 'config.json'),
@@ -118,8 +125,35 @@ const obsTourne = () => {
 
 // ---------- État ----------
 
-const actif = async (obs, statut) => (await obs.req(statut)).responseData?.outputActive === true;
+const actif = async (obs, statut, donnees) => (await obs.req(statut, donnees)).responseData?.outputActive === true;
 const imageTikTok = async (obs) => (await obs.vendeur(AITUM, 'status'))?.virtual_camera === true;
+
+/**
+ * Les noms des sorties d'Aitum Multistream pour un profil d'OBS, lus dans sa configuration (jamais les clés). Ce
+ * fichier ne porte que les sorties du canevas principal : les verticales vivent dans la configuration d'Aitum Vertical.
+ */
+function sortiesDuProfil(profil) {
+  const config = lireJson(CONFIG_MULTISTREAM, {});
+  const trouve = (config.profiles ?? []).find((p) => p.name === profil);
+  return (trouve?.outputs ?? []).map((o) => o.name).filter((nom) => typeof nom === 'string' && nom);
+}
+
+/**
+ * Les sorties d'Aitum Multistream du profil ouvert (« YouTube Latshow ») et si elles tournent. `pilotable` : le module
+ * accepte les commandes websocket. Une sortie n'existe dans OBS (« aitum_multi_output_<nom> ») qu'une fois démarrée.
+ */
+async function multistream(obs) {
+  const pilotable = Boolean(await obs.vendeur(MULTISTREAM, 'version'));
+  const noms = pilotable
+    ? ((await obs.vendeur(MULTISTREAM, 'get_outputs'))?.outputs ?? []).filter((o) => !o.vertical).map((o) => o.name)
+    : sortiesDuProfil((await obs.req('GetProfileList')).responseData?.currentProfileName);
+  const sorties = [];
+  for (const nom of noms) sorties.push({ nom, actif: await actif(obs, 'GetOutputStatus', { outputName: `aitum_multi_output_${nom}` }) });
+  return { pilotable, sorties };
+}
+
+const listeNoms = (sorties) => sorties.map((s) => s.nom).join(', ');
+const A_LA_MAIN = 'bouton « Stream » du panneau Aitum Multistream dans OBS';
 
 async function nomMicro(obs, id) {
   const r = await obs.req('GetInputPropertiesListPropertyItems', { inputName: 'Micro', propertyName: 'device_id' });
@@ -135,7 +169,7 @@ async function lireEtat(obs) {
     sortie: ecoute.son, communication: ecoute.communication, surCable: ecoute.surCable,
   };
   const memorise = lireJson(PERIPHERIQUES, {}).micro ?? null;
-  if (!obs) return { obs: { ouvert: false }, live: false, enregistrement: false, cameraObs: false, tiktok: { module: false, image: false, scene: null }, son, micro: memorise };
+  if (!obs) return { obs: { ouvert: false }, live: false, multistream: { pilotable: false, sorties: [] }, enregistrement: false, cameraObs: false, tiktok: { module: false, image: false, scene: null }, son, micro: memorise };
   const statut = await obs.vendeur(AITUM, 'status');
   const microId = (await obs.req('GetInputSettings', { inputName: 'Micro' })).responseData?.inputSettings?.device_id;
   return {
@@ -145,6 +179,7 @@ async function lireEtat(obs) {
       scene: (await obs.req('GetCurrentProgramScene')).responseData?.sceneName ?? null,
     },
     live: await actif(obs, 'GetStreamStatus'),
+    multistream: await multistream(obs),
     enregistrement: await actif(obs, 'GetRecordStatus'),
     cameraObs: (await actif(obs, 'GetVirtualCamStatus')) && statut?.virtual_camera !== true,
     tiktok: { module: Boolean(statut), image: statut?.virtual_camera === true, scene: (await obs.vendeur(AITUM, 'current_scene'))?.scene ?? null },
@@ -202,6 +237,28 @@ async function arreterSortie(obs, demande, statut) {
   await obs.req(demande);
   await attendreQue(async () => !(await actif(obs, statut)));
   return true;
+}
+
+/**
+ * Démarre (ou arrête) les sorties d'Aitum Multistream du profil ouvert. Ne refuse jamais : le live principal est déjà
+ * parti (ou s'arrête quand même) ; la phrase rendue dit ce qui reste à faire à la main, vide si tout a suivi.
+ */
+async function basculerMultistream(obs, allumer) {
+  const { pilotable, sorties } = await multistream(obs);
+  const enRetard = (liste) => liste.filter((s) => s.actif !== allumer);
+  if (!pilotable) {
+    const noms = listeNoms(enRetard(sorties));
+    if (!noms) return '';
+    return allumer
+      ? ` ${noms} ne part pas tout seul : clique sur le ${A_LA_MAIN} (le module installé ne prend pas encore d'ordres, voir la page Live).`
+      : ` ${noms} tourne encore : arrête-le avec le ${A_LA_MAIN}.`;
+  }
+  // L'ordre part vers toutes les sorties, sans se fier à l'état lu : le module ne bascule que celles qui ne sont pas
+  // déjà comme demandé (une lecture fausse ne doit pas laisser YouTube tourner seul après le live).
+  for (const s of sorties) await obs.vendeur(MULTISTREAM, allumer ? 'start_output' : 'stop_output', { name: s.nom });
+  if (await attendreQue(async () => enRetard((await multistream(obs)).sorties).length === 0)) return '';
+  const noms = listeNoms(enRetard((await multistream(obs)).sorties));
+  return allumer ? ` ${noms} n'a pas démarré : clique sur le ${A_LA_MAIN}.` : ` ${noms} ne s'est pas arrêté : utilise le ${A_LA_MAIN}.`;
 }
 
 async function listeMicros(obs) {
@@ -273,15 +330,18 @@ const COMMANDES = {
     const remise = protegerSortie();
     await assurerSoutiens();
     await demarrerSortie(obs, 'StartStream', 'GetStreamStatus', 'Le live');
+    const aFaire = await basculerMultistream(obs, true);
     await demarrerSortie(obs, 'StartRecord', 'GetRecordStatus', "L'enregistrement");
     await lancerTikTok(obs);
-    return { message: `Live, enregistrement et image TikTok lancés. Passe en direct dans TikTok LIVE Studio.${remise ? ` (Le son de Windows partait dans le câble : remis sur ${remise.nom}.)` : ''}` };
+    const youtube = aFaire ? ` Attention :${aFaire}` : '';
+    return { message: `Live, enregistrement et image TikTok lancés. Passe en direct dans TikTok LIVE Studio.${youtube}${remise ? ` (Le son de Windows partait dans le câble : remis sur ${remise.nom}.)` : ''}` };
   },
   async 'terminer-live'(obs) {
+    const aFaire = await basculerMultistream(obs, false);
     await arreterSortie(obs, 'StopStream', 'GetStreamStatus');
     await arreterSortie(obs, 'StopRecord', 'GetRecordStatus');
     await couperTikTok(obs);
-    return { message: 'Live, enregistrement et image TikTok arrêtés. Pense à terminer le live dans TikTok LIVE Studio.' };
+    return { message: `Live, enregistrement et image TikTok arrêtés. Pense à terminer le live dans TikTok LIVE Studio.${aFaire ? ` Attention :${aFaire}` : ''}` };
   },
   async enregistrer(obs) {
     const parti = await demarrerSortie(obs, 'StartRecord', 'GetRecordStatus', "L'enregistrement");
@@ -334,6 +394,7 @@ function resumer(etat) {
     ecoute,
     `OBS : ${etat.obs.collection}, scène ${etat.obs.scene}`,
     `Live : ${oui(etat.live)} · Enregistrement : ${oui(etat.enregistrement)}`,
+    ...etat.multistream.sorties.map((s) => `${s.nom} (Aitum Multistream) : ${oui(s.actif)}${etat.multistream.pilotable ? '' : ' — à lancer à la main, module sans commandes'}`),
     `Image TikTok : ${etat.tiktok.image ? `oui (${etat.tiktok.scene})` : 'non'}${etat.cameraObs ? " · la caméra virtuelle d'OBS (image horizontale) tourne" : ''}`,
     `Son TikTok : ${etat.son.branche ? `piste ${etat.son.piste} vers ${etat.son.cable}` : `à régler (câble : ${etat.son.cable ?? 'absent'}, Audio Monitor : ${etat.son.installe ? 'installé' : 'absent'})`}`,
     `Micro : ${etat.micro?.nom ?? '—'}`,
