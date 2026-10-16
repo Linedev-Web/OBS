@@ -196,11 +196,14 @@ function overlayVertical(seance, vue, nom) {
     css: `${CSS_BASE} :root{--seance:${seance.id};--vue:${vue}}`,
   }, { mixers: 0, hotkeys: { ...vide(), 'ObsBrowser.Refresh': [] } });
 }
+// Morceaux à -18 LUFS, joués à 0,3 (-10,5 dB) : environ -28 LUFS dans le live, nettement sous la voix (0,6 jusqu'au
+// 2026-10-16, le client : « les musiques sont trop fortes »).
+const VOLUME_MUSIQUE = 0.3;
 function musique(cle) {
   const dossier = `${MUSIQUE}/${cle}`;
   return source(`Musique — ${cle.replace('/', ' ')}`, 'vlc_source', {
     playlist: [{ value: dossier, hidden: false, selected: false }], loop: true, shuffle: true, playback_behavior: 'stop_restart', network_caching: 400,
-  }, { volume: 0.6, mixers: PISTES.musique, hotkeys: { ...vide(), 'VLC_PLAY_PAUSE': [], 'VLC_RESTART': [], 'VLC_STOP': [], 'VLC_PLAYLIST_NEXT': [], 'VLC_PLAYLIST_PREV': [] } });
+  }, { volume: VOLUME_MUSIQUE, mixers: PISTES.musique, hotkeys: { ...vide(), 'VLC_PLAY_PAUSE': [], 'VLC_RESTART': [], 'VLC_STOP': [], 'VLC_PLAYLIST_NEXT': [], 'VLC_PLAYLIST_PREV': [] } });
 }
 
 // ---------- Éléments de scène ----------

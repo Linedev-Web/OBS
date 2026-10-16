@@ -6,6 +6,8 @@
   OBS change de scène pendant que l'écran est couvert (point de bascule : 0,62 s), puis les tuiles repartent et
   découvrent la nouvelle scène. Latshow : losanges nuit, vague cyan. linedev : carrés papier, vague vermillon.
   Rendu en WebM transparent par HyperFrames (voir rendre.mjs), lu par la transition « Stinger » d'OBS.
+  Son (2026-10-16, le client : « les sons des transitions cassent les oreilles ») : plus d'impact de basse (−6,5 LUFS,
+  crête à −0,4 dBFS) ; deux whooshs discrets, environ 15 dB sous la voix du live.
 -->
 <html lang="fr" data-composition-variables='[{"id":"marque","type":"string","label":"Marque (latshow ou linedev)","default":"latshow"}]'>
   <head>
@@ -53,9 +55,8 @@
         <div class="mur" id="mur"></div>
         <div class="scene3d"><div class="logo" id="logo" data-layout-allow-overlap></div></div>
       </section>
-      <audio id="son-arrivee" src="medias/whoosh.mp3" data-start="0" data-duration="0.57" data-track-index="10" data-volume="0.8"></audio>
-      <audio id="son-impact" src="medias/impact-bass-1.mp3" data-start="0.5" data-duration="1" data-track-index="11" data-volume="0.45"></audio>
-      <audio id="son-depart" src="medias/whoosh.mp3" data-start="0.9" data-duration="0.57" data-track-index="12" data-volume="0.55"></audio>
+      <audio id="son-arrivee" src="medias/whoosh.mp3" data-start="0" data-duration="0.57" data-track-index="10" data-volume="0.18"></audio>
+      <audio id="son-depart" src="medias/whoosh.mp3" data-start="0.9" data-duration="0.57" data-track-index="11" data-volume="0.1"></audio>
     </div>
     <script>
       const MARQUES = {

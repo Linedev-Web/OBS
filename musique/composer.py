@@ -1,6 +1,8 @@
 """Musique de fond des écrans de live (demande du client, 2026-10-07 : « des bonnes musiques qui ont de la pêche,
-fait maison »). Composée en local par ACE-Step 1.5 dans le ComfyUI du client, avec la même chaîne que la bibliothèque des
-shorts (D:\\Stream\\Dev\\Assets\\Musique\\composer_ace.py) : workflow officiel, 8 étapes, euler, cfg 1, shift 3.
+fait maison » ; 2026-10-16 : « trop fortes, il faut des musiques plus chill » : démarrage, pause et fin recomposés en
+lofi, chillwave et downtempo à 75-88 BPM, sans grosse batterie ; anciens morceaux dans
+_Archives_travail\\anciens_2026-10-07). Composée en local par ACE-Step 1.5 dans le ComfyUI du client, avec la même chaîne
+que la bibliothèque des shorts (D:\\Stream\\Dev\\Assets\\Musique\\composer_ace.py) : workflow officiel, 8 étapes, euler, cfg 1, shift 3.
 
     D:\\Stream\\Clone\\.venv\\Scripts\\python.exe composer.py            compose ce qui manque, contrôle la voix, écoute
     D:\\Stream\\Clone\\.venv\\Scripts\\python.exe composer.py --ecoute   refait seulement la vidéo d'écoute
@@ -32,26 +34,26 @@ LICENCE = "Composé en local par ACE-Step 1.5 (poids MIT, repackagés Comfy-Org 
 
 # (marque, ambiance, nom court, description ACE-Step, BPM, tonalité). Numéro = rang + 1. Aucun nom d'artiste.
 MORCEAUX = [
-    ("latshow", "demarrage", "synthwave-montee", "energetic synthwave, driving drums, pulsing analog bass, bright arpeggios, gradual build up, "
-     "gaming stream intro, exciting anticipation", 120, "A minor"),
-    ("latshow", "demarrage", "electro-depart", "upbeat electro house, punchy four on the floor kick, sidechained synth chords, rising energy, "
-     "catchy lead riff, gaming stream starting", 124, "F minor"),
-    ("latshow", "pause", "lofi-house", "chill lofi house, warm soft kick, mellow chords, laid back groove, relaxed but positive, background music",
-     118, "D minor"),
-    ("latshow", "pause", "chill-electro", "chill electronic, soft punchy drums, warm bass, dreamy pads, light plucks, relaxed coffee break vibe",
-     105, "E minor"),
+    ("latshow", "demarrage", "chillwave-nuit", "chillwave, soft retro synths, mellow drum machine, warm analog pads, dreamy night drive, "
+     "relaxed anticipation, background music", 85, "A minor"),
+    ("latshow", "demarrage", "lofi-synth", "lofi synth beat, soft muffled drums, warm analog bass, gentle arpeggio, calm and cozy, "
+     "background music", 82, "F minor"),
+    ("latshow", "pause", "lofi-nuit", "chill lofi hip hop, soft dusty drums, mellow electric piano, warm bass, relaxed late night, "
+     "background music", 80, "D minor"),
+    ("latshow", "pause", "downtempo-doux", "downtempo chill electronic, soft kick, warm pads, gentle plucks, airy and relaxed, coffee break, "
+     "background music", 88, "E minor"),
     ("latshow", "bebe", "lofi-doux", "calm lofi, soft muffled piano, gentle brushed drums, warm vinyl texture, peaceful and tender, slow",
      78, "F major"),
     ("latshow", "bebe", "piano-feutre", "soft felt piano, gentle ambient pads, very calm, tender lullaby mood, light soft beat, cozy",
      72, "C major"),
-    ("latshow", "fin", "outro-epique", "warm cinematic electronic outro, uplifting synth chords, steady drums, emotional and slightly epic, "
-     "end of stream, grateful", 110, "C major"),
-    ("latshow", "fin", "synthwave-coucher", "warm synthwave, nostalgic sunset mood, steady drums, lush pads, melodic and uplifting, outro",
-     100, "G major"),
-    ("linedev", "demarrage", "chillhop-focus", "upbeat chillhop, crisp punchy drums, jazzy guitar chops, warm bass, focused coding vibe, positive energy",
-     95, "G major"),
-    ("linedev", "demarrage", "lofi-peche", "upbeat lofi hip hop, punchy boom bap drums, jazzy rhodes keys, head nodding groove, motivated study session",
-     92, "D minor"),
+    ("latshow", "fin", "ambient-coucher", "calm ambient synth outro, warm lush pads, soft slow beat, gentle melody, peaceful and grateful, "
+     "end of stream", 75, "C major"),
+    ("latshow", "fin", "chillwave-aube", "slow chillwave, nostalgic sunset, soft drums, lush warm pads, mellow melody, relaxed outro",
+     80, "G major"),
+    ("linedev", "demarrage", "lofi-focus", "chill lofi hip hop, soft drums, jazzy guitar, warm bass, calm focused coding vibe, background music",
+     82, "G major"),
+    ("linedev", "demarrage", "lofi-rhodes", "mellow lofi beat, soft brushed drums, warm rhodes keys, gentle groove, relaxed study session",
+     80, "D minor"),
     ("linedev", "pause", "jazz-hop", "relaxed jazz hop, swing drums, upright bass, rhodes piano, laid back coffee break groove",
      88, "Bb major"),
     ("linedev", "pause", "lofi-cafe", "chill lofi, soft drums, warm guitar, mellow keys, cozy coffee shop vibe, relaxed",
@@ -60,10 +62,10 @@ MORCEAUX = [
      70, "F major"),
     ("linedev", "bebe", "ambient-doux", "soft ambient, warm pads, gentle music box melody, very calm, peaceful, soft light beat",
      68, "D major"),
-    ("linedev", "fin", "lofi-lumineuse", "bright uplifting lofi, crisp drums, warm major chords, happy jazzy keys, satisfied end of lesson vibe",
-     96, "C major"),
-    ("linedev", "fin", "chillhop-soleil", "sunny chillhop, bouncy drums, warm bass, bright guitar and keys, positive and grateful outro",
-     100, "A major"),
+    ("linedev", "fin", "lofi-lumiere", "warm mellow lofi, soft drums, gentle major chords, jazzy keys, calm and satisfied end of lesson",
+     80, "C major"),
+    ("linedev", "fin", "chillhop-doux", "soft chillhop, relaxed drums, warm bass, gentle guitar and keys, peaceful and grateful outro",
+     84, "A major"),
 ]
 
 
@@ -174,7 +176,8 @@ def main() -> None:
         return
     BRUTS.mkdir(parents=True, exist_ok=True)
     catalogue = charger_catalogue()
-    a_faire = [n for n in range(1, len(MORCEAUX) + 1) if n not in catalogue or not (ICI / catalogue[n]["fichier"]).exists()]
+    a_faire = [n for n in range(1, len(MORCEAUX) + 1)
+               if n not in catalogue or catalogue[n]["nom"] != MORCEAUX[n - 1][2] or not (ICI / catalogue[n]["fichier"]).exists()]
     if a_faire:
         demarrer_comfy()
     # 1. Composition (graine 700 + numéro, puis +1000 par nouvel essai si trop court)

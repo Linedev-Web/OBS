@@ -3,7 +3,9 @@
 //   node transitions/rendre.mjs [latshow|linedev]
 //
 // OBS garde ouvert le fichier de la collection chargée : il ne peut pas être remplacé tant qu'elle est ouverte
-// (EPERM). Pour latshow, passer OBS sur « Live — Dev » ; pour linedev, sur « Live — Gaming » ; ou fermer OBS.
+// (EPERM). OBS fermé, ou sur une collection de l'autre marque choisie par le client. Ne pas changer de collection par
+// obs-websocket : le 2026-10-16, OBS s'est figé en déchargeant Live — Gaming. Pour remplacer le fichier pendant que sa
+// collection est ouverte, voir la ligne `transitions\` de CLAUDE.md (passer par un fichier provisoire).
 //
 // Sortie : transitions/transition_latshow.webm et transition_linedev.webm (VP9 avec transparence, son Opus, 60 i/s),
 // lues par la transition Stinger d'OBS (obs/generer.mjs). Polices et bruitages : transitions/medias/ (non versionnés,
