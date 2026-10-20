@@ -1,1 +1,1 @@
-window.LIVE = {"gaming":{"titre":"","prochain":"","attente_min":5},"montage":{"titre":"","prochain":"","attente_min":5},"dev":{"titre":"","etape":0,"etapes":0,"etape_titre":"","prochain":"","attente_min":5},"maj":"2026-10-07T11:00:00+02:00"};
+window.LIVE = {"gaming":{"titre":"VALORANT","prochain":"","attente_min":3},"montage":{"titre":"","prochain":"","attente_min":5},"dev":{"titre":"","etape":0,"etapes":0,"etape_titre":"","prochain":"","attente_min":5},"maj":"2026-10-19T18:42:14.051Z"};
