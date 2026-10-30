@@ -1,0 +1,90 @@
+/* Bannière du jeu, image verticale Latshow (demande du client, 2026-10-30) : entre la caméra (0–540 px) et le jeu
+   (672 px), 92 px de bannière puis 40 px pour les soutiens du live. Le jeu vient de overlays/jeu.js (obs/jeu.mjs) :
+   <html data-jeu="…"> choisit le gabarit (couleurs, police, symbole, nom dessiné), .avec-score montre le score.
+   Un jeu sans gabarit garde les couleurs de la chaîne, avec son nom écrit en Russo One. */
+@font-face{font-family:'Anton';src:url('../commun/polices/anton-400.woff2') format('woff2');font-weight:400;font-display:block}
+@font-face{font-family:'Orbitron';src:url('../commun/polices/orbitron-700.woff2') format('woff2');font-weight:700;font-display:block}
+@font-face{font-family:'Saira Condensed';src:url('../commun/polices/saira-condensed-800.woff2') format('woff2');font-weight:800;font-display:block}
+@font-face{font-family:'Barlow Condensed';src:url('../commun/polices/barlow-condensed-700.woff2') format('woff2');font-weight:700;font-display:block}
+@font-face{font-family:'Chakra Petch';src:url('../commun/polices/chakra-petch-700.woff2') format('woff2');font-weight:700;font-display:block}
+@font-face{font-family:'Montserrat';src:url('../commun/polices/montserrat-900.woff2') format('woff2');font-weight:900;font-display:block}
+
+:root{
+  --j-fond:var(--nuit);--j-fond-2:#151327;--j-accent:var(--cyan);--j-moi:var(--cyan);--j-adv:#F05A5A;--j-texte:var(--texte);
+  --j-police:'Russo One';--j-graisse:400;--j-espace:.04em;--j-chiffres:'Anton';--j-image:none;
+  /* Symbole sur un pan en biais à gauche (none = pas de pan), nom dessiné à la place du texte (none = texte). */
+  --j-symbole:none;--j-pan:none;--j-titre-gauche:40px;
+  --j-nom:none;--j-nom-ratio:1;--j-nom-image:none;--j-nom-texte:block;
+}
+
+.banniere{position:absolute;left:0;right:0;top:540px;height:92px;overflow:hidden;color:var(--j-texte);
+  background:linear-gradient(100deg,var(--j-fond) 0%,var(--j-fond-2) 100%)}
+/* Image de fond du jeu (préparée à l'avance), fondue dans la couleur du jeu. */
+.banniere::before{content:"";position:absolute;inset:0;background:var(--j-image) center/cover no-repeat;opacity:.5;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 30%,#000 70%,transparent 100%)}
+/* Lueur de la couleur du jeu derrière le score. */
+.banniere::after{content:"";position:absolute;left:50%;top:50%;width:620px;height:260px;transform:translate(-50%,-50%);
+  background:radial-gradient(closest-side,color-mix(in srgb,var(--j-accent) 28%,transparent),transparent);opacity:0;transition:opacity .6s}
+.avec-score .banniere::after{opacity:1}
+.b-pan{display:var(--j-pan);position:absolute;left:0;top:0;bottom:0;width:132px;background:var(--j-accent);
+  clip-path:polygon(0 0,100% 0,calc(100% - 34px) 100%,0 100%)}
+.b-symbole{position:absolute;left:14px;top:14px;width:76px;height:64px;background:var(--j-symbole) center/contain no-repeat}
+
+/* Titre : nom du jeu. Sans score, il est centré et grand ; avec score, il glisse à gauche, plus petit. */
+.b-titre{position:absolute;left:var(--j-titre-gauche);right:40px;top:0;bottom:0;display:flex;align-items:center;justify-content:center;z-index:1}
+.avec-score .b-titre{right:650px;justify-content:flex-start}
+.b-nom{display:var(--j-nom-texte);font:var(--j-graisse) 50px/1 var(--j-police);text-transform:uppercase;letter-spacing:var(--j-espace);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.avec-score .b-nom{font-size:28px}
+.b-nom-image{display:var(--j-nom-image);height:40px;aspect-ratio:var(--j-nom-ratio);background:var(--j-nom) left center/contain no-repeat}
+.avec-score .b-nom-image{height:21px}
+
+/* Score : ton équipe à gauche, l'adverse à droite. */
+.b-score{position:absolute;left:50%;top:0;bottom:0;display:flex;align-items:center;gap:22px;transform:translateX(-30%);opacity:0;z-index:1;
+  transition:opacity .4s,transform .5s cubic-bezier(.2,.8,.2,1)}
+.avec-score .b-score{opacity:1;transform:translateX(-50%)}
+.b-cote{display:flex;align-items:center;gap:14px}
+.b-cote small{font:700 17px/1 'Inter';letter-spacing:.18em;text-transform:uppercase}
+.b-cote.moi small{color:var(--j-moi)}
+.b-cote.adv small{color:var(--j-adv)}
+.b-cote b{display:inline-block;min-width:1.1ch;text-align:center;font:var(--j-graisse-chiffres,400) 74px/1 var(--j-chiffres);color:var(--j-texte);font-variant-numeric:tabular-nums}
+.b-tiret{font:400 40px/1 var(--j-chiffres);color:color-mix(in srgb,var(--j-texte) 45%,transparent)}
+.marque-point{animation:point .9s cubic-bezier(.2,.8,.2,1)}
+.b-cote.moi .marque-point{--eclat:var(--j-moi)}
+.b-cote.adv .marque-point{--eclat:var(--j-adv)}
+@keyframes point{0%{transform:scale(1.5);color:var(--eclat);text-shadow:0 0 28px var(--eclat)}100%{transform:none;text-shadow:none}}
+
+/* Détail de la partie (carte, mode) à droite. */
+.b-detail{position:absolute;right:36px;top:0;bottom:0;display:flex;align-items:center;z-index:1;font:700 17px/1 'Inter';letter-spacing:.14em;
+  text-transform:uppercase;color:color-mix(in srgb,var(--j-texte) 70%,transparent);opacity:0;transition:opacity .4s}
+.avec-score .b-detail{opacity:1}
+
+/* Entrée quand le jeu change : la bannière se dévoile de gauche à droite. */
+.entree{animation:entree .9s cubic-bezier(.2,.8,.2,1)}
+@keyframes entree{0%{clip-path:inset(0 100% 0 0)}100%{clip-path:inset(0 0 0 0)}}
+.sans-jeu .banniere{display:none}
+
+/* Soutiens du live, sous la bannière. */
+.bandeau.sous-banniere{top:632px;height:40px}
+.bandeau.sous-banniere [data-soutiens]{font-size:20px}
+.bandeau.sous-banniere .soutiens-titre{font-size:13px}
+
+/* ---------- Gabarits des jeux ---------- */
+[data-jeu="valorant"]{--j-fond:#0F1923;--j-fond-2:#1B2733;--j-accent:#FF4655;--j-moi:#5DF2C9;--j-adv:#FF4655;--j-texte:#ECE8E1;
+  --j-symbole:url('../jeux/valorant/symbole.svg');--j-pan:block;--j-titre-gauche:130px;
+  --j-nom:url('../jeux/valorant/nom.svg');--j-nom-ratio:1035/150;--j-nom-image:block;--j-nom-texte:none;--j-chiffres:'Anton'}
+[data-jeu="valorant"] .b-pan{background:#1F2B36}
+[data-jeu="roblox"]{--j-fond:#101214;--j-fond-2:#1F2328;--j-accent:#E8E8E8;--j-moi:#00B06F;--j-adv:#FF4B4B;--j-texte:#FFFFFF;
+  --j-nom:url('../jeux/roblox/logo.svg');--j-nom-ratio:800/148;--j-nom-image:block;--j-nom-texte:none;
+  --j-chiffres:'Montserrat';--j-graisse-chiffres:900}
+[data-jeu="roblox"] .b-nom-image{filter:invert(1)}
+[data-jeu="no-mans-sky"]{--j-fond:#120A24;--j-fond-2:#3A1440;--j-accent:#FF8A2B;--j-moi:#FFC24B;--j-adv:#FF5A7A;--j-texte:#FFF4E6;
+  --j-police:'Orbitron';--j-graisse:700;--j-espace:.16em;--j-chiffres:'Orbitron';--j-graisse-chiffres:700}
+[data-jeu="rocket-league"]{--j-fond:#06142E;--j-fond-2:#2A1606;--j-accent:#1E7BFF;--j-moi:#3D9BFF;--j-adv:#FF8A1E;--j-texte:#FFFFFF;
+  --j-symbole:url('../jeux/rocket-league/symbole.svg');--j-pan:block;--j-titre-gauche:130px;
+  --j-police:'Saira Condensed';--j-graisse:800;--j-espace:.02em;--j-chiffres:'Saira Condensed';--j-graisse-chiffres:800}
+[data-jeu="rocket-league"] .b-pan{background:linear-gradient(135deg,#123C8C,#06142E)}
+[data-jeu="euro-truck"]{--j-fond:#0E1B2E;--j-fond-2:#183457;--j-accent:#F5B400;--j-moi:#F5B400;--j-adv:#E8EDF5;--j-texte:#F4F6FA;
+  --j-police:'Barlow Condensed';--j-graisse:700;--j-espace:.06em;--j-chiffres:'Barlow Condensed';--j-graisse-chiffres:700}
+[data-jeu="arc-raiders"]{--j-fond:#16130F;--j-fond-2:#2B2219;--j-accent:#E8572A;--j-moi:#F2C14E;--j-adv:#E8572A;--j-texte:#F1E9DC;
+  --j-police:'Chakra Petch';--j-graisse:700;--j-espace:.1em;--j-chiffres:'Chakra Petch';--j-graisse-chiffres:700}

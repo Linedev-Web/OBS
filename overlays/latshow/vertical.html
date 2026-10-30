@@ -3,7 +3,7 @@
      TikTok affiche ton nom et les spectateurs en haut (jusqu'à ~150 px), les commentaires et la saisie en bas (à partir
      de ~1300 px) : le texte important reste entre les deux. Maquettes validées par le client le 2026-10-08 ; bandeau des
      soutiens à la place de « LIVE GAMING / LATSHOW » et plus aucune pastille (2026-10-09). -->
-<link rel="stylesheet" href="latshow.css"><script src="../commun/scene.js"></script><script src="../commun/soutiens.js"></script>
+<link rel="stylesheet" href="latshow.css"><link rel="stylesheet" href="banniere-jeu.css"><script src="../commun/scene.js"></script><script src="../commun/soutiens.js"></script><script src="../commun/jeu.js"></script>
 <style>
 .v-marque{left:0;right:0;top:400px;justify-content:center}
 .v-centre{position:absolute;left:80px;right:80px;top:530px;text-align:center}
@@ -73,9 +73,16 @@ html:not([data-seance="gaming"]) .annonce{display:none}
   <div class="aussi">Aussi en live sur <b>Twitch</b> latshow et <b>YouTube</b> @Latshow-y</div>
 </div></section>
 
-<!-- Caméra en haut (0–540), jeu ou fenêtre dessous (672–1410, 4:3 élargi), posés par OBS ; entre les deux, les soutiens du
-     live et l'annonce du moment. -->
-<section data-vues="pile"><div class="bandeau" style="top:540px"><span class="soutiens-titre">Merci</span><div data-soutiens="defile" data-vide="Un follow et ton pseudo s'affiche ici"></div></div>
+<!-- Caméra en haut (0–540), jeu ou fenêtre dessous (672–1410, 4:3 élargi), posés par OBS ; entre les deux, la bannière du
+     jeu (banniere-jeu.css, 2026-10-30 : nom et logo du jeu choisi dans le cockpit, score automatique pour Valorant ou au
+     Stream Deck) puis les soutiens du live. -->
+<section data-vues="pile"><div class="banniere" data-jeu-entree>
+  <div class="b-pan"><div class="b-symbole"></div></div>
+  <div class="b-titre"><span class="b-nom" data-jeu-nom></span><span class="b-nom-image"></span></div>
+  <div class="b-score"><span class="b-cote moi"><small>Moi</small><b data-score="moi"></b></span><span class="b-tiret">–</span><span class="b-cote adv"><b data-score="adv"></b><small>Adv.</small></span></div>
+  <div class="b-detail" data-jeu-detail></div>
+</div>
+<div class="bandeau sous-banniere"><span class="soutiens-titre">Merci</span><div data-soutiens="defile" data-vide="Un follow et ton pseudo s'affiche ici"></div></div>
 <!--  <div class="annonce" style="top:600px"><span>Nouveau serveur <b>Valblock</b>&nbsp;: venez le tester&nbsp;!</span></div>-->
 </section>
 

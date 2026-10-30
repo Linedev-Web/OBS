@@ -40,3 +40,6 @@ alertes/sons/_composer.log
 # Soutiens du live (obs/soutiens.mjs) : la liste du live en cours, refaite à chaque live
 obs/soutiens-session.json
 overlays/soutiens.js
+# Bannière du jeu (obs/jeu.mjs) : jeu choisi et score du live en cours
+obs/jeu-session.json
+overlays/jeu.js

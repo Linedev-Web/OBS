@@ -1,4 +1,4 @@
--- Lance le service des soutiens du live (obs/soutiens.mjs) quand OBS charge une collection des lives : il recueille
+-- Lance le service des soutiens du live (obs/soutiens.mjs) et celui de la bannière du jeu (obs/jeu.mjs) quand OBS charge une collection des lives : il recueille
 -- follows, abonnements et dons (widgets StreamElements, TikFinity) pour les écrans. Sans fenêtre (ShellExecute, caché).
 -- S'il tourne déjà, la nouvelle copie s'arrête d'elle-même ; il s'arrête seul deux minutes après la fermeture d'OBS.
 -- Ajouté aux trois collections par obs/generer.mjs (liste « scripts-tool »).
@@ -17,4 +17,6 @@ end
 function script_load(settings)
 	local dossier = script_path():gsub("/", "\\")
 	shell32.ShellExecuteA(nil, "open", "node.exe", '"' .. dossier .. 'soutiens.mjs"', dossier, CACHE)
+	-- Bannière du jeu de l'image verticale (score de Valorant, Stream Deck) : son propre service, port 21311.
+	shell32.ShellExecuteA(nil, "open", "node.exe", '"' .. dossier .. 'jeu.mjs"', dossier, CACHE)
 end
