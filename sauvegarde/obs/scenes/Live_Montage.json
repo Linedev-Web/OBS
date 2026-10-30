@@ -1,84 +1,8 @@
 {
   "name": "Live — Montage",
-  "groups": [],
-  "scene_order": [
-    {
-      "name": "Démarrage"
-    },
-    {
-      "name": "Montage"
-    },
-    {
-      "name": "Aperçu plein écran"
-    },
-    {
-      "name": "Discussion"
-    },
-    {
-      "name": "Pause"
-    },
-    {
-      "name": "Pause bébé"
-    },
-    {
-      "name": "Souci technique"
-    },
-    {
-      "name": "Fin"
-    }
-  ],
-  "current_scene": "Démarrage",
-  "current_program_scene": "Démarrage",
-  "canvases": [
-    {
-      "info": {
-        "name": "Aitum Vertical",
-        "uuid": "920ac5af-9a0b-452a-bb67-e3df68eae738",
-        "private": false,
-        "flags": 14
-      }
-    }
-  ],
-  "current_transition": "Tuiles 3D",
-  "transition_duration": 300,
-  "transitions": [
-    {
-      "name": "Tuiles 3D",
-      "id": "obs_stinger_transition",
-      "settings": {
-        "path": "D:/Stream/OBS/transitions/transition_latshow.webm",
-        "tp_type": 0,
-        "transition_point": 620,
-        "audio_monitoring": 2,
-        "audio_fade_style": 1,
-        "hw_decode": false,
-        "preload": false
-      }
-    }
-  ],
-  "quick_transitions": [],
-  "saved_projectors": [],
-  "preview_locked": false,
-  "scaling_enabled": false,
-  "scaling_level": 0,
-  "scaling_off_x": 0,
-  "scaling_off_y": 0,
-  "modules": {
-    "scripts-tool": [
-      {
-        "path": "D:/Stream/OBS/obs/soutiens.lua",
-        "settings": {}
-      }
-    ]
-  },
-  "resolution": {
-    "x": 2560,
-    "y": 1440
-  },
-  "version": 2,
   "sources": [
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Caméra",
       "uuid": "57d20add-b735-4cba-b5eb-7806ae2badf7",
       "id": "dshow_input",
@@ -106,14 +30,28 @@
       "push-to-mute-delay": 0,
       "push-to-talk": false,
       "push-to-talk-delay": 0,
-      "hotkeys": {},
+      "hotkeys": {
+        "libobs.mute": [],
+        "libobs.unmute": [],
+        "libobs.monitor-on": [],
+        "libobs.monitor-off": [],
+        "libobs.push-to-mute": [],
+        "libobs.push-to-talk": [],
+        "source_record.enable": [],
+        "source_record.disable": [],
+        "source_record.PauseRecording": [],
+        "source_record.UnpauseRecording": [],
+        "source_record.SplitRecording": [],
+        "source_record.AddChapterMarker": []
+      },
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "private_settings": {},
       "filters": [
         {
-          "prev_ver": 537001986,
+          "prev_ver": 553648128,
           "name": "Couleurs",
           "uuid": "c7fa1d03-6935-4c5f-be06-3c170416857b",
           "id": "color_filter",
@@ -140,10 +78,11 @@
           "deinterlace_mode": 0,
           "deinterlace_field_order": 0,
           "monitoring_type": 0,
+          "monitoring_enabled": false,
           "private_settings": {}
         },
         {
-          "prev_ver": 537001986,
+          "prev_ver": 553648128,
           "name": "Enregistrement caméra",
           "uuid": "7f5dd732-49db-48e3-8a43-1eaec6122588",
           "id": "source_record_filter",
@@ -176,12 +115,13 @@
           "deinterlace_mode": 0,
           "deinterlace_field_order": 0,
           "monitoring_type": 0,
+          "monitoring_enabled": false,
           "private_settings": {}
         }
       ]
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Micro",
       "uuid": "a17c36c9-8400-4c79-9e13-0a8332d8dcbe",
       "id": "wasapi_input_capture",
@@ -206,8 +146,6 @@
           {
             "control": true,
             "alt": true,
-            "shift": false,
-            "command": false,
             "key": "OBS_KEY_F9"
           }
         ],
@@ -215,21 +153,22 @@
           {
             "control": true,
             "alt": true,
-            "shift": false,
-            "command": false,
             "key": "OBS_KEY_F10"
           }
         ],
+        "libobs.monitor-on": [],
+        "libobs.monitor-off": [],
         "libobs.push-to-mute": [],
         "libobs.push-to-talk": []
       },
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "private_settings": {},
       "filters": [
         {
-          "prev_ver": 537001986,
+          "prev_ver": 553648128,
           "name": "Réduction du bruit",
           "uuid": "695b4592-eb2f-47c5-be17-b7f6e2ad4222",
           "id": "noise_suppress_filter",
@@ -252,10 +191,11 @@
           "deinterlace_mode": 0,
           "deinterlace_field_order": 0,
           "monitoring_type": 0,
+          "monitoring_enabled": false,
           "private_settings": {}
         },
         {
-          "prev_ver": 537001986,
+          "prev_ver": 553648128,
           "name": "Expandeur",
           "uuid": "e5afc560-338b-499b-99d2-0f897c10b2ef",
           "id": "expander_filter",
@@ -284,10 +224,11 @@
           "deinterlace_mode": 0,
           "deinterlace_field_order": 0,
           "monitoring_type": 0,
+          "monitoring_enabled": false,
           "private_settings": {}
         },
         {
-          "prev_ver": 537001986,
+          "prev_ver": 553648128,
           "name": "Égaliseur",
           "uuid": "2371bb02-117f-4008-8139-50cba605dd6f",
           "id": "basic_eq_filter",
@@ -312,10 +253,11 @@
           "deinterlace_mode": 0,
           "deinterlace_field_order": 0,
           "monitoring_type": 0,
+          "monitoring_enabled": false,
           "private_settings": {}
         },
         {
-          "prev_ver": 537001986,
+          "prev_ver": 553648128,
           "name": "Compresseur",
           "uuid": "7194eaf7-e014-4e0a-b8e1-4fffaa72fa81",
           "id": "compressor_filter",
@@ -342,10 +284,11 @@
           "deinterlace_mode": 0,
           "deinterlace_field_order": 0,
           "monitoring_type": 0,
+          "monitoring_enabled": false,
           "private_settings": {}
         },
         {
-          "prev_ver": 537001986,
+          "prev_ver": 553648128,
           "name": "Limiteur",
           "uuid": "f3ed81d6-fbef-41ca-9c9d-3a0274cf413e",
           "id": "limiter_filter",
@@ -369,22 +312,23 @@
           "deinterlace_mode": 0,
           "deinterlace_field_order": 0,
           "monitoring_type": 0,
+          "monitoring_enabled": false,
           "private_settings": {}
         }
       ]
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Fenêtre",
       "uuid": "08ef7330-2399-4ba4-ad74-3e9fcdb050d0",
       "id": "window_capture",
       "versioned_id": "window_capture",
       "settings": {
         "window": "Arc:WinUIDesktopWin32WindowClass:Arc.exe",
+        "capture_audio": true,
         "method": 2,
         "cursor": true,
-        "client_area": true,
-        "capture_audio": true
+        "client_area": true
       },
       "mixers": 37,
       "sync": 0,
@@ -397,14 +341,22 @@
       "push-to-mute-delay": 0,
       "push-to-talk": false,
       "push-to-talk-delay": 0,
-      "hotkeys": {},
+      "hotkeys": {
+        "libobs.mute": [],
+        "libobs.unmute": [],
+        "libobs.monitor-on": [],
+        "libobs.monitor-off": [],
+        "libobs.push-to-mute": [],
+        "libobs.push-to-talk": []
+      },
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "private_settings": {},
       "filters": [
         {
-          "prev_ver": 537001986,
+          "prev_ver": 553648128,
           "name": "Baisse quand tu parles",
           "uuid": "4f4ddc9b-06f1-4730-b684-c7efdf65177d",
           "id": "compressor_filter",
@@ -432,10 +384,11 @@
           "deinterlace_mode": 0,
           "deinterlace_field_order": 0,
           "monitoring_type": 0,
+          "monitoring_enabled": false,
           "private_settings": {}
         },
         {
-          "prev_ver": 537001986,
+          "prev_ver": 553648128,
           "name": "Limiteur",
           "uuid": "d94b6bae-fa67-404e-bf15-85092127f8e0",
           "id": "limiter_filter",
@@ -459,12 +412,13 @@
           "deinterlace_mode": 0,
           "deinterlace_field_order": 0,
           "monitoring_type": 0,
+          "monitoring_enabled": false,
           "private_settings": {}
         }
       ]
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Alertes",
       "uuid": "9d91ae36-4373-41be-8296-02d0fd166824",
       "id": "browser_source",
@@ -479,7 +433,7 @@
       "mixers": 1,
       "sync": 0,
       "flags": 0,
-      "volume": 0.8,
+      "volume": 0.800000011920929,
       "balance": 0.5,
       "enabled": true,
       "muted": false,
@@ -490,6 +444,8 @@
       "hotkeys": {
         "libobs.mute": [],
         "libobs.unmute": [],
+        "libobs.monitor-on": [],
+        "libobs.monitor-off": [],
         "libobs.push-to-mute": [],
         "libobs.push-to-talk": [],
         "ObsBrowser.Refresh": []
@@ -497,10 +453,11 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 2,
+      "monitoring_enabled": true,
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Alertes YouTube",
       "uuid": "e1da4652-ab69-488d-8fde-9cd30eaf9a25",
       "id": "browser_source",
@@ -515,7 +472,7 @@
       "mixers": 1,
       "sync": 0,
       "flags": 0,
-      "volume": 0.8,
+      "volume": 0.800000011920929,
       "balance": 0.5,
       "enabled": true,
       "muted": false,
@@ -526,6 +483,8 @@
       "hotkeys": {
         "libobs.mute": [],
         "libobs.unmute": [],
+        "libobs.monitor-on": [],
+        "libobs.monitor-off": [],
         "libobs.push-to-mute": [],
         "libobs.push-to-talk": [],
         "ObsBrowser.Refresh": []
@@ -533,10 +492,11 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 2,
+      "monitoring_enabled": true,
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Alertes TikTok",
       "uuid": "8406bc71-1fe9-4e5d-bbce-f17abbdea385",
       "id": "browser_source",
@@ -546,16 +506,16 @@
         "local_file": "D:/Stream/OBS/alertes/tiktok/latshow.html",
         "width": 1080,
         "height": 1920,
-        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden}",
-        "fps_custom": true,
         "fps": 30,
-        "reroute_audio": true,
-        "shutdown": false
+        "fps_custom": true,
+        "shutdown": false,
+        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden}",
+        "reroute_audio": true
       },
       "mixers": 32,
       "sync": 0,
       "flags": 0,
-      "volume": 0.8,
+      "volume": 0.800000011920929,
       "balance": 0.5,
       "enabled": true,
       "muted": false,
@@ -566,6 +526,8 @@
       "hotkeys": {
         "libobs.mute": [],
         "libobs.unmute": [],
+        "libobs.monitor-on": [],
+        "libobs.monitor-off": [],
         "libobs.push-to-mute": [],
         "libobs.push-to-talk": [],
         "ObsBrowser.Refresh": []
@@ -573,10 +535,11 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 2,
+      "monitoring_enabled": true,
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Habillage — Démarrage",
       "uuid": "0b8549ce-7834-49c1-aadb-55f610b34f5e",
       "id": "browser_source",
@@ -586,12 +549,12 @@
         "local_file": "D:/Stream/OBS/overlays/latshow/demarrage.html",
         "width": 2560,
         "height": 1440,
-        "fps_custom": true,
         "fps": 30,
-        "restart_when_active": true,
+        "fps_custom": true,
         "shutdown": true,
-        "reroute_audio": false,
-        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} :root{--seance:montage}"
+        "restart_when_active": true,
+        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} :root{--seance:montage}",
+        "reroute_audio": false
       },
       "mixers": 0,
       "sync": 0,
@@ -607,6 +570,8 @@
       "hotkeys": {
         "libobs.mute": [],
         "libobs.unmute": [],
+        "libobs.monitor-on": [],
+        "libobs.monitor-off": [],
         "libobs.push-to-mute": [],
         "libobs.push-to-talk": [],
         "ObsBrowser.Refresh": []
@@ -614,10 +579,11 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Chat",
       "uuid": "dbb415eb-dabd-476a-896b-8a062b1aa8cd",
       "id": "browser_source",
@@ -626,9 +592,9 @@
         "url": "",
         "width": 587,
         "height": 1120,
-        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} /* Chat des lives Latshow (page dock.html de Social Stream Ninja, CSS posé dans la source OBS par obs/generer.mjs).\n   Demande du client, 2026-10-09 : « un chat clean avec la bonne typo », moins gros (14 px depuis le 2026-10-09). Inter, pseudo cyan, texte clair,\n   petit logo de la plateforme ; ni bande, ni contour, ni menu. La source a la taille exacte de son cadre (pas d'étirement). */\n@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');\n#menu,#context-menu{display:none!important}\nhtml,body,#output{background:transparent!important}\n/* La page décale la liste de 32 px vers la gauche (ascenseur caché) : rognait les logos et les lignes. */\n#output{left:0!important;right:0!important;width:auto!important;box-sizing:border-box!important;padding:0 12px 10px!important}\n.highlight-chat{background:transparent!important;border:0!important;box-shadow:none!important;padding:2px 0!important;margin:0!important}\n.hl-message{display:block!important;font:400 14px/1.35 'Inter',sans-serif!important;color:#E9E6FF!important;text-shadow:none!important;-webkit-text-stroke:0!important;letter-spacing:0!important;text-indent:0!important;padding:0!important;margin:0!important;overflow:visible!important}\n.hl-source-type{width:12px!important;height:12px!important;vertical-align:-2px!important;margin:0 6px 0 0!important;opacity:.9}\n.hl-name{display:inline!important;font:700 14px/1.35 'Inter',sans-serif!important;color:#22D3EE!important;margin-right:6px!important;text-shadow:none!important;-webkit-text-stroke:0!important}\n.hl-content{display:inline!important;font:400 14px/1.35 'Inter',sans-serif!important;color:#E9E6FF!important;text-shadow:none!important;-webkit-text-stroke:0!important}\n",
+        "fps": 30,
         "fps_custom": true,
-        "fps": 30
+        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} /* Chat des lives Latshow (page dock.html de Social Stream Ninja, CSS posé dans la source OBS par obs/generer.mjs).\n   Demande du client, 2026-10-09 : « un chat clean avec la bonne typo », moins gros (14 px depuis le 2026-10-09). Inter, pseudo cyan, texte clair,\n   petit logo de la plateforme ; ni bande, ni contour, ni menu. La source a la taille exacte de son cadre (pas d'étirement). */\n@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');\n#menu,#context-menu{display:none!important}\nhtml,body,#output{background:transparent!important}\n/* La page décale la liste de 32 px vers la gauche (ascenseur caché) : rognait les logos et les lignes. */\n#output{left:0!important;right:0!important;width:auto!important;box-sizing:border-box!important;padding:0 12px 10px!important}\n.highlight-chat{background:transparent!important;border:0!important;box-shadow:none!important;padding:2px 0!important;margin:0!important}\n.hl-message{display:block!important;font:400 14px/1.35 'Inter',sans-serif!important;color:#E9E6FF!important;text-shadow:none!important;-webkit-text-stroke:0!important;letter-spacing:0!important;text-indent:0!important;padding:0!important;margin:0!important;overflow:visible!important}\n.hl-source-type{width:12px!important;height:12px!important;vertical-align:-2px!important;margin:0 6px 0 0!important;opacity:.9}\n.hl-name{display:inline!important;font:700 14px/1.35 'Inter',sans-serif!important;color:#22D3EE!important;margin-right:6px!important;text-shadow:none!important;-webkit-text-stroke:0!important}\n.hl-content{display:inline!important;font:400 14px/1.35 'Inter',sans-serif!important;color:#E9E6FF!important;text-shadow:none!important;-webkit-text-stroke:0!important}\n"
       },
       "mixers": 0,
       "sync": 0,
@@ -644,6 +610,8 @@
       "hotkeys": {
         "libobs.mute": [],
         "libobs.unmute": [],
+        "libobs.monitor-on": [],
+        "libobs.monitor-off": [],
         "libobs.push-to-mute": [],
         "libobs.push-to-talk": [],
         "ObsBrowser.Refresh": []
@@ -651,10 +619,11 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Musique — latshow demarrage",
       "uuid": "c83a81e9-7132-49d0-9de5-5192a451d7bd",
       "id": "vlc_source",
@@ -675,7 +644,7 @@
       "mixers": 33,
       "sync": 0,
       "flags": 0,
-      "volume": 0.3,
+      "volume": 0.30000001192092896,
       "balance": 0.5,
       "enabled": true,
       "muted": false,
@@ -686,21 +655,24 @@
       "hotkeys": {
         "libobs.mute": [],
         "libobs.unmute": [],
+        "libobs.monitor-on": [],
+        "libobs.monitor-off": [],
         "libobs.push-to-mute": [],
         "libobs.push-to-talk": [],
-        "VLC_PLAY_PAUSE": [],
-        "VLC_RESTART": [],
-        "VLC_STOP": [],
-        "VLC_PLAYLIST_NEXT": [],
-        "VLC_PLAYLIST_PREV": []
+        "VLCSource.PlayPause": [],
+        "VLCSource.Restart": [],
+        "VLCSource.Stop": [],
+        "VLCSource.PlaylistNext": [],
+        "VLCSource.PlaylistPrev": []
       },
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Habillage — Montage",
       "uuid": "c59ebc8f-66c8-471a-b527-2f47870bbc12",
       "id": "browser_source",
@@ -710,12 +682,12 @@
         "local_file": "D:/Stream/OBS/overlays/latshow/montage.html",
         "width": 2560,
         "height": 1440,
-        "fps_custom": true,
         "fps": 30,
-        "restart_when_active": false,
+        "fps_custom": true,
         "shutdown": true,
-        "reroute_audio": false,
-        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} :root{--seance:montage}"
+        "restart_when_active": false,
+        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} :root{--seance:montage}",
+        "reroute_audio": false
       },
       "mixers": 0,
       "sync": 0,
@@ -731,6 +703,8 @@
       "hotkeys": {
         "libobs.mute": [],
         "libobs.unmute": [],
+        "libobs.monitor-on": [],
+        "libobs.monitor-off": [],
         "libobs.push-to-mute": [],
         "libobs.push-to-talk": [],
         "ObsBrowser.Refresh": []
@@ -738,10 +712,11 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Chat — Colonne",
       "uuid": "dc09b630-f1eb-4560-ae0e-c73c5eaf6897",
       "id": "browser_source",
@@ -750,9 +725,9 @@
         "url": "",
         "width": 427,
         "height": 907,
-        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} /* Chat des lives Latshow (page dock.html de Social Stream Ninja, CSS posé dans la source OBS par obs/generer.mjs).\n   Demande du client, 2026-10-09 : « un chat clean avec la bonne typo », moins gros (14 px depuis le 2026-10-09). Inter, pseudo cyan, texte clair,\n   petit logo de la plateforme ; ni bande, ni contour, ni menu. La source a la taille exacte de son cadre (pas d'étirement). */\n@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');\n#menu,#context-menu{display:none!important}\nhtml,body,#output{background:transparent!important}\n/* La page décale la liste de 32 px vers la gauche (ascenseur caché) : rognait les logos et les lignes. */\n#output{left:0!important;right:0!important;width:auto!important;box-sizing:border-box!important;padding:0 12px 10px!important}\n.highlight-chat{background:transparent!important;border:0!important;box-shadow:none!important;padding:2px 0!important;margin:0!important}\n.hl-message{display:block!important;font:400 14px/1.35 'Inter',sans-serif!important;color:#E9E6FF!important;text-shadow:none!important;-webkit-text-stroke:0!important;letter-spacing:0!important;text-indent:0!important;padding:0!important;margin:0!important;overflow:visible!important}\n.hl-source-type{width:12px!important;height:12px!important;vertical-align:-2px!important;margin:0 6px 0 0!important;opacity:.9}\n.hl-name{display:inline!important;font:700 14px/1.35 'Inter',sans-serif!important;color:#22D3EE!important;margin-right:6px!important;text-shadow:none!important;-webkit-text-stroke:0!important}\n.hl-content{display:inline!important;font:400 14px/1.35 'Inter',sans-serif!important;color:#E9E6FF!important;text-shadow:none!important;-webkit-text-stroke:0!important}\n",
+        "fps": 30,
         "fps_custom": true,
-        "fps": 30
+        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} /* Chat des lives Latshow (page dock.html de Social Stream Ninja, CSS posé dans la source OBS par obs/generer.mjs).\n   Demande du client, 2026-10-09 : « un chat clean avec la bonne typo », moins gros (14 px depuis le 2026-10-09). Inter, pseudo cyan, texte clair,\n   petit logo de la plateforme ; ni bande, ni contour, ni menu. La source a la taille exacte de son cadre (pas d'étirement). */\n@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');\n#menu,#context-menu{display:none!important}\nhtml,body,#output{background:transparent!important}\n/* La page décale la liste de 32 px vers la gauche (ascenseur caché) : rognait les logos et les lignes. */\n#output{left:0!important;right:0!important;width:auto!important;box-sizing:border-box!important;padding:0 12px 10px!important}\n.highlight-chat{background:transparent!important;border:0!important;box-shadow:none!important;padding:2px 0!important;margin:0!important}\n.hl-message{display:block!important;font:400 14px/1.35 'Inter',sans-serif!important;color:#E9E6FF!important;text-shadow:none!important;-webkit-text-stroke:0!important;letter-spacing:0!important;text-indent:0!important;padding:0!important;margin:0!important;overflow:visible!important}\n.hl-source-type{width:12px!important;height:12px!important;vertical-align:-2px!important;margin:0 6px 0 0!important;opacity:.9}\n.hl-name{display:inline!important;font:700 14px/1.35 'Inter',sans-serif!important;color:#22D3EE!important;margin-right:6px!important;text-shadow:none!important;-webkit-text-stroke:0!important}\n.hl-content{display:inline!important;font:400 14px/1.35 'Inter',sans-serif!important;color:#E9E6FF!important;text-shadow:none!important;-webkit-text-stroke:0!important}\n"
       },
       "mixers": 0,
       "sync": 0,
@@ -768,6 +743,8 @@
       "hotkeys": {
         "libobs.mute": [],
         "libobs.unmute": [],
+        "libobs.monitor-on": [],
+        "libobs.monitor-off": [],
         "libobs.push-to-mute": [],
         "libobs.push-to-talk": [],
         "ObsBrowser.Refresh": []
@@ -775,10 +752,11 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Habillage — Aperçu plein écran",
       "uuid": "efec1bdb-c13c-480f-bf10-671a2af8a879",
       "id": "browser_source",
@@ -788,12 +766,12 @@
         "local_file": "D:/Stream/OBS/overlays/latshow/jeu.html",
         "width": 2560,
         "height": 1440,
-        "fps_custom": true,
         "fps": 30,
-        "restart_when_active": false,
+        "fps_custom": true,
         "shutdown": true,
-        "reroute_audio": false,
-        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} :root{--seance:montage}"
+        "restart_when_active": false,
+        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} :root{--seance:montage}",
+        "reroute_audio": false
       },
       "mixers": 0,
       "sync": 0,
@@ -809,6 +787,8 @@
       "hotkeys": {
         "libobs.mute": [],
         "libobs.unmute": [],
+        "libobs.monitor-on": [],
+        "libobs.monitor-off": [],
         "libobs.push-to-mute": [],
         "libobs.push-to-talk": [],
         "ObsBrowser.Refresh": []
@@ -816,10 +796,11 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Habillage — Discussion",
       "uuid": "14847b5d-51cf-4d4c-9211-1ef7dc5c3944",
       "id": "browser_source",
@@ -829,12 +810,12 @@
         "local_file": "D:/Stream/OBS/overlays/latshow/discussion.html",
         "width": 2560,
         "height": 1440,
-        "fps_custom": true,
         "fps": 30,
-        "restart_when_active": false,
+        "fps_custom": true,
         "shutdown": true,
-        "reroute_audio": false,
-        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} :root{--seance:montage}"
+        "restart_when_active": false,
+        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} :root{--seance:montage}",
+        "reroute_audio": false
       },
       "mixers": 0,
       "sync": 0,
@@ -850,6 +831,8 @@
       "hotkeys": {
         "libobs.mute": [],
         "libobs.unmute": [],
+        "libobs.monitor-on": [],
+        "libobs.monitor-off": [],
         "libobs.push-to-mute": [],
         "libobs.push-to-talk": [],
         "ObsBrowser.Refresh": []
@@ -857,10 +840,11 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Chat — Discussion",
       "uuid": "dcc5ba73-ae48-4fb0-b2aa-8d65e25ee187",
       "id": "browser_source",
@@ -869,9 +853,9 @@
         "url": "",
         "width": 640,
         "height": 960,
-        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} /* Chat des lives Latshow (page dock.html de Social Stream Ninja, CSS posé dans la source OBS par obs/generer.mjs).\n   Demande du client, 2026-10-09 : « un chat clean avec la bonne typo », moins gros (14 px depuis le 2026-10-09). Inter, pseudo cyan, texte clair,\n   petit logo de la plateforme ; ni bande, ni contour, ni menu. La source a la taille exacte de son cadre (pas d'étirement). */\n@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');\n#menu,#context-menu{display:none!important}\nhtml,body,#output{background:transparent!important}\n/* La page décale la liste de 32 px vers la gauche (ascenseur caché) : rognait les logos et les lignes. */\n#output{left:0!important;right:0!important;width:auto!important;box-sizing:border-box!important;padding:0 12px 10px!important}\n.highlight-chat{background:transparent!important;border:0!important;box-shadow:none!important;padding:2px 0!important;margin:0!important}\n.hl-message{display:block!important;font:400 14px/1.35 'Inter',sans-serif!important;color:#E9E6FF!important;text-shadow:none!important;-webkit-text-stroke:0!important;letter-spacing:0!important;text-indent:0!important;padding:0!important;margin:0!important;overflow:visible!important}\n.hl-source-type{width:12px!important;height:12px!important;vertical-align:-2px!important;margin:0 6px 0 0!important;opacity:.9}\n.hl-name{display:inline!important;font:700 14px/1.35 'Inter',sans-serif!important;color:#22D3EE!important;margin-right:6px!important;text-shadow:none!important;-webkit-text-stroke:0!important}\n.hl-content{display:inline!important;font:400 14px/1.35 'Inter',sans-serif!important;color:#E9E6FF!important;text-shadow:none!important;-webkit-text-stroke:0!important}\n",
+        "fps": 30,
         "fps_custom": true,
-        "fps": 30
+        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} /* Chat des lives Latshow (page dock.html de Social Stream Ninja, CSS posé dans la source OBS par obs/generer.mjs).\n   Demande du client, 2026-10-09 : « un chat clean avec la bonne typo », moins gros (14 px depuis le 2026-10-09). Inter, pseudo cyan, texte clair,\n   petit logo de la plateforme ; ni bande, ni contour, ni menu. La source a la taille exacte de son cadre (pas d'étirement). */\n@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');\n#menu,#context-menu{display:none!important}\nhtml,body,#output{background:transparent!important}\n/* La page décale la liste de 32 px vers la gauche (ascenseur caché) : rognait les logos et les lignes. */\n#output{left:0!important;right:0!important;width:auto!important;box-sizing:border-box!important;padding:0 12px 10px!important}\n.highlight-chat{background:transparent!important;border:0!important;box-shadow:none!important;padding:2px 0!important;margin:0!important}\n.hl-message{display:block!important;font:400 14px/1.35 'Inter',sans-serif!important;color:#E9E6FF!important;text-shadow:none!important;-webkit-text-stroke:0!important;letter-spacing:0!important;text-indent:0!important;padding:0!important;margin:0!important;overflow:visible!important}\n.hl-source-type{width:12px!important;height:12px!important;vertical-align:-2px!important;margin:0 6px 0 0!important;opacity:.9}\n.hl-name{display:inline!important;font:700 14px/1.35 'Inter',sans-serif!important;color:#22D3EE!important;margin-right:6px!important;text-shadow:none!important;-webkit-text-stroke:0!important}\n.hl-content{display:inline!important;font:400 14px/1.35 'Inter',sans-serif!important;color:#E9E6FF!important;text-shadow:none!important;-webkit-text-stroke:0!important}\n"
       },
       "mixers": 0,
       "sync": 0,
@@ -887,6 +871,8 @@
       "hotkeys": {
         "libobs.mute": [],
         "libobs.unmute": [],
+        "libobs.monitor-on": [],
+        "libobs.monitor-off": [],
         "libobs.push-to-mute": [],
         "libobs.push-to-talk": [],
         "ObsBrowser.Refresh": []
@@ -894,10 +880,11 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Habillage — Pause",
       "uuid": "c56ef02c-c37d-41e5-8e4d-951287bba3eb",
       "id": "browser_source",
@@ -907,12 +894,12 @@
         "local_file": "D:/Stream/OBS/overlays/latshow/pause.html",
         "width": 2560,
         "height": 1440,
-        "fps_custom": true,
         "fps": 30,
-        "restart_when_active": true,
+        "fps_custom": true,
         "shutdown": true,
-        "reroute_audio": false,
-        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} :root{--seance:montage}"
+        "restart_when_active": true,
+        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} :root{--seance:montage}",
+        "reroute_audio": false
       },
       "mixers": 0,
       "sync": 0,
@@ -928,6 +915,8 @@
       "hotkeys": {
         "libobs.mute": [],
         "libobs.unmute": [],
+        "libobs.monitor-on": [],
+        "libobs.monitor-off": [],
         "libobs.push-to-mute": [],
         "libobs.push-to-talk": [],
         "ObsBrowser.Refresh": []
@@ -935,10 +924,11 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Musique — latshow pause",
       "uuid": "6a317065-571e-4c2e-8dce-ab11b1169089",
       "id": "vlc_source",
@@ -959,7 +949,7 @@
       "mixers": 33,
       "sync": 0,
       "flags": 0,
-      "volume": 0.3,
+      "volume": 0.30000001192092896,
       "balance": 0.5,
       "enabled": true,
       "muted": false,
@@ -970,21 +960,24 @@
       "hotkeys": {
         "libobs.mute": [],
         "libobs.unmute": [],
+        "libobs.monitor-on": [],
+        "libobs.monitor-off": [],
         "libobs.push-to-mute": [],
         "libobs.push-to-talk": [],
-        "VLC_PLAY_PAUSE": [],
-        "VLC_RESTART": [],
-        "VLC_STOP": [],
-        "VLC_PLAYLIST_NEXT": [],
-        "VLC_PLAYLIST_PREV": []
+        "VLCSource.PlayPause": [],
+        "VLCSource.Restart": [],
+        "VLCSource.Stop": [],
+        "VLCSource.PlaylistNext": [],
+        "VLCSource.PlaylistPrev": []
       },
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Habillage — Pause bébé",
       "uuid": "35c8d3b3-5474-492c-9bcf-9cd22ca7a24b",
       "id": "browser_source",
@@ -994,12 +987,12 @@
         "local_file": "D:/Stream/OBS/overlays/latshow/pause-bebe.html",
         "width": 2560,
         "height": 1440,
-        "fps_custom": true,
         "fps": 30,
-        "restart_when_active": true,
+        "fps_custom": true,
         "shutdown": true,
-        "reroute_audio": false,
-        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} :root{--seance:montage}"
+        "restart_when_active": true,
+        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} :root{--seance:montage}",
+        "reroute_audio": false
       },
       "mixers": 0,
       "sync": 0,
@@ -1015,6 +1008,8 @@
       "hotkeys": {
         "libobs.mute": [],
         "libobs.unmute": [],
+        "libobs.monitor-on": [],
+        "libobs.monitor-off": [],
         "libobs.push-to-mute": [],
         "libobs.push-to-talk": [],
         "ObsBrowser.Refresh": []
@@ -1022,10 +1017,11 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Musique — latshow bebe",
       "uuid": "fb88cafd-73af-45e1-ae41-b8cf7f4cfae6",
       "id": "vlc_source",
@@ -1046,7 +1042,7 @@
       "mixers": 33,
       "sync": 0,
       "flags": 0,
-      "volume": 0.3,
+      "volume": 0.30000001192092896,
       "balance": 0.5,
       "enabled": true,
       "muted": false,
@@ -1057,21 +1053,24 @@
       "hotkeys": {
         "libobs.mute": [],
         "libobs.unmute": [],
+        "libobs.monitor-on": [],
+        "libobs.monitor-off": [],
         "libobs.push-to-mute": [],
         "libobs.push-to-talk": [],
-        "VLC_PLAY_PAUSE": [],
-        "VLC_RESTART": [],
-        "VLC_STOP": [],
-        "VLC_PLAYLIST_NEXT": [],
-        "VLC_PLAYLIST_PREV": []
+        "VLCSource.PlayPause": [],
+        "VLCSource.Restart": [],
+        "VLCSource.Stop": [],
+        "VLCSource.PlaylistNext": [],
+        "VLCSource.PlaylistPrev": []
       },
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Habillage — Souci technique",
       "uuid": "7fd5d97c-dba9-41d6-a20a-9411d78c7a73",
       "id": "browser_source",
@@ -1081,12 +1080,12 @@
         "local_file": "D:/Stream/OBS/overlays/latshow/souci.html",
         "width": 2560,
         "height": 1440,
-        "fps_custom": true,
         "fps": 30,
-        "restart_when_active": true,
+        "fps_custom": true,
         "shutdown": true,
-        "reroute_audio": false,
-        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} :root{--seance:montage}"
+        "restart_when_active": true,
+        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} :root{--seance:montage}",
+        "reroute_audio": false
       },
       "mixers": 0,
       "sync": 0,
@@ -1102,6 +1101,8 @@
       "hotkeys": {
         "libobs.mute": [],
         "libobs.unmute": [],
+        "libobs.monitor-on": [],
+        "libobs.monitor-off": [],
         "libobs.push-to-mute": [],
         "libobs.push-to-talk": [],
         "ObsBrowser.Refresh": []
@@ -1109,10 +1110,11 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Habillage — Fin",
       "uuid": "dfba5898-b4dd-4c8a-89cf-0b668fcf3f7a",
       "id": "browser_source",
@@ -1122,12 +1124,12 @@
         "local_file": "D:/Stream/OBS/overlays/latshow/fin.html",
         "width": 2560,
         "height": 1440,
-        "fps_custom": true,
         "fps": 30,
-        "restart_when_active": false,
+        "fps_custom": true,
         "shutdown": true,
-        "reroute_audio": false,
-        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} :root{--seance:montage}"
+        "restart_when_active": false,
+        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} :root{--seance:montage}",
+        "reroute_audio": false
       },
       "mixers": 0,
       "sync": 0,
@@ -1143,6 +1145,8 @@
       "hotkeys": {
         "libobs.mute": [],
         "libobs.unmute": [],
+        "libobs.monitor-on": [],
+        "libobs.monitor-off": [],
         "libobs.push-to-mute": [],
         "libobs.push-to-talk": [],
         "ObsBrowser.Refresh": []
@@ -1150,10 +1154,11 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Musique — latshow fin",
       "uuid": "c5e9c78a-4f82-4e52-8db1-c2ee80fc2c26",
       "id": "vlc_source",
@@ -1174,7 +1179,7 @@
       "mixers": 33,
       "sync": 0,
       "flags": 0,
-      "volume": 0.3,
+      "volume": 0.30000001192092896,
       "balance": 0.5,
       "enabled": true,
       "muted": false,
@@ -1185,21 +1190,24 @@
       "hotkeys": {
         "libobs.mute": [],
         "libobs.unmute": [],
+        "libobs.monitor-on": [],
+        "libobs.monitor-off": [],
         "libobs.push-to-mute": [],
         "libobs.push-to-talk": [],
-        "VLC_PLAY_PAUSE": [],
-        "VLC_RESTART": [],
-        "VLC_STOP": [],
-        "VLC_PLAYLIST_NEXT": [],
-        "VLC_PLAYLIST_PREV": []
+        "VLCSource.PlayPause": [],
+        "VLCSource.Restart": [],
+        "VLCSource.Stop": [],
+        "VLCSource.PlaylistNext": [],
+        "VLCSource.PlaylistPrev": []
       },
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Habillage TikTok — Démarrage",
       "uuid": "03917f7f-746f-4565-b1b4-e69af4368269",
       "id": "browser_source",
@@ -1209,12 +1217,12 @@
         "local_file": "D:/Stream/OBS/overlays/latshow/vertical.html",
         "width": 1080,
         "height": 1920,
-        "fps_custom": true,
         "fps": 30,
-        "restart_when_active": true,
+        "fps_custom": true,
         "shutdown": true,
-        "reroute_audio": false,
-        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} :root{--seance:montage;--vue:demarrage}"
+        "restart_when_active": true,
+        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} :root{--seance:montage;--vue:demarrage}",
+        "reroute_audio": false
       },
       "mixers": 0,
       "sync": 0,
@@ -1230,6 +1238,8 @@
       "hotkeys": {
         "libobs.mute": [],
         "libobs.unmute": [],
+        "libobs.monitor-on": [],
+        "libobs.monitor-off": [],
         "libobs.push-to-mute": [],
         "libobs.push-to-talk": [],
         "ObsBrowser.Refresh": []
@@ -1237,10 +1247,11 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Habillage TikTok — Montage",
       "uuid": "256a9f9c-5dd5-46a1-8c48-ec67cd2832bc",
       "id": "browser_source",
@@ -1250,12 +1261,12 @@
         "local_file": "D:/Stream/OBS/overlays/latshow/vertical.html",
         "width": 1080,
         "height": 1920,
-        "fps_custom": true,
         "fps": 30,
-        "restart_when_active": false,
+        "fps_custom": true,
         "shutdown": true,
-        "reroute_audio": false,
-        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} :root{--seance:montage;--vue:pile}"
+        "restart_when_active": false,
+        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} :root{--seance:montage;--vue:pile}",
+        "reroute_audio": false
       },
       "mixers": 0,
       "sync": 0,
@@ -1271,6 +1282,8 @@
       "hotkeys": {
         "libobs.mute": [],
         "libobs.unmute": [],
+        "libobs.monitor-on": [],
+        "libobs.monitor-off": [],
         "libobs.push-to-mute": [],
         "libobs.push-to-talk": [],
         "ObsBrowser.Refresh": []
@@ -1278,10 +1291,11 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Habillage TikTok — Discussion",
       "uuid": "4cef24e0-664a-4eff-b909-c44a60722c90",
       "id": "browser_source",
@@ -1291,12 +1305,12 @@
         "local_file": "D:/Stream/OBS/overlays/latshow/vertical.html",
         "width": 1080,
         "height": 1920,
-        "fps_custom": true,
         "fps": 30,
-        "restart_when_active": false,
+        "fps_custom": true,
         "shutdown": true,
-        "reroute_audio": false,
-        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} :root{--seance:montage;--vue:discussion}"
+        "restart_when_active": false,
+        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} :root{--seance:montage;--vue:discussion}",
+        "reroute_audio": false
       },
       "mixers": 0,
       "sync": 0,
@@ -1312,6 +1326,8 @@
       "hotkeys": {
         "libobs.mute": [],
         "libobs.unmute": [],
+        "libobs.monitor-on": [],
+        "libobs.monitor-off": [],
         "libobs.push-to-mute": [],
         "libobs.push-to-talk": [],
         "ObsBrowser.Refresh": []
@@ -1319,10 +1335,11 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Habillage TikTok — Pause",
       "uuid": "a08fd58e-6e5d-473e-8e78-00076aa9d892",
       "id": "browser_source",
@@ -1332,12 +1349,12 @@
         "local_file": "D:/Stream/OBS/overlays/latshow/vertical.html",
         "width": 1080,
         "height": 1920,
-        "fps_custom": true,
         "fps": 30,
-        "restart_when_active": true,
+        "fps_custom": true,
         "shutdown": true,
-        "reroute_audio": false,
-        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} :root{--seance:montage;--vue:pause}"
+        "restart_when_active": true,
+        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} :root{--seance:montage;--vue:pause}",
+        "reroute_audio": false
       },
       "mixers": 0,
       "sync": 0,
@@ -1353,6 +1370,8 @@
       "hotkeys": {
         "libobs.mute": [],
         "libobs.unmute": [],
+        "libobs.monitor-on": [],
+        "libobs.monitor-off": [],
         "libobs.push-to-mute": [],
         "libobs.push-to-talk": [],
         "ObsBrowser.Refresh": []
@@ -1360,10 +1379,11 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Habillage TikTok — Pause bébé",
       "uuid": "fe601dae-eeaf-4d05-91c8-37c2c1f9cda9",
       "id": "browser_source",
@@ -1373,12 +1393,12 @@
         "local_file": "D:/Stream/OBS/overlays/latshow/vertical.html",
         "width": 1080,
         "height": 1920,
-        "fps_custom": true,
         "fps": 30,
-        "restart_when_active": true,
+        "fps_custom": true,
         "shutdown": true,
-        "reroute_audio": false,
-        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} :root{--seance:montage;--vue:pause-bebe}"
+        "restart_when_active": true,
+        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} :root{--seance:montage;--vue:pause-bebe}",
+        "reroute_audio": false
       },
       "mixers": 0,
       "sync": 0,
@@ -1394,6 +1414,8 @@
       "hotkeys": {
         "libobs.mute": [],
         "libobs.unmute": [],
+        "libobs.monitor-on": [],
+        "libobs.monitor-off": [],
         "libobs.push-to-mute": [],
         "libobs.push-to-talk": [],
         "ObsBrowser.Refresh": []
@@ -1401,10 +1423,11 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Habillage TikTok — Souci technique",
       "uuid": "ae84c302-73a4-464e-af4a-1aa2732f2608",
       "id": "browser_source",
@@ -1414,12 +1437,12 @@
         "local_file": "D:/Stream/OBS/overlays/latshow/vertical.html",
         "width": 1080,
         "height": 1920,
-        "fps_custom": true,
         "fps": 30,
-        "restart_when_active": true,
+        "fps_custom": true,
         "shutdown": true,
-        "reroute_audio": false,
-        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} :root{--seance:montage;--vue:souci}"
+        "restart_when_active": true,
+        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} :root{--seance:montage;--vue:souci}",
+        "reroute_audio": false
       },
       "mixers": 0,
       "sync": 0,
@@ -1435,6 +1458,8 @@
       "hotkeys": {
         "libobs.mute": [],
         "libobs.unmute": [],
+        "libobs.monitor-on": [],
+        "libobs.monitor-off": [],
         "libobs.push-to-mute": [],
         "libobs.push-to-talk": [],
         "ObsBrowser.Refresh": []
@@ -1442,10 +1467,11 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Habillage TikTok — Fin",
       "uuid": "8e9c5205-a863-4b5e-9d5d-e9e6a38ec2cc",
       "id": "browser_source",
@@ -1455,12 +1481,12 @@
         "local_file": "D:/Stream/OBS/overlays/latshow/vertical.html",
         "width": 1080,
         "height": 1920,
-        "fps_custom": true,
         "fps": 30,
-        "restart_when_active": false,
+        "fps_custom": true,
         "shutdown": true,
-        "reroute_audio": false,
-        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} :root{--seance:montage;--vue:fin}"
+        "restart_when_active": false,
+        "css": "body{background-color:rgba(0,0,0,0);margin:0;overflow:hidden} :root{--seance:montage;--vue:fin}",
+        "reroute_audio": false
       },
       "mixers": 0,
       "sync": 0,
@@ -1476,6 +1502,8 @@
       "hotkeys": {
         "libobs.mute": [],
         "libobs.unmute": [],
+        "libobs.monitor-on": [],
+        "libobs.monitor-off": [],
         "libobs.push-to-mute": [],
         "libobs.push-to-talk": [],
         "ObsBrowser.Refresh": []
@@ -1483,10 +1511,11 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Démarrage",
       "uuid": "466b3cdc-2dfb-4852-9123-ae057d0aa098",
       "id": "scene",
@@ -1501,6 +1530,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
             "align": 5,
             "bounds_type": 0,
             "bounds_align": 0,
@@ -1515,11 +1548,23 @@
               "x": 0,
               "y": 0
             },
+            "pos_rel": {
+              "x": -1.7777777910232544,
+              "y": -1
+            },
             "scale": {
+              "x": 0.75,
+              "y": 0.75
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
+              "x": 0,
+              "y": 0
+            },
+            "bounds_rel": {
               "x": 0,
               "y": 0
             },
@@ -1532,23 +1577,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
-            "pos_rel": {
-              "x": -1.7777777777777777,
-              "y": -1
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 0,
-              "y": 0
-            }
+            "private_settings": {}
           },
           {
             "name": "Chat",
@@ -1556,6 +1585,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -1567,16 +1600,28 @@
             "id": 2,
             "group_item_backup": false,
             "pos": {
-              "x": 1888,
-              "y": 160
+              "x": 1416,
+              "y": 120
+            },
+            "pos_rel": {
+              "x": 0.8444444537162781,
+              "y": -0.7777777910232544
             },
             "scale": {
+              "x": 0.75,
+              "y": 0.75
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
-              "x": 586.6666666666666,
-              "y": 1120
+              "x": 440,
+              "y": 840
+            },
+            "bounds_rel": {
+              "x": 0.8148148059844971,
+              "y": 1.5555555820465088
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -1587,23 +1632,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
-            "pos_rel": {
-              "x": 0.8444444444444444,
-              "y": -0.7777777777777778
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 0.8148148148148148,
-              "y": 1.5555555555555556
-            }
+            "private_settings": {}
           },
           {
             "name": "Micro",
@@ -1611,6 +1640,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
             "align": 5,
             "bounds_type": 0,
             "bounds_align": 0,
@@ -1625,11 +1658,23 @@
               "x": 0,
               "y": 0
             },
+            "pos_rel": {
+              "x": -1.7777777910232544,
+              "y": -1
+            },
             "scale": {
+              "x": 0.75,
+              "y": 0.75
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
+              "x": 0,
+              "y": 0
+            },
+            "bounds_rel": {
               "x": 0,
               "y": 0
             },
@@ -1642,23 +1687,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
-            "pos_rel": {
-              "x": -1.7777777777777777,
-              "y": -1
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 0,
-              "y": 0
-            }
+            "private_settings": {}
           },
           {
             "name": "Musique — latshow demarrage",
@@ -1666,6 +1695,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
             "align": 5,
             "bounds_type": 0,
             "bounds_align": 0,
@@ -1680,11 +1713,23 @@
               "x": 0,
               "y": 0
             },
+            "pos_rel": {
+              "x": -1.7777777910232544,
+              "y": -1
+            },
             "scale": {
+              "x": 0.75,
+              "y": 0.75
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
+              "x": 0,
+              "y": 0
+            },
+            "bounds_rel": {
               "x": 0,
               "y": 0
             },
@@ -1697,23 +1742,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
-            "pos_rel": {
-              "x": -1.7777777777777777,
-              "y": -1
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 0,
-              "y": 0
-            }
+            "private_settings": {}
           },
           {
             "name": "Alertes",
@@ -1721,6 +1750,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -1735,13 +1768,25 @@
               "x": 0,
               "y": 0
             },
+            "pos_rel": {
+              "x": -1.7777777910232544,
+              "y": -1
+            },
             "scale": {
+              "x": 0.75,
+              "y": 0.75
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
-              "x": 2560,
-              "y": 1440
+              "x": 1920,
+              "y": 1080
+            },
+            "bounds_rel": {
+              "x": 3.555555582046509,
+              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -1752,23 +1797,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
-            "pos_rel": {
-              "x": -1.7777777777777777,
-              "y": -1
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 3.5555555555555554,
-              "y": 2
-            }
+            "private_settings": {}
           },
           {
             "name": "Alertes YouTube",
@@ -1776,6 +1805,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -1790,13 +1823,25 @@
               "x": 0,
               "y": 0
             },
+            "pos_rel": {
+              "x": -1.7777777910232544,
+              "y": -1
+            },
             "scale": {
+              "x": 0.75,
+              "y": 0.75
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
-              "x": 2560,
-              "y": 1440
+              "x": 1920,
+              "y": 1080
+            },
+            "bounds_rel": {
+              "x": 3.555555582046509,
+              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -1807,23 +1852,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
-            "pos_rel": {
-              "x": -1.7777777777777777,
-              "y": -1
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 3.5555555555555554,
-              "y": 2
-            }
+            "private_settings": {}
           }
         ],
         "canvas": [
@@ -1850,8 +1879,6 @@
           {
             "control": true,
             "alt": true,
-            "shift": false,
-            "command": false,
             "key": "OBS_KEY_F1"
           }
         ],
@@ -1871,11 +1898,12 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
-      "private_settings": {},
-      "canvas_uuid": "6c69626f-6273-4c00-9d88-c5136d61696e"
+      "monitoring_enabled": false,
+      "canvas_uuid": "6c69626f-6273-4c00-9d88-c5136d61696e",
+      "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Montage",
       "uuid": "6edac302-5792-485d-bd93-6f5569c6cf01",
       "id": "scene",
@@ -1890,6 +1918,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
             "align": 5,
             "bounds_type": 0,
             "bounds_align": 0,
@@ -1904,11 +1936,23 @@
               "x": 0,
               "y": 0
             },
+            "pos_rel": {
+              "x": -1.7777777910232544,
+              "y": -1
+            },
             "scale": {
+              "x": 0.75,
+              "y": 0.75
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
+              "x": 0,
+              "y": 0
+            },
+            "bounds_rel": {
               "x": 0,
               "y": 0
             },
@@ -1921,23 +1965,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
-            "pos_rel": {
-              "x": -1.7777777777777777,
-              "y": -1
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 0,
-              "y": 0
-            }
+            "private_settings": {}
           },
           {
             "name": "Fenêtre",
@@ -1945,6 +1973,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
             "align": 5,
             "bounds_type": 2,
             "bounds_align": 0,
@@ -1959,13 +1991,25 @@
               "x": 0,
               "y": 0
             },
+            "pos_rel": {
+              "x": -1.7777777910232544,
+              "y": -1
+            },
             "scale": {
+              "x": 0.75,
+              "y": 0.75
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
-              "x": 2133.333333333333,
-              "y": 1200
+              "x": 1600,
+              "y": 900
+            },
+            "bounds_rel": {
+              "x": 2.9629628658294678,
+              "y": 1.6666666269302368
             },
             "scale_filter": "area",
             "blend_method": "default",
@@ -1976,23 +2020,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
-            "pos_rel": {
-              "x": -1.7777777777777777,
-              "y": -1
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 2.9629629629629624,
-              "y": 1.6666666666666667
-            }
+            "private_settings": {}
           },
           {
             "name": "Caméra",
@@ -2000,6 +2028,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
             "align": 5,
             "bounds_type": 3,
             "bounds_align": 0,
@@ -2011,16 +2043,28 @@
             "id": 3,
             "group_item_backup": false,
             "pos": {
-              "x": 2133.333333333333,
+              "x": 1600,
               "y": 0
             },
+            "pos_rel": {
+              "x": 1.185185194015503,
+              "y": -1
+            },
             "scale": {
+              "x": 0.75,
+              "y": 0.75
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
-              "x": 426.66666666666663,
-              "y": 533.3333333333333
+              "x": 320,
+              "y": 400
+            },
+            "bounds_rel": {
+              "x": 0.5925925970077515,
+              "y": 0.7407407164573669
             },
             "scale_filter": "area",
             "blend_method": "default",
@@ -2031,23 +2075,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
-            "pos_rel": {
-              "x": 1.1851851851851847,
-              "y": -1
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 0.5925925925925926,
-              "y": 0.7407407407407406
-            }
+            "private_settings": {}
           },
           {
             "name": "Chat — Colonne",
@@ -2055,6 +2083,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -2066,16 +2098,28 @@
             "id": 4,
             "group_item_backup": false,
             "pos": {
-              "x": 2133.333333333333,
-              "y": 533.3333333333333
+              "x": 1600,
+              "y": 400
+            },
+            "pos_rel": {
+              "x": 1.185185194015503,
+              "y": -0.25925925374031067
             },
             "scale": {
+              "x": 0.75,
+              "y": 0.75
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
-              "x": 426.66666666666663,
-              "y": 906.6666666666666
+              "x": 320,
+              "y": 680
+            },
+            "bounds_rel": {
+              "x": 0.5925925970077515,
+              "y": 1.2592592239379883
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -2086,23 +2130,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
-            "pos_rel": {
-              "x": 1.1851851851851847,
-              "y": -0.25925925925925936
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 0.5925925925925926,
-              "y": 1.2592592592592593
-            }
+            "private_settings": {}
           },
           {
             "name": "Micro",
@@ -2110,6 +2138,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
             "align": 5,
             "bounds_type": 0,
             "bounds_align": 0,
@@ -2124,11 +2156,23 @@
               "x": 0,
               "y": 0
             },
+            "pos_rel": {
+              "x": -1.7777777910232544,
+              "y": -1
+            },
             "scale": {
+              "x": 0.75,
+              "y": 0.75
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
+              "x": 0,
+              "y": 0
+            },
+            "bounds_rel": {
               "x": 0,
               "y": 0
             },
@@ -2141,23 +2185,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
-            "pos_rel": {
-              "x": -1.7777777777777777,
-              "y": -1
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 0,
-              "y": 0
-            }
+            "private_settings": {}
           },
           {
             "name": "Alertes",
@@ -2165,6 +2193,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -2179,13 +2211,25 @@
               "x": 0,
               "y": 0
             },
+            "pos_rel": {
+              "x": -1.7777777910232544,
+              "y": -1
+            },
             "scale": {
+              "x": 0.75,
+              "y": 0.75
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
-              "x": 2560,
-              "y": 1440
+              "x": 1920,
+              "y": 1080
+            },
+            "bounds_rel": {
+              "x": 3.555555582046509,
+              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -2196,23 +2240,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
-            "pos_rel": {
-              "x": -1.7777777777777777,
-              "y": -1
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 3.5555555555555554,
-              "y": 2
-            }
+            "private_settings": {}
           },
           {
             "name": "Alertes YouTube",
@@ -2220,6 +2248,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -2234,13 +2266,25 @@
               "x": 0,
               "y": 0
             },
+            "pos_rel": {
+              "x": -1.7777777910232544,
+              "y": -1
+            },
             "scale": {
+              "x": 0.75,
+              "y": 0.75
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
-              "x": 2560,
-              "y": 1440
+              "x": 1920,
+              "y": 1080
+            },
+            "bounds_rel": {
+              "x": 3.555555582046509,
+              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -2251,23 +2295,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
-            "pos_rel": {
-              "x": -1.7777777777777777,
-              "y": -1
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 3.5555555555555554,
-              "y": 2
-            }
+            "private_settings": {}
           }
         ],
         "canvas": [
@@ -2294,8 +2322,6 @@
           {
             "control": true,
             "alt": true,
-            "shift": false,
-            "command": false,
             "key": "OBS_KEY_F2"
           }
         ],
@@ -2317,11 +2343,12 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
-      "private_settings": {},
-      "canvas_uuid": "6c69626f-6273-4c00-9d88-c5136d61696e"
+      "monitoring_enabled": false,
+      "canvas_uuid": "6c69626f-6273-4c00-9d88-c5136d61696e",
+      "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Aperçu plein écran",
       "uuid": "166079d1-f512-4f0d-85df-97dcfdcb4806",
       "id": "scene",
@@ -2336,6 +2363,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
             "align": 5,
             "bounds_type": 2,
             "bounds_align": 0,
@@ -2350,13 +2381,25 @@
               "x": 0,
               "y": 0
             },
+            "pos_rel": {
+              "x": -1.7777777910232544,
+              "y": -1
+            },
             "scale": {
+              "x": 0.75,
+              "y": 0.75
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
-              "x": 2560,
-              "y": 1440
+              "x": 1920,
+              "y": 1080
+            },
+            "bounds_rel": {
+              "x": 3.555555582046509,
+              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -2367,23 +2410,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
-            "pos_rel": {
-              "x": -1.7777777777777777,
-              "y": -1
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 3.5555555555555554,
-              "y": 2
-            }
+            "private_settings": {}
           },
           {
             "name": "Habillage — Aperçu plein écran",
@@ -2391,6 +2418,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
             "align": 5,
             "bounds_type": 0,
             "bounds_align": 0,
@@ -2405,11 +2436,23 @@
               "x": 0,
               "y": 0
             },
+            "pos_rel": {
+              "x": -1.7777777910232544,
+              "y": -1
+            },
             "scale": {
+              "x": 0.75,
+              "y": 0.75
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
+              "x": 0,
+              "y": 0
+            },
+            "bounds_rel": {
               "x": 0,
               "y": 0
             },
@@ -2422,23 +2465,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
-            "pos_rel": {
-              "x": -1.7777777777777777,
-              "y": -1
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 0,
-              "y": 0
-            }
+            "private_settings": {}
           },
           {
             "name": "Caméra",
@@ -2446,6 +2473,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
             "align": 5,
             "bounds_type": 3,
             "bounds_align": 0,
@@ -2457,16 +2488,28 @@
             "id": 3,
             "group_item_backup": false,
             "pos": {
-              "x": 2005.3333333333333,
-              "y": 1114.6666666666665
+              "x": 1504,
+              "y": 836
+            },
+            "pos_rel": {
+              "x": 1.0074074268341064,
+              "y": 0.5481481552124023
             },
             "scale": {
+              "x": 0.75,
+              "y": 0.75
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
-              "x": 512,
-              "y": 288
+              "x": 384,
+              "y": 216
+            },
+            "bounds_rel": {
+              "x": 0.7111111283302307,
+              "y": 0.4000000059604645
             },
             "scale_filter": "area",
             "blend_method": "default",
@@ -2477,23 +2520,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
-            "pos_rel": {
-              "x": 1.0074074074074073,
-              "y": 0.5481481481481479
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 0.7111111111111111,
-              "y": 0.4
-            }
+            "private_settings": {}
           },
           {
             "name": "Micro",
@@ -2501,6 +2528,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
             "align": 5,
             "bounds_type": 0,
             "bounds_align": 0,
@@ -2515,11 +2546,23 @@
               "x": 0,
               "y": 0
             },
+            "pos_rel": {
+              "x": -1.7777777910232544,
+              "y": -1
+            },
             "scale": {
+              "x": 0.75,
+              "y": 0.75
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
+              "x": 0,
+              "y": 0
+            },
+            "bounds_rel": {
               "x": 0,
               "y": 0
             },
@@ -2532,23 +2575,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
-            "pos_rel": {
-              "x": -1.7777777777777777,
-              "y": -1
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 0,
-              "y": 0
-            }
+            "private_settings": {}
           },
           {
             "name": "Alertes",
@@ -2556,6 +2583,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -2570,13 +2601,25 @@
               "x": 0,
               "y": 0
             },
+            "pos_rel": {
+              "x": -1.7777777910232544,
+              "y": -1
+            },
             "scale": {
+              "x": 0.75,
+              "y": 0.75
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
-              "x": 2560,
-              "y": 1440
+              "x": 1920,
+              "y": 1080
+            },
+            "bounds_rel": {
+              "x": 3.555555582046509,
+              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -2587,23 +2630,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
-            "pos_rel": {
-              "x": -1.7777777777777777,
-              "y": -1
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 3.5555555555555554,
-              "y": 2
-            }
+            "private_settings": {}
           },
           {
             "name": "Alertes YouTube",
@@ -2611,6 +2638,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -2625,13 +2656,25 @@
               "x": 0,
               "y": 0
             },
+            "pos_rel": {
+              "x": -1.7777777910232544,
+              "y": -1
+            },
             "scale": {
+              "x": 0.75,
+              "y": 0.75
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
-              "x": 2560,
-              "y": 1440
+              "x": 1920,
+              "y": 1080
+            },
+            "bounds_rel": {
+              "x": 3.555555582046509,
+              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -2642,23 +2685,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
-            "pos_rel": {
-              "x": -1.7777777777777777,
-              "y": -1
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 3.5555555555555554,
-              "y": 2
-            }
+            "private_settings": {}
           }
         ],
         "canvas": [
@@ -2685,8 +2712,6 @@
           {
             "control": true,
             "alt": true,
-            "shift": false,
-            "command": false,
             "key": "OBS_KEY_F3"
           }
         ],
@@ -2706,11 +2731,12 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
-      "private_settings": {},
-      "canvas_uuid": "6c69626f-6273-4c00-9d88-c5136d61696e"
+      "monitoring_enabled": false,
+      "canvas_uuid": "6c69626f-6273-4c00-9d88-c5136d61696e",
+      "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Discussion",
       "uuid": "718e9718-ba75-4539-baa0-f65d1507cf60",
       "id": "scene",
@@ -2725,6 +2751,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
             "align": 5,
             "bounds_type": 0,
             "bounds_align": 0,
@@ -2739,11 +2769,23 @@
               "x": 0,
               "y": 0
             },
+            "pos_rel": {
+              "x": -1.7777777910232544,
+              "y": -1
+            },
             "scale": {
+              "x": 0.75,
+              "y": 0.75
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
+              "x": 0,
+              "y": 0
+            },
+            "bounds_rel": {
               "x": 0,
               "y": 0
             },
@@ -2756,23 +2798,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
-            "pos_rel": {
-              "x": -1.7777777777777777,
-              "y": -1
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 0,
-              "y": 0
-            }
+            "private_settings": {}
           },
           {
             "name": "Caméra",
@@ -2780,6 +2806,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
             "align": 5,
             "bounds_type": 3,
             "bounds_align": 0,
@@ -2791,16 +2821,28 @@
             "id": 2,
             "group_item_backup": false,
             "pos": {
-              "x": 85.33333333333333,
-              "y": 202.66666666666666
+              "x": 64,
+              "y": 152
+            },
+            "pos_rel": {
+              "x": -1.6592592000961304,
+              "y": -0.7185184955596924
             },
             "scale": {
+              "x": 0.75,
+              "y": 0.75
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
-              "x": 1706.6666666666665,
-              "y": 960
+              "x": 1280,
+              "y": 720
+            },
+            "bounds_rel": {
+              "x": 2.370370388031006,
+              "y": 1.3333333730697632
             },
             "scale_filter": "area",
             "blend_method": "default",
@@ -2811,23 +2853,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
-            "pos_rel": {
-              "x": -1.6592592592592594,
-              "y": -0.7185185185185186
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 2.3703703703703702,
-              "y": 1.3333333333333333
-            }
+            "private_settings": {}
           },
           {
             "name": "Chat — Discussion",
@@ -2835,6 +2861,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -2846,16 +2876,28 @@
             "id": 3,
             "group_item_backup": false,
             "pos": {
-              "x": 1834.6666666666665,
-              "y": 202.66666666666666
+              "x": 1376,
+              "y": 152
+            },
+            "pos_rel": {
+              "x": 0.770370364189148,
+              "y": -0.7185184955596924
             },
             "scale": {
+              "x": 0.75,
+              "y": 0.75
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
-              "x": 640,
-              "y": 960
+              "x": 480,
+              "y": 720
+            },
+            "bounds_rel": {
+              "x": 0.8888888955116272,
+              "y": 1.3333333730697632
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -2866,23 +2908,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
-            "pos_rel": {
-              "x": 0.7703703703703701,
-              "y": -0.7185185185185186
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 0.8888888888888888,
-              "y": 1.3333333333333333
-            }
+            "private_settings": {}
           },
           {
             "name": "Micro",
@@ -2890,6 +2916,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
             "align": 5,
             "bounds_type": 0,
             "bounds_align": 0,
@@ -2904,11 +2934,23 @@
               "x": 0,
               "y": 0
             },
+            "pos_rel": {
+              "x": -1.7777777910232544,
+              "y": -1
+            },
             "scale": {
+              "x": 0.75,
+              "y": 0.75
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
+              "x": 0,
+              "y": 0
+            },
+            "bounds_rel": {
               "x": 0,
               "y": 0
             },
@@ -2921,23 +2963,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
-            "pos_rel": {
-              "x": -1.7777777777777777,
-              "y": -1
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 0,
-              "y": 0
-            }
+            "private_settings": {}
           },
           {
             "name": "Alertes",
@@ -2945,6 +2971,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -2959,13 +2989,25 @@
               "x": 0,
               "y": 0
             },
+            "pos_rel": {
+              "x": -1.7777777910232544,
+              "y": -1
+            },
             "scale": {
+              "x": 0.75,
+              "y": 0.75
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
-              "x": 2560,
-              "y": 1440
+              "x": 1920,
+              "y": 1080
+            },
+            "bounds_rel": {
+              "x": 3.555555582046509,
+              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -2976,23 +3018,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
-            "pos_rel": {
-              "x": -1.7777777777777777,
-              "y": -1
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 3.5555555555555554,
-              "y": 2
-            }
+            "private_settings": {}
           },
           {
             "name": "Alertes YouTube",
@@ -3000,6 +3026,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -3014,13 +3044,25 @@
               "x": 0,
               "y": 0
             },
+            "pos_rel": {
+              "x": -1.7777777910232544,
+              "y": -1
+            },
             "scale": {
+              "x": 0.75,
+              "y": 0.75
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
-              "x": 2560,
-              "y": 1440
+              "x": 1920,
+              "y": 1080
+            },
+            "bounds_rel": {
+              "x": 3.555555582046509,
+              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -3031,23 +3073,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
-            "pos_rel": {
-              "x": -1.7777777777777777,
-              "y": -1
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 3.5555555555555554,
-              "y": 2
-            }
+            "private_settings": {}
           }
         ],
         "canvas": [
@@ -3074,8 +3100,6 @@
           {
             "control": true,
             "alt": true,
-            "shift": false,
-            "command": false,
             "key": "OBS_KEY_F4"
           }
         ],
@@ -3095,11 +3119,12 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
-      "private_settings": {},
-      "canvas_uuid": "6c69626f-6273-4c00-9d88-c5136d61696e"
+      "monitoring_enabled": false,
+      "canvas_uuid": "6c69626f-6273-4c00-9d88-c5136d61696e",
+      "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Pause",
       "uuid": "6b1f629a-a3d2-44eb-8bfa-0b52761d4497",
       "id": "scene",
@@ -3114,6 +3139,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
             "align": 5,
             "bounds_type": 0,
             "bounds_align": 0,
@@ -3128,11 +3157,23 @@
               "x": 0,
               "y": 0
             },
+            "pos_rel": {
+              "x": -1.7777777910232544,
+              "y": -1
+            },
             "scale": {
+              "x": 0.75,
+              "y": 0.75
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
+              "x": 0,
+              "y": 0
+            },
+            "bounds_rel": {
               "x": 0,
               "y": 0
             },
@@ -3145,23 +3186,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
-            "pos_rel": {
-              "x": -1.7777777777777777,
-              "y": -1
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 0,
-              "y": 0
-            }
+            "private_settings": {}
           },
           {
             "name": "Chat",
@@ -3169,6 +3194,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -3180,16 +3209,28 @@
             "id": 2,
             "group_item_backup": false,
             "pos": {
-              "x": 1888,
-              "y": 160
+              "x": 1416,
+              "y": 120
+            },
+            "pos_rel": {
+              "x": 0.8444444537162781,
+              "y": -0.7777777910232544
             },
             "scale": {
+              "x": 0.75,
+              "y": 0.75
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
-              "x": 586.6666666666666,
-              "y": 1120
+              "x": 440,
+              "y": 840
+            },
+            "bounds_rel": {
+              "x": 0.8148148059844971,
+              "y": 1.5555555820465088
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -3200,23 +3241,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
-            "pos_rel": {
-              "x": 0.8444444444444444,
-              "y": -0.7777777777777778
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 0.8148148148148148,
-              "y": 1.5555555555555556
-            }
+            "private_settings": {}
           },
           {
             "name": "Musique — latshow pause",
@@ -3224,6 +3249,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
             "align": 5,
             "bounds_type": 0,
             "bounds_align": 0,
@@ -3238,11 +3267,23 @@
               "x": 0,
               "y": 0
             },
+            "pos_rel": {
+              "x": -1.7777777910232544,
+              "y": -1
+            },
             "scale": {
+              "x": 0.75,
+              "y": 0.75
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
+              "x": 0,
+              "y": 0
+            },
+            "bounds_rel": {
               "x": 0,
               "y": 0
             },
@@ -3255,23 +3296,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
-            "pos_rel": {
-              "x": -1.7777777777777777,
-              "y": -1
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 0,
-              "y": 0
-            }
+            "private_settings": {}
           },
           {
             "name": "Alertes",
@@ -3279,6 +3304,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -3293,13 +3322,25 @@
               "x": 0,
               "y": 0
             },
+            "pos_rel": {
+              "x": -1.7777777910232544,
+              "y": -1
+            },
             "scale": {
+              "x": 0.75,
+              "y": 0.75
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
-              "x": 2560,
-              "y": 1440
+              "x": 1920,
+              "y": 1080
+            },
+            "bounds_rel": {
+              "x": 3.555555582046509,
+              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -3310,23 +3351,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
-            "pos_rel": {
-              "x": -1.7777777777777777,
-              "y": -1
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 3.5555555555555554,
-              "y": 2
-            }
+            "private_settings": {}
           },
           {
             "name": "Alertes YouTube",
@@ -3334,6 +3359,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -3348,13 +3377,25 @@
               "x": 0,
               "y": 0
             },
+            "pos_rel": {
+              "x": -1.7777777910232544,
+              "y": -1
+            },
             "scale": {
+              "x": 0.75,
+              "y": 0.75
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
-              "x": 2560,
-              "y": 1440
+              "x": 1920,
+              "y": 1080
+            },
+            "bounds_rel": {
+              "x": 3.555555582046509,
+              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -3365,23 +3406,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
-            "pos_rel": {
-              "x": -1.7777777777777777,
-              "y": -1
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 3.5555555555555554,
-              "y": 2
-            }
+            "private_settings": {}
           }
         ],
         "canvas": [
@@ -3408,8 +3433,6 @@
           {
             "control": true,
             "alt": true,
-            "shift": false,
-            "command": false,
             "key": "OBS_KEY_F5"
           }
         ],
@@ -3427,11 +3450,12 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
-      "private_settings": {},
-      "canvas_uuid": "6c69626f-6273-4c00-9d88-c5136d61696e"
+      "monitoring_enabled": false,
+      "canvas_uuid": "6c69626f-6273-4c00-9d88-c5136d61696e",
+      "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Pause bébé",
       "uuid": "f8e9e393-cebf-41a1-9442-f335998ae57e",
       "id": "scene",
@@ -3446,6 +3470,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
             "align": 5,
             "bounds_type": 0,
             "bounds_align": 0,
@@ -3460,11 +3488,23 @@
               "x": 0,
               "y": 0
             },
+            "pos_rel": {
+              "x": -1.7777777910232544,
+              "y": -1
+            },
             "scale": {
+              "x": 0.75,
+              "y": 0.75
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
+              "x": 0,
+              "y": 0
+            },
+            "bounds_rel": {
               "x": 0,
               "y": 0
             },
@@ -3477,23 +3517,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
-            "pos_rel": {
-              "x": -1.7777777777777777,
-              "y": -1
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 0,
-              "y": 0
-            }
+            "private_settings": {}
           },
           {
             "name": "Chat",
@@ -3501,6 +3525,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -3512,16 +3540,28 @@
             "id": 2,
             "group_item_backup": false,
             "pos": {
-              "x": 1888,
-              "y": 160
+              "x": 1416,
+              "y": 120
+            },
+            "pos_rel": {
+              "x": 0.8444444537162781,
+              "y": -0.7777777910232544
             },
             "scale": {
+              "x": 0.75,
+              "y": 0.75
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
-              "x": 586.6666666666666,
-              "y": 1120
+              "x": 440,
+              "y": 840
+            },
+            "bounds_rel": {
+              "x": 0.8148148059844971,
+              "y": 1.5555555820465088
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -3532,23 +3572,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
-            "pos_rel": {
-              "x": 0.8444444444444444,
-              "y": -0.7777777777777778
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 0.8148148148148148,
-              "y": 1.5555555555555556
-            }
+            "private_settings": {}
           },
           {
             "name": "Musique — latshow bebe",
@@ -3556,6 +3580,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
             "align": 5,
             "bounds_type": 0,
             "bounds_align": 0,
@@ -3570,11 +3598,23 @@
               "x": 0,
               "y": 0
             },
+            "pos_rel": {
+              "x": -1.7777777910232544,
+              "y": -1
+            },
             "scale": {
+              "x": 0.75,
+              "y": 0.75
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
+              "x": 0,
+              "y": 0
+            },
+            "bounds_rel": {
               "x": 0,
               "y": 0
             },
@@ -3587,23 +3627,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
-            "pos_rel": {
-              "x": -1.7777777777777777,
-              "y": -1
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 0,
-              "y": 0
-            }
+            "private_settings": {}
           },
           {
             "name": "Alertes",
@@ -3611,6 +3635,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -3625,13 +3653,25 @@
               "x": 0,
               "y": 0
             },
+            "pos_rel": {
+              "x": -1.7777777910232544,
+              "y": -1
+            },
             "scale": {
+              "x": 0.75,
+              "y": 0.75
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
-              "x": 2560,
-              "y": 1440
+              "x": 1920,
+              "y": 1080
+            },
+            "bounds_rel": {
+              "x": 3.555555582046509,
+              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -3642,23 +3682,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
-            "pos_rel": {
-              "x": -1.7777777777777777,
-              "y": -1
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 3.5555555555555554,
-              "y": 2
-            }
+            "private_settings": {}
           },
           {
             "name": "Alertes YouTube",
@@ -3666,6 +3690,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -3680,13 +3708,25 @@
               "x": 0,
               "y": 0
             },
+            "pos_rel": {
+              "x": -1.7777777910232544,
+              "y": -1
+            },
             "scale": {
+              "x": 0.75,
+              "y": 0.75
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
-              "x": 2560,
-              "y": 1440
+              "x": 1920,
+              "y": 1080
+            },
+            "bounds_rel": {
+              "x": 3.555555582046509,
+              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -3697,23 +3737,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
-            "pos_rel": {
-              "x": -1.7777777777777777,
-              "y": -1
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 3.5555555555555554,
-              "y": 2
-            }
+            "private_settings": {}
           }
         ],
         "canvas": [
@@ -3740,8 +3764,6 @@
           {
             "control": true,
             "alt": true,
-            "shift": false,
-            "command": false,
             "key": "OBS_KEY_F6"
           }
         ],
@@ -3759,11 +3781,12 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
-      "private_settings": {},
-      "canvas_uuid": "6c69626f-6273-4c00-9d88-c5136d61696e"
+      "monitoring_enabled": false,
+      "canvas_uuid": "6c69626f-6273-4c00-9d88-c5136d61696e",
+      "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Souci technique",
       "uuid": "0330ee77-05be-4144-997b-516b56b41bcd",
       "id": "scene",
@@ -3778,6 +3801,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
             "align": 5,
             "bounds_type": 0,
             "bounds_align": 0,
@@ -3792,11 +3819,23 @@
               "x": 0,
               "y": 0
             },
+            "pos_rel": {
+              "x": -1.7777777910232544,
+              "y": -1
+            },
             "scale": {
+              "x": 0.75,
+              "y": 0.75
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
+              "x": 0,
+              "y": 0
+            },
+            "bounds_rel": {
               "x": 0,
               "y": 0
             },
@@ -3809,23 +3848,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
-            "pos_rel": {
-              "x": -1.7777777777777777,
-              "y": -1
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 0,
-              "y": 0
-            }
+            "private_settings": {}
           },
           {
             "name": "Musique — latshow pause",
@@ -3833,6 +3856,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
             "align": 5,
             "bounds_type": 0,
             "bounds_align": 0,
@@ -3847,11 +3874,23 @@
               "x": 0,
               "y": 0
             },
+            "pos_rel": {
+              "x": -1.7777777910232544,
+              "y": -1
+            },
             "scale": {
+              "x": 0.75,
+              "y": 0.75
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
+              "x": 0,
+              "y": 0
+            },
+            "bounds_rel": {
               "x": 0,
               "y": 0
             },
@@ -3864,23 +3903,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
-            "pos_rel": {
-              "x": -1.7777777777777777,
-              "y": -1
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 0,
-              "y": 0
-            }
+            "private_settings": {}
           },
           {
             "name": "Alertes",
@@ -3888,6 +3911,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -3902,13 +3929,25 @@
               "x": 0,
               "y": 0
             },
+            "pos_rel": {
+              "x": -1.7777777910232544,
+              "y": -1
+            },
             "scale": {
+              "x": 0.75,
+              "y": 0.75
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
-              "x": 2560,
-              "y": 1440
+              "x": 1920,
+              "y": 1080
+            },
+            "bounds_rel": {
+              "x": 3.555555582046509,
+              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -3919,23 +3958,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
-            "pos_rel": {
-              "x": -1.7777777777777777,
-              "y": -1
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 3.5555555555555554,
-              "y": 2
-            }
+            "private_settings": {}
           },
           {
             "name": "Alertes YouTube",
@@ -3943,6 +3966,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -3957,13 +3984,25 @@
               "x": 0,
               "y": 0
             },
+            "pos_rel": {
+              "x": -1.7777777910232544,
+              "y": -1
+            },
             "scale": {
+              "x": 0.75,
+              "y": 0.75
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
-              "x": 2560,
-              "y": 1440
+              "x": 1920,
+              "y": 1080
+            },
+            "bounds_rel": {
+              "x": 3.555555582046509,
+              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -3974,23 +4013,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
-            "pos_rel": {
-              "x": -1.7777777777777777,
-              "y": -1
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 3.5555555555555554,
-              "y": 2
-            }
+            "private_settings": {}
           }
         ],
         "canvas": [
@@ -4017,8 +4040,6 @@
           {
             "control": true,
             "alt": true,
-            "shift": false,
-            "command": false,
             "key": "OBS_KEY_F7"
           }
         ],
@@ -4034,11 +4055,12 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
-      "private_settings": {},
-      "canvas_uuid": "6c69626f-6273-4c00-9d88-c5136d61696e"
+      "monitoring_enabled": false,
+      "canvas_uuid": "6c69626f-6273-4c00-9d88-c5136d61696e",
+      "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Fin",
       "uuid": "9fecfc35-0ac1-4ba4-990b-fd8bbe010206",
       "id": "scene",
@@ -4053,6 +4075,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
             "align": 5,
             "bounds_type": 0,
             "bounds_align": 0,
@@ -4067,11 +4093,23 @@
               "x": 0,
               "y": 0
             },
+            "pos_rel": {
+              "x": -1.7777777910232544,
+              "y": -1
+            },
             "scale": {
+              "x": 0.75,
+              "y": 0.75
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
+              "x": 0,
+              "y": 0
+            },
+            "bounds_rel": {
               "x": 0,
               "y": 0
             },
@@ -4084,23 +4122,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
-            "pos_rel": {
-              "x": -1.7777777777777777,
-              "y": -1
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 0,
-              "y": 0
-            }
+            "private_settings": {}
           },
           {
             "name": "Caméra",
@@ -4108,6 +4130,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
             "align": 5,
             "bounds_type": 3,
             "bounds_align": 0,
@@ -4119,16 +4145,28 @@
             "id": 2,
             "group_item_backup": false,
             "pos": {
-              "x": 1653.3333333333333,
-              "y": 400
+              "x": 1240,
+              "y": 300
+            },
+            "pos_rel": {
+              "x": 0.5185185074806213,
+              "y": -0.4444444477558136
             },
             "scale": {
+              "x": 0.75,
+              "y": 0.75
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
-              "x": 768,
-              "y": 432
+              "x": 576,
+              "y": 324
+            },
+            "bounds_rel": {
+              "x": 1.0666667222976685,
+              "y": 0.6000000238418579
             },
             "scale_filter": "area",
             "blend_method": "default",
@@ -4139,23 +4177,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
-            "pos_rel": {
-              "x": 0.5185185185185184,
-              "y": -0.4444444444444444
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 1.0666666666666667,
-              "y": 0.6
-            }
+            "private_settings": {}
           },
           {
             "name": "Micro",
@@ -4163,6 +4185,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
             "align": 5,
             "bounds_type": 0,
             "bounds_align": 0,
@@ -4177,11 +4203,23 @@
               "x": 0,
               "y": 0
             },
+            "pos_rel": {
+              "x": -1.7777777910232544,
+              "y": -1
+            },
             "scale": {
+              "x": 0.75,
+              "y": 0.75
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
+              "x": 0,
+              "y": 0
+            },
+            "bounds_rel": {
               "x": 0,
               "y": 0
             },
@@ -4194,23 +4232,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
-            "pos_rel": {
-              "x": -1.7777777777777777,
-              "y": -1
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 0,
-              "y": 0
-            }
+            "private_settings": {}
           },
           {
             "name": "Musique — latshow fin",
@@ -4218,6 +4240,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
             "align": 5,
             "bounds_type": 0,
             "bounds_align": 0,
@@ -4232,11 +4258,23 @@
               "x": 0,
               "y": 0
             },
+            "pos_rel": {
+              "x": -1.7777777910232544,
+              "y": -1
+            },
             "scale": {
+              "x": 0.75,
+              "y": 0.75
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
+              "x": 0,
+              "y": 0
+            },
+            "bounds_rel": {
               "x": 0,
               "y": 0
             },
@@ -4249,23 +4287,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
-            "pos_rel": {
-              "x": -1.7777777777777777,
-              "y": -1
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 0,
-              "y": 0
-            }
+            "private_settings": {}
           },
           {
             "name": "Alertes",
@@ -4273,6 +4295,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -4287,13 +4313,25 @@
               "x": 0,
               "y": 0
             },
+            "pos_rel": {
+              "x": -1.7777777910232544,
+              "y": -1
+            },
             "scale": {
+              "x": 0.75,
+              "y": 0.75
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
-              "x": 2560,
-              "y": 1440
+              "x": 1920,
+              "y": 1080
+            },
+            "bounds_rel": {
+              "x": 3.555555582046509,
+              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -4304,23 +4342,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
-            "pos_rel": {
-              "x": -1.7777777777777777,
-              "y": -1
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 3.5555555555555554,
-              "y": 2
-            }
+            "private_settings": {}
           },
           {
             "name": "Alertes YouTube",
@@ -4328,6 +4350,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -4342,13 +4368,25 @@
               "x": 0,
               "y": 0
             },
+            "pos_rel": {
+              "x": -1.7777777910232544,
+              "y": -1
+            },
             "scale": {
+              "x": 0.75,
+              "y": 0.75
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
-              "x": 2560,
-              "y": 1440
+              "x": 1920,
+              "y": 1080
+            },
+            "bounds_rel": {
+              "x": 3.555555582046509,
+              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -4359,23 +4397,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
-            "pos_rel": {
-              "x": -1.7777777777777777,
-              "y": -1
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 3.5555555555555554,
-              "y": 2
-            }
+            "private_settings": {}
           }
         ],
         "canvas": [
@@ -4402,8 +4424,6 @@
           {
             "control": true,
             "alt": true,
-            "shift": false,
-            "command": false,
             "key": "OBS_KEY_F8"
           }
         ],
@@ -4423,11 +4443,12 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
-      "private_settings": {},
-      "canvas_uuid": "6c69626f-6273-4c00-9d88-c5136d61696e"
+      "monitoring_enabled": false,
+      "canvas_uuid": "6c69626f-6273-4c00-9d88-c5136d61696e",
+      "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "TikTok — Démarrage",
       "uuid": "ac9a5ce8-6609-4cd4-81d3-e468a7da1657",
       "id": "scene",
@@ -4442,6 +4463,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 1080,
+              "y": 1920
+            },
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -4456,13 +4481,25 @@
               "x": 0,
               "y": 0
             },
+            "pos_rel": {
+              "x": -0.5625,
+              "y": -1
+            },
             "scale": {
+              "x": 1,
+              "y": 1
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
               "x": 1080,
               "y": 1920
+            },
+            "bounds_rel": {
+              "x": 1.125,
+              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -4473,23 +4510,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 1080,
-              "y": 1920
-            },
-            "pos_rel": {
-              "x": -0.5625,
-              "y": -1
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 1.125,
-              "y": 2
-            }
+            "private_settings": {}
           },
           {
             "name": "Alertes TikTok",
@@ -4497,6 +4518,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 1080,
+              "y": 1920
+            },
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -4511,13 +4536,25 @@
               "x": 0,
               "y": 0
             },
+            "pos_rel": {
+              "x": -0.5625,
+              "y": -1
+            },
             "scale": {
+              "x": 1,
+              "y": 1
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
               "x": 1080,
               "y": 1920
+            },
+            "bounds_rel": {
+              "x": 1.125,
+              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -4528,27 +4565,11 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 1080,
-              "y": 1920
-            },
-            "pos_rel": {
-              "x": -0.5625,
-              "y": -1
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 1.125,
-              "y": 2
-            }
+            "private_settings": {}
           }
         ],
         "order": 0,
-        "canvas_active": true
+        "canvas_active": false
       },
       "mixers": 0,
       "sync": 0,
@@ -4562,21 +4583,21 @@
       "push-to-talk": false,
       "push-to-talk-delay": 0,
       "hotkeys": {
-        "OBSBasic.SelectScene": [],
         "libobs.show_scene_item.1": [],
         "libobs.hide_scene_item.1": [],
         "libobs.show_scene_item.2": [],
-        "libobs.hide_scene_item.2": []
+        "libobs.hide_scene_item.2": [],
+        "OBSBasic.SelectScene": []
       },
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
-      "private_settings": {},
-      "filters": [],
-      "canvas_uuid": "920ac5af-9a0b-452a-bb67-e3df68eae738"
+      "monitoring_enabled": false,
+      "canvas_uuid": "920ac5af-9a0b-452a-bb67-e3df68eae738",
+      "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "TikTok — Montage",
       "uuid": "0a91ed14-ee97-4ef5-89c3-43680b4a8f0c",
       "id": "scene",
@@ -4591,6 +4612,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 1080,
+              "y": 1920
+            },
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -4605,13 +4630,25 @@
               "x": 0,
               "y": 0
             },
+            "pos_rel": {
+              "x": -0.5625,
+              "y": -1
+            },
             "scale": {
+              "x": 1,
+              "y": 1
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
               "x": 1080,
               "y": 1920
+            },
+            "bounds_rel": {
+              "x": 1.125,
+              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -4622,23 +4659,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 1080,
-              "y": 1920
-            },
-            "pos_rel": {
-              "x": -0.5625,
-              "y": -1
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 1.125,
-              "y": 2
-            }
+            "private_settings": {}
           },
           {
             "name": "Caméra",
@@ -4646,6 +4667,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 1080,
+              "y": 1920
+            },
             "align": 5,
             "bounds_type": 3,
             "bounds_align": 0,
@@ -4660,13 +4685,25 @@
               "x": 0,
               "y": 0
             },
+            "pos_rel": {
+              "x": -0.5625,
+              "y": -1
+            },
             "scale": {
+              "x": 1,
+              "y": 1
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
               "x": 1080,
               "y": 540
+            },
+            "bounds_rel": {
+              "x": 1.125,
+              "y": 0.5625
             },
             "scale_filter": "area",
             "blend_method": "default",
@@ -4677,23 +4714,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 1080,
-              "y": 1920
-            },
-            "pos_rel": {
-              "x": -0.5625,
-              "y": -1
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 1.125,
-              "y": 0.5625
-            }
+            "private_settings": {}
           },
           {
             "name": "Fenêtre",
@@ -4701,6 +4722,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 1080,
+              "y": 1920
+            },
             "align": 5,
             "bounds_type": 3,
             "bounds_align": 0,
@@ -4715,13 +4740,25 @@
               "x": 0,
               "y": 672
             },
+            "pos_rel": {
+              "x": -0.5625,
+              "y": -0.30000001192092896
+            },
             "scale": {
+              "x": 1,
+              "y": 1
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
               "x": 1080,
               "y": 738
+            },
+            "bounds_rel": {
+              "x": 1.125,
+              "y": 0.768750011920929
             },
             "scale_filter": "area",
             "blend_method": "default",
@@ -4732,23 +4769,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 1080,
-              "y": 1920
-            },
-            "pos_rel": {
-              "x": -0.5625,
-              "y": -0.3
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 1.125,
-              "y": 0.76875
-            }
+            "private_settings": {}
           },
           {
             "name": "Alertes TikTok",
@@ -4756,6 +4777,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 1080,
+              "y": 1920
+            },
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -4770,13 +4795,25 @@
               "x": 0,
               "y": 0
             },
+            "pos_rel": {
+              "x": -0.5625,
+              "y": -1
+            },
             "scale": {
+              "x": 1,
+              "y": 1
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
               "x": 1080,
               "y": 1920
+            },
+            "bounds_rel": {
+              "x": 1.125,
+              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -4787,23 +4824,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 1080,
-              "y": 1920
-            },
-            "pos_rel": {
-              "x": -0.5625,
-              "y": -1
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 1.125,
-              "y": 2
-            }
+            "private_settings": {}
           }
         ],
         "order": 1,
@@ -4821,7 +4842,6 @@
       "push-to-talk": false,
       "push-to-talk-delay": 0,
       "hotkeys": {
-        "OBSBasic.SelectScene": [],
         "libobs.show_scene_item.1": [],
         "libobs.hide_scene_item.1": [],
         "libobs.show_scene_item.2": [],
@@ -4829,17 +4849,18 @@
         "libobs.show_scene_item.3": [],
         "libobs.hide_scene_item.3": [],
         "libobs.show_scene_item.4": [],
-        "libobs.hide_scene_item.4": []
+        "libobs.hide_scene_item.4": [],
+        "OBSBasic.SelectScene": []
       },
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
-      "private_settings": {},
-      "filters": [],
-      "canvas_uuid": "920ac5af-9a0b-452a-bb67-e3df68eae738"
+      "monitoring_enabled": false,
+      "canvas_uuid": "920ac5af-9a0b-452a-bb67-e3df68eae738",
+      "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "TikTok — Discussion",
       "uuid": "9eb4ed14-7341-4ad6-9601-191ca66abd72",
       "id": "scene",
@@ -4854,6 +4875,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 1080,
+              "y": 1920
+            },
             "align": 5,
             "bounds_type": 3,
             "bounds_align": 0,
@@ -4868,13 +4893,25 @@
               "x": 0,
               "y": 0
             },
+            "pos_rel": {
+              "x": -0.5625,
+              "y": -1
+            },
             "scale": {
+              "x": 1,
+              "y": 1
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
               "x": 1080,
               "y": 1920
+            },
+            "bounds_rel": {
+              "x": 1.125,
+              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -4885,23 +4922,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 1080,
-              "y": 1920
-            },
-            "pos_rel": {
-              "x": -0.5625,
-              "y": -1
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 1.125,
-              "y": 2
-            }
+            "private_settings": {}
           },
           {
             "name": "Habillage TikTok — Discussion",
@@ -4909,6 +4930,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 1080,
+              "y": 1920
+            },
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -4923,13 +4948,25 @@
               "x": 0,
               "y": 0
             },
+            "pos_rel": {
+              "x": -0.5625,
+              "y": -1
+            },
             "scale": {
+              "x": 1,
+              "y": 1
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
               "x": 1080,
               "y": 1920
+            },
+            "bounds_rel": {
+              "x": 1.125,
+              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -4940,23 +4977,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 1080,
-              "y": 1920
-            },
-            "pos_rel": {
-              "x": -0.5625,
-              "y": -1
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 1.125,
-              "y": 2
-            }
+            "private_settings": {}
           },
           {
             "name": "Alertes TikTok",
@@ -4964,6 +4985,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 1080,
+              "y": 1920
+            },
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -4978,13 +5003,25 @@
               "x": 0,
               "y": 0
             },
+            "pos_rel": {
+              "x": -0.5625,
+              "y": -1
+            },
             "scale": {
+              "x": 1,
+              "y": 1
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
               "x": 1080,
               "y": 1920
+            },
+            "bounds_rel": {
+              "x": 1.125,
+              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -4995,27 +5032,11 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 1080,
-              "y": 1920
-            },
-            "pos_rel": {
-              "x": -0.5625,
-              "y": -1
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 1.125,
-              "y": 2
-            }
+            "private_settings": {}
           }
         ],
         "order": 2,
-        "canvas_active": true
+        "canvas_active": false
       },
       "mixers": 0,
       "sync": 0,
@@ -5029,23 +5050,23 @@
       "push-to-talk": false,
       "push-to-talk-delay": 0,
       "hotkeys": {
-        "OBSBasic.SelectScene": [],
         "libobs.show_scene_item.1": [],
         "libobs.hide_scene_item.1": [],
         "libobs.show_scene_item.2": [],
         "libobs.hide_scene_item.2": [],
         "libobs.show_scene_item.3": [],
-        "libobs.hide_scene_item.3": []
+        "libobs.hide_scene_item.3": [],
+        "OBSBasic.SelectScene": []
       },
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
-      "private_settings": {},
-      "filters": [],
-      "canvas_uuid": "920ac5af-9a0b-452a-bb67-e3df68eae738"
+      "monitoring_enabled": false,
+      "canvas_uuid": "920ac5af-9a0b-452a-bb67-e3df68eae738",
+      "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "TikTok — Pause",
       "uuid": "76241e37-e07c-4e8f-aba7-f7e2821dee87",
       "id": "scene",
@@ -5060,6 +5081,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 1080,
+              "y": 1920
+            },
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -5074,13 +5099,25 @@
               "x": 0,
               "y": 0
             },
+            "pos_rel": {
+              "x": -0.5625,
+              "y": -1
+            },
             "scale": {
+              "x": 1,
+              "y": 1
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
               "x": 1080,
               "y": 1920
+            },
+            "bounds_rel": {
+              "x": 1.125,
+              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -5091,23 +5128,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 1080,
-              "y": 1920
-            },
-            "pos_rel": {
-              "x": -0.5625,
-              "y": -1
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 1.125,
-              "y": 2
-            }
+            "private_settings": {}
           },
           {
             "name": "Alertes TikTok",
@@ -5115,6 +5136,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 1080,
+              "y": 1920
+            },
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -5129,13 +5154,25 @@
               "x": 0,
               "y": 0
             },
+            "pos_rel": {
+              "x": -0.5625,
+              "y": -1
+            },
             "scale": {
+              "x": 1,
+              "y": 1
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
               "x": 1080,
               "y": 1920
+            },
+            "bounds_rel": {
+              "x": 1.125,
+              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -5146,27 +5183,11 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 1080,
-              "y": 1920
-            },
-            "pos_rel": {
-              "x": -0.5625,
-              "y": -1
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 1.125,
-              "y": 2
-            }
+            "private_settings": {}
           }
         ],
         "order": 3,
-        "canvas_active": true
+        "canvas_active": false
       },
       "mixers": 0,
       "sync": 0,
@@ -5180,21 +5201,21 @@
       "push-to-talk": false,
       "push-to-talk-delay": 0,
       "hotkeys": {
-        "OBSBasic.SelectScene": [],
         "libobs.show_scene_item.1": [],
         "libobs.hide_scene_item.1": [],
         "libobs.show_scene_item.2": [],
-        "libobs.hide_scene_item.2": []
+        "libobs.hide_scene_item.2": [],
+        "OBSBasic.SelectScene": []
       },
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
-      "private_settings": {},
-      "filters": [],
-      "canvas_uuid": "920ac5af-9a0b-452a-bb67-e3df68eae738"
+      "monitoring_enabled": false,
+      "canvas_uuid": "920ac5af-9a0b-452a-bb67-e3df68eae738",
+      "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "TikTok — Pause bébé",
       "uuid": "13fed290-bc24-4e0d-9d09-a69cf818c2b3",
       "id": "scene",
@@ -5209,6 +5230,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 1080,
+              "y": 1920
+            },
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -5223,13 +5248,25 @@
               "x": 0,
               "y": 0
             },
+            "pos_rel": {
+              "x": -0.5625,
+              "y": -1
+            },
             "scale": {
+              "x": 1,
+              "y": 1
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
               "x": 1080,
               "y": 1920
+            },
+            "bounds_rel": {
+              "x": 1.125,
+              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -5240,23 +5277,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 1080,
-              "y": 1920
-            },
-            "pos_rel": {
-              "x": -0.5625,
-              "y": -1
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 1.125,
-              "y": 2
-            }
+            "private_settings": {}
           },
           {
             "name": "Alertes TikTok",
@@ -5264,6 +5285,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 1080,
+              "y": 1920
+            },
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -5278,13 +5303,25 @@
               "x": 0,
               "y": 0
             },
+            "pos_rel": {
+              "x": -0.5625,
+              "y": -1
+            },
             "scale": {
+              "x": 1,
+              "y": 1
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
               "x": 1080,
               "y": 1920
+            },
+            "bounds_rel": {
+              "x": 1.125,
+              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -5295,27 +5332,11 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 1080,
-              "y": 1920
-            },
-            "pos_rel": {
-              "x": -0.5625,
-              "y": -1
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 1.125,
-              "y": 2
-            }
+            "private_settings": {}
           }
         ],
         "order": 4,
-        "canvas_active": true
+        "canvas_active": false
       },
       "mixers": 0,
       "sync": 0,
@@ -5329,21 +5350,21 @@
       "push-to-talk": false,
       "push-to-talk-delay": 0,
       "hotkeys": {
-        "OBSBasic.SelectScene": [],
         "libobs.show_scene_item.1": [],
         "libobs.hide_scene_item.1": [],
         "libobs.show_scene_item.2": [],
-        "libobs.hide_scene_item.2": []
+        "libobs.hide_scene_item.2": [],
+        "OBSBasic.SelectScene": []
       },
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
-      "private_settings": {},
-      "filters": [],
-      "canvas_uuid": "920ac5af-9a0b-452a-bb67-e3df68eae738"
+      "monitoring_enabled": false,
+      "canvas_uuid": "920ac5af-9a0b-452a-bb67-e3df68eae738",
+      "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "TikTok — Souci technique",
       "uuid": "54655473-1c5c-4c44-9b6f-cabf01725b9d",
       "id": "scene",
@@ -5358,6 +5379,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 1080,
+              "y": 1920
+            },
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -5372,13 +5397,25 @@
               "x": 0,
               "y": 0
             },
+            "pos_rel": {
+              "x": -0.5625,
+              "y": -1
+            },
             "scale": {
+              "x": 1,
+              "y": 1
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
               "x": 1080,
               "y": 1920
+            },
+            "bounds_rel": {
+              "x": 1.125,
+              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -5389,23 +5426,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 1080,
-              "y": 1920
-            },
-            "pos_rel": {
-              "x": -0.5625,
-              "y": -1
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 1.125,
-              "y": 2
-            }
+            "private_settings": {}
           },
           {
             "name": "Alertes TikTok",
@@ -5413,6 +5434,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 1080,
+              "y": 1920
+            },
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -5427,13 +5452,25 @@
               "x": 0,
               "y": 0
             },
+            "pos_rel": {
+              "x": -0.5625,
+              "y": -1
+            },
             "scale": {
+              "x": 1,
+              "y": 1
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
               "x": 1080,
               "y": 1920
+            },
+            "bounds_rel": {
+              "x": 1.125,
+              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -5444,27 +5481,11 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 1080,
-              "y": 1920
-            },
-            "pos_rel": {
-              "x": -0.5625,
-              "y": -1
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 1.125,
-              "y": 2
-            }
+            "private_settings": {}
           }
         ],
         "order": 5,
-        "canvas_active": true
+        "canvas_active": false
       },
       "mixers": 0,
       "sync": 0,
@@ -5478,21 +5499,21 @@
       "push-to-talk": false,
       "push-to-talk-delay": 0,
       "hotkeys": {
-        "OBSBasic.SelectScene": [],
         "libobs.show_scene_item.1": [],
         "libobs.hide_scene_item.1": [],
         "libobs.show_scene_item.2": [],
-        "libobs.hide_scene_item.2": []
+        "libobs.hide_scene_item.2": [],
+        "OBSBasic.SelectScene": []
       },
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
-      "private_settings": {},
-      "filters": [],
-      "canvas_uuid": "920ac5af-9a0b-452a-bb67-e3df68eae738"
+      "monitoring_enabled": false,
+      "canvas_uuid": "920ac5af-9a0b-452a-bb67-e3df68eae738",
+      "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "TikTok — Fin",
       "uuid": "3baa2e0b-dbde-444d-a5d9-1536a720f65e",
       "id": "scene",
@@ -5507,6 +5528,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 1080,
+              "y": 1920
+            },
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -5521,13 +5546,25 @@
               "x": 0,
               "y": 0
             },
+            "pos_rel": {
+              "x": -0.5625,
+              "y": -1
+            },
             "scale": {
+              "x": 1,
+              "y": 1
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
               "x": 1080,
               "y": 1920
+            },
+            "bounds_rel": {
+              "x": 1.125,
+              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -5538,23 +5575,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 1080,
-              "y": 1920
-            },
-            "pos_rel": {
-              "x": -0.5625,
-              "y": -1
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 1.125,
-              "y": 2
-            }
+            "private_settings": {}
           },
           {
             "name": "Caméra",
@@ -5562,6 +5583,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 1080,
+              "y": 1920
+            },
             "align": 5,
             "bounds_type": 3,
             "bounds_align": 0,
@@ -5576,13 +5601,25 @@
               "x": 0,
               "y": 0
             },
+            "pos_rel": {
+              "x": -0.5625,
+              "y": -1
+            },
             "scale": {
+              "x": 1,
+              "y": 1
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
               "x": 1080,
               "y": 700
+            },
+            "bounds_rel": {
+              "x": 1.125,
+              "y": 0.7291666865348816
             },
             "scale_filter": "area",
             "blend_method": "default",
@@ -5593,23 +5630,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 1080,
-              "y": 1920
-            },
-            "pos_rel": {
-              "x": -0.5625,
-              "y": -1
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 1.125,
-              "y": 0.7291666666666666
-            }
+            "private_settings": {}
           },
           {
             "name": "Alertes TikTok",
@@ -5617,6 +5638,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 1080,
+              "y": 1920
+            },
             "align": 5,
             "bounds_type": 1,
             "bounds_align": 0,
@@ -5631,13 +5656,25 @@
               "x": 0,
               "y": 0
             },
+            "pos_rel": {
+              "x": -0.5625,
+              "y": -1
+            },
             "scale": {
+              "x": 1,
+              "y": 1
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
               "x": 1080,
               "y": 1920
+            },
+            "bounds_rel": {
+              "x": 1.125,
+              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -5648,27 +5685,11 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 1080,
-              "y": 1920
-            },
-            "pos_rel": {
-              "x": -0.5625,
-              "y": -1
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 1.125,
-              "y": 2
-            }
+            "private_settings": {}
           }
         ],
         "order": 6,
-        "canvas_active": true
+        "canvas_active": false
       },
       "mixers": 0,
       "sync": 0,
@@ -5682,20 +5703,123 @@
       "push-to-talk": false,
       "push-to-talk-delay": 0,
       "hotkeys": {
-        "OBSBasic.SelectScene": [],
         "libobs.show_scene_item.1": [],
         "libobs.hide_scene_item.1": [],
         "libobs.show_scene_item.2": [],
         "libobs.hide_scene_item.2": [],
         "libobs.show_scene_item.3": [],
-        "libobs.hide_scene_item.3": []
+        "libobs.hide_scene_item.3": [],
+        "OBSBasic.SelectScene": []
       },
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
-      "private_settings": {},
-      "filters": [],
-      "canvas_uuid": "920ac5af-9a0b-452a-bb67-e3df68eae738"
+      "monitoring_enabled": false,
+      "canvas_uuid": "920ac5af-9a0b-452a-bb67-e3df68eae738",
+      "private_settings": {}
     }
-  ]
+  ],
+  "groups": [],
+  "scene_order": [
+    {
+      "name": "Démarrage"
+    },
+    {
+      "name": "Montage"
+    },
+    {
+      "name": "Aperçu plein écran"
+    },
+    {
+      "name": "Discussion"
+    },
+    {
+      "name": "Pause"
+    },
+    {
+      "name": "Pause bébé"
+    },
+    {
+      "name": "Souci technique"
+    },
+    {
+      "name": "Fin"
+    }
+  ],
+  "current_scene": "Montage",
+  "current_program_scene": "Montage",
+  "canvases": [
+    {
+      "info": {
+        "name": "Aitum Vertical",
+        "uuid": "920ac5af-9a0b-452a-bb67-e3df68eae738",
+        "private": false,
+        "flags": 14
+      }
+    }
+  ],
+  "current_transition": "Tuiles 3D",
+  "transition_duration": 300,
+  "transitions": [
+    {
+      "name": "Tuiles 3D",
+      "id": "obs_stinger_transition",
+      "settings": {
+        "path": "D:/Stream/OBS/transitions/transition_latshow.webm",
+        "tp_type": 0,
+        "transition_point": 620,
+        "audio_monitoring": 2,
+        "audio_fade_style": 1,
+        "preload": false,
+        "hw_decode": false
+      }
+    }
+  ],
+  "quick_transitions": [],
+  "saved_projectors": [],
+  "preview_locked": false,
+  "scaling_enabled": false,
+  "scaling_level": -3,
+  "scaling_off_x": 0,
+  "scaling_off_y": 0,
+  "virtual-camera": {
+    "type2": 3
+  },
+  "modules": {
+    "scripts-tool": [
+      {
+        "path": "D:/Stream/OBS/obs/soutiens.lua",
+        "settings": {}
+      }
+    ],
+    "output-timer": {
+      "streamTimerHours": 0,
+      "streamTimerMinutes": 0,
+      "streamTimerSeconds": 0,
+      "recordTimerHours": 0,
+      "recordTimerMinutes": 0,
+      "recordTimerSeconds": 0,
+      "autoStartStreamTimer": false,
+      "autoStartRecordTimer": false,
+      "pauseRecordTimer": false
+    },
+    "auto-scene-switcher": {
+      "interval": 300,
+      "non_matching_scene": "",
+      "switch_if_not_matching": false,
+      "active": false,
+      "switches": []
+    },
+    "captions": {
+      "source": "",
+      "enabled": false,
+      "lang_id": 1036,
+      "provider": "mssapi"
+    }
+  },
+  "resolution": {
+    "x": 2560,
+    "y": 1440
+  },
+  "version": 2
 }

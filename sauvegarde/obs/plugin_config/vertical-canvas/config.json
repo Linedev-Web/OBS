@@ -1,7 +1,7 @@
 {
   "canvas": [
     {
-      "current_scene": "TikTok — Démarrage",
+      "current_scene": "TikTok — Fin",
       "grid_mode": false,
       "width": 1080,
       "height": 1920,
@@ -18,9 +18,7 @@
       "backtrack": false,
       "backtrack_seconds": 57,
       "backtrack_path": "D:/Stream/Rush",
-      "backtrack_hotkeys": {
-        "ReplayBuffer.Save": []
-      },
+      "backtrack_hotkeys": null,
       "virtual_camera_mode": 0,
       "stream_outputs": [],
       "stream_delay_enabled": false,

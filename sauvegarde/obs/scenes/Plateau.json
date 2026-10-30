@@ -1,41 +1,8 @@
 {
   "name": "Plateau",
-  "groups": [],
-  "scene_order": [
-    {
-      "name": "Plateau"
-    },
-    {
-      "name": "Écran"
-    },
-    {
-      "name": "Page web et caméra"
-    },
-    {
-      "name": "Code et caméra"
-    }
-  ],
-  "current_scene": "Plateau",
-  "current_program_scene": "Plateau",
-  "current_transition": "Coupure",
-  "transition_duration": 300,
-  "transitions": [],
-  "quick_transitions": [],
-  "saved_projectors": [],
-  "preview_locked": false,
-  "scaling_enabled": false,
-  "scaling_level": 0,
-  "scaling_off_x": 0,
-  "scaling_off_y": 0,
-  "modules": {},
-  "resolution": {
-    "x": 2560,
-    "y": 1440
-  },
-  "version": 2,
   "sources": [
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Caméra",
       "uuid": "3be54f7c-343b-4ad4-b452-fb55fc32ce10",
       "id": "dshow_input",
@@ -63,14 +30,28 @@
       "push-to-mute-delay": 0,
       "push-to-talk": false,
       "push-to-talk-delay": 0,
-      "hotkeys": {},
+      "hotkeys": {
+        "libobs.mute": [],
+        "libobs.unmute": [],
+        "libobs.monitor-on": [],
+        "libobs.monitor-off": [],
+        "libobs.push-to-mute": [],
+        "libobs.push-to-talk": [],
+        "source_record.enable": [],
+        "source_record.disable": [],
+        "source_record.PauseRecording": [],
+        "source_record.UnpauseRecording": [],
+        "source_record.SplitRecording": [],
+        "source_record.AddChapterMarker": []
+      },
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "private_settings": {},
       "filters": [
         {
-          "prev_ver": 537001986,
+          "prev_ver": 553648128,
           "name": "Couleurs",
           "uuid": "aaeb872e-a6e8-4680-9cd3-5d869824dcbf",
           "id": "color_filter",
@@ -97,10 +78,11 @@
           "deinterlace_mode": 0,
           "deinterlace_field_order": 0,
           "monitoring_type": 0,
+          "monitoring_enabled": false,
           "private_settings": {}
         },
         {
-          "prev_ver": 537001986,
+          "prev_ver": 553648128,
           "name": "Enregistrement caméra",
           "uuid": "70f2dbe9-2f00-4894-8dfb-bc2a8270a035",
           "id": "source_record_filter",
@@ -133,12 +115,13 @@
           "deinterlace_mode": 0,
           "deinterlace_field_order": 0,
           "monitoring_type": 0,
+          "monitoring_enabled": false,
           "private_settings": {}
         }
       ]
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Micro",
       "uuid": "85efa166-a0eb-4ce1-8a84-83ed0bdd52ff",
       "id": "wasapi_input_capture",
@@ -161,16 +144,19 @@
       "hotkeys": {
         "libobs.mute": [],
         "libobs.unmute": [],
+        "libobs.monitor-on": [],
+        "libobs.monitor-off": [],
         "libobs.push-to-mute": [],
         "libobs.push-to-talk": []
       },
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "private_settings": {},
       "filters": [
         {
-          "prev_ver": 537001986,
+          "prev_ver": 553648128,
           "name": "Limiteur",
           "uuid": "99de33b6-a944-44ba-8284-c9d275121780",
           "id": "limiter_filter",
@@ -194,12 +180,13 @@
           "deinterlace_mode": 0,
           "deinterlace_field_order": 0,
           "monitoring_type": 0,
+          "monitoring_enabled": false,
           "private_settings": {}
         }
       ]
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Capture de l’écran",
       "uuid": "f40888f4-255f-4a6f-b70b-30f86884e058",
       "id": "monitor_capture",
@@ -222,10 +209,11 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Son du PC",
       "uuid": "d184d4c4-7677-4e08-87d6-3381f312f54c",
       "id": "wasapi_output_capture",
@@ -247,27 +235,30 @@
       "hotkeys": {
         "libobs.mute": [],
         "libobs.unmute": [],
+        "libobs.monitor-on": [],
+        "libobs.monitor-off": [],
         "libobs.push-to-mute": [],
         "libobs.push-to-talk": []
       },
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Page web",
       "uuid": "6145379d-82c9-47e0-949a-d465ff0e49cf",
       "id": "window_capture",
       "versioned_id": "window_capture",
       "settings": {
         "window": "Arc:WinUIDesktopWin32WindowClass:Arc.exe",
-        "method": 2,
         "priority": 2,
+        "capture_audio": true,
+        "method": 2,
         "cursor": true,
-        "client_area": true,
-        "capture_audio": true
+        "client_area": true
       },
       "mixers": 5,
       "sync": 0,
@@ -280,25 +271,33 @@
       "push-to-mute-delay": 0,
       "push-to-talk": false,
       "push-to-talk-delay": 0,
-      "hotkeys": {},
+      "hotkeys": {
+        "libobs.mute": [],
+        "libobs.unmute": [],
+        "libobs.monitor-on": [],
+        "libobs.monitor-off": [],
+        "libobs.push-to-mute": [],
+        "libobs.push-to-talk": []
+      },
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Code",
       "uuid": "e25ffb75-00c2-4595-8b91-7157f2ffc5cf",
       "id": "window_capture",
       "versioned_id": "window_capture",
       "settings": {
         "window": "Serveurliste – Commit#3A index.php:SunAwtFrame:phpstorm64.exe",
-        "method": 2,
         "priority": 2,
+        "capture_audio": false,
+        "method": 2,
         "cursor": true,
-        "client_area": true,
-        "capture_audio": false
+        "client_area": true
       },
       "mixers": 0,
       "sync": 0,
@@ -311,14 +310,22 @@
       "push-to-mute-delay": 0,
       "push-to-talk": false,
       "push-to-talk-delay": 0,
-      "hotkeys": {},
+      "hotkeys": {
+        "libobs.mute": [],
+        "libobs.unmute": [],
+        "libobs.monitor-on": [],
+        "libobs.monitor-off": [],
+        "libobs.push-to-mute": [],
+        "libobs.push-to-talk": []
+      },
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Plateau",
       "uuid": "97f8a89d-29bf-4449-86cc-a745ffb20e8e",
       "id": "scene",
@@ -333,6 +340,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
             "align": 5,
             "bounds_type": 3,
             "bounds_align": 0,
@@ -347,13 +358,25 @@
               "x": 0,
               "y": 0
             },
+            "pos_rel": {
+              "x": -1.7777777910232544,
+              "y": -1
+            },
             "scale": {
+              "x": 0.75,
+              "y": 0.75
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
-              "x": 2560,
-              "y": 1440
+              "x": 1920,
+              "y": 1080
+            },
+            "bounds_rel": {
+              "x": 3.555555582046509,
+              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -364,23 +387,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
-            "pos_rel": {
-              "x": -1.7777777777777777,
-              "y": -1
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 3.5555555555555554,
-              "y": 2
-            }
+            "private_settings": {}
           },
           {
             "name": "Micro",
@@ -388,6 +395,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
             "align": 5,
             "bounds_type": 0,
             "bounds_align": 0,
@@ -402,11 +413,23 @@
               "x": 0,
               "y": 0
             },
+            "pos_rel": {
+              "x": -1.7777777910232544,
+              "y": -1
+            },
             "scale": {
+              "x": 0.75,
+              "y": 0.75
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
+              "x": 0,
+              "y": 0
+            },
+            "bounds_rel": {
               "x": 0,
               "y": 0
             },
@@ -419,23 +442,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
-            "pos_rel": {
-              "x": -1.7777777777777777,
-              "y": -1
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 0,
-              "y": 0
-            }
+            "private_settings": {}
           }
         ]
       },
@@ -460,11 +467,12 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
-      "private_settings": {},
-      "canvas_uuid": "6c69626f-6273-4c00-9d88-c5136d61696e"
+      "monitoring_enabled": false,
+      "canvas_uuid": "6c69626f-6273-4c00-9d88-c5136d61696e",
+      "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Écran",
       "uuid": "da5fa9f3-8dd2-44d9-bcc6-762dcc8a20d4",
       "id": "scene",
@@ -479,6 +487,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
             "align": 5,
             "bounds_type": 2,
             "bounds_align": 0,
@@ -493,13 +505,25 @@
               "x": 0,
               "y": 0
             },
+            "pos_rel": {
+              "x": -1.7777777910232544,
+              "y": -1
+            },
             "scale": {
+              "x": 0.75,
+              "y": 0.75
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
-              "x": 2560,
-              "y": 1440
+              "x": 1920,
+              "y": 1080
+            },
+            "bounds_rel": {
+              "x": 3.555555582046509,
+              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -510,23 +534,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
-            "pos_rel": {
-              "x": -1.7777777777777777,
-              "y": -1
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 3.5555555555555554,
-              "y": 2
-            }
+            "private_settings": {}
           },
           {
             "name": "Son du PC",
@@ -534,6 +542,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
             "align": 5,
             "bounds_type": 0,
             "bounds_align": 0,
@@ -548,11 +560,23 @@
               "x": 0,
               "y": 0
             },
+            "pos_rel": {
+              "x": -1.7777777910232544,
+              "y": -1
+            },
             "scale": {
+              "x": 0.75,
+              "y": 0.75
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
+              "x": 0,
+              "y": 0
+            },
+            "bounds_rel": {
               "x": 0,
               "y": 0
             },
@@ -565,23 +589,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
-            "pos_rel": {
-              "x": -1.7777777777777777,
-              "y": -1
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 0,
-              "y": 0
-            }
+            "private_settings": {}
           }
         ]
       },
@@ -606,11 +614,12 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
-      "private_settings": {},
-      "canvas_uuid": "6c69626f-6273-4c00-9d88-c5136d61696e"
+      "monitoring_enabled": false,
+      "canvas_uuid": "6c69626f-6273-4c00-9d88-c5136d61696e",
+      "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Page web et caméra",
       "uuid": "871b0beb-f2a6-4859-9537-f7e68afacc2e",
       "id": "scene",
@@ -625,6 +634,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
             "align": 5,
             "bounds_type": 2,
             "bounds_align": 0,
@@ -639,13 +652,25 @@
               "x": 0,
               "y": 0
             },
+            "pos_rel": {
+              "x": -1.7777777910232544,
+              "y": -1
+            },
             "scale": {
+              "x": 0.75,
+              "y": 0.75
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
-              "x": 2560,
-              "y": 1440
+              "x": 1920,
+              "y": 1080
+            },
+            "bounds_rel": {
+              "x": 3.555555582046509,
+              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -656,23 +681,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
-            "pos_rel": {
-              "x": -1.7777777777777777,
-              "y": -1
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 3.5555555555555554,
-              "y": 2
-            }
+            "private_settings": {}
           },
           {
             "name": "Caméra",
@@ -680,6 +689,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
             "align": 5,
             "bounds_type": 3,
             "bounds_align": 0,
@@ -691,16 +704,28 @@
             "id": 2,
             "group_item_backup": false,
             "pos": {
-              "x": 2005.3333333333333,
-              "y": 1114.6666666666665
+              "x": 1504,
+              "y": 836
+            },
+            "pos_rel": {
+              "x": 1.0074074268341064,
+              "y": 0.5481481552124023
             },
             "scale": {
+              "x": 0.75,
+              "y": 0.75
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
-              "x": 512,
-              "y": 288
+              "x": 384,
+              "y": 216
+            },
+            "bounds_rel": {
+              "x": 0.7111111283302307,
+              "y": 0.4000000059604645
             },
             "scale_filter": "area",
             "blend_method": "default",
@@ -711,23 +736,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
-            "pos_rel": {
-              "x": 1.0074074074074073,
-              "y": 0.5481481481481479
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 0.7111111111111111,
-              "y": 0.4
-            }
+            "private_settings": {}
           },
           {
             "name": "Micro",
@@ -735,6 +744,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
             "align": 5,
             "bounds_type": 0,
             "bounds_align": 0,
@@ -749,11 +762,23 @@
               "x": 0,
               "y": 0
             },
+            "pos_rel": {
+              "x": -1.7777777910232544,
+              "y": -1
+            },
             "scale": {
+              "x": 0.75,
+              "y": 0.75
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
+              "x": 0,
+              "y": 0
+            },
+            "bounds_rel": {
               "x": 0,
               "y": 0
             },
@@ -766,23 +791,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
-            "pos_rel": {
-              "x": -1.7777777777777777,
-              "y": -1
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 0,
-              "y": 0
-            }
+            "private_settings": {}
           }
         ]
       },
@@ -809,11 +818,12 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
-      "private_settings": {},
-      "canvas_uuid": "6c69626f-6273-4c00-9d88-c5136d61696e"
+      "monitoring_enabled": false,
+      "canvas_uuid": "6c69626f-6273-4c00-9d88-c5136d61696e",
+      "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Code et caméra",
       "uuid": "afa8748c-ba3d-40f1-b0ff-b81f7e4ffd5f",
       "id": "scene",
@@ -828,6 +838,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
             "align": 5,
             "bounds_type": 2,
             "bounds_align": 0,
@@ -842,13 +856,25 @@
               "x": 0,
               "y": 0
             },
+            "pos_rel": {
+              "x": -1.7777777910232544,
+              "y": -1
+            },
             "scale": {
+              "x": 0.75,
+              "y": 0.75
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
-              "x": 2560,
-              "y": 1440
+              "x": 1920,
+              "y": 1080
+            },
+            "bounds_rel": {
+              "x": 3.555555582046509,
+              "y": 2
             },
             "scale_filter": "disable",
             "blend_method": "default",
@@ -859,23 +885,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
-            "pos_rel": {
-              "x": -1.7777777777777777,
-              "y": -1
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 3.5555555555555554,
-              "y": 2
-            }
+            "private_settings": {}
           },
           {
             "name": "Caméra",
@@ -883,6 +893,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
             "align": 5,
             "bounds_type": 3,
             "bounds_align": 0,
@@ -894,16 +908,28 @@
             "id": 2,
             "group_item_backup": false,
             "pos": {
-              "x": 2005.3333333333333,
-              "y": 1114.6666666666665
+              "x": 1504,
+              "y": 836
+            },
+            "pos_rel": {
+              "x": 1.0074074268341064,
+              "y": 0.5481481552124023
             },
             "scale": {
+              "x": 0.75,
+              "y": 0.75
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
-              "x": 512,
-              "y": 288
+              "x": 384,
+              "y": 216
+            },
+            "bounds_rel": {
+              "x": 0.7111111283302307,
+              "y": 0.4000000059604645
             },
             "scale_filter": "area",
             "blend_method": "default",
@@ -914,23 +940,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
-            "pos_rel": {
-              "x": 1.0074074074074073,
-              "y": 0.5481481481481479
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 0.7111111111111111,
-              "y": 0.4
-            }
+            "private_settings": {}
           },
           {
             "name": "Micro",
@@ -938,6 +948,10 @@
             "visible": true,
             "locked": true,
             "rot": 0,
+            "scale_ref": {
+              "x": 2560,
+              "y": 1440
+            },
             "align": 5,
             "bounds_type": 0,
             "bounds_align": 0,
@@ -952,11 +966,23 @@
               "x": 0,
               "y": 0
             },
+            "pos_rel": {
+              "x": -1.7777777910232544,
+              "y": -1
+            },
             "scale": {
+              "x": 0.75,
+              "y": 0.75
+            },
+            "scale_rel": {
               "x": 1,
               "y": 1
             },
             "bounds": {
+              "x": 0,
+              "y": 0
+            },
+            "bounds_rel": {
               "x": 0,
               "y": 0
             },
@@ -969,23 +995,7 @@
             "hide_transition": {
               "duration": 0
             },
-            "private_settings": {},
-            "scale_ref": {
-              "x": 2560,
-              "y": 1440
-            },
-            "pos_rel": {
-              "x": -1.7777777777777777,
-              "y": -1
-            },
-            "scale_rel": {
-              "x": 1,
-              "y": 1
-            },
-            "bounds_rel": {
-              "x": 0,
-              "y": 0
-            }
+            "private_settings": {}
           }
         ]
       },
@@ -1012,8 +1022,115 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
-      "private_settings": {},
-      "canvas_uuid": "6c69626f-6273-4c00-9d88-c5136d61696e"
+      "monitoring_enabled": false,
+      "canvas_uuid": "6c69626f-6273-4c00-9d88-c5136d61696e",
+      "private_settings": {}
+    },
+    {
+      "prev_ver": 553648128,
+      "name": "Vertical Scene",
+      "uuid": "d479fea8-38f1-41c6-b2b3-7a690cf03830",
+      "id": "scene",
+      "versioned_id": "scene",
+      "settings": {
+        "id_counter": 0,
+        "custom_size": false,
+        "items": [],
+        "order": 0,
+        "canvas_active": true
+      },
+      "mixers": 0,
+      "sync": 0,
+      "flags": 0,
+      "volume": 1,
+      "balance": 0.5,
+      "enabled": true,
+      "muted": false,
+      "push-to-mute": false,
+      "push-to-mute-delay": 0,
+      "push-to-talk": false,
+      "push-to-talk-delay": 0,
+      "hotkeys": {
+        "OBSBasic.SelectScene": []
+      },
+      "deinterlace_mode": 0,
+      "deinterlace_field_order": 0,
+      "monitoring_type": 0,
+      "monitoring_enabled": false,
+      "canvas_uuid": "b2cf1ed8-ae4e-438f-9b66-ff345dc1ed4f",
+      "private_settings": {}
     }
-  ]
+  ],
+  "groups": [],
+  "scene_order": [
+    {
+      "name": "Plateau"
+    },
+    {
+      "name": "Écran"
+    },
+    {
+      "name": "Page web et caméra"
+    },
+    {
+      "name": "Code et caméra"
+    }
+  ],
+  "current_scene": "Plateau",
+  "current_program_scene": "Plateau",
+  "canvases": [
+    {
+      "info": {
+        "name": "Aitum Vertical",
+        "uuid": "b2cf1ed8-ae4e-438f-9b66-ff345dc1ed4f",
+        "private": false,
+        "flags": 14
+      }
+    }
+  ],
+  "current_transition": "Coupure",
+  "transition_duration": 300,
+  "transitions": [],
+  "quick_transitions": [],
+  "saved_projectors": [],
+  "preview_locked": false,
+  "scaling_enabled": false,
+  "scaling_level": -13,
+  "scaling_off_x": 0,
+  "scaling_off_y": 0,
+  "virtual-camera": {
+    "type2": 3
+  },
+  "modules": {
+    "scripts-tool": [],
+    "output-timer": {
+      "streamTimerHours": 0,
+      "streamTimerMinutes": 0,
+      "streamTimerSeconds": 0,
+      "recordTimerHours": 0,
+      "recordTimerMinutes": 0,
+      "recordTimerSeconds": 0,
+      "autoStartStreamTimer": false,
+      "autoStartRecordTimer": false,
+      "pauseRecordTimer": false
+    },
+    "auto-scene-switcher": {
+      "interval": 300,
+      "non_matching_scene": "",
+      "switch_if_not_matching": false,
+      "active": false,
+      "switches": []
+    },
+    "captions": {
+      "source": "",
+      "enabled": false,
+      "lang_id": 1036,
+      "provider": "mssapi"
+    }
+  },
+  "resolution": {
+    "x": 1920,
+    "y": 1080
+  },
+  "version": 2
 }

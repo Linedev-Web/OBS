@@ -1,7 +1,7 @@
 {
-  "sauvegarde_le": "2026-10-16T10:37:06.588Z",
+  "sauvegarde_le": "2026-10-30T11:17:56.624Z",
   "obs": {
-    "version": "32.2.2",
+    "version": "33.0.0",
     "modules_ajoutes": [
       "aitum-multistream",
       "logi_obs_plugin_x64",
@@ -9,7 +9,6 @@
       "obs-advanced-masks",
       "obs-backgroundremoval",
       "se-crash-wer",
-      "sl-browser-plugin",
       "source-record",
       "vertical-canvas"
     ],

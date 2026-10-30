@@ -2,7 +2,7 @@
   "name": "Live — Gaming",
   "sources": [
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Caméra",
       "uuid": "b0458604-1225-4a5c-82bf-5e6cb70f0853",
       "id": "dshow_input",
@@ -33,6 +33,8 @@
       "hotkeys": {
         "libobs.mute": [],
         "libobs.unmute": [],
+        "libobs.monitor-on": [],
+        "libobs.monitor-off": [],
         "libobs.push-to-mute": [],
         "libobs.push-to-talk": [],
         "source_record.enable": [],
@@ -45,10 +47,11 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "private_settings": {},
       "filters": [
         {
-          "prev_ver": 537001986,
+          "prev_ver": 553648128,
           "name": "Couleurs",
           "uuid": "f09d4781-76df-4ca1-a45c-3f3fefa944ee",
           "id": "color_filter",
@@ -75,10 +78,11 @@
           "deinterlace_mode": 0,
           "deinterlace_field_order": 0,
           "monitoring_type": 0,
+          "monitoring_enabled": false,
           "private_settings": {}
         },
         {
-          "prev_ver": 537001986,
+          "prev_ver": 553648128,
           "name": "Enregistrement caméra",
           "uuid": "293b2ba5-a403-44bb-b645-ea24f44eda6c",
           "id": "source_record_filter",
@@ -111,12 +115,13 @@
           "deinterlace_mode": 0,
           "deinterlace_field_order": 0,
           "monitoring_type": 0,
+          "monitoring_enabled": false,
           "private_settings": {}
         }
       ]
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Micro",
       "uuid": "2cad8ffe-eb35-4b2a-8c2c-b70e7f7fb8e0",
       "id": "wasapi_input_capture",
@@ -151,16 +156,19 @@
             "key": "OBS_KEY_F10"
           }
         ],
+        "libobs.monitor-on": [],
+        "libobs.monitor-off": [],
         "libobs.push-to-mute": [],
         "libobs.push-to-talk": []
       },
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "private_settings": {},
       "filters": [
         {
-          "prev_ver": 537001986,
+          "prev_ver": 553648128,
           "name": "Réduction du bruit",
           "uuid": "c26d12b4-ccf9-47b9-97f4-998f5ef2a377",
           "id": "noise_suppress_filter",
@@ -183,10 +191,11 @@
           "deinterlace_mode": 0,
           "deinterlace_field_order": 0,
           "monitoring_type": 0,
+          "monitoring_enabled": false,
           "private_settings": {}
         },
         {
-          "prev_ver": 537001986,
+          "prev_ver": 553648128,
           "name": "Expandeur",
           "uuid": "0e39e613-2c82-427f-bdae-5f4fd4c1cf53",
           "id": "expander_filter",
@@ -215,10 +224,11 @@
           "deinterlace_mode": 0,
           "deinterlace_field_order": 0,
           "monitoring_type": 0,
+          "monitoring_enabled": false,
           "private_settings": {}
         },
         {
-          "prev_ver": 537001986,
+          "prev_ver": 553648128,
           "name": "Égaliseur",
           "uuid": "fd7a17d1-a696-4c1e-a902-bf33d44e84b2",
           "id": "basic_eq_filter",
@@ -243,10 +253,11 @@
           "deinterlace_mode": 0,
           "deinterlace_field_order": 0,
           "monitoring_type": 0,
+          "monitoring_enabled": false,
           "private_settings": {}
         },
         {
-          "prev_ver": 537001986,
+          "prev_ver": 553648128,
           "name": "Compresseur",
           "uuid": "3516f909-4f2a-4366-905b-706f3cbaa035",
           "id": "compressor_filter",
@@ -273,10 +284,11 @@
           "deinterlace_mode": 0,
           "deinterlace_field_order": 0,
           "monitoring_type": 0,
+          "monitoring_enabled": false,
           "private_settings": {}
         },
         {
-          "prev_ver": 537001986,
+          "prev_ver": 553648128,
           "name": "Limiteur",
           "uuid": "7fc8ae53-4e28-49eb-97cc-94eb15c1bead",
           "id": "limiter_filter",
@@ -300,12 +312,13 @@
           "deinterlace_mode": 0,
           "deinterlace_field_order": 0,
           "monitoring_type": 0,
+          "monitoring_enabled": false,
           "private_settings": {}
         }
       ]
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Capture du jeu",
       "uuid": "81b40904-8dcb-442a-b6d5-eeb2f55dba67",
       "id": "game_capture",
@@ -330,6 +343,8 @@
       "hotkeys": {
         "libobs.mute": [],
         "libobs.unmute": [],
+        "libobs.monitor-on": [],
+        "libobs.monitor-off": [],
         "libobs.push-to-mute": [],
         "libobs.push-to-talk": [],
         "hotkey_start": [],
@@ -338,10 +353,11 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "private_settings": {},
       "filters": [
         {
-          "prev_ver": 537001986,
+          "prev_ver": 553648128,
           "name": "Baisse quand tu parles",
           "uuid": "3ed937cc-b647-4243-abc5-d17f1d41b621",
           "id": "compressor_filter",
@@ -369,10 +385,11 @@
           "deinterlace_mode": 0,
           "deinterlace_field_order": 0,
           "monitoring_type": 0,
+          "monitoring_enabled": false,
           "private_settings": {}
         },
         {
-          "prev_ver": 537001986,
+          "prev_ver": 553648128,
           "name": "Limiteur",
           "uuid": "12ce3826-f0eb-4b6f-9333-b3f51e2cd111",
           "id": "limiter_filter",
@@ -396,12 +413,13 @@
           "deinterlace_mode": 0,
           "deinterlace_field_order": 0,
           "monitoring_type": 0,
+          "monitoring_enabled": false,
           "private_settings": {}
         }
       ]
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Discord",
       "uuid": "1fe8eb34-988d-4e04-9de7-303f18b7e733",
       "id": "wasapi_process_output_capture",
@@ -424,16 +442,19 @@
       "hotkeys": {
         "libobs.mute": [],
         "libobs.unmute": [],
+        "libobs.monitor-on": [],
+        "libobs.monitor-off": [],
         "libobs.push-to-mute": [],
         "libobs.push-to-talk": []
       },
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "private_settings": {},
       "filters": [
         {
-          "prev_ver": 537001986,
+          "prev_ver": 553648128,
           "name": "Compresseur",
           "uuid": "43abbf1c-7780-48c4-a723-3813f7baf9c9",
           "id": "compressor_filter",
@@ -460,10 +481,11 @@
           "deinterlace_mode": 0,
           "deinterlace_field_order": 0,
           "monitoring_type": 0,
+          "monitoring_enabled": false,
           "private_settings": {}
         },
         {
-          "prev_ver": 537001986,
+          "prev_ver": 553648128,
           "name": "Limiteur",
           "uuid": "3fb20dd9-04bb-4a45-873b-8bab28ce0ff9",
           "id": "limiter_filter",
@@ -487,12 +509,13 @@
           "deinterlace_mode": 0,
           "deinterlace_field_order": 0,
           "monitoring_type": 0,
+          "monitoring_enabled": false,
           "private_settings": {}
         }
       ]
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Alertes",
       "uuid": "23ace284-0b71-4046-9ae2-fa87fcd392af",
       "id": "browser_source",
@@ -518,6 +541,8 @@
       "hotkeys": {
         "libobs.mute": [],
         "libobs.unmute": [],
+        "libobs.monitor-on": [],
+        "libobs.monitor-off": [],
         "libobs.push-to-mute": [],
         "libobs.push-to-talk": [],
         "ObsBrowser.Refresh": []
@@ -525,10 +550,11 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 2,
+      "monitoring_enabled": true,
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Alertes YouTube",
       "uuid": "4759c372-63b9-41b2-8dcc-8ea1b95e0cd3",
       "id": "browser_source",
@@ -554,6 +580,8 @@
       "hotkeys": {
         "libobs.mute": [],
         "libobs.unmute": [],
+        "libobs.monitor-on": [],
+        "libobs.monitor-off": [],
         "libobs.push-to-mute": [],
         "libobs.push-to-talk": [],
         "ObsBrowser.Refresh": []
@@ -561,10 +589,11 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 2,
+      "monitoring_enabled": true,
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Alertes TikTok",
       "uuid": "f5cf609c-55ae-429e-a1a4-17557ca53e47",
       "id": "browser_source",
@@ -594,6 +623,8 @@
       "hotkeys": {
         "libobs.mute": [],
         "libobs.unmute": [],
+        "libobs.monitor-on": [],
+        "libobs.monitor-off": [],
         "libobs.push-to-mute": [],
         "libobs.push-to-talk": [],
         "ObsBrowser.Refresh": []
@@ -601,10 +632,11 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 2,
+      "monitoring_enabled": true,
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Habillage — Démarrage",
       "uuid": "79e8fa18-9401-4a8f-860b-5fe19866a616",
       "id": "browser_source",
@@ -635,6 +667,8 @@
       "hotkeys": {
         "libobs.mute": [],
         "libobs.unmute": [],
+        "libobs.monitor-on": [],
+        "libobs.monitor-off": [],
         "libobs.push-to-mute": [],
         "libobs.push-to-talk": [],
         "ObsBrowser.Refresh": []
@@ -642,10 +676,11 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Chat",
       "uuid": "82b24b46-0e08-4faa-9b85-21f5bd240db7",
       "id": "browser_source",
@@ -672,6 +707,8 @@
       "hotkeys": {
         "libobs.mute": [],
         "libobs.unmute": [],
+        "libobs.monitor-on": [],
+        "libobs.monitor-off": [],
         "libobs.push-to-mute": [],
         "libobs.push-to-talk": [],
         "ObsBrowser.Refresh": []
@@ -679,10 +716,11 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Musique — latshow demarrage",
       "uuid": "dc5328cc-2bf1-40e1-b093-6ff106626975",
       "id": "vlc_source",
@@ -714,6 +752,8 @@
       "hotkeys": {
         "libobs.mute": [],
         "libobs.unmute": [],
+        "libobs.monitor-on": [],
+        "libobs.monitor-off": [],
         "libobs.push-to-mute": [],
         "libobs.push-to-talk": [],
         "VLCSource.PlayPause": [],
@@ -725,10 +765,11 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Habillage — Jeu",
       "uuid": "d2e0913d-8d9b-40c2-9095-d7f018648b95",
       "id": "browser_source",
@@ -759,6 +800,8 @@
       "hotkeys": {
         "libobs.mute": [],
         "libobs.unmute": [],
+        "libobs.monitor-on": [],
+        "libobs.monitor-off": [],
         "libobs.push-to-mute": [],
         "libobs.push-to-talk": [],
         "ObsBrowser.Refresh": []
@@ -766,10 +809,11 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Habillage — Discussion",
       "uuid": "79c23761-3b74-4b6a-a913-78c665fabedc",
       "id": "browser_source",
@@ -800,6 +844,8 @@
       "hotkeys": {
         "libobs.mute": [],
         "libobs.unmute": [],
+        "libobs.monitor-on": [],
+        "libobs.monitor-off": [],
         "libobs.push-to-mute": [],
         "libobs.push-to-talk": [],
         "ObsBrowser.Refresh": []
@@ -807,10 +853,11 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Chat — Discussion",
       "uuid": "2d4aefc5-9dd4-4162-8d8a-5bd016a76e2c",
       "id": "browser_source",
@@ -837,6 +884,8 @@
       "hotkeys": {
         "libobs.mute": [],
         "libobs.unmute": [],
+        "libobs.monitor-on": [],
+        "libobs.monitor-off": [],
         "libobs.push-to-mute": [],
         "libobs.push-to-talk": [],
         "ObsBrowser.Refresh": []
@@ -844,10 +893,11 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Habillage — Pause",
       "uuid": "58dc301c-f485-4762-8fdd-388c37b07984",
       "id": "browser_source",
@@ -878,6 +928,8 @@
       "hotkeys": {
         "libobs.mute": [],
         "libobs.unmute": [],
+        "libobs.monitor-on": [],
+        "libobs.monitor-off": [],
         "libobs.push-to-mute": [],
         "libobs.push-to-talk": [],
         "ObsBrowser.Refresh": []
@@ -885,10 +937,11 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Musique — latshow pause",
       "uuid": "9f017bc9-d221-4ba6-9885-e46d9cefb271",
       "id": "vlc_source",
@@ -920,6 +973,8 @@
       "hotkeys": {
         "libobs.mute": [],
         "libobs.unmute": [],
+        "libobs.monitor-on": [],
+        "libobs.monitor-off": [],
         "libobs.push-to-mute": [],
         "libobs.push-to-talk": [],
         "VLCSource.PlayPause": [],
@@ -931,10 +986,11 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Habillage — Pause bébé",
       "uuid": "ca30b9a2-0e39-4884-aede-2fd9638683d4",
       "id": "browser_source",
@@ -965,6 +1021,8 @@
       "hotkeys": {
         "libobs.mute": [],
         "libobs.unmute": [],
+        "libobs.monitor-on": [],
+        "libobs.monitor-off": [],
         "libobs.push-to-mute": [],
         "libobs.push-to-talk": [],
         "ObsBrowser.Refresh": []
@@ -972,10 +1030,11 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Musique — latshow bebe",
       "uuid": "2d0a8f1d-063a-4315-bb6d-3c2cd6368128",
       "id": "vlc_source",
@@ -1007,6 +1066,8 @@
       "hotkeys": {
         "libobs.mute": [],
         "libobs.unmute": [],
+        "libobs.monitor-on": [],
+        "libobs.monitor-off": [],
         "libobs.push-to-mute": [],
         "libobs.push-to-talk": [],
         "VLCSource.PlayPause": [],
@@ -1018,10 +1079,11 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Habillage — Souci technique",
       "uuid": "730d4872-06c4-45a3-bb47-8c9f6f7fa8c2",
       "id": "browser_source",
@@ -1052,6 +1114,8 @@
       "hotkeys": {
         "libobs.mute": [],
         "libobs.unmute": [],
+        "libobs.monitor-on": [],
+        "libobs.monitor-off": [],
         "libobs.push-to-mute": [],
         "libobs.push-to-talk": [],
         "ObsBrowser.Refresh": []
@@ -1059,10 +1123,11 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Habillage — Fin",
       "uuid": "dd7ad100-acd9-4c08-a995-1fb085670358",
       "id": "browser_source",
@@ -1093,6 +1158,8 @@
       "hotkeys": {
         "libobs.mute": [],
         "libobs.unmute": [],
+        "libobs.monitor-on": [],
+        "libobs.monitor-off": [],
         "libobs.push-to-mute": [],
         "libobs.push-to-talk": [],
         "ObsBrowser.Refresh": []
@@ -1100,10 +1167,11 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Musique — latshow fin",
       "uuid": "c33cd1ec-e1f7-48b0-9a3b-718525149527",
       "id": "vlc_source",
@@ -1135,6 +1203,8 @@
       "hotkeys": {
         "libobs.mute": [],
         "libobs.unmute": [],
+        "libobs.monitor-on": [],
+        "libobs.monitor-off": [],
         "libobs.push-to-mute": [],
         "libobs.push-to-talk": [],
         "VLCSource.PlayPause": [],
@@ -1146,10 +1216,11 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Habillage TikTok — Démarrage",
       "uuid": "617d5400-a629-4054-bc79-5a0d543286e4",
       "id": "browser_source",
@@ -1180,6 +1251,8 @@
       "hotkeys": {
         "libobs.mute": [],
         "libobs.unmute": [],
+        "libobs.monitor-on": [],
+        "libobs.monitor-off": [],
         "libobs.push-to-mute": [],
         "libobs.push-to-talk": [],
         "ObsBrowser.Refresh": []
@@ -1187,10 +1260,11 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Habillage TikTok — Jeu",
       "uuid": "cfbbd827-b593-44f4-af7f-c8c03677c748",
       "id": "browser_source",
@@ -1221,6 +1295,8 @@
       "hotkeys": {
         "libobs.mute": [],
         "libobs.unmute": [],
+        "libobs.monitor-on": [],
+        "libobs.monitor-off": [],
         "libobs.push-to-mute": [],
         "libobs.push-to-talk": [],
         "ObsBrowser.Refresh": []
@@ -1228,10 +1304,11 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Habillage TikTok — Jeu sans caméra",
       "uuid": "08c3fe81-5c18-4ec6-9779-758c7a87873f",
       "id": "browser_source",
@@ -1262,6 +1339,8 @@
       "hotkeys": {
         "libobs.mute": [],
         "libobs.unmute": [],
+        "libobs.monitor-on": [],
+        "libobs.monitor-off": [],
         "libobs.push-to-mute": [],
         "libobs.push-to-talk": [],
         "ObsBrowser.Refresh": []
@@ -1269,10 +1348,11 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Habillage TikTok — Discussion",
       "uuid": "514bc4a4-ed5d-41f6-bddf-2c499c94f3ba",
       "id": "browser_source",
@@ -1303,6 +1383,8 @@
       "hotkeys": {
         "libobs.mute": [],
         "libobs.unmute": [],
+        "libobs.monitor-on": [],
+        "libobs.monitor-off": [],
         "libobs.push-to-mute": [],
         "libobs.push-to-talk": [],
         "ObsBrowser.Refresh": []
@@ -1310,10 +1392,11 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Habillage TikTok — Pause",
       "uuid": "b1a6fb2e-f0c4-4da5-8ece-208179ac59f3",
       "id": "browser_source",
@@ -1344,6 +1427,8 @@
       "hotkeys": {
         "libobs.mute": [],
         "libobs.unmute": [],
+        "libobs.monitor-on": [],
+        "libobs.monitor-off": [],
         "libobs.push-to-mute": [],
         "libobs.push-to-talk": [],
         "ObsBrowser.Refresh": []
@@ -1351,10 +1436,11 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Habillage TikTok — Pause bébé",
       "uuid": "81d51309-2b5b-4bbd-b366-cb3ca529875a",
       "id": "browser_source",
@@ -1385,6 +1471,8 @@
       "hotkeys": {
         "libobs.mute": [],
         "libobs.unmute": [],
+        "libobs.monitor-on": [],
+        "libobs.monitor-off": [],
         "libobs.push-to-mute": [],
         "libobs.push-to-talk": [],
         "ObsBrowser.Refresh": []
@@ -1392,10 +1480,11 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Habillage TikTok — Souci technique",
       "uuid": "02484fba-b556-497e-87a9-caba4ed898e3",
       "id": "browser_source",
@@ -1426,6 +1515,8 @@
       "hotkeys": {
         "libobs.mute": [],
         "libobs.unmute": [],
+        "libobs.monitor-on": [],
+        "libobs.monitor-off": [],
         "libobs.push-to-mute": [],
         "libobs.push-to-talk": [],
         "ObsBrowser.Refresh": []
@@ -1433,10 +1524,11 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Habillage TikTok — Fin",
       "uuid": "c10178c4-2b74-49cb-b856-47230114f4e3",
       "id": "browser_source",
@@ -1467,6 +1559,8 @@
       "hotkeys": {
         "libobs.mute": [],
         "libobs.unmute": [],
+        "libobs.monitor-on": [],
+        "libobs.monitor-off": [],
         "libobs.push-to-mute": [],
         "libobs.push-to-talk": [],
         "ObsBrowser.Refresh": []
@@ -1474,10 +1568,48 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
+      "name": "Capture Roblox (fenêtre)",
+      "uuid": "19969e47-27d5-46e8-8d82-4e579d1934c6",
+      "id": "window_capture",
+      "versioned_id": "window_capture",
+      "settings": {
+        "capture_audio": true,
+        "window": "Roblox:WINDOWSCLIENT:RobloxPlayerBeta.exe",
+        "method": 2,
+        "cursor": false
+      },
+      "mixers": 255,
+      "sync": 0,
+      "flags": 0,
+      "volume": 1,
+      "balance": 0.5,
+      "enabled": true,
+      "muted": false,
+      "push-to-mute": false,
+      "push-to-mute-delay": 0,
+      "push-to-talk": false,
+      "push-to-talk-delay": 0,
+      "hotkeys": {
+        "libobs.mute": [],
+        "libobs.unmute": [],
+        "libobs.monitor-on": [],
+        "libobs.monitor-off": [],
+        "libobs.push-to-mute": [],
+        "libobs.push-to-talk": []
+      },
+      "deinterlace_mode": 0,
+      "deinterlace_field_order": 0,
+      "monitoring_type": 0,
+      "monitoring_enabled": false,
+      "private_settings": {}
+    },
+    {
+      "prev_ver": 553648128,
       "name": "Démarrage",
       "uuid": "6eb29554-e48a-4dcd-841d-7773b7b96561",
       "id": "scene",
@@ -1860,19 +1992,75 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "canvas_uuid": "6c69626f-6273-4c00-9d88-c5136d61696e",
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Jeu",
       "uuid": "6bfda28f-ab22-4470-9679-77ea3d6baa00",
       "id": "scene",
       "versioned_id": "scene",
       "settings": {
-        "id_counter": 7,
+        "id_counter": 8,
         "custom_size": false,
         "items": [
+          {
+            "name": "Capture Roblox (fenêtre)",
+            "source_uuid": "19969e47-27d5-46e8-8d82-4e579d1934c6",
+            "visible": false,
+            "locked": false,
+            "rot": 0,
+            "scale_ref": {
+              "x": 1920,
+              "y": 1080
+            },
+            "align": 5,
+            "bounds_type": 2,
+            "bounds_align": 0,
+            "bounds_crop": false,
+            "crop_left": 0,
+            "crop_top": 0,
+            "crop_right": 0,
+            "crop_bottom": 0,
+            "id": 8,
+            "group_item_backup": false,
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "pos_rel": {
+              "x": -1.7777777910232544,
+              "y": -1
+            },
+            "scale": {
+              "x": 1,
+              "y": 1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds": {
+              "x": 1920,
+              "y": 1080
+            },
+            "bounds_rel": {
+              "x": 3.555555582046509,
+              "y": 2
+            },
+            "scale_filter": "disable",
+            "blend_method": "default",
+            "blend_type": "normal",
+            "show_transition": {
+              "duration": 0
+            },
+            "hide_transition": {
+              "duration": 0
+            },
+            "private_settings": {}
+          },
           {
             "name": "Capture du jeu",
             "source_uuid": "81b40904-8dcb-442a-b6d5-eeb2f55dba67",
@@ -2286,6 +2474,8 @@
             "key": "OBS_KEY_F2"
           }
         ],
+        "libobs.show_scene_item.8": [],
+        "libobs.hide_scene_item.8": [],
         "libobs.show_scene_item.1": [],
         "libobs.hide_scene_item.1": [],
         "libobs.show_scene_item.2": [],
@@ -2304,11 +2494,12 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "canvas_uuid": "6c69626f-6273-4c00-9d88-c5136d61696e",
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Jeu sans caméra",
       "uuid": "9a953257-1da8-4090-ae5f-451f97947e98",
       "id": "scene",
@@ -2634,11 +2825,12 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "canvas_uuid": "6c69626f-6273-4c00-9d88-c5136d61696e",
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Discussion",
       "uuid": "c53f4714-dab3-4a83-98ca-7c95e93c422c",
       "id": "scene",
@@ -3078,11 +3270,12 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "canvas_uuid": "6c69626f-6273-4c00-9d88-c5136d61696e",
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Pause",
       "uuid": "46fd5ef0-5eb5-41e0-a59e-b7ba435c3a3b",
       "id": "scene",
@@ -3408,11 +3601,12 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "canvas_uuid": "6c69626f-6273-4c00-9d88-c5136d61696e",
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Pause bébé",
       "uuid": "ad93e9fa-5e99-4abe-8883-0989a45c85e2",
       "id": "scene",
@@ -3738,11 +3932,12 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "canvas_uuid": "6c69626f-6273-4c00-9d88-c5136d61696e",
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Souci technique",
       "uuid": "14337d3a-5623-43b5-ac91-347c90347e2a",
       "id": "scene",
@@ -4011,11 +4206,12 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "canvas_uuid": "6c69626f-6273-4c00-9d88-c5136d61696e",
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "Fin",
       "uuid": "f686f999-6749-4c13-aa7c-fe97995606f6",
       "id": "scene",
@@ -4398,11 +4594,12 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "canvas_uuid": "6c69626f-6273-4c00-9d88-c5136d61696e",
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "TikTok — Démarrage",
       "uuid": "b0f3ae4e-7899-4a5b-a24c-651223424c15",
       "id": "scene",
@@ -4523,7 +4720,7 @@
           }
         ],
         "order": 0,
-        "canvas_active": true
+        "canvas_active": false
       },
       "mixers": 0,
       "sync": 0,
@@ -4546,17 +4743,18 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "canvas_uuid": "6bad365f-88c2-4cb4-9dde-e2f19ee74325",
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "TikTok — Jeu",
       "uuid": "de29f150-514b-42ab-a78c-bd50a8700d25",
       "id": "scene",
       "versioned_id": "scene",
       "settings": {
-        "id_counter": 4,
+        "id_counter": 5,
         "custom_size": false,
         "items": [
           {
@@ -4659,6 +4857,61 @@
               "y": 0.5625
             },
             "scale_filter": "area",
+            "blend_method": "default",
+            "blend_type": "normal",
+            "show_transition": {
+              "duration": 0
+            },
+            "hide_transition": {
+              "duration": 0
+            },
+            "private_settings": {}
+          },
+          {
+            "name": "Capture Roblox (fenêtre)",
+            "source_uuid": "19969e47-27d5-46e8-8d82-4e579d1934c6",
+            "visible": false,
+            "locked": false,
+            "rot": 0,
+            "scale_ref": {
+              "x": 1080,
+              "y": 1920
+            },
+            "align": 5,
+            "bounds_type": 3,
+            "bounds_align": 0,
+            "bounds_crop": true,
+            "crop_left": 0,
+            "crop_top": 0,
+            "crop_right": 0,
+            "crop_bottom": 0,
+            "id": 5,
+            "group_item_backup": false,
+            "pos": {
+              "x": 0,
+              "y": 672
+            },
+            "pos_rel": {
+              "x": -0.5625,
+              "y": -0.30000001192092896
+            },
+            "scale": {
+              "x": 1,
+              "y": 1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds": {
+              "x": 1080,
+              "y": 738
+            },
+            "bounds_rel": {
+              "x": 1.125,
+              "y": 0.768750011920929
+            },
+            "scale_filter": "disable",
             "blend_method": "default",
             "blend_type": "normal",
             "show_transition": {
@@ -4799,6 +5052,8 @@
         "libobs.hide_scene_item.1": [],
         "libobs.show_scene_item.2": [],
         "libobs.hide_scene_item.2": [],
+        "libobs.show_scene_item.5": [],
+        "libobs.hide_scene_item.5": [],
         "libobs.show_scene_item.3": [],
         "libobs.hide_scene_item.3": [],
         "libobs.show_scene_item.4": [],
@@ -4808,17 +5063,18 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "canvas_uuid": "6bad365f-88c2-4cb4-9dde-e2f19ee74325",
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "TikTok — Jeu sans caméra",
       "uuid": "f628cb1f-e3c7-4f20-a215-44ade0bd499d",
       "id": "scene",
       "versioned_id": "scene",
       "settings": {
-        "id_counter": 3,
+        "id_counter": 4,
         "custom_size": false,
         "items": [
           {
@@ -4877,9 +5133,64 @@
             "private_settings": {}
           },
           {
+            "name": "Capture Roblox (fenêtre)",
+            "source_uuid": "19969e47-27d5-46e8-8d82-4e579d1934c6",
+            "visible": true,
+            "locked": false,
+            "rot": 0,
+            "scale_ref": {
+              "x": 1080,
+              "y": 1920
+            },
+            "align": 5,
+            "bounds_type": 2,
+            "bounds_align": 0,
+            "bounds_crop": false,
+            "crop_left": 0,
+            "crop_top": 0,
+            "crop_right": 0,
+            "crop_bottom": 0,
+            "id": 4,
+            "group_item_backup": false,
+            "pos": {
+              "x": 0,
+              "y": 500
+            },
+            "pos_rel": {
+              "x": -0.5625,
+              "y": -0.4791666865348816
+            },
+            "scale": {
+              "x": 1,
+              "y": 1
+            },
+            "scale_rel": {
+              "x": 1,
+              "y": 1
+            },
+            "bounds": {
+              "x": 1080,
+              "y": 608
+            },
+            "bounds_rel": {
+              "x": 1.125,
+              "y": 0.6333333253860474
+            },
+            "scale_filter": "disable",
+            "blend_method": "default",
+            "blend_type": "normal",
+            "show_transition": {
+              "duration": 0
+            },
+            "hide_transition": {
+              "duration": 0
+            },
+            "private_settings": {}
+          },
+          {
             "name": "Capture du jeu",
             "source_uuid": "81b40904-8dcb-442a-b6d5-eeb2f55dba67",
-            "visible": true,
+            "visible": false,
             "locked": true,
             "rot": 0,
             "scale_ref": {
@@ -5004,6 +5315,8 @@
       "hotkeys": {
         "libobs.show_scene_item.1": [],
         "libobs.hide_scene_item.1": [],
+        "libobs.show_scene_item.4": [],
+        "libobs.hide_scene_item.4": [],
         "libobs.show_scene_item.2": [],
         "libobs.hide_scene_item.2": [],
         "libobs.show_scene_item.3": [],
@@ -5013,11 +5326,12 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "canvas_uuid": "6bad365f-88c2-4cb4-9dde-e2f19ee74325",
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "TikTok — Discussion",
       "uuid": "25246891-528c-43c4-8d47-7d66b12c0ce2",
       "id": "scene",
@@ -5218,11 +5532,12 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "canvas_uuid": "6bad365f-88c2-4cb4-9dde-e2f19ee74325",
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "TikTok — Pause",
       "uuid": "edd69928-6ee5-4e64-87a4-f65fa4d29966",
       "id": "scene",
@@ -5366,11 +5681,12 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "canvas_uuid": "6bad365f-88c2-4cb4-9dde-e2f19ee74325",
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "TikTok — Pause bébé",
       "uuid": "1ba1d8d0-901a-4c46-b3f0-f925272468f6",
       "id": "scene",
@@ -5514,11 +5830,12 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "canvas_uuid": "6bad365f-88c2-4cb4-9dde-e2f19ee74325",
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "TikTok — Souci technique",
       "uuid": "03ddd27e-c432-489e-bf81-5e745ed875a3",
       "id": "scene",
@@ -5662,11 +5979,12 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "canvas_uuid": "6bad365f-88c2-4cb4-9dde-e2f19ee74325",
       "private_settings": {}
     },
     {
-      "prev_ver": 537001986,
+      "prev_ver": 553648128,
       "name": "TikTok — Fin",
       "uuid": "c63c7243-60ca-4464-915d-ca77e02471b8",
       "id": "scene",
@@ -5842,7 +6160,7 @@
           }
         ],
         "order": 7,
-        "canvas_active": false
+        "canvas_active": true
       },
       "mixers": 0,
       "sync": 0,
@@ -5867,6 +6185,7 @@
       "deinterlace_mode": 0,
       "deinterlace_field_order": 0,
       "monitoring_type": 0,
+      "monitoring_enabled": false,
       "canvas_uuid": "6bad365f-88c2-4cb4-9dde-e2f19ee74325",
       "private_settings": {}
     }
@@ -5898,8 +6217,8 @@
       "name": "Fin"
     }
   ],
-  "current_scene": "Démarrage",
-  "current_program_scene": "Démarrage",
+  "current_scene": "Fin",
+  "current_program_scene": "Fin",
   "canvases": [
     {
       "info": {
@@ -5922,8 +6241,8 @@
         "audio_monitoring": 2,
         "audio_fade_style": 1,
         "preload": false,
-        "hw_decode": false,
-        "path": "D:/Stream/OBS/transitions/transition_latshow.webm"
+        "path": "D:/Stream/OBS/transitions/transition_latshow.webm",
+        "hw_decode": false
       }
     }
   ],
