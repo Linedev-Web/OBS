@@ -472,6 +472,16 @@
       "latshow": "centre",
       "linedev": "gauche"
     },
+    "reflet": {
+      "_note": "Reflet flouté du jeu sous la capture en vue pile (2026-10-30) : cadre [x, y, largeur, hauteur] rempli par la capture rognée, réduite à « reduction » puis agrandie (flou sans module), assombrie (luminosite -1..1, saturation 0 = normale, opacite 0..1). TikTok couvre le bas à partir de ~1300 px.",
+      "seances": ["gaming"],
+      "nom": "Reflet du jeu",
+      "cadre": [0, 1410, 1080, 510],
+      "reduction": [72, 128],
+      "luminosite": -0.3,
+      "saturation": 0.4,
+      "opacite": 0.85
+    },
     "_note_son": "Piste audio d’OBS réservée à TikTok (piste_son) : mix du live + alertes TikTok, sans les alertes Twitch / YouTube. Le module Audio Monitor l’envoie au câble VB-CABLE (« CABLE Input »), micro de TikTok LIVE Studio (« CABLE Output »). Réglé par node obs/regie.mjs son-tiktok, OBS fermé."
   },
   "plateau": {

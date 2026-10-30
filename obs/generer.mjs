@@ -261,6 +261,24 @@ function rectCapture(cadres, scene) {
 // Vue verticale d'une scène principale ; la scène secondaire est « pile » si elle garde la caméra, « plein » sinon.
 const vueVerticale = (sc) => (sc.id === 'secondaire' ? (sc.camera ? 'pile' : 'plein') : VERT.vues[sc.id]);
 
+// Reflet flouté du jeu sous la capture, vue « pile » (demande du client, 2026-10-30 : « un blur de mon jeu en dessous,
+// comme dans tous les streams, que ça habille ») : une scène qui ne contient que la capture, posée sous le jeu
+// (vertical.reflet.cadre), réduite par le filtre « Mise à l'échelle » d'OBS puis agrandie en bicubique, ce qui la floute
+// sans module (aucun filtre de flou dans OBS), et assombrie. Rien au-dessus de la capture : le flou qui déborde est caché par le jeu.
+function sceneReflet(com, canevas, ordre) {
+  const R = VERT.reflet;
+  const [rw, rh] = R.reduction;
+  const item = { ...element(com.capture, R.cadre, 'exterieur', { k: 1, canevas: [VW, VH] }), id: 1 };
+  const hk = { 'OBSBasic.SelectScene': [], 'libobs.show_scene_item.1': [], 'libobs.hide_scene_item.1': [] };
+  return {
+    ...source(`TikTok — ${R.nom}`, 'scene', { id_counter: 1, custom_size: false, items: [item], order: ordre, canvas_active: true }, { mixers: 0, hotkeys: hk, filters: [
+      filtre('Flou (réduction)', 'scale_filter', 'scale_filter', { resolution: `${rw}x${rh}`, sampling: 'bicubic', undistort: false }),
+      filtre('Assombri', 'color_filter_v2', 'color_filter_v2', { brightness: R.luminosite, saturation: R.saturation, opacity: R.opacite }),
+    ] }),
+    canvas_uuid: canevas,
+  };
+}
+
 // Scènes du canevas vertical, sans aucun son : un son présent dans une scène verticale active serait mixé dans le live
 // Twitch / YouTube (le micro coupé des pauses reviendrait). TikTok LIVE Studio prend le micro et le son du PC lui-même.
 function construireVertical(seance, com, canevas) {
@@ -269,6 +287,7 @@ function construireVertical(seance, com, canevas) {
   const sources = [];
   const scenes = [];
   const parVue = new Map();
+  const reflet = VERT.reflet?.seances?.includes(seance.id) ? sceneReflet(com, canevas, 0) : null;
   for (const sc of seance.scenes) {
     const vue = vueVerticale(sc);
     if (!vue) throw new Error(`Pas de vue verticale pour la scène « ${sc.nom} » (${seance.nom}) : voir vertical.vues dans seances.json`);
@@ -284,7 +303,11 @@ function construireVertical(seance, com, canevas) {
     if (vue === 'discussion') { ajouter(com.camera, cadres['camera.discussion'], 'exterieur'); ajouter(ov, plein, 'etirer'); }
     else {
       ajouter(ov, plein, 'etirer');
-      if (vue === 'pile') { ajouter(com.camera, cadres['camera.pile'], 'exterieur'); ajouter(com.capture, cadres['capture.pile'], 'exterieur', { aligner }); }
+      if (vue === 'pile') {
+        // Le reflet est agrandi en bicubique (sans filtre, le flou garde des marches d'escalier).
+        if (reflet) items.push({ ...element(reflet, ++n, plein, 'etirer', { k: 1, canevas: [VW, VH] }), scale_filter: 'bicubic' });
+        ajouter(com.camera, cadres['camera.pile'], 'exterieur'); ajouter(com.capture, cadres['capture.pile'], 'exterieur', { aligner });
+      }
       if (vue === 'plein') ajouter(com.capture, cadres['capture.plein'], 'interieur');
       if (vue === 'fin') ajouter(com.camera, cadres['camera.fin'], 'exterieur');
     }
@@ -296,6 +319,7 @@ function construireVertical(seance, com, canevas) {
     const retard = VERT.retard_image_ms > 0 ? [filtre('Synchro avec le son', 'gpu_delay', 'gpu_delay', { delay_ms: VERT.retard_image_ms })] : [];
     scenes.push({ ...source(nom, 'scene', { id_counter: n, custom_size: false, items, order: scenes.length, canvas_active: true }, { mixers: 0, hotkeys: hk, filters: retard }), canvas_uuid: canevas });
   }
+  if (reflet) scenes.push({ ...reflet, settings: { ...reflet.settings, order: scenes.length } }); // listée après les vues
   return { sources, scenes, lien: (sc) => [{ width: VW, height: VH, scene: parVue.get(vueVerticale(sc)) }] };
 }
 
