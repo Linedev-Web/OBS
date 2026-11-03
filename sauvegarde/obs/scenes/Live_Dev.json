@@ -187,7 +187,7 @@
       "id": "wasapi_input_capture",
       "versioned_id": "wasapi_input_capture",
       "settings": {
-        "device_id": "{0.0.1.00000000}.{cae08b20-c542-448b-936c-063d9a33a2d0}",
+        "device_id": "{0.0.1.00000000}.{eeebce3a-8b81-4620-8fed-7493673669d2}",
         "use_device_timing": false
       },
       "mixers": 35,

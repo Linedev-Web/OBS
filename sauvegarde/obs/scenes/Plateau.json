@@ -37,7 +37,7 @@
     {
       "prev_ver": 537001986,
       "name": "Caméra",
-      "uuid": "d2667089-0e5c-45ee-a7a4-44f5e2257ce1",
+      "uuid": "3bde1fe8-4702-46dd-b4e6-98fbdccfbe04",
       "id": "dshow_input",
       "versioned_id": "dshow_input",
       "settings": {
@@ -72,7 +72,7 @@
         {
           "prev_ver": 537001986,
           "name": "Couleurs",
-          "uuid": "9614be83-9725-4be3-8205-473e1e709f57",
+          "uuid": "60eb7357-dd57-48de-96f8-6791caba21cf",
           "id": "color_filter",
           "versioned_id": "color_filter_v2",
           "settings": {
@@ -102,7 +102,7 @@
         {
           "prev_ver": 537001986,
           "name": "Enregistrement caméra",
-          "uuid": "f1fbd169-16fb-49ab-894b-7d763771174f",
+          "uuid": "a0b018e9-5b54-4980-a075-715d7e23c6ed",
           "id": "source_record_filter",
           "versioned_id": "source_record_filter",
           "settings": {
@@ -140,11 +140,11 @@
     {
       "prev_ver": 537001986,
       "name": "Micro",
-      "uuid": "c461c603-5c14-4e34-b726-f4e2695bff7e",
+      "uuid": "980dda13-995f-4138-8a00-d8fa3075c2f1",
       "id": "wasapi_input_capture",
       "versioned_id": "wasapi_input_capture",
       "settings": {
-        "device_id": "{0.0.1.00000000}.{cae08b20-c542-448b-936c-063d9a33a2d0}",
+        "device_id": "{0.0.1.00000000}.{eeebce3a-8b81-4620-8fed-7493673669d2}",
         "use_device_timing": false
       },
       "mixers": 3,
@@ -172,7 +172,7 @@
         {
           "prev_ver": 537001986,
           "name": "Limiteur",
-          "uuid": "d7048a4a-c043-424a-b88d-fb7507451c1e",
+          "uuid": "6cdc9b52-b52e-40c5-9046-fd4e32669cec",
           "id": "limiter_filter",
           "versioned_id": "limiter_filter",
           "settings": {
@@ -201,7 +201,7 @@
     {
       "prev_ver": 537001986,
       "name": "Capture de l’écran",
-      "uuid": "93857697-5e61-4bde-83cb-d3973d70f898",
+      "uuid": "4e169acb-dfa4-4744-af25-4150921ddefb",
       "id": "monitor_capture",
       "versioned_id": "monitor_capture",
       "settings": {
@@ -227,7 +227,7 @@
     {
       "prev_ver": 537001986,
       "name": "Son du PC",
-      "uuid": "af16a05b-cd61-42f5-b25f-aba02dda88b9",
+      "uuid": "840a1f9d-f975-40e8-8018-1db894f61a0d",
       "id": "wasapi_output_capture",
       "versioned_id": "wasapi_output_capture",
       "settings": {
@@ -258,7 +258,7 @@
     {
       "prev_ver": 537001986,
       "name": "Page web",
-      "uuid": "7cc3e6f0-ec25-44c8-ade2-94e49a2b0c53",
+      "uuid": "4977e893-4d33-4e71-b2cd-7d693f216ecc",
       "id": "window_capture",
       "versioned_id": "window_capture",
       "settings": {
@@ -289,7 +289,7 @@
     {
       "prev_ver": 537001986,
       "name": "Code",
-      "uuid": "5cf4ae90-a85d-4edf-bb61-6b6040a5decf",
+      "uuid": "01576d1f-d19f-4867-b1bd-3d780bfdaf11",
       "id": "window_capture",
       "versioned_id": "window_capture",
       "settings": {
@@ -320,7 +320,7 @@
     {
       "prev_ver": 537001986,
       "name": "Plateau",
-      "uuid": "06534178-62e9-4304-9017-443715d1bc84",
+      "uuid": "c79cd25d-10bb-4396-907d-08e58b7c0a7e",
       "id": "scene",
       "versioned_id": "scene",
       "settings": {
@@ -329,7 +329,7 @@
         "items": [
           {
             "name": "Caméra",
-            "source_uuid": "d2667089-0e5c-45ee-a7a4-44f5e2257ce1",
+            "source_uuid": "3bde1fe8-4702-46dd-b4e6-98fbdccfbe04",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -384,7 +384,7 @@
           },
           {
             "name": "Micro",
-            "source_uuid": "c461c603-5c14-4e34-b726-f4e2695bff7e",
+            "source_uuid": "980dda13-995f-4138-8a00-d8fa3075c2f1",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -466,7 +466,7 @@
     {
       "prev_ver": 537001986,
       "name": "Écran",
-      "uuid": "658b6cc3-bf15-4ba0-b9c6-bbfc9a933657",
+      "uuid": "f748afd5-928c-4b5f-9f0a-ccbfda3e3022",
       "id": "scene",
       "versioned_id": "scene",
       "settings": {
@@ -475,7 +475,7 @@
         "items": [
           {
             "name": "Capture de l’écran",
-            "source_uuid": "93857697-5e61-4bde-83cb-d3973d70f898",
+            "source_uuid": "4e169acb-dfa4-4744-af25-4150921ddefb",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -530,7 +530,7 @@
           },
           {
             "name": "Son du PC",
-            "source_uuid": "af16a05b-cd61-42f5-b25f-aba02dda88b9",
+            "source_uuid": "840a1f9d-f975-40e8-8018-1db894f61a0d",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -612,7 +612,7 @@
     {
       "prev_ver": 537001986,
       "name": "Page web et caméra",
-      "uuid": "2b89c6b4-0b42-45de-a456-a6eacbd8832c",
+      "uuid": "1b475fbd-32ca-43ba-a2c8-13c13979f9bb",
       "id": "scene",
       "versioned_id": "scene",
       "settings": {
@@ -621,7 +621,7 @@
         "items": [
           {
             "name": "Page web",
-            "source_uuid": "7cc3e6f0-ec25-44c8-ade2-94e49a2b0c53",
+            "source_uuid": "4977e893-4d33-4e71-b2cd-7d693f216ecc",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -676,7 +676,7 @@
           },
           {
             "name": "Caméra",
-            "source_uuid": "d2667089-0e5c-45ee-a7a4-44f5e2257ce1",
+            "source_uuid": "3bde1fe8-4702-46dd-b4e6-98fbdccfbe04",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -731,7 +731,7 @@
           },
           {
             "name": "Micro",
-            "source_uuid": "c461c603-5c14-4e34-b726-f4e2695bff7e",
+            "source_uuid": "980dda13-995f-4138-8a00-d8fa3075c2f1",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -815,7 +815,7 @@
     {
       "prev_ver": 537001986,
       "name": "Code et caméra",
-      "uuid": "0253631c-08e1-47a9-a143-f6287b07e333",
+      "uuid": "f1d3f2a5-d223-4d50-82b5-d31a78f1ce25",
       "id": "scene",
       "versioned_id": "scene",
       "settings": {
@@ -824,7 +824,7 @@
         "items": [
           {
             "name": "Code",
-            "source_uuid": "5cf4ae90-a85d-4edf-bb61-6b6040a5decf",
+            "source_uuid": "01576d1f-d19f-4867-b1bd-3d780bfdaf11",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -879,7 +879,7 @@
           },
           {
             "name": "Caméra",
-            "source_uuid": "d2667089-0e5c-45ee-a7a4-44f5e2257ce1",
+            "source_uuid": "3bde1fe8-4702-46dd-b4e6-98fbdccfbe04",
             "visible": true,
             "locked": true,
             "rot": 0,
@@ -934,7 +934,7 @@
           },
           {
             "name": "Micro",
-            "source_uuid": "c461c603-5c14-4e34-b726-f4e2695bff7e",
+            "source_uuid": "980dda13-995f-4138-8a00-d8fa3075c2f1",
             "visible": true,
             "locked": true,
             "rot": 0,

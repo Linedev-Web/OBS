@@ -472,6 +472,11 @@
       "latshow": "centre",
       "linedev": "gauche"
     },
+    "capture_entiere": {
+      "_note": "Vue pile des séances où l’écran doit se lire en entier (2026-11-03, le client : « que l’écran soit bien lisible, là c’est tronqué ») : la fenêtre (Premiere, IDE, navigateur, ~2560 × 1392) est posée entière sur la largeur, jamais rognée, dans un cadre 16:9 qui commence en haut de capture.pile. Avant, elle remplissait capture.pile en rognant : 45 % de l’écran visible en Dev, les bords coupés en Montage. Le jeu (séance absente de la liste) garde le remplissage.",
+      "seances": ["montage", "dev"],
+      "hauteur": 608
+    },
     "reflet": {
       "_note": "Reflet flouté du jeu sous la capture en vue pile (2026-10-30) : cadre [x, y, largeur, hauteur] rempli par la capture rognée, réduite à « reduction » puis agrandie (flou sans module), assombrie (luminosite -1..1, saturation 0 = normale, opacite 0..1). TikTok couvre le bas à partir de ~1300 px.",
       "seances": ["gaming"],

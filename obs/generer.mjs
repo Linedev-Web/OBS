@@ -284,6 +284,7 @@ function sceneReflet(com, canevas, ordre) {
 function construireVertical(seance, com, canevas) {
   const cadres = VERT.cadres[seance.marque];
   const aligner = ALIGNEMENT[VERT.capture_alignee[seance.marque]] ?? 0;
+  const entiere = VERT.capture_entiere?.seances?.includes(seance.id);
   const sources = [];
   const scenes = [];
   const parVue = new Map();
@@ -306,7 +307,11 @@ function construireVertical(seance, com, canevas) {
       if (vue === 'pile') {
         // Le reflet est agrandi en bicubique (sans filtre, le flou garde des marches d'escalier).
         if (reflet) items.push({ ...element(reflet, ++n, plein, 'etirer', { k: 1, canevas: [VW, VH] }), scale_filter: 'bicubic' });
-        ajouter(com.camera, cadres['camera.pile'], 'exterieur'); ajouter(com.capture, cadres['capture.pile'], 'exterieur', { aligner });
+        ajouter(com.camera, cadres['camera.pile'], 'exterieur');
+        // Écran entier (montage, dev) : la fenêtre sur toute la largeur, sans rien rogner ; le jeu remplit son cadre.
+        const [cx, cy, cw, ch] = cadres['capture.pile'];
+        if (entiere) ajouter(com.capture, [cx, cy, cw, VERT.capture_entiere.hauteur], 'interieur');
+        else ajouter(com.capture, [cx, cy, cw, ch], 'exterieur', { aligner });
       }
       if (vue === 'plein') ajouter(com.capture, cadres['capture.plein'], 'interieur');
       if (vue === 'fin') ajouter(com.camera, cadres['camera.fin'], 'exterieur');
