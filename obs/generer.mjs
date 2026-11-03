@@ -1,8 +1,9 @@
 // Génère les collections de scènes OBS des lives à partir de obs/seances.json.
 //
 //   node obs/generer.mjs            simulation : ce qui serait écrit
-//   node obs/generer.mjs --ecrire   écrit Live_Gaming.json, Live_Montage.json, Live_Dev.json et Plateau.json (tournage)
+//   node obs/generer.mjs --ecrire   écrit Live_Gaming.json, Live_Montage.json, Live_Dev.json, Live_Roblox.json et Plateau.json (tournage)
 //                                   dans %APPDATA%\obs-studio\basic\scenes\ (ancienne version sauvegardée à côté)
+//   … --ecrire --seulement roblox   seulement ces collections (identifiants séparés par des virgules)
 //
 // Les réglages des périphériques (caméra MX Brio et sa correction couleur, micro FIFINE, jeu, fenêtre, Discord, chat)
 // sont repris de la collection de référence (Plateau, celle où la caméra a été réglée) : on ne les réinvente pas.
@@ -125,6 +126,23 @@ function microReference() {
   return { micRef, reglages: PERIPHERIQUES.micro?.id ? { ...micRef.settings, device_id: PERIPHERIQUES.micro.id } : micRef.settings };
 }
 
+// Discord : les voix des amis ramenées au même niveau, sans les faire baisser quand tu parles.
+function sourceDiscord() {
+  return source('Discord', 'wasapi_process_output_capture', refSource('Discord').settings, { volume: 0.85, mixers: PISTES.discord, filters: [
+    filtre('Compresseur', 'compressor_filter', 'compressor_filter', { ratio: 3, threshold: -24, attack_time: 6, release_time: 80, output_gain: 2 }),
+    filtre('Limiteur', 'limiter_filter', 'limiter_filter', { threshold: -3, release_time: 60 })] });
+}
+
+// « Écran du moment » (live Roblox) : une scène qui contient tous les écrans, un seul visible, celui de la dernière scène
+// d'écran montrée (obs/ecran.lua). Le Face à face et l'image TikTok la montrent : ils suivent l'écran choisi au Stream Deck.
+const NOM_SCENE_ECRAN = 'Écran du moment';
+function sceneEcran(captures) {
+  const items = captures.map((c, i) => ({ ...element(c, i + 1, [0, 0, MW, MH], 'interieur'), visible: i === 0 }));
+  const hk = { 'OBSBasic.SelectScene': [] };
+  for (const it of items) { hk[`libobs.show_scene_item.${it.id}`] = []; hk[`libobs.hide_scene_item.${it.id}`] = []; }
+  return { ...source(NOM_SCENE_ECRAN, 'scene', { id_counter: items.length, custom_size: false, items }, { mixers: 0, hotkeys: hk }), canvas_uuid: CANEVAS };
+}
+
 function sourcesCommunes(seance) {
   const camera = cameraReference();
   const { micRef, reglages: micReglages } = microReference();
@@ -143,17 +161,24 @@ function sourcesCommunes(seance) {
   });
 
   const s = { camera, micro };
-  if (seance.id === 'gaming') {
+  if (seance.ecrans) {
+    // Live Roblox (2026-11-03) : une capture de fenêtre par écran (jeu, Studio, outil, navigateur), jamais l'écran entier.
+    // Capture Windows (method 2) : Roblox, Qt et Chromium y sont nets ; le son vient de la seule fenêtre montrée.
+    for (const e of seance.ecrans) {
+      s[`ecran:${e.id}`] = source(`Capture — ${e.nom}`, 'window_capture', { window: e.fenetre, method: 2, priority: 2, cursor: e.curseur, client_area: true, capture_audio: true }, {
+        volume: e.id === 'roblox' ? 0.32 : 0.5, mixers: PISTES.capture, hotkeys: {},
+        filters: [attenuation(), filtre('Limiteur', 'limiter_filter', 'limiter_filter', { threshold: -6, release_time: 60 })],
+      });
+    }
+    s.capture = sceneEcran(seance.ecrans.map((e) => s[`ecran:${e.id}`]));
+    s.discord = sourceDiscord();
+  } else if (seance.id === 'gaming') {
     // N'importe quel jeu en plein écran (sans bordure compris) : la référence visait la fenêtre de How to Fish, et chaque
     // régénération écrasait le jeu choisi dans OBS (No Man's Sky, constaté le 2026-10-12).
     const { window: _fenetre, ...jeuRef } = refSource('Capture de jeu').settings;
     s.capture = source('Capture du jeu', 'game_capture', { ...jeuRef, capture_mode: 'any_fullscreen', capture_audio: true, anti_cheat_hook: true }, { volume: 0.32, mixers: PISTES.capture, hotkeys: { ...vide(), hotkey_start: [], hotkey_stop: [] },
       filters: [attenuation(), filtre('Limiteur', 'limiter_filter', 'limiter_filter', { threshold: -6, release_time: 60 })] });
-    const disco = refSource('Discord');
-    // Discord : les voix des amis ramenées au même niveau, sans les faire baisser quand tu parles.
-    s.discord = source('Discord', 'wasapi_process_output_capture', disco.settings, { volume: 0.85, mixers: PISTES.discord, filters: [
-      filtre('Compresseur', 'compressor_filter', 'compressor_filter', { ratio: 3, threshold: -24, attack_time: 6, release_time: 80, output_gain: 2 }),
-      filtre('Limiteur', 'limiter_filter', 'limiter_filter', { threshold: -3, release_time: 60 })] });
+    s.discord = sourceDiscord();
   } else {
     const fen = refSource('Fenettre');
     // Le son vient de la fenêtre capturée seulement (Premiere, l'éditeur, la page montrée), comme le jeu en gaming :
@@ -259,7 +284,8 @@ function rectCapture(cadres, scene) {
 }
 
 // Vue verticale d'une scène principale ; la scène secondaire est « pile » si elle garde la caméra, « plein » sinon.
-const vueVerticale = (sc) => (sc.id === 'secondaire' ? (sc.camera ? 'pile' : 'plein') : VERT.vues[sc.id]);
+// Une scène peut nommer sa vue (« vue », écrans du live Roblox).
+const vueVerticale = (sc) => sc.vue ?? (sc.id === 'secondaire' ? (sc.camera ? 'pile' : 'plein') : VERT.vues[sc.id]);
 
 // Reflet flouté du jeu sous la capture, vue « pile » (demande du client, 2026-10-30 : « un blur de mon jeu en dessous,
 // comme dans tous les streams, que ça habille ») : une scène qui ne contient que la capture, posée sous le jeu
@@ -347,9 +373,10 @@ function construire(seance, canevasVertical) {
     const ov = sc.overlay ? overlay(seance, sc) : null;
     if (ov) sources.push(ov);
     const pleinEcran = sc.capture && (!sc.camera || sc.camera === 'coin');
+    const capture = com[`ecran:${sc.capture}`] ?? com.capture; // un écran précis (live Roblox), sinon la capture de la séance
     // Ordre de bas en haut : capture plein écran puis habillage par-dessus ; sinon habillage en fond puis la capture cadrée.
-    if (pleinEcran) { ajouter(com.capture, rectCapture(cadres, sc), 'interieur'); if (ov) ajouter(ov); }
-    else { if (ov) ajouter(ov); if (sc.capture) ajouter(com.capture, rectCapture(cadres, sc), 'interieur'); }
+    if (pleinEcran) { ajouter(capture, rectCapture(cadres, sc), 'interieur'); if (ov) ajouter(ov); }
+    else { if (ov) ajouter(ov); if (sc.capture) ajouter(capture, rectCapture(cadres, sc), 'interieur'); }
     if (sc.camera) ajouter(com.camera, cadres[`camera.${sc.camera}`], 'exterieur');
     if (sc.chat) { const [cle, rect] = cadreChat(cadres, sc); ajouter(chatPour(cle, rect), rect, 'etirer'); }
     // Son : le micro n'est présent que là où l'on parle (Pause, Pause bébé, Souci technique le coupent d'office).
@@ -368,14 +395,19 @@ function construire(seance, canevasVertical) {
   return {
     name: seance.nom,
     groups: [],
-    scene_order: seance.scenes.map((s) => ({ name: s.nom })),
+    // La scène « Écran du moment » (live Roblox) est listée en dernier : elle ne se montre pas seule.
+    scene_order: [...seance.scenes.map((s) => ({ name: s.nom })), ...(seance.ecrans ? [{ name: NOM_SCENE_ECRAN }] : [])],
     current_scene: seance.scenes[0].nom,
     current_program_scene: seance.scenes[0].nom,
     canvases: [{ info: { name: CANEVAS_VERTICAL, uuid: canevasVertical, private: false, flags: 14 } }],
     current_transition: TRANSITION, transition_duration: 300, transitions: [transition(seance.marque)], quick_transitions: [],
     saved_projectors: [], preview_locked: false, scaling_enabled: false, scaling_level: 0, scaling_off_x: 0, scaling_off_y: 0,
-    // Script OBS qui lance le service des soutiens du live (obs/soutiens.lua → obs/soutiens.mjs) à l'ouverture.
-    modules: { 'scripts-tool': [{ path: `${RACINE.replaceAll('\\', '/')}/obs/soutiens.lua`, settings: {} }] },
+    // Scripts OBS : le service des soutiens du live (obs/soutiens.lua → obs/soutiens.mjs) à l'ouverture ; pour le live
+    // Roblox, celui qui fait suivre à « Écran du moment » la dernière scène d'écran montrée (obs/ecran.lua).
+    modules: { 'scripts-tool': [
+      { path: `${RACINE.replaceAll('\\', '/')}/obs/soutiens.lua`, settings: {} },
+      ...(seance.ecrans ? [{ path: `${RACINE.replaceAll('\\', '/')}/obs/ecran.lua`, settings: {} }] : []),
+    ] },
     resolution: { x: W, y: H }, version: ref.version ?? 2,
     sources: [...sources, ...vertical.sources, ...scenes, ...vertical.scenes],
   };
@@ -439,7 +471,7 @@ function construirePlateau(plateau) {
   };
 }
 
-const FICHIERS = { gaming: 'Live_Gaming.json', montage: 'Live_Montage.json', dev: 'Live_Dev.json', plateau: 'Plateau.json' };
+const FICHIERS = { gaming: 'Live_Gaming.json', montage: 'Live_Montage.json', dev: 'Live_Dev.json', roblox: 'Live_Roblox.json', plateau: 'Plateau.json' };
 // Collection ouverte : demandée à OBS quand il tourne (user.ini n'est réécrit qu'à la fermeture d'OBS : après un
 // changement de collection, il désigne encore l'ancienne — constaté le 2026-10-07), sinon lue dans user.ini.
 // OBS absent de la liste des processus : rien n'est ouvert, les trois collections peuvent s'écrire.
@@ -456,7 +488,12 @@ const collections = [
   ...conf.seances.map((seance) => ({ seance, fabriquer: (fichier) => construire(seance, canevasVerticalExistant(fichier) ?? crypto.randomUUID()) })),
   ...(conf.plateau ? [{ seance: { id: 'plateau', nom: conf.plateau.nom }, fabriquer: () => construirePlateau(conf.plateau) }] : []),
 ];
+// --seulement <id>[,<id>…] : n'écrit que ces collections (les autres restent telles qu'OBS les a laissées).
+const iSeulement = process.argv.indexOf('--seulement');
+const SEULEMENT = iSeulement > 0 ? process.argv[iSeulement + 1]?.split(',') : undefined;
+if (SEULEMENT?.some((id) => !FICHIERS[id])) throw new Error(`--seulement : séance inconnue (${SEULEMENT.join(', ')})`);
 for (const { seance, fabriquer } of collections) {
+  if (SEULEMENT && !SEULEMENT.includes(seance.id)) continue;
   const fichier = path.join(SCENES_OBS, FICHIERS[seance.id]);
   const col = fabriquer(fichier);
   const verticales = col.sources.filter((s) => s.canvas_uuid && s.canvas_uuid !== CANEVAS).map((s) => s.name);
@@ -465,9 +502,15 @@ for (const { seance, fabriquer } of collections) {
   if (estOuverte(seance)) { console.log(`IGNORÉ ${FICHIERS[seance.id]} : collection ouverte dans OBS, change de collection puis relance.`); continue; }
   if (fs.existsSync(fichier)) {
     // L'adresse des alertes StreamElements (avec sa clé) n'est posée que dans OBS : on la garde d'une génération à l'autre.
+    // Vide dans cette collection (neuve : live Roblox, 2026-11-03) : reprise d'une autre collection de la même marque.
     const avant = JSON.parse(fs.readFileSync(fichier, 'utf8')).sources;
+    const memeMarque = conf.seances.filter((s) => s.marque === seance.marque && s.id !== seance.id).map((s) => path.join(SCENES_OBS, FICHIERS[s.id]));
+    const urlAilleurs = (nom) => {
+      for (const f of memeMarque) { try { const u = JSON.parse(fs.readFileSync(f, 'utf8')).sources.find((s) => s.name === nom)?.settings?.url; if (u) return u; } catch { /* collection absente */ } }
+      return undefined;
+    };
     for (const nom of ['Alertes', 'Alertes YouTube']) {
-      const ancienne = avant.find((s) => s.name === nom)?.settings?.url;
+      const ancienne = avant.find((s) => s.name === nom)?.settings?.url || urlAilleurs(nom);
       const neuve = col.sources.find((s) => s.name === nom);
       if (ancienne && neuve) neuve.settings.url = ancienne;
     }

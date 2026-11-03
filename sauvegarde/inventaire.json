@@ -1,5 +1,5 @@
 {
-  "sauvegarde_le": "2026-11-03T11:41:53.596Z",
+  "sauvegarde_le": "2026-11-03T11:55:34.192Z",
   "obs": {
     "version": "33.0.0",
     "modules_ajoutes": [
@@ -21,6 +21,7 @@
       "Live_Gaming.json",
       "Live_Montage.json",
       "Live_Dev.json",
+      "Live_Roblox.json",
       "Plateau.json"
     ]
   },
@@ -122,6 +123,22 @@
     },
     {
       "ou": "OBS, collection Live_Dev.json, source « Chat — Discussion »",
+      "quoi": "adresse socialstream.ninja"
+    },
+    {
+      "ou": "OBS, collection Live_Roblox.json, source « Alertes »",
+      "quoi": "adresse streamelements.com"
+    },
+    {
+      "ou": "OBS, collection Live_Roblox.json, source « Alertes YouTube »",
+      "quoi": "adresse streamelements.com"
+    },
+    {
+      "ou": "OBS, collection Live_Roblox.json, source « Chat »",
+      "quoi": "adresse socialstream.ninja"
+    },
+    {
+      "ou": "OBS, collection Live_Roblox.json, source « Chat — Discussion »",
       "quoi": "adresse socialstream.ninja"
     },
     {

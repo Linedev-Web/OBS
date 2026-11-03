@@ -272,11 +272,146 @@
           "role": "Récap du cours, prochain rendez-vous."
         }
       ]
+    },
+    {
+      "id": "roblox",
+      "nom": "Live — Roblox",
+      "marque": "latshow",
+      "diffusion": [
+        "Twitch latshow",
+        "YouTube Latshow"
+      ],
+      "profil": "Live Latshow",
+      "_note_ecrans": "Live Roblox (2026-11-03, demande du client) : quatre écrans, une fenêtre chacun, jamais l’écran entier (rien d’autre ne part en live). Chaque écran a sa scène (le Stream Deck bascule de l’un à l’autre) ; la scène « Écran du moment » (obs/ecran.lua) garde le dernier montré, pour le Face à face et l’image TikTok. « fenetre » : titre:classe:programme ; OBS reconnaît le programme même si le titre change (priority 2). La fenêtre choisie dans OBS est gardée à la régénération.",
+      "ecrans": [
+        { "id": "roblox", "nom": "Roblox", "fenetre": "Roblox:WINDOWSCLIENT:RobloxPlayerBeta.exe", "curseur": false },
+        { "id": "studio", "nom": "Roblox Studio", "fenetre": "Roblox Studio:Qt5159QWindowIcon:RobloxStudioBeta.exe", "curseur": true },
+        { "id": "forge", "nom": "BRYX Forge", "fenetre": "BRYX Forge:Chrome_WidgetWin_1:BRYX Forge.exe", "curseur": true },
+        { "id": "web", "nom": "Page web", "fenetre": "Arc:WinUIDesktopWin32WindowClass:Arc.exe", "curseur": true }
+      ],
+      "scenes": [
+        {
+          "id": "demarrage",
+          "nom": "Démarrage",
+          "touche": "Ctrl+Alt+F1",
+          "overlay": "latshow/demarrage.html",
+          "musique": "latshow/demarrage",
+          "chat": true,
+          "role": "Écran d'attente avec compte à rebours."
+        },
+        {
+          "id": "principal",
+          "nom": "Roblox",
+          "touche": "Ctrl+Alt+F2",
+          "overlay": "latshow/jeu.html",
+          "capture": "roblox",
+          "camera": "coin",
+          "role": "Le jeu Roblox en plein écran, ta caméra en bas à droite."
+        },
+        {
+          "id": "studio",
+          "nom": "Roblox Studio",
+          "touche": "Ctrl+Alt+Maj+F2",
+          "overlay": "latshow/jeu.html",
+          "capture": "studio",
+          "camera": "coin",
+          "vue": "pile",
+          "role": "Roblox Studio (code, test du jeu) en plein écran, ta caméra en bas à droite."
+        },
+        {
+          "id": "forge",
+          "nom": "BRYX Forge",
+          "touche": "Ctrl+Alt+Maj+F3",
+          "overlay": "latshow/jeu.html",
+          "capture": "forge",
+          "camera": "coin",
+          "vue": "pile",
+          "role": "Ton outil BRYX Forge en plein écran, ta caméra en bas à droite."
+        },
+        {
+          "id": "web",
+          "nom": "Page web",
+          "touche": "Ctrl+Alt+Maj+F4",
+          "overlay": "latshow/jeu.html",
+          "capture": "web",
+          "camera": "coin",
+          "vue": "pile",
+          "role": "Le navigateur (Arc) en plein écran, ta caméra en bas à droite."
+        },
+        {
+          "id": "secondaire",
+          "nom": "Face à face",
+          "touche": "Ctrl+Alt+F3",
+          "overlay": "latshow/face-a-face.html",
+          "capture": "ecran",
+          "camera": "cote",
+          "role": "Toi et le dernier écran montré côte à côte, pour expliquer avant de tester."
+        },
+        {
+          "id": "discussion",
+          "nom": "Questions",
+          "touche": "Ctrl+Alt+F4",
+          "overlay": "latshow/discussion.html",
+          "camera": "grande",
+          "chat": true,
+          "role": "Ta caméra en grand et le chat, pour répondre aux questions."
+        },
+        {
+          "id": "pause",
+          "nom": "Pause",
+          "touche": "Ctrl+Alt+F5",
+          "overlay": "latshow/pause.html",
+          "musique": "latshow/pause",
+          "chat": true,
+          "micro_coupe": true,
+          "role": "Pause café, micro coupé."
+        },
+        {
+          "id": "pause-bebe",
+          "nom": "Pause bébé",
+          "touche": "Ctrl+Alt+F6",
+          "overlay": "latshow/pause-bebe.html",
+          "musique": "latshow/bebe",
+          "chat": true,
+          "micro_coupe": true,
+          "role": "Micro coupé automatiquement."
+        },
+        {
+          "id": "souci",
+          "nom": "Souci technique",
+          "touche": "Ctrl+Alt+F7",
+          "overlay": "latshow/souci.html",
+          "musique": "latshow/pause",
+          "micro_coupe": true,
+          "role": "On cache tout le temps de régler."
+        },
+        {
+          "id": "fin",
+          "nom": "Fin",
+          "touche": "Ctrl+Alt+F8",
+          "overlay": "latshow/fin.html",
+          "musique": "latshow/fin",
+          "camera": "fin",
+          "role": "Merci, prochain live, raid."
+        }
+      ]
     }
   ],
   "cadres": {
     "_note": "Rectangles [x, y, largeur, hauteur] en unités de maquette 1920x1080. Les overlays dessinent leurs bordures exactement autour de ces rectangles.",
     "latshow": {
+      "camera.cote": [
+        64,
+        176,
+        832,
+        468
+      ],
+      "capture.cote": [
+        960,
+        176,
+        896,
+        504
+      ],
       "camera.coin": [
         1504,
         836,
@@ -474,7 +609,7 @@
     },
     "capture_entiere": {
       "_note": "Vue pile des séances où l’écran doit se lire en entier (2026-11-03, le client : « que l’écran soit bien lisible, là c’est tronqué ») : la fenêtre (Premiere, IDE, navigateur, ~2560 × 1392) est posée entière sur la largeur, jamais rognée, dans un cadre 16:9 qui commence en haut de capture.pile. Avant, elle remplissait capture.pile en rognant : 45 % de l’écran visible en Dev, les bords coupés en Montage. Le jeu (séance absente de la liste) garde le remplissage.",
-      "seances": ["montage", "dev"],
+      "seances": ["montage", "dev", "roblox"],
       "hauteur": 608
     },
     "reflet": {

@@ -92,6 +92,20 @@ function pageSeance(seance) {
   };
 }
 
+// Page « Roblox » (2026-11-03) : les quatre écrans en haut (jeu, Studio, BRYX Forge, page web), les scènes du live,
+// micro, enregistrement et live. Souci technique reste sur Ctrl+Alt+F7 (15 touches seulement).
+function pageRoblox(seance) {
+  const m = seance.marque;
+  const sc = Object.fromEntries(seance.scenes.map((s) => [s.id, s]));
+  return {
+    '0,0': retour(m), '1,0': scene(m, sc.demarrage), '2,0': scene(m, sc.principal), '3,0': scene(m, sc.studio), '4,0': scene(m, sc.forge),
+    '0,1': charger(m, seance), '1,1': scene(m, sc.web), '2,1': scene(m, sc.secondaire), '3,1': scene(m, sc.discussion), '4,1': scene(m, sc.pause),
+    '0,2': muet(m, 'micro', 'Micro', 'Micro', 'Micro\ncoupé'), '1,2': scene(m, sc.fin), '2,2': scene(m, sc['pause-bebe']),
+    '3,2': enregistrer(m),
+    '4,2': action('com.elgato.obsstudio.stream', 'Stream', OBS, { isInMultiAction: false, longpress: true }, [icone(`live-${m}-on`, { m, t: 'En\ndirect', e: 'actif', f: 'triangle', p: 'appui long' }), icone(`live-${m}`, { m, t: 'Live', f: 'triangle', p: 'appui long' })], 1),
+  };
+}
+
 // Page « Plateau » (tournages face caméra et vidéos d'explication, 2026-10-14) : ses quatre scènes, le micro, l'enregistrement.
 // La webcam s'enregistre à part d'elle-même dès que l'enregistrement d'OBS tourne.
 function pagePlateau(plateau) {
@@ -104,7 +118,7 @@ function pagePlateau(plateau) {
   };
 }
 
-const PAGES = { racine: uuidDe('racine'), gaming: uuidDe('gaming'), montage: uuidDe('montage'), dev: uuidDe('dev'), plateau: uuidDe('plateau') };
+const PAGES = { racine: uuidDe('racine'), gaming: uuidDe('gaming'), montage: uuidDe('montage'), dev: uuidDe('dev'), roblox: uuidDe('roblox'), plateau: uuidDe('plateau') };
 function construire() {
   const pages = { [PAGES.racine]: {
     '0,0': retour('latshow'),
@@ -118,8 +132,10 @@ function construire() {
     '3,1': site('linedev', 'site-yt-linedev', 'YouTube\nlinedev', 'https://studio.youtube.com/channel/UCxzv_XUVN-bGx9FCZNIxetA/livestreaming'),
     '4,1': site('latshow', 'site-se', 'Stream\nElements', 'https://streamelements.com/dashboard'),
     '0,2': commande('latshow', 'ouvrir-applis', 'Ouvrir\nles applis', 'avant le live', 'lancer-applis.ps1'),
+    // 1,2 : dossier « Jeu » (bannière et score du jeu, posé hors de ce script et gardé à la régénération).
+    '2,2': dossier('latshow', 'dossier-roblox', 'Roblox', PAGES.roblox, 'Twitch + YT'),
   } };
-  for (const s of conf.seances) pages[PAGES[s.id]] = pageSeance(s);
+  for (const s of conf.seances) pages[PAGES[s.id]] = s.ecrans ? pageRoblox(s) : pageSeance(s);
   if (conf.plateau) pages[PAGES.plateau] = pagePlateau(conf.plateau);
   return pages;
 }
@@ -173,11 +189,26 @@ fs.mkdirSync(sauvegarde, { recursive: true });
 fs.cpSync(dir, path.join(sauvegarde, path.basename(dir)), { recursive: true });
 console.log('profil sauvegardé dans', sauvegarde);
 
+// Touches posées sur nos pages par quelqu'un d'autre (dossier « Jeu » de la page Live, 2026-10-30) : gardées avec leurs
+// images. Sans ça, régénérer les effaçait et le logiciel supprimait ensuite la page qu'elles ouvraient (2026-11-03).
+function touchesEnPlus(pdir, touches) {
+  try {
+    const avant = JSON.parse(fs.readFileSync(path.join(pdir, 'manifest.json'), 'utf8')).Controllers[0].Actions;
+    return Object.entries(avant).filter(([pos]) => !touches[pos]).map(([pos, a]) => [pos, a,
+      (a.States ?? []).map((s) => s.Image).filter(Boolean).map((img) => [img, fs.readFileSync(path.join(pdir, img))])]);
+  } catch { return []; }
+}
 for (const [uuid, touches] of Object.entries(pages)) {
   const pdir = path.join(dir, 'Profiles', uuid);
+  const gardees = touchesEnPlus(pdir, touches);
   fs.rmSync(pdir, { recursive: true, force: true });
   const actions = {};
   for (const [pos, a] of Object.entries(touches)) actions[pos] = poserImages(pdir, a);
+  for (const [pos, a, images] of gardees) {
+    for (const [img, contenu] of images) { fs.mkdirSync(path.dirname(path.join(pdir, img)), { recursive: true }); fs.writeFileSync(path.join(pdir, img), contenu); }
+    actions[pos] = a;
+    console.log(`touche gardée en ${pos} : ${a.UUID}`);
+  }
   fs.writeFileSync(path.join(pdir, 'manifest.json'), JSON.stringify({ Controllers: [{ Actions: actions, Type: 'Keypad' }], Icon: '', Name: '' }));
 }
 am.Controllers[0].Actions['0,0'] = poserImages(path.join(dir, 'Profiles', accueil), entree);
