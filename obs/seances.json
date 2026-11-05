@@ -300,6 +300,17 @@
           "role": "Écran d'attente avec compte à rebours."
         },
         {
+          "id": "creation",
+          "nom": "Création de jeu",
+          "touche": "Ctrl+Alt+Maj+F1",
+          "overlay": "latshow/creation.html",
+          "ecrans": ["studio", "forge"],
+          "camera": "creation",
+          "vue": "creation",
+          "_note": "Mode création (2026-11-05, demande du client) : Roblox Studio, BRYX Forge et la caméra en même temps. Cadres « creation.<écran> » et « camera.creation » (horizontal et vertical). En vertical : Studio en haut, caméra au milieu, BRYX Forge en bas.",
+          "role": "Roblox Studio en grand, ta caméra et BRYX Forge à côté (TikTok : Studio, toi, BRYX Forge de haut en bas)."
+        },
+        {
           "id": "principal",
           "nom": "Roblox",
           "touche": "Ctrl+Alt+F2",
@@ -400,6 +411,9 @@
   "cadres": {
     "_note": "Rectangles [x, y, largeur, hauteur] en unités de maquette 1920x1080. Les overlays dessinent leurs bordures exactement autour de ces rectangles.",
     "latshow": {
+      "creation.studio": [32, 84, 1248, 702],
+      "creation.forge": [1312, 432, 576, 354],
+      "camera.creation": [1312, 84, 576, 324],
       "camera.cote": [
         64,
         176,
@@ -539,6 +553,9 @@
     },
     "cadres": {
       "latshow": {
+        "creation.studio": [0, 150, 1080, 608],
+        "camera.creation": [0, 806, 1080, 452],
+        "creation.forge": [0, 1270, 1080, 608],
         "camera.pile": [
           0,
           0,

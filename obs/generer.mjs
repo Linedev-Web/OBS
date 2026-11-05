@@ -341,6 +341,11 @@ function construireVertical(seance, com, canevas) {
       }
       if (vue === 'plein') ajouter(com.capture, cadres['capture.plein'], 'interieur');
       if (vue === 'fin') ajouter(com.camera, cadres['camera.fin'], 'exterieur');
+      // Plusieurs écrans et la caméra (Création de jeu : Studio en haut, caméra au milieu, BRYX Forge en bas).
+      if (sc.ecrans) {
+        for (const id of sc.ecrans) ajouter(com[`ecran:${id}`], cadres[`${sc.id}.${id}`], 'interieur');
+        ajouter(com.camera, cadres[`camera.${sc.camera}`], 'exterieur');
+      }
     }
     ajouter(com.alertesTikTok, plein, 'etirer');
     const hk = { 'OBSBasic.SelectScene': [] };
@@ -377,11 +382,12 @@ function construire(seance, canevasVertical) {
     // Ordre de bas en haut : capture plein écran puis habillage par-dessus ; sinon habillage en fond puis la capture cadrée.
     if (pleinEcran) { ajouter(capture, rectCapture(cadres, sc), 'interieur'); if (ov) ajouter(ov); }
     else { if (ov) ajouter(ov); if (sc.capture) ajouter(capture, rectCapture(cadres, sc), 'interieur'); }
+    for (const id of sc.ecrans ?? []) ajouter(com[`ecran:${id}`], cadres[`${sc.id}.${id}`], 'interieur'); // plusieurs écrans à la fois (Création de jeu)
     if (sc.camera) ajouter(com.camera, cadres[`camera.${sc.camera}`], 'exterieur');
     if (sc.chat) { const [cle, rect] = cadreChat(cadres, sc); ajouter(chatPour(cle, rect), rect, 'etirer'); }
     // Son : le micro n'est présent que là où l'on parle (Pause, Pause bébé, Souci technique le coupent d'office).
     if (!sc.micro_coupe) ajouter(com.micro);
-    if (com.discord && (sc.capture || sc.id === 'discussion')) ajouter(com.discord);
+    if (com.discord && (sc.capture || sc.ecrans || sc.id === 'discussion')) ajouter(com.discord);
     if (sc.musique) {
       if (!musiques.has(sc.musique)) { const m = musique(sc.musique); musiques.set(sc.musique, m); sources.push(m); }
       ajouter(musiques.get(sc.musique));

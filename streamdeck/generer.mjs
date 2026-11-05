@@ -67,9 +67,9 @@ const scene = (m, sc) => { const p = (sc.touche ?? '').replace('Ctrl+Alt+', '');
 const enregistrer = (m) => action('com.elgato.obsstudio.record', 'Record', OBS, { isInMultiAction: false }, [icone(`enreg-${m}-on`, { m, t: 'Enreg.\nen cours', e: 'actif', f: 'rond' }), icone(`enreg-${m}`, { m, t: 'Enregis-\ntrer', f: 'rond' })], 1);
 const muet = (m, id, source, texte, coupe) => action('com.elgato.obsstudio.mixeraudio', 'Mixer Audio', OBS, { source, type: 'mute', mode: 'toggle', isInMultiAction: false },
   [icone(`${id}-${m}`, { m, t: texte, f: 'rond' }), icone(`${id}-${m}-coupe`, { m, t: coupe, e: 'actif', f: 'rond' })]);
-function charger(m, seance) {
+function charger(m, seance, t = 'Charger\nla séance') {
   const p = { dev: 'linedev', plateau: 'Tournage' }[seance.id] ?? 'Latshow';
-  const routine = action('com.elgato.streamdeck.multiactions.routine', null, null, {}, [icone(`charger-${seance.id}`, { m, t: 'Charger\nla séance', f: 'losange', p })]);
+  const routine = action('com.elgato.streamdeck.multiactions.routine', null, null, {}, [icone(`charger-${seance.id}`, { m, t, f: 'losange', p })]);
   const pas = (a) => { const { _images, ...propre } = a; propre.States = [{}, {}]; return { Actions: [propre] }; };
   routine.Actions = [
     pas(action('com.elgato.obsstudio.profile', 'Profile', OBS, { profile: seance.profil }, [], 1)),
@@ -92,14 +92,15 @@ function pageSeance(seance) {
   };
 }
 
-// Page « Roblox » (2026-11-03) : les quatre écrans en haut (jeu, Studio, BRYX Forge, page web), les scènes du live,
-// micro, enregistrement et live. Souci technique reste sur Ctrl+Alt+F7 (15 touches seulement).
+// Page « Roblox » (2026-11-03) : Création de jeu (2026-11-05) et ses deux écrans en haut, puis le jeu, la page web, les
+// scènes du live, micro, enregistrement et live. Souci technique reste sur Ctrl+Alt+F7 (15 touches seulement) ;
+// « Charger la séance » est sur la page Live (« Charger Roblox »), pour laisser la place à Création de jeu.
 function pageRoblox(seance) {
   const m = seance.marque;
   const sc = Object.fromEntries(seance.scenes.map((s) => [s.id, s]));
   return {
-    '0,0': retour(m), '1,0': scene(m, sc.demarrage), '2,0': scene(m, sc.principal), '3,0': scene(m, sc.studio), '4,0': scene(m, sc.forge),
-    '0,1': charger(m, seance), '1,1': scene(m, sc.web), '2,1': scene(m, sc.secondaire), '3,1': scene(m, sc.discussion), '4,1': scene(m, sc.pause),
+    '0,0': retour(m), '1,0': scene(m, sc.demarrage), '2,0': scene(m, sc.creation), '3,0': scene(m, sc.studio), '4,0': scene(m, sc.forge),
+    '0,1': scene(m, sc.principal), '1,1': scene(m, sc.web), '2,1': scene(m, sc.secondaire), '3,1': scene(m, sc.discussion), '4,1': scene(m, sc.pause),
     '0,2': muet(m, 'micro', 'Micro', 'Micro', 'Micro\ncoupé'), '1,2': scene(m, sc.fin), '2,2': scene(m, sc['pause-bebe']),
     '3,2': enregistrer(m),
     '4,2': action('com.elgato.obsstudio.stream', 'Stream', OBS, { isInMultiAction: false, longpress: true }, [icone(`live-${m}-on`, { m, t: 'En\ndirect', e: 'actif', f: 'triangle', p: 'appui long' }), icone(`live-${m}`, { m, t: 'Live', f: 'triangle', p: 'appui long' })], 1),
@@ -134,6 +135,7 @@ function construire() {
     '0,2': commande('latshow', 'ouvrir-applis', 'Ouvrir\nles applis', 'avant le live', 'lancer-applis.ps1'),
     // 1,2 : dossier « Jeu » (bannière et score du jeu, posé hors de ce script et gardé à la régénération).
     '2,2': dossier('latshow', 'dossier-roblox', 'Roblox', PAGES.roblox, 'Twitch + YT'),
+    '3,2': charger('latshow', conf.seances.find((s) => s.id === 'roblox'), 'Charger\nRoblox'),
   } };
   for (const s of conf.seances) pages[PAGES[s.id]] = s.ecrans ? pageRoblox(s) : pageSeance(s);
   if (conf.plateau) pages[PAGES.plateau] = pagePlateau(conf.plateau);
