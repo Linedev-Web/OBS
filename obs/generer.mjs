@@ -289,18 +289,20 @@ const vueVerticale = (sc) => sc.vue ?? (sc.id === 'secondaire' ? (sc.camera ? 'p
 
 // Reflet flouté du jeu sous la capture, vue « pile » (demande du client, 2026-10-30 : « un blur de mon jeu en dessous,
 // comme dans tous les streams, que ça habille ») : une scène qui ne contient que la capture, posée sous le jeu
-// (vertical.reflet.cadre), réduite par le filtre « Mise à l'échelle » d'OBS puis agrandie en bicubique, ce qui la floute
-// sans module (aucun filtre de flou dans OBS), et assombrie. Rien au-dessus de la capture : le flou qui déborde est caché par le jeu.
+// (vertical.reflet.cadre) et floutée par les filtres « Mise à l'échelle » d'OBS (aucun filtre de flou dans OBS, pas de module).
+// Rien au-dessus de la capture : le flou qui déborde est caché par le jeu.
+// Reflet invisible du 2026-10-30 au 2026-11-05 : l'appel à element() oubliait l'identifiant, la capture était écrite
+// sans position ni cadre (NaN) et OBS la posait au centre. La scène a désormais la taille de la bande (custom_size). Flou par une chaîne de filtres « Mise à l'échelle » (vertical.reflet.etapes) :
+// réduite par paliers en « area » puis réagrandie par paliers de 2 en bilinéaire. En un seul saut (72 px puis agrandie),
+// le flou sortait en gros carrés (« pixelisé à mort », le client, 2026-11-05). Couleurs du jeu inchangées.
 function sceneReflet(com, canevas, ordre) {
   const R = VERT.reflet;
-  const [rw, rh] = R.reduction;
-  const item = { ...element(com.capture, R.cadre, 'exterieur', { k: 1, canevas: [VW, VH] }), id: 1 };
+  const [, , bw, bh] = R.cadre;
+  const item = element(com.capture, 1, [0, 0, bw, bh], 'exterieur', { k: 1, canevas: [bw, bh] });
   const hk = { 'OBSBasic.SelectScene': [], 'libobs.show_scene_item.1': [], 'libobs.hide_scene_item.1': [] };
+  const filtres = R.etapes.map(([l, h, sampling], i) => filtre(`Flou ${i + 1}`, 'scale_filter', 'scale_filter', { resolution: `${l}x${h}`, sampling, undistort: false }));
   return {
-    ...source(`TikTok — ${R.nom}`, 'scene', { id_counter: 1, custom_size: false, items: [item], order: ordre, canvas_active: true }, { mixers: 0, hotkeys: hk, filters: [
-      filtre('Flou (réduction)', 'scale_filter', 'scale_filter', { resolution: `${rw}x${rh}`, sampling: 'bicubic', undistort: false }),
-      filtre('Assombri', 'color_filter_v2', 'color_filter_v2', { brightness: R.luminosite, saturation: R.saturation, opacity: R.opacite }),
-    ] }),
+    ...source(`TikTok — ${R.nom}`, 'scene', { id_counter: 1, custom_size: true, cx: bw, cy: bh, items: [item], order: ordre, canvas_active: true }, { mixers: 0, hotkeys: hk, filters: filtres }),
     canvas_uuid: canevas,
   };
 }
@@ -332,7 +334,7 @@ function construireVertical(seance, com, canevas) {
       ajouter(ov, plein, 'etirer');
       if (vue === 'pile') {
         // Le reflet est agrandi en bicubique (sans filtre, le flou garde des marches d'escalier).
-        if (reflet) items.push({ ...element(reflet, ++n, plein, 'etirer', { k: 1, canevas: [VW, VH] }), scale_filter: 'bicubic' });
+        if (reflet) items.push({ ...element(reflet, ++n, VERT.reflet.cadre, 'etirer', { k: 1, canevas: [VW, VH] }), scale_filter: 'bicubic' });
         ajouter(com.camera, cadres['camera.pile'], 'exterieur');
         // Écran entier (montage, dev) : la fenêtre sur toute la largeur, sans rien rogner ; le jeu remplit son cadre.
         const [cx, cy, cw, ch] = cadres['capture.pile'];
@@ -387,7 +389,8 @@ function construire(seance, canevasVertical) {
     if (sc.chat) { const [cle, rect] = cadreChat(cadres, sc); ajouter(chatPour(cle, rect), rect, 'etirer'); }
     // Son : le micro n'est présent que là où l'on parle (Pause, Pause bébé, Souci technique le coupent d'office).
     if (!sc.micro_coupe) ajouter(com.micro);
-    if (com.discord && (sc.capture || sc.ecrans || sc.id === 'discussion')) ajouter(com.discord);
+    // Discord là où l'on joue, répond ou dit au revoir (Fin : demande du client, 2026-11-07).
+    if (com.discord && (sc.capture || sc.ecrans || ['discussion', 'fin'].includes(sc.id))) ajouter(com.discord);
     if (sc.musique) {
       if (!musiques.has(sc.musique)) { const m = musique(sc.musique); musiques.set(sc.musique, m); sources.push(m); }
       ajouter(musiques.get(sc.musique));
