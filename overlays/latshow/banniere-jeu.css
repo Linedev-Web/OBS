@@ -1,7 +1,8 @@
 /* Bannière du jeu, image verticale Latshow (demande du client, 2026-10-30) : entre la caméra (0–540 px) et le jeu
    (672 px), 92 px de bannière puis 40 px pour les soutiens du live. Le jeu vient de overlays/jeu.js (obs/jeu.mjs) :
    <html data-jeu="…"> choisit le gabarit (couleurs, police, symbole, nom dessiné), .avec-score montre le score.
-   Un jeu sans gabarit garde les couleurs de la chaîne, avec son nom écrit en Russo One. */
+   Un jeu sans gabarit garde les couleurs de la chaîne, avec son nom écrit en Bricolage Grotesque 800 (habillage « papa »,
+   2026-11-08 ; Russo One avant). */
 @font-face{font-family:'Anton';src:url('../commun/polices/anton-400.woff2') format('woff2');font-weight:400;font-display:block}
 @font-face{font-family:'Orbitron';src:url('../commun/polices/orbitron-700.woff2') format('woff2');font-weight:700;font-display:block}
 @font-face{font-family:'Saira Condensed';src:url('../commun/polices/saira-condensed-800.woff2') format('woff2');font-weight:800;font-display:block}
@@ -11,7 +12,7 @@
 
 :root{
   --j-fond:var(--nuit);--j-fond-2:#151327;--j-accent:var(--cyan);--j-moi:var(--cyan);--j-adv:#F05A5A;--j-texte:var(--texte);
-  --j-police:'Russo One';--j-graisse:400;--j-espace:.04em;--j-chiffres:'Anton';--j-image:none;
+  --j-police:'Bricolage Titre';--j-graisse:800;--j-espace:0;--j-chiffres:'Anton';--j-image:none;
   /* Symbole sur un pan en biais à gauche (none = pas de pan), nom dessiné à la place du texte (none = texte). */
   --j-symbole:none;--j-pan:none;--j-titre-gauche:40px;
   --j-nom:none;--j-nom-ratio:1;--j-nom-image:none;--j-nom-texte:block;

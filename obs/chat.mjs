@@ -7,7 +7,8 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ICI = path.dirname(fileURLToPath(import.meta.url));
-const POLICES = { latshow: 'Inter', linedev: 'JetBrains Mono' };
+// Habillage « papa » (2026-11-08) : Bricolage Grotesque partout, comme les écrans.
+const POLICES = { latshow: 'Bricolage Grotesque', linedev: 'Bricolage Grotesque' };
 // rtl : texte écrit de droite à gauche (« :pseudo ? message ») ; scale : la taille vient du CSS ; chroma : fond gris.
 const RETIRES = ['rtl', 'scale', 'chroma'];
 // Pas de « : » après le pseudo, pas de barre de boutons, pas d'ombre ni de contour sur le texte.
@@ -23,5 +24,9 @@ export function adresseChat(brute, marque) {
   return u.toString().replace(/=(?=&|$)/g, ''); // les options sans valeur, comme dans l'adresse d'origine
 }
 
-/** Le CSS du chat d'une marque (obs/chat-<marque>.css), à poser dans le champ CSS de la source OBS. */
-export const cssChat = (marque) => fs.readFileSync(path.join(ICI, `chat-${marque}.css`), 'utf8');
+/** Le CSS du chat (obs/chat-<séance>.css s'il existe, comme chat-roblox.css, sinon obs/chat-<marque>.css), à poser dans
+ *  le champ CSS de la source OBS. */
+export const cssChat = (marque, seance) => {
+  const propre = seance && path.join(ICI, `chat-${seance}.css`);
+  return fs.readFileSync(propre && fs.existsSync(propre) ? propre : path.join(ICI, `chat-${marque}.css`), 'utf8');
+};

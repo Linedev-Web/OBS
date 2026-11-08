@@ -1,0 +1,166 @@
+<!doctype html>
+<!--
+  Transition de scène « Coup de moustache » (stinger) — refonte « papa » des lives validée par le client le 2026-11-08 :
+  « un coup de moustache balaie l'écran, à la place des tuiles 3D ». Remplace la transition « Tuiles 3D » (index.html,
+  gardée telle quelle).
+
+  Le geste, en 1,5 s :
+  - 0 à 0,34 s : la moustache guidon du client (overlays/commun/moustache.svg) déboule de la gauche en balayant, penchée,
+    et se balance un peu en freinant ;
+  - 0,22 à 0,54 s : son ombre, une moustache de la couleur du fond, gonfle derrière elle jusqu'à avaler tout l'écran ;
+  - 0,54 à 0,86 s : écran entièrement couvert (OBS change de scène à 620 ms) ; les pointes frisent et se relèvent,
+    le nom de la chaîne apparaît dessous ;
+  - 0,86 à 1,28 s : l'ombre se rétracte dans la moustache (on découvre la nouvelle scène), qui file à droite en se penchant.
+  Trois univers (variable `univers`) : gaming « le salon du soir », dev « le bureau du matin », roblox « l'atelier ».
+  Rendu en WebM transparent par rendre.mjs, lu par la transition « Stinger » d'OBS.
+
+  Son : deux whooshs discrets (comme les Tuiles 3D depuis le 2026-10-16 : pas d'impact de basse, environ −34 LUFS) et un
+  petit « frisottis » quand les pointes frisent. medias/frisottis.mp3 est fait maison par ffmpeg (glissando doux, sans
+  basse) :
+    ffmpeg -f lavfi -i "aevalsrc='0.5*min(1\,t/0.01)*exp(-t/0.07)*(sin(2*PI*(620*t+2900*t*t))+0.18*sin(4*PI*(620*t+2900*t*t)))':s=48000:d=0.26"
+           -af "highpass=f=320,lowpass=f=6500,afade=t=out:st=0.2:d=0.06,aformat=channel_layouts=stereo" -c:a libmp3lame -b:a 192k frisottis.mp3
+-->
+<html lang="fr" data-composition-variables='[{"id":"univers","type":"string","label":"Univers (gaming, dev ou roblox)","default":"gaming"}]'>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>Coup de moustache</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "Bricolage Grotesque"; src: url("medias/bricolage-titre-800.ttf") format("truetype"); font-weight: 800; }
+      html, body { margin: 0; background: transparent; }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; }
+      .clip { position: absolute; inset: 0; }
+
+      /* Couleurs des trois univers (planche « papa » du 2026-11-08) */
+      #root[data-univers="gaming"] { --fond: #1F1712; --moustache: #F4A33A; --nom: #FFF3E3; }
+      #root[data-univers="dev"]    { --fond: #F6F0E4; --moustache: #D9431D; --nom: #1E1B16; }
+      #root[data-univers="roblox"] { --fond: #16324D; --moustache: #FFC83D; --nom: #FFF8EC; }
+
+      #dessin { position: absolute; inset: 0; display: block; width: 100%; height: 100%; overflow: hidden; }
+      #ombre { fill: var(--fond); }
+      #moustache { fill: var(--moustache); }
+      .nom { position: absolute; left: 0; right: 0; top: 580px; display: block; text-align: center;
+        font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 132px; line-height: 1;
+        letter-spacing: -0.015em; color: var(--nom); white-space: nowrap; opacity: 0; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="moustache" data-start="0" data-width="1920" data-height="1080" data-duration="1.5" data-univers="gaming">
+      <section id="moustache-scene" class="clip" data-start="0" data-duration="1.5" data-track-index="0">
+        <svg id="dessin" viewBox="0 0 1920 1080" aria-hidden="true">
+          <g id="voyage" data-layout-allow-overflow>
+            <!-- L'ombre : la même moustache, couleur du fond, qui gonfle jusqu'à couvrir l'écran -->
+            <g id="ombre" opacity="0">
+              <path id="ombre-g" />
+              <path id="ombre-d" transform="matrix(-1 0 0 1 240 0)" />
+            </g>
+            <g id="moustache">
+              <g id="moitie-g"><path id="chemin-g" /></g>
+              <g transform="matrix(-1 0 0 1 240 0)"><g id="moitie-d"><path id="chemin-d" /></g></g>
+            </g>
+          </g>
+        </svg>
+        <div class="nom" id="nom">Latshow</div>
+      </section>
+      <audio id="son-arrivee" src="medias/whoosh.mp3" data-start="0" data-duration="0.57" data-track-index="10" data-volume="0.18"></audio>
+      <audio id="son-frise" src="medias/frisottis.mp3" data-start="0.58" data-duration="0.26" data-track-index="11" data-volume="0.18"></audio>
+      <audio id="son-depart" src="medias/whoosh.mp3" data-start="0.86" data-duration="0.57" data-track-index="12" data-volume="0.1"></audio>
+    </div>
+    <script>
+      const UNIVERS = {
+        gaming: { nom: "Latshow" },
+        dev: { nom: "linedev" },
+        roblox: { nom: "Latshow" },
+      };
+      const vars = window.__hyperframes.getVariables();
+      const cle = UNIVERS[vars.univers] ? vars.univers : "gaming";
+      const root = document.getElementById("root");
+      root.dataset.univers = cle;
+      document.getElementById("nom").textContent = UNIVERS[cle].nom;
+
+      // Demi-moustache gauche de overlays/commun/moustache.svg (viewBox 0 6 240 54), la droite en est le miroir.
+      // 40 points : M p0, puis 13 courbes C de 3 points chacune.
+      const POINTS = [
+        [120, 54], [108, 56], [92, 56], [76, 52], [62, 48], [50, 46], [38, 46], [30, 46], [24, 46], [18, 43],
+        [9, 38], [6, 28], [11, 20], [16, 12], [27, 10], [33, 16], [37, 21], [34, 28], [28, 28], [26, 28],
+        [25, 27], [25.5, 26], [29, 25], [31, 21], [28, 18], [24, 14], [16, 17], [15, 24], [14, 32], [20, 38],
+        [30, 40], [44, 42], [56, 38], [70, 32], [84, 26], [100, 24], [112, 28], [116, 29], [118, 31], [120, 33],
+      ];
+      const chemin = (pts) => {
+        const f = (p) => `${p[0].toFixed(2)},${p[1].toFixed(2)}`;
+        let d = `M${f(pts[0])}`;
+        for (let i = 1; i < pts.length; i += 3) d += ` C${f(pts[i])} ${f(pts[i + 1])} ${f(pts[i + 2])}`;
+        return d + " Z";
+      };
+
+      // Frisure : la pointe s'enroule davantage autour du centre de sa boucle. Le ruban de la boucle va du point 9
+      // (attache du bas) au point 30 (attache du haut) en passant par son bout intérieur (point 21) : plus on approche
+      // du bout, plus le point tourne (sens horaire, celui de la boucle) et se resserre. Les attaches ne bougent pas.
+      const CENTRE_BOUCLE = [21, 27], ENROULEMENT = (100 * Math.PI) / 180, RESSERREMENT = 0.22;
+      const poids = (i) => (i <= 9 || i >= 30 ? 0 : i <= 21 ? (i - 9) / 12 : (30 - i) / 9);
+      function frisee(f) {
+        return POINTS.map((p, i) => {
+          const w = poids(i);
+          if (!w || !f) return p;
+          const a = f * ENROULEMENT * w, k = 1 - f * RESSERREMENT * w;
+          const dx = (p[0] - CENTRE_BOUCLE[0]) * k, dy = (p[1] - CENTRE_BOUCLE[1]) * k;
+          return [CENTRE_BOUCLE[0] + dx * Math.cos(a) - dy * Math.sin(a), CENTRE_BOUCLE[1] + dx * Math.sin(a) + dy * Math.cos(a)];
+        });
+      }
+
+      // Géométrie. La moustache fait 864 px de large (3,6 px par unité) ; son centre (120 ; 43,5) se pose en (960 ; 482),
+      // le nom dessous. L'ombre grandit autour de ce même point jusqu'à OMBRE_MAX fois : à 79 px par unité, le cœur de
+      // la moustache (entre le creux du haut, y = 33, et le bas, y = 54) déborde l'écran de tous les côtés.
+      const ECHELLE = 3.6, CX = 960, CY = 482, OMBRE_MAX = 22;
+      const poseMoustache = (s) => `translate(${CX} ${CY}) scale(${(ECHELLE * s).toFixed(4)}) translate(-120 -43.5)`;
+      const base = chemin(POINTS);
+      for (const id of ["ombre-g", "ombre-d"]) document.getElementById(id).setAttribute("d", base);
+      const el = (id) => document.getElementById(id);
+      const voyage = el("voyage"), ombre = el("ombre"), moustache = el("moustache");
+      const moities = [el("moitie-g"), el("moitie-d")], chemins = [el("chemin-g"), el("chemin-d")];
+      moustache.setAttribute("transform", poseMoustache(1));
+
+      // Un seul état, posé sur le dessin après chaque image (onUpdate de la timeline, appelé à chaque recherche).
+      const E = { x: -1500, r: -16, zoom: 0, ombre: 0, frise: 0, releve: 0 };
+      let friseDessinee = null;
+      function poser() {
+        voyage.setAttribute("transform", `translate(${E.x.toFixed(2)} 0) rotate(${E.r.toFixed(3)} ${CX} ${CY})`);
+        // Zoom exponentiel : la vitesse perçue reste régulière de 1 à 22 fois
+        ombre.setAttribute("transform", poseMoustache(Math.pow(OMBRE_MAX, E.zoom)));
+        ombre.setAttribute("opacity", E.ombre >= 0.5 ? "1" : "0");
+        // Les pointes se relèvent : chaque moitié tourne autour du bas du milieu (120 ; 54), qui reste soudé
+        for (const m of moities) m.setAttribute("transform", `rotate(${E.releve.toFixed(3)} 120 54)`);
+        const f = Math.round(E.frise * 1000) / 1000;
+        if (f !== friseDessinee) {
+          const d = chemin(frisee(f));
+          for (const c of chemins) c.setAttribute("d", d);
+          friseDessinee = f;
+        }
+      }
+
+      const tl = gsap.timeline({ paused: true, onUpdate: poser });
+      // Arrivée en balayage, petit balancement au freinage
+      tl.to(E, { x: 0, duration: 0.34, ease: "power3.out" }, 0);
+      tl.to(E, { keyframes: [{ r: 6, duration: 0.26, ease: "power2.out" }, { r: 0, duration: 0.14, ease: "sine.inOut" }] }, 0);
+      // L'ombre gonfle et avale l'écran : couvert de 0,54 s à 0,86 s
+      tl.set(E, { ombre: 1 }, 0.22);
+      tl.to(E, { zoom: 1, duration: 0.32, ease: "power2.in" }, 0.22);
+      // Les pointes frisent et se relèvent
+      tl.to(E, { frise: 1, duration: 0.16, ease: "back.out(2.2)" }, 0.58);
+      tl.to(E, { keyframes: [{ releve: 11, duration: 0.09, ease: "power2.out" }, { releve: 4, duration: 0.14, ease: "sine.inOut" }] }, 0.58);
+      // Le nom de la chaîne, seulement pendant que l'écran est couvert
+      tl.fromTo("#nom", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.1, ease: "power2.out" }, 0.53);
+      tl.to("#nom", { opacity: 0, y: -12, duration: 0.08, ease: "power1.in" }, 0.84);
+      // Départ : l'ombre se rétracte dans la moustache (qui reprend sa forme pour la cacher), puis tout file à droite
+      tl.to(E, { zoom: 0, duration: 0.28, ease: "power2.out" }, 0.86);
+      tl.to(E, { frise: 0, releve: 0, duration: 0.14, ease: "power2.inOut" }, 0.88);
+      tl.set(E, { ombre: 0 }, 1.14);
+      tl.to(E, { x: 1500, duration: 0.32, ease: "power2.in" }, 0.96);
+      tl.to(E, { r: 14, duration: 0.32, ease: "power2.in" }, 0.96);
+
+      poser();
+      window.__timelines["moustache"] = tl;
+    </script>
+  </body>
+</html>

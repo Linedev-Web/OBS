@@ -61,13 +61,21 @@ const PISTES = {
 // Périphériques choisis dans la régie (obs/peripheriques.json, écrit par obs/regie.mjs) : ils priment sur la référence.
 const PERIPHERIQUES = (() => { try { return JSON.parse(fs.readFileSync(path.join(ICI, 'peripheriques.json'), 'utf8')); } catch { return {}; } })();
 
-// Transition de scène « Tuiles 3D » (stinger, demande du client, 2026-10-07) : vidéo transparente rendue par
-// transitions/rendre.mjs. OBS change de scène à 620 ms, quand les tuiles couvrent tout l'écran. Son du whoosh dans le
-// live et dans le casque (2) ; décodage logiciel (le décodage matériel du VP9 perd la transparence).
-const TRANSITION = 'Tuiles 3D';
-const transition = (marque) => ({
+// Transition de scène « Coup de moustache » (habillage « papa », 2026-11-08 ; avant : « Tuiles 3D ») : vidéo transparente
+// rendue par transitions/rendre.mjs, une par univers. OBS change de scène à 620 ms, quand la moustache couvre tout l'écran
+// (opaque de 533 à 867 ms). Son du whoosh dans le live et dans le casque (2) ; décodage logiciel (le décodage matériel du
+// VP9 perd la transparence).
+const TRANSITION = 'Coup de moustache';
+// L'univers d'une séance (ambiance des écrans, transition, chat) : le montage est un live Latshow, comme le gaming.
+const UNIVERS = { gaming: 'gaming', montage: 'gaming', dev: 'dev', roblox: 'roblox' };
+const universDe = (seance) => {
+  const u = UNIVERS[seance.id];
+  if (!u) throw new Error(`Séance « ${seance.id} » sans univers : l'ajouter à UNIVERS dans obs/generer.mjs.`);
+  return u;
+};
+const transition = (seance) => ({
   name: TRANSITION, id: 'obs_stinger_transition',
-  settings: { path: `${TRANSITIONS}/transition_${marque}.webm`, tp_type: 0, transition_point: 620,
+  settings: { path: `${TRANSITIONS}/transition_${universDe(seance)}_papa.webm`, tp_type: 0, transition_point: 620,
     audio_monitoring: 2, audio_fade_style: 1, hw_decode: false, preload: false },
 });
 
@@ -274,7 +282,7 @@ function cadreChat(cadres, scene) {
 function sourceChat(seance, cle, [, , w, h]) {
   return source(NOMS_CHAT[cle], 'browser_source', {
     url: adresseChat(refSource('Social chatting').settings.url, seance.marque), width: Math.round(w * K), height: Math.round(h * K),
-    css: `${CSS_BASE} ${cssChat(seance.marque)}`, fps_custom: true, fps: 30,
+    css: `${CSS_BASE} ${cssChat(seance.marque, seance.id)}`, fps_custom: true, fps: 30,
   }, { mixers: 0, hotkeys: { ...vide(), 'ObsBrowser.Refresh': [] } });
 }
 function rectCapture(cadres, scene) {
@@ -409,7 +417,7 @@ function construire(seance, canevasVertical) {
     current_scene: seance.scenes[0].nom,
     current_program_scene: seance.scenes[0].nom,
     canvases: [{ info: { name: CANEVAS_VERTICAL, uuid: canevasVertical, private: false, flags: 14 } }],
-    current_transition: TRANSITION, transition_duration: 300, transitions: [transition(seance.marque)], quick_transitions: [],
+    current_transition: TRANSITION, transition_duration: 300, transitions: [transition(seance)], quick_transitions: [],
     saved_projectors: [], preview_locked: false, scaling_enabled: false, scaling_level: 0, scaling_off_x: 0, scaling_off_y: 0,
     // Scripts OBS : le service des soutiens du live (obs/soutiens.lua → obs/soutiens.mjs) à l'ouverture ; pour le live
     // Roblox, celui qui fait suivre à « Écran du moment » la dernière scène d'écran montrée (obs/ecran.lua).

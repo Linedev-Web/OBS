@@ -1,107 +1,105 @@
 <!doctype html><html lang="fr" data-format="vertical"><head><meta charset="utf-8"><title>Vertical</title>
-<!-- Image verticale TikTok (1080 × 1920), Latshow : une page, une vue par scène (--vue posée par obs/generer.mjs).
-     TikTok affiche ton nom et les spectateurs en haut (jusqu'à ~150 px), les commentaires et la saisie en bas (à partir
-     de ~1300 px) : le texte important reste entre les deux. Maquettes validées par le client le 2026-10-08 ; bandeau des
-     soutiens à la place de « LIVE GAMING / LATSHOW » et plus aucune pastille (2026-10-09). -->
-<link rel="stylesheet" href="latshow.css"><link rel="stylesheet" href="banniere-jeu.css"><script src="../commun/scene.js"></script><script src="../commun/soutiens.js"></script><script src="../commun/jeu.js"></script>
+<!-- Image verticale TikTok (1080 × 1920), Latshow (gaming, montage, Roblox) : une page, une vue par scène (--vue posée par
+     obs/generer.mjs). TikTok affiche le nom et les spectateurs en haut (~150 px), les commentaires en bas (dès ~1300 px) :
+     le texte important reste entre les deux. Habillage « papa » (2026-11-08) : photo tirée au hasard sous un voile sombre
+     (les commentaires de TikTok sont écrits en blanc), la moustache, les textes de commun/papa.js. -->
+<link rel="stylesheet" href="latshow.css"><link rel="stylesheet" href="banniere-jeu.css"><script src="../fonds.js"></script><script src="../commun/scene.js"></script><script src="../commun/soutiens.js"></script><script src="../commun/jeu.js"></script><script src="../commun/papa.js"></script>
 <style>
-.v-marque{left:0;right:0;top:400px;justify-content:center}
-.v-centre{position:absolute;left:80px;right:80px;top:530px;text-align:center}
-.v-centre .surtitre{justify-content:center}
-.v-centre .titre{font-size:92px;margin-top:28px}
-.v-centre .texte{font-size:38px;margin:32px auto 0;max-width:900px}
-.v-centre .compte{font-size:170px;margin-top:64px}
-.v-centre .depuis{margin-top:56px;font-size:26px}
-.v-barre{position:absolute;left:240px;right:240px;top:1170px;height:4px;background:var(--trait)}
-.v-barre i{display:block;height:100%;background:var(--cyan);transform-origin:0 50%;transform:scaleX(0)}
-/* Bandeau entre la caméra et le jeu : les soutiens du live, qui défilent en boucle. */
-.bandeau{position:absolute;left:0;right:0;height:60px;display:flex;align-items:center;gap:18px;padding:0 40px;background:var(--nuit)}
-.bandeau [data-soutiens]{flex:1;min-width:0;height:100%;font-size:26px}
+.v-voile{position:absolute;inset:0;background:linear-gradient(180deg,rgba(var(--voile),.6) 0%,rgba(var(--voile),.86) 26%,rgba(var(--voile),.9) 64%,rgba(var(--voile),.97) 100%)}
+.v-signe{position:absolute;left:400px;top:390px;width:280px;color:var(--texte)}
+.v-centre{position:absolute;left:80px;right:80px;top:520px;text-align:center}
+.v-centre .titre{font-size:96px}
+.v-centre .texte{font-size:38px;margin:30px auto 0;max-width:900px}
+.v-centre .ligne-compte{flex-direction:column;gap:28px;margin-top:44px}
+.v-centre .compte{font-size:170px}
+.v-centre .depuis{margin-top:36px;font-size:28px}
+.v-centre .conseil{margin:52px auto 0}
+.v-centre .petit{font-size:28px}
+.v-centre + .note{left:180px;top:910px;width:720px}
+.v-depuis{position:absolute;left:0;right:0;top:1190px;text-align:center;font-size:28px}
+/* Bandeau des soutiens entre la caméra et le jeu : écrit à la main, sur la couleur du cadre. */
+.bandeau{position:absolute;left:0;right:0;height:60px;display:flex;align-items:center;gap:16px;padding:0 40px;background:var(--cadre);color:var(--cadre-texte);font-family:'Kalam',cursive}
+.bandeau .soutiens-titre{font:700 26px/1 'Kalam';color:var(--cadre-texte)}
+.bandeau [data-soutiens]{flex:1;min-width:0;height:100%;font:400 28px/1 'Kalam';color:var(--cadre-texte)}
 .bandeau:has(.soutiens-vide) .soutiens-titre{display:none}
-/* Annonce du moment, live Gaming seulement (demande du client, 2026-10-13) : sous les soutiens en « pile » (600–672, le
-   jeu commence à 672 ; OBS pose cette page sous la caméra et le jeu), sous le jeu en « plein ». Toujours au-dessus des
-   commentaires TikTok (~1300 px). À retirer quand elle n'a plus lieu d'être. */
-.annonce{position:absolute;left:0;right:0;height:72px;display:flex;align-items:center;justify-content:center;padding:0 40px;background:rgba(7,6,15,.8);font:700 34px/1 'Inter';color:var(--texte);white-space:nowrap}
-.annonce b{color:var(--cyan)}
-html:not([data-seance="gaming"]) .annonce{display:none}
-.etiquette-vue{position:absolute;right:32px;top:170px;padding:12px 18px;background:rgba(7,6,15,.72);font:700 22px/1 'Inter';letter-spacing:.16em;text-transform:uppercase}
-.v-fin{position:absolute;left:80px;right:80px;top:750px}
-.v-fin .titre{font-size:76px;margin-top:20px}
-.v-fin small{display:block;font:700 18px/1 'Inter';letter-spacing:.2em;text-transform:uppercase;color:var(--texte-2)}
-.v-fin .merci{margin-top:36px}
-.v-fin .merci [data-soutiens]{margin-top:14px;height:160px;font-size:28px}
+.v-marque{position:absolute;left:0;right:0;text-align:center;font:800 54px/1 'Bricolage Titre'}
+.etiquette-vue{position:absolute;right:32px;top:170px;padding:14px 20px;border-radius:12px;background:var(--panneau);font:700 26px/1 'Bricolage'}
+.v-fin{position:absolute;left:80px;right:80px;top:740px}
+.v-fin .titre{font-size:64px}
+.v-fin .liste-merci{margin-top:30px}
+.v-fin .liste-merci [data-soutiens]{height:110px;font-size:30px}
 .v-fin .prochain{margin-top:30px}
-.v-fin .prochain div{font:700 34px/1.25 'Inter';margin-top:12px}
-.v-fin .aussi{margin-top:22px;font:400 24px/1.3 'Inter';color:var(--texte-2)}
-.v-fin .aussi b{color:var(--texte);font-weight:700}
+.v-fin .prochain div{font-size:34px}
+.v-fin .aussi{margin-top:20px;font:400 26px/1.3 'Bricolage';color:var(--texte-2)}
+.v-fin .aussi b{color:var(--texte)}
 </style></head><body><div id="scene">
 
 <section data-vues="demarrage pause pause-bebe souci fin pile plein creation"><div class="fond"></div></section>
-
-<section data-vues="demarrage pause pause-bebe souci"><div class="marque v-marque">LATSHOW</div></section>
+<section data-vues="demarrage"><div class="photo" data-photo="demarrage"></div></section>
+<section data-vues="pause souci"><div class="photo" data-photo="pause"></div></section>
+<section data-vues="pause-bebe"><div class="photo" data-photo="pause-enfant"></div></section>
+<section data-vues="fin"><div class="photo" data-photo="fin"></div></section>
+<section data-vues="demarrage pause pause-bebe souci fin"><div class="v-voile"></div></section>
+<section data-vues="demarrage pause pause-bebe souci"><div class="v-signe moustache"></div></section>
 
 <section data-vues="demarrage"><div class="v-centre">
-  <div class="surtitre" data-genre>Live gaming</div>
-  <div class="titre">Ça commence</div>
-  <div class="texte" data-si><span>Au programme : </span><b data-live="titre"></b></div>
-  <div class="compte chiffres" data-compte data-fini="J’arrive">05:00</div>
-</div><div class="v-barre"><i data-compte-barre></i></div></section>
+  <div class="mot" data-texte="demarrage-mot"></div>
+  <div class="titre" data-texte="demarrage-titre"></div>
+  <div class="texte" data-si>Ce soir : <b data-live="titre"></b></div>
+  <div class="ligne-compte"><div class="compte" data-compte data-fini="J’arrive">05:00</div><div class="chrono"><div class="moustache"></div><div class="plein"><div class="moustache"></div></div></div></div>
+  <div class="petit" data-coucher hidden>Jusqu’à <b data-coucher-heure></b> environ. Après, dodo.</div>
+</div></section>
 
 <section data-vues="pause"><div class="v-centre">
-  <div class="surtitre">Pause</div><div class="titre">Petite pause</div>
-  <div class="texte">Je prends un café et je reviens. Le chat reste ouvert, profitez-en.</div>
-  <div class="depuis">En pause depuis <span class="chiffres" data-depuis>00:00</span></div>
+  <div class="mot" data-texte="pause-mot"></div>
+  <div class="titre">Pause café</div>
+  <div class="texte" data-texte="pause-texte"></div>
+  <div class="depuis">En pause depuis <b data-depuis>00:00</b></div>
+  <div class="conseil"><small>Le conseil du papa</small><p data-conseil></p></div>
 </div></section>
 
 <section data-vues="pause-bebe"><div class="v-centre">
-  <div class="surtitre">Pause</div><div class="titre">Pause bébé</div>
-  <div class="texte">Le petit a besoin de moi. Je reviens très vite, restez dans le coin.</div>
-  <div class="depuis">En pause depuis <span class="chiffres" data-depuis>00:00</span></div>
-</div></section>
+  <div class="mot">Le petit m’appelle.</div>
+  <div class="titre">Pause papa</div>
+  <div class="texte" data-texte="enfant-texte"></div>
+</div><div class="note"><small>En ce moment :</small><b data-statut>mission papa en cours</b></div>
+<div class="depuis v-depuis">En pause depuis <b data-depuis>00:00</b></div></section>
 
 <section data-vues="souci"><div class="v-centre">
-  <div class="surtitre">Un instant</div><div class="titre">Souci technique</div>
-  <div class="texte">Je règle ça. Ne bougez pas, on revient tout de suite.</div>
-  <div class="depuis">Depuis <span class="chiffres" data-depuis>00:00</span></div>
+  <div class="mot">Même les papas ont des bugs.</div>
+  <div class="titre">Petit souci</div>
+  <div class="texte">Le PC fait des siennes. Je règle ça, ne bouge pas.</div>
+  <div class="depuis">Depuis <b data-depuis>00:00</b></div>
 </div></section>
 
 <!-- Fin : la caméra occupe le haut (0–700 px, posée par OBS) ; dessous, merci et soutiens du live, avant les commentaires. -->
-<section data-vues="fin"><div class="cadre" style="left:0;top:0;width:1080px;height:700px"></div><div class="v-fin">
-  <div class="surtitre">Fin du live</div><div class="titre">Merci d’être passé</div>
-  <div class="merci"><small>Merci à vous</small><div data-soutiens="liste" data-vide="Un follow, un abonnement : ton pseudo s'affiche ici au prochain live."></div></div>
-  <div class="prochain"><small>Prochain live</small><div data-live="prochain" data-defaut="Suis la chaîne pour ne pas le rater."></div></div>
+<section data-vues="fin"><div class="v-fin">
+  <div class="mot" data-texte="fin-mot"></div>
+  <div class="titre" data-texte="fin-titre"></div>
+  <div class="liste-merci"><span class="etiquette">Merci à vous</span><div data-soutiens="liste" data-vide="Un follow, un abonnement : ton pseudo s’écrit ici au prochain live."></div></div>
+  <div class="prochain"><span class="etiquette" data-texte="fin-prochain">Prochain live</span><div data-live="prochain" data-defaut="Suis la chaîne pour ne pas le rater."></div></div>
   <div class="aussi">Aussi en live sur <b>Twitch</b> latshow et <b>YouTube</b> @Latshow-y</div>
 </div></section>
 
-<!-- Caméra en haut (0–540), jeu ou fenêtre dessous (672–1410, 4:3 élargi), posés par OBS ; entre les deux, la bannière du
-     jeu (banniere-jeu.css, 2026-10-30 : nom et logo du jeu choisi dans le cockpit, score automatique pour Valorant ou au
-     Stream Deck) puis les soutiens du live. -->
+<!-- Caméra en haut (0–540), jeu ou fenêtre dessous (672–1410), posés par OBS ; entre les deux, la bannière du jeu
+     (banniere-jeu.css, 2026-10-30) puis les soutiens du live. -->
 <section data-vues="pile"><div class="banniere" data-jeu-entree>
   <div class="b-pan"><div class="b-symbole"></div></div>
   <div class="b-titre"><span class="b-nom" data-jeu-nom></span><span class="b-nom-image"></span></div>
   <div class="b-score"><span class="b-cote moi"><small>Moi</small><b data-score="moi"></b></span><span class="b-tiret">–</span><span class="b-cote adv"><b data-score="adv"></b><small>Adv.</small></span></div>
   <div class="b-detail" data-jeu-detail></div>
 </div>
-<div class="bandeau sous-banniere"><span class="soutiens-titre">Merci</span><div data-soutiens="defile" data-vide="Un follow et ton pseudo s'affiche ici"></div></div>
-<!--  <div class="annonce" style="top:600px"><span>Nouveau serveur <b>Valblock</b>&nbsp;: venez le tester&nbsp;!</span></div>-->
+<div class="bandeau sous-banniere"><span class="soutiens-titre">Merci</span><div data-soutiens="defile" data-vide="Un follow, et ton pseudo s’écrit ici"></div></div>
 </section>
 
 <!-- Jeu sans caméra : la marque, les soutiens, puis le jeu entier (16:9, 500–1108 px, posé par OBS). -->
-<section data-vues="plein"><div class="marque v-marque" style="top:340px">LATSHOW</div><div class="bandeau" style="top:440px"><span class="soutiens-titre">Merci</span><div data-soutiens="defile" data-vide="Un follow et ton pseudo s'affiche ici"></div></div>
-<!--  <div class="annonce" style="top:1140px"><span>Nouveau serveur <b>Valblock</b>&nbsp;: venez le tester&nbsp;!</span></div>-->
-</section>
+<section data-vues="plein"><div class="v-marque" style="top:350px">Latshow</div><div class="bandeau" style="top:440px"><span class="soutiens-titre">Merci</span><div data-soutiens="defile" data-vide="Un follow, et ton pseudo s’écrit ici"></div></div></section>
 
 <!-- Création de jeu (live Roblox, 2026-11-05) : Roblox Studio en haut (150–758), la caméra au milieu (806–1258), BRYX
      Forge en bas (1270–1878), posés par OBS ; entre Studio et la caméra, les soutiens du live. -->
-<section data-vues="creation"><div class="bandeau" style="top:758px;height:48px"><span class="soutiens-titre">Merci</span><div data-soutiens="defile" data-vide="Un follow et ton pseudo s'affiche ici"></div></div></section>
+<section data-vues="creation"><div class="bandeau" style="top:758px;height:48px"><span class="soutiens-titre">Merci</span><div data-soutiens="defile" data-vide="Un follow, et ton pseudo s’écrit ici"></div></div></section>
 
-<!-- Discussion : la caméra en plein écran (posée par OBS) ; juste le mot, sans forme à côté. -->
-<section data-vues="discussion"><div class="etiquette-vue">Discussion</div></section>
+<!-- Discussion : la caméra en plein écran (posée par OBS) ; juste le mot. -->
+<section data-vues="discussion"><div class="etiquette-vue">On discute</div></section>
 
-</div><script>
-// Gaming ou montage : surtitre de l'écran de démarrage.
-document.addEventListener('live', () => {
-  const montage = document.documentElement.dataset.seance === 'montage';
-  document.querySelectorAll('[data-genre]').forEach((el) => { el.textContent = montage ? 'Live montage' : 'Live gaming'; });
-});
-</script></body></html>
+</div></body></html>

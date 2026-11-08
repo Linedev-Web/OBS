@@ -1,22 +1,20 @@
 <!doctype html><html lang="fr"><head><meta charset="utf-8"><title>Création de jeu</title>
-<link rel="stylesheet" href="latshow.css"><script src="../commun/scene.js"></script><script src="../commun/soutiens.js"></script>
-<style>.entete{position:absolute;left:32px;top:30px;display:flex;align-items:baseline;gap:28px}.entete .m{font:400 30px/1 'Russo One';letter-spacing:.04em}.entete .t{font:700 26px/1 'Inter';color:var(--texte-2)}.entete .t b{color:var(--texte)}
-.merci{position:absolute;left:32px;top:840px;width:1856px;height:44px;display:flex;align-items:center;gap:14px;padding:0 16px;background:rgba(7,6,15,.78)}
-.merci [data-soutiens]{flex:1;min-width:0;height:100%;font-size:20px}
-.merci:has(.soutiens-vide) .soutiens-titre{display:none}</style></head><body><div id="scene">
+<link rel="stylesheet" href="latshow.css"><script src="../commun/scene.js"></script><script src="../commun/soutiens.js"></script><script src="../commun/papa.js"></script></head><body><div id="scene">
 <!-- Live Roblox, Création de jeu (2026-11-05) : Roblox Studio (creation.studio 32,84,1248,702), caméra (camera.creation
-     1312,84,576,324) et BRYX Forge (creation.forge 1312,432,576,354) posés par-dessus dans OBS ; ici le fond, les cadres,
-     le nom de chaque écran et les soutiens du live. -->
+     1312,84,576,324) et BRYX Forge (creation.forge 1312,432,576,354) posés par OBS ; ici le fond, les passe-partout, le nom
+     de chaque écran et les soutiens du live. Habillage « papa », l'atelier (2026-11-08). -->
 <div class="fond"></div>
-<div class="entete"><span class="m">LATSHOW</span><span class="t">Création de jeu<span data-si> · <b data-live="titre"></b></span></span></div>
-<div class="zone" style="left:32px;top:84px;width:1248px;height:702px;background:#000"></div>
-<div class="cadre" style="left:30px;top:82px;width:1252px;height:706px"></div>
+<div class="entete" style="left:32px;top:30px"><span class="m">Latshow</span><span class="t">Création de jeu<span data-si> : <b data-live="titre"></b></span></span></div>
+<div class="autocollant moustache" style="left:1788px;top:34px;transform:none"></div>
+<div class="passe" style="left:26px;top:78px;width:1260px;height:714px"></div>
+<div class="zone" style="left:32px;top:84px;width:1248px;height:702px"></div>
+<div class="passe" style="left:1306px;top:78px;width:588px;height:336px"></div>
 <div class="zone" style="left:1312px;top:84px;width:576px;height:324px"></div>
-<div class="cadre" style="left:1310px;top:82px;width:580px;height:328px"></div>
-<div class="zone" style="left:1312px;top:432px;width:576px;height:354px;background:#000"></div>
-<div class="cadre" style="left:1310px;top:430px;width:580px;height:358px"></div>
-<div class="zone-titre" style="left:32px;top:804px">Roblox Studio</div>
-<div class="zone-titre" style="left:1312px;top:804px">BRYX Forge</div>
-<div class="merci"><span class="soutiens-titre">Merci</span><div data-soutiens="defile" data-vide="Un follow et ton pseudo s'affiche ici"></div></div>
-<div class="pied" style="left:32px;bottom:72px"><span><b>LATSHOW</b> sur Twitch et YouTube</span><span>Pose ta question dans le chat</span></div>
+<div class="passe" style="left:1306px;top:426px;width:588px;height:366px"></div>
+<div class="zone" style="left:1312px;top:432px;width:576px;height:354px"></div>
+<div class="zone-nom" style="left:32px;top:806px">Roblox Studio</div>
+<div class="zone-nom" style="left:1312px;top:806px">BRYX Forge</div>
+<div class="merci" style="left:26px;top:846px;width:1868px;height:54px;border-radius:12px;background:var(--accent)"><span class="soutiens-titre">Merci</span><div data-soutiens="defile" data-vide="Un follow, et ton pseudo s’écrit ici"></div></div>
+<div class="appel" style="position:absolute;left:32px;top:938px">Viens tester le jeu avec moi : le lien est dans le chat.</div>
+<div class="pied" style="left:32px;top:1000px"><span><b>Latshow</b> sur Twitch et YouTube</span></div>
 </div></body></html>

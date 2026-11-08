@@ -1,17 +1,15 @@
 <!doctype html><html lang="fr"><head><meta charset="utf-8"><title>Face à face</title>
-<link rel="stylesheet" href="latshow.css"><script src="../commun/scene.js"></script><script src="../commun/soutiens.js"></script>
-<style>.entete{position:absolute;left:64px;top:64px;display:flex;align-items:baseline;gap:28px}.entete .m{font:400 30px/1 'Russo One';letter-spacing:.04em}.entete .t{font:700 26px/1 'Inter';color:var(--texte-2)}.entete .t b{color:var(--texte)}
-.merci{position:absolute;left:64px;top:744px;width:1792px;height:44px;display:flex;align-items:center;gap:14px;padding:0 16px;background:rgba(7,6,15,.78)}
-.merci [data-soutiens]{flex:1;min-width:0;height:100%;font-size:20px}
-.merci:has(.soutiens-vide) .soutiens-titre{display:none}</style></head><body><div id="scene">
+<link rel="stylesheet" href="latshow.css"><script src="../commun/scene.js"></script><script src="../commun/soutiens.js"></script><script src="../commun/papa.js"></script></head><body><div id="scene">
 <!-- Live Roblox (2026-11-03) : caméra (camera.cote 64,176,832,468) et écran du moment (capture.cote 960,176,896,504)
-     posés par-dessus dans OBS ; ici le fond, les cadres et les soutiens du live. -->
+     posés par OBS ; ici le fond, les passe-partout, les soutiens du live. Habillage « papa » (2026-11-08). -->
 <div class="fond"></div>
-<div class="entete"><span class="m">LATSHOW</span><span class="t">Face à face<span data-si> · <b data-live="titre"></b></span></span></div>
+<div class="entete" style="left:64px;top:58px"><span class="m">Latshow</span><span class="t">Face à face<span data-si> : <b data-live="titre"></b></span></span></div>
+<div class="autocollant moustache" style="left:1746px;top:66px;width:110px;transform:none"></div>
+<div class="passe" style="left:58px;top:170px;width:844px;height:480px"></div>
 <div class="zone" style="left:64px;top:176px;width:832px;height:468px"></div>
-<div class="cadre" style="left:62px;top:174px;width:836px;height:472px"></div>
-<div class="zone" style="left:960px;top:176px;width:896px;height:504px;background:#000"></div>
-<div class="cadre" style="left:958px;top:174px;width:900px;height:508px"></div>
-<div class="merci"><span class="soutiens-titre">Merci</span><div data-soutiens="defile" data-vide="Un follow et ton pseudo s'affiche ici"></div></div>
-<div class="pied" style="left:64px;bottom:120px"><span><b>LATSHOW</b> sur Twitch et YouTube</span><span>Pose ta question dans le chat</span></div>
+<div class="passe" style="left:954px;top:170px;width:908px;height:516px"></div>
+<div class="zone" style="left:960px;top:176px;width:896px;height:504px"></div>
+<div class="merci" style="left:58px;top:730px;width:1804px;height:56px;border-radius:12px;background:var(--cadre)"><span class="soutiens-titre">Merci</span><div data-soutiens="defile" data-vide="Un follow, et ton pseudo s’écrit ici"></div></div>
+<div class="appel" style="position:absolute;left:64px;top:834px">Pose ta question dans le chat, je réponds à tout.</div>
+<div class="pied" style="left:64px;top:900px"><span><b>Latshow</b> sur Twitch et YouTube</span></div>
 </div></body></html>

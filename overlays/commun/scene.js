@@ -69,6 +69,8 @@
     const reste = attente - (Date.now() - debut);
     document.querySelectorAll('[data-compte]').forEach(el => { el.textContent = reste > 0 ? minSec(reste) : el.dataset.fini || '00:00'; });
     document.querySelectorAll('[data-compte-barre]').forEach(el => { el.style.transform = 'scaleX(' + Math.min(1, (Date.now() - debut) / attente) + ')'; });
+    // La moustache du compte à rebours (habillage « papa », commun/papa.css) se remplit avec cette variable.
+    document.documentElement.style.setProperty('--progression', Math.min(1, (Date.now() - debut) / attente).toFixed(4));
     document.querySelectorAll('[data-depuis]').forEach(el => { el.textContent = minSec(Date.now() - debut); });
     document.documentElement.classList.toggle('compte-fini', reste <= 0);
   }

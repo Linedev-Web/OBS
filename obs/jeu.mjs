@@ -10,6 +10,9 @@
 //   node obs/jeu.mjs               service local http://127.0.0.1:21311 (lancé par OBS, obs/soutiens.lua)
 //   node obs/jeu.mjs --presence    la partie de Valorant lue dans le client Riot (--brut : la présence entière)
 //
+// Pause enfant (habillage « papa », 2026-11-08) : le Stream Deck dit où en est le papa (/papa/enfant?statut=histoire|eau|
+// calin|dort, ou aucun) ; l'écran Pause bébé l'écrit sur son petit mot (overlays/commun/papa.js).
+//
 // Écrit overlays/jeu.js (relu par overlays/commun/jeu.js) et obs/jeu-session.json, non versionnés.
 import fs from 'node:fs';
 import http from 'node:http';
@@ -61,7 +64,9 @@ const SANS_SCORE_EQUIPE = new Set(['deathmatch']);
 
 // ---------- État ----------
 
-const etatVide = () => ({ titre: '', choix: null, score: { moi: 0, adv: 0 }, scoreManuel: false, scoreVisible: false, valorant: null });
+const etatVide = () => ({ titre: '', choix: null, score: { moi: 0, adv: 0 }, scoreManuel: false, scoreVisible: false, valorant: null, enfant: null });
+/** Ce que le Stream Deck peut dire pendant la pause enfant (le texte affiché est dans overlays/commun/papa.js). */
+export const STATUTS_ENFANT = ['histoire', 'eau', 'calin', 'dort'];
 function lireEtat() {
   try { return { ...etatVide(), ...JSON.parse(fs.readFileSync(SESSION, 'utf8')) }; } catch { return etatVide(); }
 }
@@ -85,6 +90,7 @@ export function pourLesEcrans(e = etat) {
     score,
     source: score ? (auto ? 'auto' : 'manuel') : null,
     detail: v?.enPartie ? [v.carte, v.mode].filter(Boolean).join(' · ') : '',
+    enfant: e.enfant ?? null,
   };
 }
 
@@ -136,6 +142,13 @@ export function commander(chemin, params) {
     case '/jeu/cockpit':
       etat = { ...etat, choix: null };
       break;
+    case '/papa/enfant': {
+      const statut = params.get('statut');
+      if (statut === 'aucun') { etat = { ...etat, enfant: null }; break; }
+      if (!STATUTS_ENFANT.includes(statut)) return null;
+      etat = { ...etat, enfant: { statut, depuis: Date.now() } };
+      break;
+    }
     default:
       return null;
   }

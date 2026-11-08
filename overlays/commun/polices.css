@@ -2,3 +2,11 @@
 @font-face{font-family:'Russo One';src:url('polices/russo-one-400.ttf') format('truetype');font-weight:400;font-display:block}
 @font-face{font-family:'Archivo Black';src:url('polices/archivo-black-400.woff2') format('woff2');font-weight:400;font-display:block}
 @font-face{font-family:'JetBrains Mono';src:url('polices/jetbrains-mono-400.woff2') format('woff2');font-weight:100 800;font-display:block}
+/* Habillage « papa » (2026-11-08) : Bricolage Grotesque (texte en taille optique 14, titres en 96) et Kalam pour les petits
+   mots écrits à la main. TTF statiques, OFL : les mêmes fichiers servent à la story Instagram du cockpit (next/og). */
+@font-face{font-family:'Bricolage';src:url('polices/bricolage-texte-400.ttf') format('truetype');font-weight:400;font-display:block}
+@font-face{font-family:'Bricolage';src:url('polices/bricolage-texte-500.ttf') format('truetype');font-weight:500 600;font-display:block}
+@font-face{font-family:'Bricolage';src:url('polices/bricolage-texte-700.ttf') format('truetype');font-weight:700;font-display:block}
+@font-face{font-family:'Bricolage Titre';src:url('polices/bricolage-titre-800.ttf') format('truetype');font-weight:800;font-display:block}
+@font-face{font-family:'Kalam';src:url('polices/kalam-400.ttf') format('truetype');font-weight:400;font-display:block}
+@font-face{font-family:'Kalam';src:url('polices/kalam-700.ttf') format('truetype');font-weight:700;font-display:block}

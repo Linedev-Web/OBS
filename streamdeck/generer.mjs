@@ -57,6 +57,21 @@ function action(uuid, nom, plugin, settings, images, etat = 0) {
 const retour = (m) => action('com.elgato.streamdeck.profile.backtoparent', null, null, {}, [icone(`retour-${m}`, { m, t: 'Retour', f: 'rond' })]);
 const dossier = (m, id, texte, cible, p = '') => action('com.elgato.streamdeck.profile.openchild', null, null, { ProfileUUID: cible.toLowerCase() }, [icone(id, { m, t: texte, f: 'triangle', p })]);
 const site = (m, id, texte, url) => action('com.elgato.streamdeck.system.website', null, null, { openInBrowser: true, path: url }, [icone(id, { m, t: texte, f: 'carre' })]);
+// Appel en arrière-plan d'un service local (comme les touches du dossier « Jeu ») : aucun navigateur ne s'ouvre.
+const appel = (m, id, texte, url, p = '') => action('com.elgato.streamdeck.system.website', null, null, { openInBrowser: false, path: url }, [icone(id, { m, t: texte, f: 'carre', p })]);
+// Pause enfant (habillage « papa », 2026-11-08) : le petit mot de l'écran Pause bébé dit où en est le papa (obs/jeu.mjs).
+const ENFANT = 'http://127.0.0.1:21311/papa/enfant?statut=';
+function pageEnfant() {
+  const m = 'latshow';
+  return {
+    '0,0': retour(m),
+    '1,0': appel(m, 'enfant-histoire', 'Une\nhistoire', `${ENFANT}histoire`, 'la dernière'),
+    '2,0': appel(m, 'enfant-eau', 'Verre\nd’eau', `${ENFANT}eau`),
+    '3,0': appel(m, 'enfant-calin', 'Câlin', `${ENFANT}calin`),
+    '4,0': appel(m, 'enfant-dort', 'Il dort !', `${ENFANT}dort`),
+    '0,1': appel(m, 'enfant-aucun', 'Effacer', `${ENFANT}aucun`, 'le petit mot'),
+  };
+}
 // Script PowerShell de ce dossier, sans fenêtre (conhost --headless : ni console ni Terminal qui clignote).
 // L'action « Ouvrir » prend le programme entre guillemets, puis ses arguments.
 const commande = (m, id, texte, p, script) => action('com.elgato.streamdeck.system.open', null, null,
@@ -119,7 +134,7 @@ function pagePlateau(plateau) {
   };
 }
 
-const PAGES = { racine: uuidDe('racine'), gaming: uuidDe('gaming'), montage: uuidDe('montage'), dev: uuidDe('dev'), roblox: uuidDe('roblox'), plateau: uuidDe('plateau') };
+const PAGES = { racine: uuidDe('racine'), gaming: uuidDe('gaming'), montage: uuidDe('montage'), dev: uuidDe('dev'), roblox: uuidDe('roblox'), plateau: uuidDe('plateau'), enfant: uuidDe('enfant') };
 function construire() {
   const pages = { [PAGES.racine]: {
     '0,0': retour('latshow'),
@@ -136,7 +151,9 @@ function construire() {
     // 1,2 : dossier « Jeu » (bannière et score du jeu, posé hors de ce script et gardé à la régénération).
     '2,2': dossier('latshow', 'dossier-roblox', 'Roblox', PAGES.roblox, 'Twitch + YT'),
     '3,2': charger('latshow', conf.seances.find((s) => s.id === 'roblox'), 'Charger\nRoblox'),
+    '4,2': dossier('latshow', 'dossier-enfant', 'Pause\nenfant', PAGES.enfant, 'le petit mot'),
   } };
+  pages[PAGES.enfant] = pageEnfant();
   for (const s of conf.seances) pages[PAGES[s.id]] = s.ecrans ? pageRoblox(s) : pageSeance(s);
   if (conf.plateau) pages[PAGES.plateau] = pagePlateau(conf.plateau);
   return pages;

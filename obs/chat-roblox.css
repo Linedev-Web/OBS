@@ -1,0 +1,12 @@
+/* Chat du live Roblox, l'atelier (page dock.html de Social Stream Ninja, CSS posé dans la source OBS par obs/generer.mjs,
+   choisi par obs/chat.mjs avant celui de la marque). Habillage « papa » (2026-11-08) : Bricolage Grotesque, pseudo jaune,
+   texte clair, sur le panneau bleu que dessine la page de la scène. Mêmes règles que chat-latshow.css. */
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@14,400;14,700&display=swap');
+#menu,#context-menu{display:none!important}
+html,body,#output{background:transparent!important}
+#output{left:0!important;right:0!important;width:auto!important;box-sizing:border-box!important;padding:0 14px 12px!important}
+.highlight-chat{background:transparent!important;border:0!important;box-shadow:none!important;padding:3px 0!important;margin:0!important}
+.hl-message{display:block!important;font:400 14px/1.4 'Bricolage Grotesque',sans-serif!important;color:#FFF8EC!important;text-shadow:none!important;-webkit-text-stroke:0!important;letter-spacing:0!important;text-indent:0!important;padding:0!important;margin:0!important;overflow:visible!important}
+.hl-source-type{width:12px!important;height:12px!important;vertical-align:-2px!important;margin:0 6px 0 0!important;opacity:.85}
+.hl-name{display:inline!important;font:700 14px/1.4 'Bricolage Grotesque',sans-serif!important;color:#FFC83D!important;margin-right:6px!important;text-shadow:none!important;-webkit-text-stroke:0!important}
+.hl-content{display:inline!important;font:400 14px/1.4 'Bricolage Grotesque',sans-serif!important;color:#FFF8EC!important;text-shadow:none!important;-webkit-text-stroke:0!important}

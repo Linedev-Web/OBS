@@ -1,0 +1,111 @@
+/* Habillage « papa » des lives (validé par le client le 2026-11-08, planche https://claude.ai/artifact/2Ru62tHEhgJFjuATUknyaX).
+   Le client : « je suis plus du style papa qui joue quand il peut et qui aime partager son expérience ». Sa signature : la
+   moustache guidon (commun/moustache.svg, posée en SVG par papa.js dans chaque .moustache). Trois ambiances, choisies par la
+   séance (scene.js écrit data-seance sur <html>) : gaming et montage = le salon du soir, dev = le bureau du matin,
+   roblox = l'atelier. Règles : docs/CHARTE_LIVE.md (aucune forme décorative à côté d'un texte). */
+@import url('base.css');
+
+:root,[data-seance=gaming],[data-seance=montage]{
+  --fond:#1F1712;--surface:#2E2219;--panneau:rgba(46,34,25,.92);--ecran:#120D0A;
+  --texte:#FFF3E3;--texte-2:rgba(255,243,227,.74);--accent:#F4A33A;--piste:rgba(255,243,227,.2);
+  --cadre:#FFF3E3;--cadre-texte:#1F1712;--note:#FFF3E3;--note-texte:#1F1712;--note-2:#7A5A44;
+  --voile:31,23,18;--v1:.93;--v2:.8;--v3:.3;--v4:.12;--vf:.6}
+[data-seance=dev]{
+  --fond:#F6F0E4;--surface:#FBF8F1;--panneau:rgba(251,248,241,.94);--ecran:#1E1B16;
+  --texte:#1E1B16;--texte-2:#5E574C;--accent:#D9431D;--piste:rgba(30,27,22,.14);
+  --cadre:#1E1B16;--cadre-texte:#FBF8F1;--note:#FFFDF7;--note-texte:#1E1B16;--note-2:#8A6F55;
+  --voile:246,240,228;--v1:.96;--v2:.88;--v3:.36;--v4:.1;--vf:.74}
+[data-seance=roblox]{
+  --fond:#16324D;--surface:#1D3D5C;--panneau:rgba(29,61,92,.92);--ecran:#0E1A26;
+  --texte:#FFF8EC;--texte-2:rgba(255,248,236,.78);--accent:#FFC83D;--piste:rgba(255,248,236,.2);
+  --cadre:#FFF8EC;--cadre-texte:#16324D;--note:#FFC83D;--note-texte:#16324D;--note-2:#3A4F66;
+  --voile:22,50,77;--v1:.94;--v2:.82;--v3:.3;--v4:.1;--vf:.62}
+
+body{color:var(--texte);font-family:'Bricolage',sans-serif}
+b{font-weight:700}
+
+/* Fond : la couleur de l'ambiance, puis une photo tirée au hasard (papa.js, liste ../fonds.js) sous un voile qui garde le
+   texte lisible à gauche. Une seule couleur d'accent par écran. */
+.fond{position:absolute;inset:0;background:var(--fond)}
+.photo{position:absolute;inset:0;background:center/cover no-repeat;opacity:0;transition:opacity 1.2s ease}
+.photo.vue{opacity:1}
+.voile{position:absolute;inset:0;background:linear-gradient(90deg,rgba(var(--voile),var(--v1)) 0%,rgba(var(--voile),var(--v2)) 38%,rgba(var(--voile),var(--v3)) 70%,rgba(var(--voile),var(--v4)) 100%)}
+.voile.fin{background:linear-gradient(90deg,rgba(var(--voile),var(--v1)) 0%,rgba(var(--voile),.86) 45%,rgba(var(--voile),var(--vf)) 100%)}
+
+/* La moustache : un logo seul, jamais une puce devant un texte. */
+.moustache{display:block}
+.moustache svg{display:block;width:100%;height:auto}
+.signe{position:absolute;left:120px;top:100px;width:150px;color:var(--texte)}
+.autocollant{position:absolute;width:100px;color:var(--accent);transform:rotate(8deg)}
+
+/* Bloc de texte des écrans d'attente. Deux tailles de titre au plus : le titre et le compte à rebours. */
+.bloc{position:absolute;left:120px;top:262px;width:1180px}
+.mot{font:400 42px/1.1 'Kalam',cursive;color:var(--accent)}
+.titre{font:800 120px/.95 'Bricolage Titre','Bricolage',sans-serif;letter-spacing:-.015em;margin-top:16px}
+.texte{font:400 34px/1.4 'Bricolage';color:var(--texte-2);margin-top:30px;max-width:1100px}
+.texte b{color:var(--texte)}
+.petit{font:400 26px/1.3 'Bricolage';color:var(--texte-2);margin-top:26px}
+.petit b{color:var(--texte)}
+.depuis{font:400 26px/1 'Bricolage';color:var(--texte-2);margin-top:30px}
+.depuis b{color:var(--texte);font-variant-numeric:tabular-nums}
+
+/* Compte à rebours : les chiffres, et la moustache qui se remplit (--progression, posée par scene.js). À zéro, elle frise. */
+.ligne-compte{display:flex;align-items:center;gap:44px;margin-top:40px}
+.compte{font:700 140px/1 'Bricolage';letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.compte-fini .compte{color:var(--accent)}
+.chrono{position:relative;width:300px;height:68px;flex:none;color:var(--piste)}
+.chrono .moustache{width:300px}
+.chrono .plein{position:absolute;left:0;top:0;height:100%;overflow:hidden;width:calc(var(--progression,0) * 300px);color:var(--accent)}
+.compte-fini .chrono{animation:frise 1.4s ease-in-out both}
+@keyframes frise{0%{transform:none}30%{transform:scale(1.14) rotate(-4deg)}60%{transform:scale(1.06) rotate(3deg)}100%{transform:none}}
+
+/* Le conseil du papa : change toutes les 20 s (papa.js). */
+.conseil{margin-top:84px;max-width:900px}
+.conseil small{display:block;font:700 24px/1 'Bricolage';color:var(--texte-2)}
+.conseil p{font:500 34px/1.3 'Bricolage';margin-top:12px;transition:opacity .6s ease}
+.conseil p.cache{opacity:0}
+
+/* Le petit mot de la pause enfant, comme un papier posé sur la table. */
+.note{position:absolute;left:128px;top:640px;width:600px;padding:30px 38px 34px;background:var(--note);color:var(--note-texte);
+  transform:rotate(-2deg);box-shadow:0 14px 34px rgba(0,0,0,.3);font-family:'Kalam',cursive}
+.note small{display:block;font-size:30px;line-height:1.2;color:var(--note-2)}
+.note b{display:block;font-size:50px;line-height:1.15}
+
+/* Cadres : la caméra et les captures sont posées par OBS au-dessus de la page ; le passe-partout dépasse de 6 px. */
+.passe{position:absolute;border-radius:16px;background:var(--cadre)}
+.zone{position:absolute;background:var(--ecran)}
+.chat-zone{position:absolute;border-radius:16px;background:var(--panneau)}
+.chat-titre,.zone-nom{position:absolute;font:700 22px/1 'Bricolage';color:var(--texte-2)}
+.entete{position:absolute;display:flex;align-items:baseline;gap:26px;white-space:nowrap}
+.entete .m{font:800 36px/1 'Bricolage Titre','Bricolage'}
+.entete .t{font:400 28px/1 'Bricolage';color:var(--texte-2)}
+.entete .t b{color:var(--texte)}
+.pied{position:absolute;left:120px;top:982px;display:flex;gap:44px;font:400 22px/1.2 'Bricolage';color:var(--texte-2)}
+.pied b{color:var(--texte)}
+.appel{font:400 40px/1.1 'Kalam',cursive;color:var(--accent)}
+
+/* Soutiens du live (commun/soutiens.js) : dans la bande du cadre caméra, écrits à la main. */
+.merci{position:absolute;display:flex;align-items:center;gap:12px;padding:0 20px;color:var(--cadre-texte);font-family:'Kalam',cursive}
+.merci .soutiens-titre{font:700 24px/1 'Kalam';flex:none}
+.merci [data-soutiens]{flex:1;min-width:0;height:100%;font:400 24px/1 'Kalam'}
+.merci:has(.soutiens-vide) .soutiens-titre{display:none}
+[data-soutiens]{font-family:'Bricolage';color:var(--texte)}
+.merci [data-soutiens]{color:var(--cadre-texte)}
+.soutiens-titre{font:700 22px/1 'Bricolage';color:var(--texte-2)}
+
+/* Écrans de fin : prochain live, merci, où me retrouver. */
+.etiquette{display:block;font:700 22px/1 'Bricolage';color:var(--texte-2)}
+.prochain{margin-top:44px}
+.prochain div{font:700 36px/1.2 'Bricolage';margin-top:10px;max-width:1040px}
+.liste-merci{margin-top:40px}
+.liste-merci [data-soutiens]{margin-top:12px;height:120px;font:600 28px/1.25 'Bricolage'}
+.chaines{position:absolute;left:1240px;top:672px;width:576px}
+.chaines ul{list-style:none;display:grid;grid-template-columns:180px minmax(0,1fr);row-gap:10px;margin-top:16px;font:400 25px/1.2 'Bricolage'}
+.chaines li{display:contents}
+.chaines span{color:var(--texte-2)}
+
+/* Entrée douce, une fois (la page est rechargée à chaque affichage de la scène). */
+.bloc,.signe,.pied,.note{opacity:0;transition:opacity .9s ease,translate .9s ease;translate:0 12px}
+.pret .bloc,.pret .signe,.pret .pied,.pret .note{opacity:1;translate:0 0}
+.pret .pied,.pret .note{transition-delay:.25s}
+[hidden]{display:none!important}

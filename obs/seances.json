@@ -295,7 +295,7 @@
           "nom": "Démarrage",
           "touche": "Ctrl+Alt+F1",
           "overlay": "latshow/demarrage.html",
-          "musique": "latshow/demarrage",
+          "musique": "roblox/demarrage",
           "chat": true,
           "role": "Écran d'attente avec compte à rebours."
         },
@@ -372,7 +372,7 @@
           "nom": "Pause",
           "touche": "Ctrl+Alt+F5",
           "overlay": "latshow/pause.html",
-          "musique": "latshow/pause",
+          "musique": "roblox/pause",
           "chat": true,
           "micro_coupe": true,
           "role": "Pause café, micro coupé."
@@ -382,7 +382,7 @@
           "nom": "Pause bébé",
           "touche": "Ctrl+Alt+F6",
           "overlay": "latshow/pause-bebe.html",
-          "musique": "latshow/bebe",
+          "musique": "roblox/bebe",
           "chat": true,
           "micro_coupe": true,
           "role": "Micro coupé automatiquement."
@@ -392,7 +392,7 @@
           "nom": "Souci technique",
           "touche": "Ctrl+Alt+F7",
           "overlay": "latshow/souci.html",
-          "musique": "latshow/pause",
+          "musique": "roblox/pause",
           "micro_coupe": true,
           "role": "On cache tout le temps de régler."
         },
@@ -401,7 +401,7 @@
           "nom": "Fin",
           "touche": "Ctrl+Alt+F8",
           "overlay": "latshow/fin.html",
-          "musique": "latshow/fin",
+          "musique": "roblox/fin",
           "camera": "fin",
           "role": "Merci, prochain live, raid."
         }
