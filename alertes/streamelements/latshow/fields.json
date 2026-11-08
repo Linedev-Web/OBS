@@ -157,12 +157,6 @@
     "value": "",
     "group": "Son"
   },
-  "avatar": {
-    "type": "image-input",
-    "label": "Sticker (ta photo)",
-    "value": "",
-    "group": "Apparence"
-  },
   "son_follow": {
     "type": "sound-input",
     "label": "Jingle — Follow",

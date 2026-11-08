@@ -12,6 +12,8 @@
       apercu.html                      boutons pour déclencher chaque alerte, comme en live
       apercu.html?planche=latshow      toutes les alertes figées sur une planche (captures de contrôle)
       apercu.html?planche=linedev
+      apercu.html?plein=latshow&plateforme=twitch   la scène seule, en 1920 × 1080 (captures) ; dans la console :
+                                       alerte('follower-latest', { name: 'Mika' }) puis figer(0.8) pour arrêter l'image à 0,8 s
 -->
 <style>
   body { margin: 0; background: #1b1a22; color: #eee; font: 14px/1.4 system-ui, sans-serif; }
@@ -21,8 +23,9 @@
   .cadre-apercu { width: 960px; height: 540px; overflow: hidden; margin: 0 16px 16px; }
   .planche { padding: 16px; display: grid; gap: 10px; }
   .planche h2 { margin: 6px 0 0; font: 600 13px/1 system-ui; color: #aaa; text-transform: uppercase; letter-spacing: .1em; }
-  .vignette { width: 960px; height: 150px; overflow: hidden; border-radius: 4px; }
-  .vignette iframe { width: 1920px; height: 300px; border: 0; transform: scale(.5); transform-origin: 0 0; }
+  .vignette { width: 960px; height: 280px; overflow: hidden; border-radius: 4px; }
+  .vignette iframe { width: 1920px; height: 560px; border: 0; transform: scale(.5); transform-origin: 0 0; }
+  .plein { position: fixed; left: 0; top: 0; width: 1920px; height: 1080px; border: 0; }
 </style>
 </head>
 <body>
@@ -167,8 +170,25 @@ async function interactif() {
   await monter();
 }
 
-const marquePlanche = new URLSearchParams(location.search).get('planche');
-(marquePlanche ? planche(marquePlanche) : interactif()).catch((erreur) => {
+// La scène seule, à taille réelle, pilotée depuis la console ou un script de capture.
+async function plein(marque, plateforme) {
+  const w = await chargerWidget(marque);
+  const scene = document.createElement('iframe');
+  scene.className = 'plein';
+  document.body.append(scene);
+  await new Promise((pret) => { scene.onload = pret; scene.srcdoc = documentWidget(w, { marque, plateforme, reglages: { filtrer: false } }); });
+  await new Promise((pret) => { const t = setInterval(() => { if (scene.contentWindow.envoyer) { clearInterval(t); pret(); } }, 20); });
+  window.alerte = (listener, event) => scene.contentWindow.envoyer({ listener, event });
+  // Fige toutes les animations de l'alerte en cours à t secondes de son début.
+  window.figer = (t) => scene.contentDocument.getAnimations().forEach((a) => { a.pause(); a.currentTime = t * 1000; });
+  window.pret = true;
+}
+
+const params = new URLSearchParams(location.search);
+const marquePlanche = params.get('planche');
+const marquePlein = params.get('plein');
+(marquePlein ? plein(marquePlein, params.get('plateforme') || 'twitch')
+  : marquePlanche ? planche(marquePlanche) : interactif()).catch((erreur) => {
   document.body.textContent = `Erreur : ${erreur.message} (ouvrir cette page par un serveur local, voir l'en-tête du fichier).`;
 });
 </script>

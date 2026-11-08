@@ -1,13 +1,23 @@
 # Alertes StreamElements — Latshow et linedev
 
-Deux « Custom widgets » StreamElements, un par marque, selon `docs\CHARTE_LIVE.md` : un bandeau sobre en haut au centre
-de l'écran (loin de la caméra en bas à droite et du centre du jeu), une alerte à la fois, dans l'ordre d'arrivée, aucune
-perdue, tout en français.
+Deux « Custom widgets » StreamElements, un par marque, selon `docs\CHARTE_LIVE.md` : en haut au centre de l'écran (loin
+de la caméra en bas à droite et du centre du jeu), une alerte à la fois, dans l'ordre d'arrivée, aucune perdue, tout en
+français.
+
+**v3 « papa » (2026-11-08)**, après la refonte des écrans validée par le client (« un papa qui joue quand il peut et qui
+aime partager », sa moustache guidon pour signature) : une plaque arrondie (titre en Bricolage Grotesque 800, pseudo en
+couleur d'accent, ce qui se passe, message) sur laquelle la **moustache** atterrit comme un autocollant. Elle saute,
+s'écrase en atterrissant (légère secousse), **frise d'un coup** (pointes qui s'enroulent, forme animée par la propriété CSS
+`d`), puis rebondit doucement ; une bulle de BD en Kalam parle dans la voix du client (« Merci Mika, la moustache te
+salue ! », le pseudo seulement s'il fait 14 caractères au plus). Un geste de plus selon l'alerte : elle frise deux fois
+(abonnements), tourne comme une pièce (dons, Super Chat), se fait chatouiller (bits, likes TikTok), refait un saut sur le
+« dong » (raid). Les grands moments (cadeau, Super Chat, raid) inversent la plaque. Le son part à 0,35 s : sa note forte
+tombe quand la moustache frise. Ni néon, ni halo, ni particule, ni forme décorative à côté d'un texte.
 
 | Dossier | Comptes StreamElements | Style |
 |---|---|---|
-| `latshow\` | Twitch latshow, YouTube Latshow | nuit `#0F0E1A`, pseudo en Russo One capitales, trait cyan |
-| `linedev\` | YouTube linedev | carte papier, gouttière de numéros de ligne, pseudo en Archivo Black souligné vermillon |
+| `latshow\` | Twitch latshow, YouTube Latshow | plaque `#1F1712`, titre crème `#FFF3E3`, pseudo et moustache ambre `#F4A33A`, bulle crème ; grands moments : plaque ambre, moustache brune |
+| `linedev\` | YouTube linedev | plaque papier `#F6F0E4`, encre `#1E1B16`, pseudo et moustache vermillon `#D9431D`, bulle papier clair ; grands moments : plaque vermillon, moustache encre |
 
 `widget.js` est **le même fichier** dans les deux dossiers (vérifier avec `cmp latshow\widget.js linedev\widget.js`) : une
 correction se fait dans l'un puis se recopie dans l'autre.
@@ -69,13 +79,42 @@ abandonné au bout de 0,8 s pour ne jamais bloquer la file.
 ## Polices
 
 Un widget StreamElements ne voit pas les fichiers du PC : les polices viennent de Google Fonts (`@import` en tête de
-`widget.css` : Russo One et Inter ; Archivo Black et JetBrains Mono). C'est la seule exception à la règle « tout en local »
-de la charte ; si Google Fonts ne répond pas, le texte s'affiche dans la police système, l'alerte part quand même.
+`widget.css` : Bricolage Grotesque 400/500/700/800 et Kalam 400/700, les deux marques). C'est la seule exception à la
+règle « tout en local » de la charte ; `widget.js` les charge dès l'ouverture du widget (sinon la première alerte
+attendrait Google Fonts, texte invisible) ; s'il ne répond pas, le texte s'affiche dans la police système, l'alerte part
+quand même. Les pages TikTok, elles, déclarent les polices locales (`overlays\commun\polices\`), qui passent avant.
+
+## Sons (v3 « papa »)
+
+Sons courts et doux, faits maison en synthèse (kalimba, ukulélé, pièce dans la tirelire, sonnette, clochettes…, -16 LUFS,
+rien sous 150 Hz) : `alertes\sons\composer_sons_papa.py`, fichiers dans `alertes\sons\_propositions_papa\` (non
+versionnés, réglages dans son `catalogue.json`). Table type d'alerte → son : `alertes\sons\sons-papa.json` (bloc
+`streamelements` pour les widgets, `tiktok` pour les pages TikTok, `remplace` : quel nouveau son prend la place de chacun
+des 14 anciens jingles). Les anciens jingles (`alertes\sons\*.mp3`) restent en place tant que les nouveaux ne sont pas en
+ligne. Une fois les sons déposés sur le CDN de StreamElements, leurs adresses vont dans `sons-papa.json` (« cdn »), puis
+`node alertes/streamelements/poser-sons.mjs --ecrire` les pose dans `fields.json` et `data.json` des deux marques (sans
+`--ecrire` : simulation ; rien n'est écrit tant qu'une adresse manque).
+
+## Mettre la v3 en ligne
+
+Par l'API StreamElements depuis le tableau de bord, dans la session du client (jamais par copier-coller), pour chacun des
+trois overlays (Latshow — Alertes sur Twitch latshow et sur YouTube Latshow, linedev — Alertes sur YouTube linedev) :
+
+1. déposer les 14 sons de `sons-papa.json` (blocs `streamelements`) dans la médiathèque StreamElements, noter leurs
+   adresses `https://cdn.streamelements.com/uploads/….mp3` dans « cdn », puis `poser-sons.mjs --ecrire` ;
+2. dans le widget « Custom » de chaque overlay, remplacer HTML, CSS, JS et FIELDS par `widget.html`, `widget.css`,
+   `widget.js`, `fields.json` du dossier de la marque, et fusionner `data.json` dans les réglages du widget (champs
+   `son_*` ; le champ `avatar` de la v2 n'existe plus, il peut rester sans effet) ; garder la plateforme réglée
+   (Twitch / YouTube) ;
+3. bouton « Tester toutes les alertes », puis **Save** ; recharger la source « Alertes » d'OBS hors live.
 
 ## Vérifier sans StreamElements
 
-- Mécanique (file, ordre, aucune perte, « passer », cadeaux groupés, textes, devise, bouton Tester) :
-  `node test-widget.mjs` (Node 24, sans dépendance) → « widget.js : 5 scénarios OK ».
+- Mécanique (file, ordre, aucune perte, « passer », cadeaux groupés, textes, devise, bouton Tester, soutiens, bulle qui
+  cite le pseudo) : `node test-widget.mjs` (Node 24, sans dépendance) → « widget.js : 7 scénarios OK ».
+- Image par image : `apercu.html?plein=latshow&plateforme=twitch` (ou `linedev&plateforme=youtube`) montre la scène seule
+  en 1920 × 1080 ; dans la console, `alerte('follower-latest', { name: 'Mika' })` puis `figer(0.62)` arrête toutes les
+  animations à 0,62 s (la moustache frisée). Captures de contrôle de la v3 : 0,3 s, 0,62 s et 1,6 s par type.
 - Rendu : depuis ce dossier, `python -m http.server 8765`, puis `http://localhost:8765/apercu.html` (boutons pour
   déclencher chaque alerte, comme en live) ou `apercu.html?planche=latshow` / `?planche=linedev` (toutes les alertes
   figées sur une planche, fond de jeu ou d'éditeur). La page charge les fichiers du widget tels quels et simule

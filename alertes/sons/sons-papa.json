@@ -1,0 +1,66 @@
+{
+  "_note": "Sons « papa » des alertes (2026-11-08) : quel son joue pour chaque type d'alerte du moteur (widget.js, champ son_<type>). Les fichiers sont dans _propositions_papa\\ (refaits par composer_sons_papa.py, réglages dans son catalogue.json). Lu par alertes\\tiktok\\generer.mjs (pages TikTok locales) et alertes\\streamelements\\poser-sons.mjs (widgets StreamElements, une fois les sons déposés sur le CDN : adresses dans « cdn »).",
+  "dossier": "_propositions_papa",
+  "streamelements": {
+    "latshow": {
+      "follow": "follow",
+      "abonne": "yt-abonne",
+      "sub": "abonnement",
+      "resub": "resub",
+      "gift": "gift",
+      "membre": "yt-membre",
+      "tip": "don",
+      "superchat": "superchat",
+      "cheer": "bits",
+      "raid": "raid"
+    },
+    "linedev": {
+      "follow": "",
+      "abonne": "linedev-abonne",
+      "sub": "",
+      "resub": "",
+      "gift": "linedev-membre",
+      "membre": "linedev-membre",
+      "tip": "linedev-tip",
+      "superchat": "linedev-superchat",
+      "cheer": "",
+      "raid": ""
+    }
+  },
+  "tiktok": {
+    "latshow": {
+      "follow": "follow",
+      "sub": "abonnement",
+      "resub": "resub",
+      "tip": "don",
+      "raid": "superchat",
+      "cheer": "bits"
+    },
+    "linedev": {
+      "follow": "linedev-abonne",
+      "sub": "linedev-membre",
+      "resub": "linedev-membre",
+      "tip": "linedev-tip",
+      "raid": "linedev-superchat",
+      "cheer": "bits"
+    }
+  },
+  "remplace": {
+    "follow.mp3": "follow",
+    "sub.mp3": "abonnement",
+    "resub.mp3": "resub",
+    "gift.mp3": "gift",
+    "tip.mp3": "don",
+    "cheer.mp3": "bits",
+    "raid.mp3": "raid",
+    "yt-abonne.mp3": "yt-abonne",
+    "yt-membre.mp3": "yt-membre",
+    "superchat.mp3": "superchat",
+    "linedev-abonne.mp3": "linedev-abonne",
+    "linedev-membre.mp3": "linedev-membre",
+    "linedev-tip.mp3": "linedev-tip",
+    "linedev-superchat.mp3": "linedev-superchat"
+  },
+  "_note_tiktok": "TikTok n'a pas de raid : le moteur y prend le type « raid » pour un gros cadeau (1 000 diamants et plus), d'où la poignée de pièces du Super Chat ; « cheer » y sert aux paliers de likes (clochettes).",
+  "cdn": {}
+}

@@ -2,7 +2,7 @@
 // Alertes TikTok (Latshow / linedev) — demande du client, 2026-10-08 : les mêmes alertes que sur Twitch et YouTube,
 // dans l'image verticale envoyée à TikTok. TikFinity (application de bureau) lit le live TikTok et rediffuse chaque
 // événement sur ws://127.0.0.1:21213 ; ce fichier les traduit en alertes et les donne au moteur des alertes
-// StreamElements (../streamelements/latshow/widget.js : même file d'attente, mêmes animations, mêmes jingles).
+// StreamElements (../streamelements/latshow/widget.js : même file d'attente, mêmes animations ; sons : ../sons/sons-papa.json).
 //
 // Paramètres de la page : ?port=21213 (autre port), ?essai=1 (joue des événements d'exemple, sans TikFinity).
 // Tout texte venu des spectateurs passe par textContent dans le moteur : jamais d'innerHTML.
@@ -13,17 +13,18 @@ const TIKTOK = {
   palierLikes: 1000,    // une alerte tous les 1 000 likes du live, pas à chaque like
   reconnexionMs: 3000,  // TikFinity fermé ou relancé : on retente sans fin
 };
+// Bulles « papa » (2026-11-08) : {nom} = le pseudo, seulement s'il est court (voir choisirBulle dans widget.js).
 const BULLES_TIKTOK = {
-  cadeau: ['Merci !', 'Ça fait plaisir', 'Tu régales !'],
-  gros: ['ÉNORME, merci !', 'Je n’en reviens pas', 'Légende.'],
-  likes: ['Ça chauffe !', 'Continuez !', 'Le live s’enflamme'],
+  cadeau: ['Merci {nom}, la moustache te salue !', 'Tu régales, {nom} !', 'Ça fait plaisir !'],
+  gros: ['La moustache en tremble !', '{nom}, t’es une légende', 'Je n’en reviens pas !'],
+  likes: ['Ça chauffe !', 'Continuez, ça frise !', 'Merci tout le monde !'],
 };
 
 // TikFinity donne l'utilisateur à plat (nickname, uniqueId…) ou dans data.user selon la version : on lit les deux.
 function utilisateurTikTok(d) {
   const u = d.user || {};
   const photo = d.profilePictureUrl || u.profilePictureUrl || (u.profilePicture && Array.isArray(u.profilePicture.url) ? u.profilePicture.url[0] : '');
-  return { nom: pseudo(d.nickname || u.nickname || d.uniqueId || u.uniqueId) || 'Quelqu’un', photo: photo || undefined };
+  return { nom: pseudo(d.nickname || u.nickname || d.uniqueId || u.uniqueId) || ANONYME, photo: photo || undefined };
 }
 
 function cadeauTikTok(d) {
@@ -67,7 +68,8 @@ function alerteTikTok(evenement, etat) {
       const palier = Math.floor((Number(d.totalLikeCount) || 0) / TIKTOK.palierLikes);
       if (palier < 1 || palier <= etat.palierLikes) return null;
       etat.palierLikes = palier;
-      return { cle: 'follow', titre: 'Likes !', bulles: BULLES_TIKTOK.likes, type: 'Likes', nom: `${entier(palier * TIKTOK.palierLikes)} likes`, detail: `merci ${u.nom} et tout le monde !`, image: u.photo };
+      // type « cheer » : clochettes et moustache chatouillée, comme une pluie de bits
+      return { cle: 'cheer', titre: 'Likes !', bulles: BULLES_TIKTOK.likes, type: 'Likes', nom: `${entier(palier * TIKTOK.palierLikes)} likes`, detail: `merci ${u.nom} et tout le monde !`, image: u.photo };
     }
     default:
       return null; // commentaires, arrivées, partages, configuration de TikFinity : pas d'alerte

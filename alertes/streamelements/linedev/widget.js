@@ -5,31 +5,38 @@
 // jamais d'innerHTML, donc aucun HTML ni script injecté ne peut s'exécuter.
 
 const SORTIE_MS = 420;          // durée de l'animation de sortie (widget.css, .sortie)
-// v2 (2026-10-07) : titre, bulle de BD drôle, sticker et jingle propres à chaque type d'alerte.
+const SON_DELAI_MS = 350;       // le son part quand la moustache atterrit : sa note forte tombe quand elle frise (0,48 s)
+// v3 « papa » (2026-11-08) : titre, bulle de BD dans la voix du client, geste de la moustache et son propres à chaque
+// type d'alerte (v2 du 2026-10-07 : même mécanique, style « gaming »).
 const TITRES = {
-  follow: 'Nouveau follow', abonne: 'Nouvel abonné', sub: 'Abonnement', resub: 'Réabonnement', gift: 'Cadeau !',
-  membre: 'Nouveau membre', tip: 'Don !', superchat: 'Super Chat', cheer: 'Bits !', raid: 'Raid !',
+  follow: 'Nouveau follow !', abonne: 'Nouvel abonné !', sub: 'Abonnement !', resub: 'Réabonnement !', gift: 'Cadeau !',
+  membre: 'Nouveau membre !', tip: 'Dans la tirelire !', superchat: 'Super Chat !', cheer: 'Des bits !', raid: 'Ding dong, un raid !',
 };
+// {nom} : le pseudo, seulement s'il est court (NOM_BULLE_MAX) ; chaque liste garde au moins une bulle sans {nom}.
 const BULLES = {
-  follow: ['Bienvenue dans la team !', 'Un de plus, on est bien', 'Installe-toi !'],
-  abonne: ['Bienvenue sur la chaîne !', 'Un de plus, on est bien', 'Installe-toi !'],
-  sub: ['T’es un boss.', 'Merci, vraiment !', 'La classe absolue'],
-  resub: ['Fidèle au poste !', 'Respect.', 'Toujours là, merci !'],
-  gift: ['Quelle générosité !', 'Le Père Noël est là', 'Merci pour eux !'],
-  membre: ['La classe !', 'Bienvenue au club', 'Merci, vraiment !'],
-  tip: ['Merci, vraiment !', 'Tu régales !', 'Ça fait chaud au cœur'],
-  superchat: ['Merci !!', 'Tu régales !', 'Énorme, merci'],
-  cheer: ['Ça pique… merci !', 'Pluie de bits !', 'Merci !'],
-  raid: ['Bienvenue à tous !', 'La horde arrive', 'Installez-vous !'],
+  follow: ['Merci {nom}, la moustache te salue !', 'Bienvenue {nom}, fais comme chez toi', 'Installe-toi, y a du café', 'La moustache te salue !'],
+  abonne: ['Merci {nom}, la moustache te salue !', 'Bienvenue à la maison, {nom}', 'Un de plus à table !'],
+  sub: ['{nom}, la moustache frise de joie !', 'Merci {nom}, t’es un amour', 'Ça, c’est du soutien !'],
+  resub: ['{nom}, toujours fidèle au poste !', 'Encore là ? Je t’adore.', 'La moustache se souvient de toi'],
+  gift: ['{nom} régale toute la tablée !', 'C’est Noël avant l’heure !', 'Merci pour les copains !'],
+  membre: ['Bienvenue au club, {nom} !', 'La moustache t’adoube', 'Merci, vraiment !'],
+  tip: ['Merci {nom}, ça paiera les couches !', 'La tirelire te dit merci !', 'Le café de demain, c’est toi'],
+  superchat: ['Merci {nom}, ça paiera les couches !', 'La moustache en tremble !', 'Énorme, merci !'],
+  cheer: ['Merci {nom}, ça chatouille !', 'Pluie de bits, la moustache frise !', 'Ça chatouille, merci !'],
+  raid: ['Entrez, entrez ! Essuyez vos pieds', 'Chut, les petits dorment !', 'Bienvenue {nom} et toute la bande !'],
 };
 const BULLES_DEV = {
-  abonne: ['Bienvenue dans le cours !', 'git commit -m "merci"', 'Un dev de plus !'],
-  membre: ['Tu fais partie du code', 'npm install soutien', 'Merci, vraiment !'],
-  tip: ['Ça compile !', 'Le café est offert', 'Merci, vraiment !'],
-  superchat: ['Ça compile !', 'Énorme, merci', 'Merci !!'],
+  abonne: ['Merci {nom}, la moustache te salue !', 'Un dev de plus à la maison !', 'Bienvenue dans le cours, {nom}'],
+  membre: ['Bienvenue au club, {nom} !', 'Ça compile du premier coup !', 'Merci, vraiment !'],
+  gift: ['{nom} régale toute la classe !', 'C’est Noël avant l’heure !', 'Merci pour les copains !'],
+  tip: ['Merci {nom}, le café est offert !', 'Ça compile du premier coup !', 'La tasse te dit merci !'],
+  superchat: ['Merci {nom}, le café est offert !', 'La moustache en tremble !', 'Énorme, merci !'],
 };
-const COULEURS_ECLAT = ['var(--couleur)', '#FFFFFF', 'var(--couleur)', '#A855F7', '#22D3EE'];
-const AVATAR_DEFAUT = 'https://static-cdn.jtvnw.net/jtv_user_pictures/40408b0c-5cdc-4c32-b698-dc2e8a6de3bf-profile_image-600x600.png';
+const TITRES_DEV = { tip: 'Pour le café !' };
+const NOM_BULLE_MAX = 14;      // au-delà, la bulle ne cite pas le pseudo (elle tiendrait sur trois lignes)
+const ANONYME = 'Quelqu’un';
+// Polices chargées dès l'ouverture : sinon la première alerte attend Google Fonts, texte invisible (display=block).
+const POLICES = ['800 84px "Bricolage Grotesque"', '500 34px "Bricolage Grotesque"', '400 26px "Bricolage Grotesque"', '700 32px "Kalam"'];
 const PSEUDO_MAX = 25;          // caractères ; au-delà, coupé avec « … »
 const FILTRE_DELAI_MS = 800;    // le filtre de grossièretés de StreamElements ne doit jamais bloquer la file
 const CHEERMOTES = /(^|\s)(cheer|biblethump|cheerwhal|corgo|uni|showlove|party|seemsgood|pride|kappa|frankerz|heyguys|dansgame|elegiggle|trihard|kreygasm|4head|swiftrage|notlikethis|failfish|vohiyo|pjsalt|mrdestructoid|bday|ripcheer|shamrock|streamlabs|muxy|doodlecheer|anon)\d+(?=\s|$)/gi;
@@ -39,7 +46,6 @@ let reglages = {};
 let devise = 'EUR';
 let plateforme = 'twitch';
 let sonCoupe = false;
-let numeroLigne = 12;           // linedev : numéro de la première ligne de la carte (gouttière)
 const file = [];
 let enCours = null;
 
@@ -52,8 +58,14 @@ window.addEventListener('onWidgetLoad', (obj) => {
   if (reglages.devise && String(reglages.devise).trim()) devise = String(reglages.devise).trim().toUpperCase();
   plateforme = choisirPlateforme(reglages.plateforme, d.channel);
   document.documentElement.style.setProperty('--haut', `${nombre('haut', 40)}px`);
+  prechargerPolices();
   envoyerSession(d.session);
 });
+
+function prechargerPolices() {
+  if (!document.fonts || typeof document.fonts.load !== 'function') return;
+  for (const police of POLICES) document.fonts.load(police).catch(() => {});
+}
 
 window.addEventListener('onEventReceived', (obj) => {
   const d = (obj && obj.detail) || {};
@@ -126,7 +138,7 @@ function mois(n) { return n > 1 ? ` · ${n} mois` : ''; }
 // ---------- Événement → alerte ----------
 
 function construire(ecouteur, e) {
-  const nom = pseudo(e.displayName || e.name) || 'Quelqu’un';
+  const nom = pseudo(e.displayName || e.name) || ANONYME;
   const montant = Number(e.amount) || 0;
   switch (ecouteur) {
     case 'follower-latest':
@@ -229,11 +241,11 @@ function abonnementTwitch(e, nom, montant) {
   if (!actif('afficherSub')) return null;
   if (e.isCommunityGift || e.playedAsCommunityGift) return null; // déjà annoncé par le cadeau groupé
   if (e.bulkGifted) {
-    const offrant = pseudo(e.sender || e.name) || 'Quelqu’un';
+    const offrant = pseudo(e.sender || e.name) || ANONYME;
     return { type: 'Abonnements offerts', nom: offrant, detail: montant > 1 ? `offre ${entier(montant)} abonnements` : 'offre un abonnement' };
   }
   if (e.gifted) {
-    const offrant = pseudo(e.sender) || 'Quelqu’un';
+    const offrant = pseudo(e.sender) || ANONYME;
     return { type: 'Abonnement offert', nom: offrant, detail: `offre un abonnement à ${nom}` };
   }
   const niveau = NIVEAUX[String(e.tier)] ? ` · ${NIVEAUX[String(e.tier)]}` : '';
@@ -244,11 +256,11 @@ function membreYoutube(e, nom, montant) {
   if (!actif('afficherMembre')) return null;
   if (e.isCommunityGift || e.playedAsCommunityGift) return null;
   if (e.bulkGifted) {
-    const offrant = pseudo(e.sender || e.name) || 'Quelqu’un';
+    const offrant = pseudo(e.sender || e.name) || ANONYME;
     return { type: 'Adhésions offertes', nom: offrant, detail: montant > 1 ? `offre ${entier(montant)} adhésions` : 'offre une adhésion' };
   }
   if (e.gifted) {
-    const offrant = pseudo(e.sender) || 'Quelqu’un';
+    const offrant = pseudo(e.sender) || ANONYME;
     return { type: 'Adhésion offerte', nom: offrant, detail: `offre une adhésion à ${nom}` };
   }
   return { type: 'Membre', nom, detail: `devient membre${mois(montant)}`, message: nettoyerMessage(e.message, false) };
@@ -297,12 +309,13 @@ function afficher(alerte) {
     carte.classList.remove('sortie', 'entree', 'secoue');
     void carte.offsetWidth; // relance les animations CSS
     carte.classList.add('entree', 'secoue');
-    jouerSon(alerte.cle);
+    const son = setTimeout(() => jouerSon(alerte.cle), SON_DELAI_MS);
     let fini = false;
     const terminer = () => {
       if (fini) return;
       fini = true;
       clearTimeout(minuteur);
+      clearTimeout(son);
       carte.classList.remove('entree', 'secoue');
       carte.classList.add('sortie');
       setTimeout(() => {
@@ -333,21 +346,25 @@ function lettres(el, texte) {
   });
 }
 
-function eclat() {
-  const zone = $('eclat');
-  if (!zone) return;
-  zone.textContent = '';
-  for (let i = 0; i < 22; i++) {
-    const a = (i / 22) * Math.PI * 2 + Math.random() * 0.4;
-    const d = 260 + Math.random() * 360;
-    const g = document.createElement('i');
-    g.style.setProperty('--dx', `${Math.round(Math.cos(a) * d)}px`);
-    g.style.setProperty('--dy', `${Math.round(Math.sin(a) * d * 0.55)}px`);
-    g.style.setProperty('--r', `${Math.round(Math.random() * 360)}deg`);
-    g.style.setProperty('--t', `${10 + Math.round(Math.random() * 16)}px`);
-    g.style.setProperty('--c', COULEURS_ECLAT[i % COULEURS_ECLAT.length]);
-    zone.appendChild(g);
-  }
+// La bulle de BD, dans la voix du client : elle cite le pseudo quand il est court, jamais « Quelqu’un ».
+const estDev = () => Boolean(document.querySelector('[data-marque=linedev]'));
+
+function choisirBulle(alerte) {
+  const liste = alerte.bulles || (estDev() && BULLES_DEV[alerte.cle]) || BULLES[alerte.cle] || BULLES.follow;
+  const nom = String(alerte.nom || '');
+  const citable = nom && nom !== ANONYME && [...nom].length <= NOM_BULLE_MAX;
+  const sansNom = liste.filter((b) => !b.includes('{nom}'));
+  const choix = citable || !sansNom.length ? liste : sansNom;
+  return typo(choix[Math.floor(Math.random() * choix.length)]).replace('{nom}', nom);
+}
+
+// Espace fine insécable avant « ! ? ; : » (le « ! » ne part jamais seul à la ligne). Nos textes seulement, pas ceux des spectateurs.
+function typo(texte) { return String(texte).replace(/ ([!?;:])/g, ' $1'); }
+
+// « : 5,00 € » (dons, Super Chat, bits) se lit sous le pseudo : « t’offre 5,00 € ».
+function texteDetail(detail) {
+  const d = String(detail || '');
+  return d.startsWith(':') ? `t’offre ${d.slice(1).trim()}` : d;
 }
 
 function remplir(alerte) {
@@ -355,17 +372,17 @@ function remplir(alerte) {
   [...carte.classList].filter((c) => c.startsWith('theme-')).forEach((c) => carte.classList.remove(c));
   carte.classList.add(`theme-${alerte.cle || 'follow'}`);
   // titre, bulles et image propres à l'alerte (alertes TikTok : photo du spectateur, image du cadeau), sinon ceux du type
-  if ($('titre')) lettres($('titre'), alerte.titre || TITRES[alerte.cle] || alerte.type);
-  if ($('type')) $('type').textContent = alerte.type;
-  if ($('bulle')) { const dev = document.querySelector('[data-marque=linedev]'); const choix = alerte.bulles || (dev && BULLES_DEV[alerte.cle]) || BULLES[alerte.cle] || BULLES.follow; $('bulle').textContent = choix[Math.floor(Math.random() * choix.length)]; }
-  if ($('avatar')) $('avatar').src = alerte.image || (reglages.avatar && String(reglages.avatar).trim()) || AVATAR_DEFAUT;
-  eclat();
-  if ($('titre')) lettres($('pseudo'), alerte.nom); else $('pseudo').textContent = alerte.nom;
-  $('detail').textContent = alerte.detail;
+  lettres($('titre'), typo(alerte.titre || (estDev() && TITRES_DEV[alerte.cle]) || TITRES[alerte.cle] || alerte.type));
+  lettres($('pseudo'), alerte.nom);
+  $('detail').textContent = texteDetail(alerte.detail);
   $('message').textContent = alerte.message || '';
-  $('alerte').classList.toggle('avec-message', Boolean(alerte.message));
-  numeroLigne = numeroLigne >= 90 ? 12 : numeroLigne + 3;
-  $('alerte').style.setProperty('--debut', String(numeroLigne - 1));
+  carte.classList.toggle('avec-message', Boolean(alerte.message));
+  if ($('bulle')) $('bulle').textContent = choisirBulle(alerte);
+  const vignette = $('avatar');
+  if (vignette) {
+    vignette.hidden = !alerte.image;
+    if (alerte.image) vignette.src = alerte.image;
+  }
 }
 
 function jouerSon(cle) {

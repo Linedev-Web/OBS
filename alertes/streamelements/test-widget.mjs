@@ -176,4 +176,30 @@ const vider = async (env, ms) => { for (let i = 0; i < ms / 50; i++) { env.avanc
   assert.deepEqual(yt.soutiens.map((m) => `${m.plateforme}|${m.genre}|${m.nom}`), ['youtube|follow|Marie', 'youtube|abonnement|Paul']);
 }
 
-console.log('widget.js : 6 scénarios OK');
+// 7. v3 « papa » : la bulle cite un pseudo court, jamais un pseudo trop long ni « Quelqu’un » (et jamais « {nom} ») ;
+//    le montant d'un don se lit « t’offre 5,00 € » sous le pseudo (l'alerte elle-même garde « : 5,00 € »).
+{
+  const env = environnement();
+  env.charger({ duree: 3, entre: 0, filtrer: false }, 'twitch');
+  const bulle = async (listener, event) => {
+    env.envoyer(listener, event);
+    await vider(env, 200);
+    const texte = env.element('bulle').textContent;
+    await vider(env, 4000);
+    return texte;
+  };
+  env.envoyer('tip-latest', { name: 'Mika', amount: 5 });
+  await vider(env, 200);
+  assert.equal(env.element('detail').textContent.replace(/[  ]/g, ' '), 't’offre 5,00 €');
+  await vider(env, 4000);
+  for (let i = 0; i < 15; i++) {
+    const courte = await bulle('follower-latest', { name: 'Mika' });
+    const longue = await bulle('follower-latest', { name: 'UnPseudoVraimentTresTresLong' });
+    const anonyme = await bulle('raid-latest', { amount: 3 });
+    for (const b of [courte, longue, anonyme]) assert.ok(b && !b.includes('{nom}'), b);
+    assert.ok(!longue.includes('UnPseudo'), longue);
+    assert.ok(!anonyme.includes('Quelqu'), anonyme);
+  }
+}
+
+console.log('widget.js : 7 scénarios OK');

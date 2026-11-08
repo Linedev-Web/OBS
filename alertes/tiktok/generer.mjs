@@ -15,17 +15,24 @@ const SE = path.join(ICI, '..', 'streamelements');
 // en haut du jeu. linedev : sur la caméra, pour ne jamais cacher le code (essai du 2026-10-08 : sur le code, la plaque
 // sombre se confondait avec l'éditeur).
 const VERTICAL = { latshow: { haut: 600, echelle: 0.84 }, linedev: { haut: 110, echelle: 0.84 } };
-// Jingles maison (alertes/sons) par type d'alerte du moteur.
-const SONS = {
-  latshow: { follow: 'follow', sub: 'sub', resub: 'resub', tip: 'tip', raid: 'raid' },
-  linedev: { follow: 'linedev-abonne', sub: 'linedev-membre', resub: 'linedev-membre', tip: 'linedev-tip', raid: 'linedev-superchat' },
-};
+// Sons « papa » (2026-11-08) par type d'alerte du moteur : table de ../sons/sons-papa.json (bloc « tiktok »).
+const TABLE = JSON.parse(fs.readFileSync(path.join(ICI, '..', 'sons', 'sons-papa.json'), 'utf8'));
+// Polices en local (charte : un live ne dépend pas d'un CDN). Déclarées après widget.css, elles passent avant celles de
+// Google Fonts qu'il importe pour StreamElements : la page ne télécharge alors aucune police.
+const POLICES = [['Bricolage Grotesque', 400, 'bricolage-texte-400'], ['Bricolage Grotesque', 500, 'bricolage-texte-500'],
+  ['Bricolage Grotesque', 700, 'bricolage-texte-700'], ['Bricolage Grotesque', 800, 'bricolage-titre-800'],
+  ['Kalam', 400, 'kalam-400'], ['Kalam', 700, 'kalam-700']];
+const faces = POLICES.map(([famille, graisse, fichier]) => `  @font-face { font-family: '${famille}'; font-weight: ${graisse}; font-display: block; src: url('../../overlays/commun/polices/${fichier}.ttf') format('truetype'); }`).join('\n');
 
 for (const marque of ['latshow', 'linedev']) {
   const champs = JSON.parse(fs.readFileSync(path.join(SE, marque, 'fields.json'), 'utf8'));
   const reglages = Object.fromEntries(Object.entries(champs).filter(([cle, c]) => c.value !== undefined && !cle.startsWith('son')).map(([cle, c]) => [cle, c.value]));
   Object.assign(reglages, { haut: VERTICAL[marque].haut, filtrer: false });
-  for (const [cle, fichier] of Object.entries(SONS[marque])) reglages[`son_${cle}`] = `../sons/${fichier}.mp3`;
+  for (const [cle, son] of Object.entries(TABLE.tiktok[marque])) {
+    const fichier = path.join(ICI, '..', 'sons', TABLE.dossier, `${son}.mp3`);
+    if (!fs.existsSync(fichier)) throw new Error(`son introuvable : ${fichier} (alertes/sons/composer_sons_papa.py ${son})`);
+    reglages[`son_${cle}`] = `../sons/${TABLE.dossier}/${son}.mp3`;
+  }
 
   const balisage = fs.readFileSync(path.join(SE, marque, 'widget.html'), 'utf8').trim();
   const page = `<!doctype html>
@@ -33,6 +40,7 @@ for (const marque of ['latshow', 'linedev']) {
 <html lang="fr"><head><meta charset="utf-8"><title>Alertes TikTok — ${marque}</title>
 <link rel="stylesheet" href="../streamelements/${marque}/widget.css">
 <style>
+${faces}
   html, body { width: 1080px; height: 1920px; }
   .alerte { scale: ${VERTICAL[marque].echelle}; }
 </style>
