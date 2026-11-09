@@ -16,27 +16,42 @@
   const seance = () => document.documentElement.dataset.seance || 'gaming';
   const univers = () => UNIVERS[seance()] || 'gaming';
 
-  // Textes des pages latshow, dans la voix du client (tutoiement). « \n » : retour à la ligne ; « {cafes} » : le compteur.
-  // Montage et Roblox ne changent que ce qui diffère du gaming.
+  // Le soir ou la journée (demande du client, 2026-11-09) : « les petits dorment », « bonne nuit », « ce soir » seulement à
+  // partir de 19 h ; le midi, les enfants ne sont pas à la maison.
+  const HEURE_SOIR = 19;
+  const HEURE_MATIN = 5;
+  const MOMENT_FORCE = new URLSearchParams(location.search).get('moment'); // essai : ?moment=soir|jour
+  const moment = () => {
+    if (MOMENT_FORCE === 'soir' || MOMENT_FORCE === 'jour') return MOMENT_FORCE;
+    const h = new Date().getHours();
+    return h >= HEURE_SOIR || h < HEURE_MATIN ? 'soir' : 'jour';
+  };
+
+  // Textes des pages, dans la voix du client (tutoiement). « \n » : retour à la ligne ; « {cafes} » : le compteur ;
+  // { soir, jour } : selon l'heure. Montage et Roblox ne changent que ce qui diffère du gaming ; les pages linedev écrivent
+  // leurs textes en dur et ne prennent ici que ce qui dépend de l'heure.
   const TEXTES = {
     gaming: {
-      'demarrage-mot': 'Les petits dorment, on peut y aller.',
+      'demarrage-mot': { soir: 'Les petits dorment, on peut y aller.', jour: 'Un moment de libre, on en profite.' },
       'demarrage-titre': 'Installe-toi,\nj’arrive.',
       'demarrage-petit': '',
-      'pause-mot': 'Café n° {cafes} de la soirée.',
+      'ce-soir': { soir: 'Ce soir :', jour: 'Aujourd’hui :' },
+      'ce-soir-vu': { soir: 'Ce soir, on a vu :', jour: 'Aujourd’hui, on a vu :' },
+      'coucher-suite': { soir: ' environ. Après, dodo.', jour: ' environ.' },
+      'pause-mot': { soir: 'Café n° {cafes} de la soirée.', jour: 'Café n° {cafes} de la journée.' },
       'pause-texte': 'Je reviens dans cinq minutes.\nLe chat reste ouvert, discute avec les autres.',
       'enfant-texte': 'Je reviens vite. Garde-moi ma place au chaud.',
       'fin-mot': 'Merci d’être passé.',
-      'fin-titre': 'Bonne nuit\ntout le monde',
-      'fin-texte': 'Moi, je file me coucher : demain, réveil à 7 h.',
+      'fin-titre': { soir: 'Bonne nuit\ntout le monde', jour: 'Merci,\nà très vite' },
+      'fin-texte': { soir: 'Moi, je file me coucher : demain, réveil à 7 h.', jour: 'Je retourne à ma journée de papa.' },
       'fin-prochain': 'Prochain live',
       'pied': 'Un follow, ça me fait vraiment plaisir',
     },
     montage: {
-      'demarrage-mot': 'Les petits dorment, on monte une vidéo.',
+      'demarrage-mot': { soir: 'Les petits dorment, on monte une vidéo.', jour: 'Un moment de libre, on monte une vidéo.' },
     },
     roblox: {
-      'demarrage-mot': 'On construit un jeu ce soir.',
+      'demarrage-mot': { soir: 'On construit un jeu ce soir.', jour: 'On construit un jeu aujourd’hui.' },
       'demarrage-titre': 'L’atelier\nouvre.',
       'demarrage-petit': 'Le lien du jeu arrive dans le chat.',
       'pause-mot': 'Le serveur reste ouvert.',
@@ -124,11 +139,13 @@
   let texteSeance = null;
   function poserTextes() {
     const s = seance();
-    if (s === texteSeance) return;
-    texteSeance = s;
+    const quand = moment();
+    if (`${s}|${quand}` === texteSeance) return;
+    texteSeance = `${s}|${quand}`;
     const textes = { ...TEXTES.gaming, ...(TEXTES[univers()] || {}), ...(TEXTES[s] || {}) };
     document.querySelectorAll('[data-texte]').forEach((el) => {
-      const t = textes[el.dataset.texte];
+      const brut = textes[el.dataset.texte];
+      const t = brut && typeof brut === 'object' ? brut[quand] : brut;
       if (t === undefined) return;
       ecrire(el, t);
       el.hidden = t === '';
