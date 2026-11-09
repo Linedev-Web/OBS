@@ -41,9 +41,29 @@ function lire() {
 }
 let session = lire();
 
+// Journal du service (obs/soutiens.log, non versionné) et écriture qui ne le fait jamais tomber : sous Windows, le
+// remplacement échoue parfois pendant qu'OBS relit le fichier (même défaut que le service du jeu, tombé en live le
+// 2026-11-09).
+const JOURNAL = path.join(ICI, 'soutiens.log');
+const JOURNAL_MAX = 200_000;
+function journal(message) {
+  try {
+    if (fs.existsSync(JOURNAL) && fs.statSync(JOURNAL).size > JOURNAL_MAX) fs.renameSync(JOURNAL, `${JOURNAL}.ancien`);
+    fs.appendFileSync(JOURNAL, `${new Date().toISOString()} ${message}\n`);
+  } catch { /* journal indisponible : on continue */ }
+}
+process.on('uncaughtException', (erreur) => journal(`erreur : ${erreur.stack ?? erreur}`));
+process.on('unhandledRejection', (erreur) => journal(`erreur : ${erreur?.stack ?? erreur}`));
+const attendre = (ms) => Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, ms);
 function ecrireAtomique(fichier, texte) {
-  fs.writeFileSync(`${fichier}.tmp`, texte);
-  fs.renameSync(`${fichier}.tmp`, fichier);
+  try {
+    fs.writeFileSync(`${fichier}.tmp`, texte);
+    for (let essai = 1; essai <= 5; essai++) {
+      try { fs.renameSync(`${fichier}.tmp`, fichier); return; } catch { attendre(25); }
+    }
+    fs.writeFileSync(fichier, texte);
+    fs.rmSync(`${fichier}.tmp`, { force: true });
+  } catch (erreur) { journal(`écriture de ${path.basename(fichier)} impossible : ${erreur.message}`); }
 }
 function publier() {
   ecrireAtomique(SESSION, JSON.stringify(session, null, 2));
@@ -188,7 +208,8 @@ async function suivreObs() {
     surEvenement: (type, donnees) => {
       if (type === 'StreamStateChanged' && donnees?.outputState === 'OBS_WEBSOCKET_OUTPUT_STARTED') remettreAZero('le live démarre');
     },
-    surFermeture: () => setTimeout(suivreObs, RECONNEXION_MS),
+    // Les 2 minutes partent de la perte de la connexion, pas de la première connexion (corrigé le 2026-11-09).
+    surFermeture: () => { obsVuLe = Date.now(); journal('connexion à OBS perdue'); setTimeout(suivreObs, RECONNEXION_MS); },
   });
   if (obs) { obsVuLe = Date.now(); return; }
   if (Date.now() - obsVuLe > OBS_ABSENT_MAX_MS) { console.log('OBS est fermé : arrêt du service'); process.exit(0); }

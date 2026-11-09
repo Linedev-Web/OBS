@@ -45,3 +45,6 @@ overlays/soutiens.js
 # Bannière du jeu (obs/jeu.mjs) : jeu choisi et score du live en cours
 obs/jeu-session.json
 overlays/jeu.js
+# Journaux des deux services (2026-11-09)
+obs/jeu.log*
+obs/soutiens.log*

@@ -72,9 +72,35 @@ function lireEtat() {
 }
 let etat = lireEtat();
 
+// Journal du service (obs/jeu.log, non versionné) : il tourne caché, lancé par OBS ; sans trace, un arrêt passait inaperçu
+// (2026-11-09 : service tombé en plein live, bannière figée sur le jeu d'avant, touches du Stream Deck sans effet).
+const JOURNAL = path.join(ICI, 'jeu.log');
+const JOURNAL_MAX = 200_000;
+export function journal(message) {
+  try {
+    if (fs.existsSync(JOURNAL) && fs.statSync(JOURNAL).size > JOURNAL_MAX) fs.renameSync(JOURNAL, `${JOURNAL}.ancien`);
+    fs.appendFileSync(JOURNAL, `${new Date().toISOString()} ${message}\n`);
+  } catch { /* journal indisponible : on continue */ }
+}
+
+const ESSAIS_ECRITURE = 5;
+const PAUSE_ECRITURE_MS = 25;
+const attendre = (ms) => Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, ms);
+/** Écrit un fichier sans jamais faire tomber le service : sous Windows, le remplacement échoue parfois pendant qu'OBS
+ *  relit le fichier (EPERM, EBUSY). On réessaie, puis on écrit directement ; renvoie false si rien n'a marché. */
 function ecrireAtomique(fichier, texte) {
-  fs.writeFileSync(`${fichier}.tmp`, texte);
-  fs.renameSync(`${fichier}.tmp`, fichier);
+  try {
+    fs.writeFileSync(`${fichier}.tmp`, texte);
+    for (let essai = 1; essai <= ESSAIS_ECRITURE; essai++) {
+      try { fs.renameSync(`${fichier}.tmp`, fichier); return true; } catch { attendre(PAUSE_ECRITURE_MS); }
+    }
+    fs.writeFileSync(fichier, texte);
+    fs.rmSync(`${fichier}.tmp`, { force: true });
+    return true;
+  } catch (erreur) {
+    journal(`écriture de ${path.basename(fichier)} impossible : ${erreur.message}`);
+    return false;
+  }
 }
 
 /** Ce que les écrans affichent : le jeu, son nom, le score s'il y en a un, et le détail (carte, mode). */
@@ -99,8 +125,8 @@ function publier() {
   const texte = JSON.stringify(pourLesEcrans());
   ecrireAtomique(SESSION, JSON.stringify(etat, null, 2));
   if (texte === dernierPublie) return;
-  dernierPublie = texte;
-  ecrireAtomique(POUR_LES_ECRANS, `window.JEU = ${texte};\n`);
+  // Retenu seulement une fois écrit : un échec est rattrapé au passage suivant (toutes les 2 s).
+  if (ecrireAtomique(POUR_LES_ECRANS, `window.JEU = ${texte};\n`)) dernierPublie = texte;
 }
 
 // ---------- Commandes (Stream Deck) ----------
@@ -254,7 +280,9 @@ export function demarrerJeu() {
   suivreLeCockpit();
   publier();
   setInterval(suivreLeCockpit, LIVE_MS);
-  const boucle = async () => { try { await suivreValorant(); } finally { setTimeout(boucle, VALORANT_MS); } };
+  const boucle = async () => {
+    try { await suivreValorant(); } catch (erreur) { journal(`Valorant : ${erreur.message}`); } finally { setTimeout(boucle, VALORANT_MS); }
+  };
   boucle();
 }
 
@@ -273,10 +301,12 @@ function lancerLeService() {
     throw erreur;
   });
   serveur.listen(PORT, '127.0.0.1', () => { console.log(`jeu du live : http://127.0.0.1:${PORT}/jeu`); demarrerJeu(); });
-  // Arrêt quand OBS est fermé depuis 2 minutes (comme le service des soutiens).
+  // Arrêt quand OBS est fermé depuis 2 minutes (comme le service des soutiens). Les 2 minutes partent de la perte de la
+  // connexion (avant le 2026-11-09, elles partaient de la première connexion : après un long live, une seule reconnexion
+  // manquée arrêtait le service).
   let obsVuLe = Date.now();
   const suivreObs = async () => {
-    const obs = await connecterObs(3000, { surFermeture: () => setTimeout(suivreObs, RECONNEXION_MS) });
+    const obs = await connecterObs(3000, { surFermeture: () => { obsVuLe = Date.now(); journal('connexion à OBS perdue'); setTimeout(suivreObs, RECONNEXION_MS); } });
     if (obs) { obsVuLe = Date.now(); return; }
     if (Date.now() - obsVuLe > OBS_ABSENT_MAX_MS) { console.log('OBS est fermé : arrêt du service'); process.exit(0); }
     setTimeout(suivreObs, RECONNEXION_MS);
@@ -285,7 +315,13 @@ function lancerLeService() {
 }
 
 const lanceDirectement = process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.argv[1]);
-if (lanceDirectement && !process.argv.includes('--presence')) lancerLeService();
+if (lanceDirectement && !process.argv.includes('--presence')) {
+  // Une erreur imprévue est notée, le service continue : le Stream Deck et la bannière en dépendent en plein live.
+  process.on('uncaughtException', (erreur) => journal(`erreur : ${erreur.stack ?? erreur}`));
+  process.on('unhandledRejection', (erreur) => journal(`erreur : ${erreur?.stack ?? erreur}`));
+  journal('démarrage');
+  lancerLeService();
+}
 
 // node obs/jeu.mjs --presence : affiche la partie lue dans le client Riot (vérification pendant une partie).
 if (lanceDirectement && process.argv.includes('--presence')) {
