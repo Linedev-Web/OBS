@@ -4,17 +4,26 @@
 //   node obs/soutiens.mjs            service local, lancé par OBS (obs/soutiens.lua) : http://127.0.0.1:21310
 //   node obs/soutiens.mjs --essai    ajoute des soutiens d'exemple à la liste (pour voir les écrans)
 //   node obs/soutiens.mjs --remise   remet la liste à zéro
+//   node obs/soutiens.mjs --verifier [jours]   avant un live : chaque chaîne StreamElements répond-elle, TikFinity
+//                                    est-il ouvert, et les soutiens des derniers jours (7 par défaut) tels que les
+//                                    bandeaux les auraient reçus
 //
-// Sources : les widgets d'alertes StreamElements (Twitch, YouTube) envoient chaque événement en POST /soutien (et la
-// session au chargement) ; TikTok arrive de TikFinity (ws://127.0.0.1:21213). La liste repart de zéro au démarrage du
-// live (obs-websocket), ou si elle date de plus de 6 h (live TikTok seul). Elle est gardée dans
+// Sources : Twitch et YouTube viennent directement de StreamElements (obs/streamelements.mjs, depuis le 2026-11-20 :
+// OBS 33 refuse aux widgets d'alertes d'appeler 127.0.0.1), pour chaque overlay d'alertes de la collection ouverte,
+// en rattrapage depuis le début du live (chaque minute) et en direct ; TikTok arrive de TikFinity (ws://127.0.0.1:21213).
+// Le relais des widgets (POST /soutien) ne sert plus que si aucune chaîne StreamElements n'est suivie. La liste repart de
+// zéro au démarrage du live (obs-websocket), sauf s'il reprend : relancé moins de 30 min après son arrêt ou après la
+// perte d'OBS (plantage, fermeture en plein live). Elle repart aussi de zéro si elle date de plus de 6 h (live TikTok
+// seul). Elle est gardée dans
 // obs/soutiens-session.json et donnée aux écrans par overlays/soutiens.js (relu toutes les 2 s, comme live.js) ; ces
-// deux fichiers ne sont pas versionnés. Le service s'arrête de lui-même quand OBS est fermé depuis 2 minutes.
+// deux fichiers ne sont pas versionnés. GET /etat dit ce que le service suit. Chaque soutien reçu et chaque changement
+// d'état est noté dans obs/soutiens.log. Le service s'arrête de lui-même quand OBS est fermé depuis 2 minutes.
 import fs from 'node:fs';
 import http from 'node:http';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { connecterObs } from './obs-websocket.mjs';
+import { activitesDepuis, chaineDe, clesDansObs, clesDesCollections, essayerDirect, soutienDeActivite, suivreStreamElements } from './streamelements.mjs';
 
 const ICI = path.dirname(fileURLToPath(import.meta.url));
 const SESSION = path.join(ICI, 'soutiens-session.json');
@@ -28,15 +37,22 @@ const LISTE_MAX = 300;
 const SESSION_PERIMEE_MS = 6 * 3600_000;
 const OBS_ABSENT_MAX_MS = 120_000;
 const RECONNEXION_MS = 5000;
+const ABONNEMENT_CONFIG = 2; // obs-websocket : catégorie « Config » (CurrentSceneCollectionChanged)
 const ABONNEMENT_SORTIES = 64; // obs-websocket : catégorie « Outputs » (StreamStateChanged)
+const VUS_MAX = 2000;
+const REPRISE_MS = 30 * 60_000;
+const RELECTURE_ALERTES_MS = 60_000;
+const VERIFIER_JOURS = 7;
 
 // ---------- Session ----------
 
-const vide = () => ({ debut: new Date().toISOString(), liste: [] });
+// `vus` : identifiants des activités StreamElements déjà comptées (le direct et le rattrapage voient les mêmes ; un
+// don ne doit pas s'additionner deux fois).
+const vide = () => ({ debut: new Date().toISOString(), liste: [], vus: [] });
 function lire() {
   try {
     const s = JSON.parse(fs.readFileSync(SESSION, 'utf8'));
-    return Array.isArray(s.liste) && s.debut ? s : vide();
+    return Array.isArray(s.liste) && s.debut ? { ...s, vus: Array.isArray(s.vus) ? s.vus : [] } : vide();
   } catch { return vide(); }
 }
 let session = lire();
@@ -74,6 +90,27 @@ function remettreAZero(raison) {
   session = vide();
   publier();
   console.log(`liste remise à zéro (${raison})`);
+  journal(`liste remise à zéro (${raison})`);
+}
+
+// Un live relancé moins de 30 min après son arrêt (ou après la perte d'OBS, notée comme un arrêt) garde sa liste, comme
+// un live encore marqué en cours (service arrêté sans voir la fin).
+function liveDemarre() {
+  const coupe = session.enLive === true;
+  const arretRecent = Boolean(session.fin) && Date.now() - Date.parse(session.fin) < REPRISE_MS;
+  const recente = Date.now() - Date.parse(session.debut) < SESSION_PERIMEE_MS;
+  if ((coupe || arretRecent) && recente) journal(`le live reprend : liste de ${session.liste.length} soutien(s) gardée`);
+  else remettreAZero('le live démarre');
+  session.enLive = true;
+  delete session.fin;
+  publier();
+}
+function liveArrete(raison) {
+  if (session.enLive !== true) return; // un démarrage raté ne vaut pas la fin d'un live
+  session.enLive = false;
+  session.fin = new Date().toISOString();
+  publier();
+  journal(`live arrêté (${raison})`);
 }
 
 /** Un soutien propre, ou null : plateforme et genre connus, pseudo sans caractère de contrôle, 32 caractères au plus. */
@@ -133,13 +170,68 @@ if (process.argv.includes('--essai')) {
   console.log(`${session.liste.length} soutiens dans la liste (essai).`);
   process.exit(0);
 }
+if (process.argv.includes('--verifier')) {
+  const jours = Number(process.argv[process.argv.indexOf('--verifier') + 1]) || VERIFIER_JOURS;
+  await verifier(jours);
+  process.exit(0);
+}
+
+/** Contrôle avant un live, sans rien écrire : clés des overlays sur le disque, service, TikFinity. */
+async function verifier(jours) {
+  const depuis = new Date(Date.now() - jours * 86400_000).toISOString();
+  const cles = clesDesCollections();
+  if (!cles.size) console.log("StreamElements : aucune source d'alertes dans les collections Live_*.json");
+  for (const [cle, ou] of cles) {
+    try {
+      const chaine = await chaineDe(cle);
+      const soutiens = (await activitesDepuis(cle, chaine.salon, depuis)).map((a) => soutienDeActivite(a, chaine.plateforme)).filter(Boolean);
+      const direct = await essayerDirect(cle).then(() => 'direct joignable', (erreur) => `DIRECT EN ÉCHEC (${erreur.message}), le rattrapage chaque minute suffit`);
+      console.log(`OK  ${ou} (${chaine.plateforme ?? '?'} ${chaine.nom ?? ''}) : rattrapage joignable, ${direct}, ${soutiens.length} soutien(s) en ${jours} j`);
+      for (const s of soutiens) console.log(`      ${new Date(s.quand).toLocaleString('fr-FR')}  ${s.plateforme} ${s.genre} ${s.nom}${s.montant ? ` ${s.montant} ${s.devise ?? ''}` : ''}`);
+    } catch (erreur) { console.log(`ÉCHEC ${ou} : ${erreur.message}`); }
+  }
+  try {
+    const r = await fetch(`http://127.0.0.1:${PORT}/etat`, { signal: AbortSignal.timeout(800) });
+    const etat = await r.json();
+    console.log(`Service des soutiens : lancé, ${etat.soutiens} soutien(s) depuis ${new Date(etat.debut).toLocaleString('fr-FR')}, TikFinity ${etat.tiktok ? 'branché' : 'non branché'}`);
+    for (const c of etat.streamelements ?? []) console.log(`      ${c.source} : ${c.plateforme ?? '?'} ${c.nom ?? ''}, direct ${c.direct ? 'oui' : 'non'}, rattrapage ${c.rattrapage ? 'oui' : 'non'}${c.erreur ? ` (${c.erreur})` : ''}`);
+  } catch { console.log('Service des soutiens : pas lancé (OBS le lance avec une collection des lives).'); }
+  const tikfinity = await new Promise((ok) => {
+    const ws = new WebSocket(TIKFINITY);
+    ws.onopen = () => { ws.close(); ok(true); };
+    ws.onerror = () => ok(false);
+  });
+  console.log(`TikFinity : ${tikfinity ? 'ouvert' : 'fermé (« Ouvrir les applis » du Stream Deck le lance)'}`);
+}
 
 // ---------- Service ----------
 
-if (Date.now() - Date.parse(session.debut) > SESSION_PERIMEE_MS) remettreAZero('dernière session de plus de 6 h');
-else publier();
+function noterSoutien(s, origine) {
+  journal(`+ ${s.plateforme} ${s.genre} ${s.nom}${s.montant ? ` ${s.montant} ${s.devise ?? ''}` : ''} (${origine})`);
+}
 
+// Twitch et YouTube, directement de StreamElements (direct et rattrapage voient les mêmes activités).
+const streamElements = suivreStreamElements({
+  depuis: () => session.debut,
+  journal,
+  surSoutien(soutien, ids, origine) {
+    if (ids.some((id) => session.vus.includes(id))) return;
+    const ajoute = ajouter(soutien);
+    const duLive = !soutien.quand || Date.parse(soutien.quand) >= Date.parse(session.debut);
+    const vu = ids.length > 0 && duLive;
+    if (vu) {
+      session.vus.push(...ids);
+      if (session.vus.length > VUS_MAX) session.vus.splice(0, session.vus.length - VUS_MAX);
+    }
+    if (ajoute) noterSoutien(soutien, `StreamElements, ${origine}`);
+    if (ajoute || vu) publier();
+  },
+});
+const suitStreamElements = () => streamElements.etat().some((c) => c.direct || c.rattrapage);
+
+// Relais des widgets (bloqué par OBS 33) : seulement si aucune chaîne StreamElements n'est suivie directement.
 function recevoir(message) {
+  if (suitStreamElements()) return false;
   if (message?.type === 'soutien') return ajouter(message);
   if (message?.type === 'session' && Array.isArray(message.liste)) return message.liste.map((s) => ajouter(s)).some(Boolean);
   return false;
@@ -152,7 +244,12 @@ const serveur = http.createServer((req, res) => {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   res.setHeader('Access-Control-Allow-Private-Network', 'true');
   if (req.method === 'OPTIONS') { res.writeHead(204).end(); return; }
-  if (req.method === 'GET' && req.url === '/soutiens') { res.writeHead(200, { 'Content-Type': 'application/json' }).end(JSON.stringify(session)); return; }
+  if (req.method === 'GET' && req.url === '/soutiens') { res.writeHead(200, { 'Content-Type': 'application/json' }).end(JSON.stringify({ debut: session.debut, liste: session.liste })); return; }
+  if (req.method === 'GET' && req.url === '/etat') {
+    const etat = { debut: session.debut, soutiens: session.liste.length, streamelements: streamElements.etat(), tiktok: tikfinityBranche };
+    res.writeHead(200, { 'Content-Type': 'application/json' }).end(JSON.stringify(etat));
+    return;
+  }
   if (req.method !== 'POST' || req.url !== '/soutien') { res.writeHead(404).end(); return; }
   let corps = '';
   req.on('data', (morceau) => { corps += morceau; if (corps.length > 64_000) req.destroy(); });
@@ -167,7 +264,17 @@ serveur.on('error', (erreur) => {
   if (erreur.code === 'EADDRINUSE') { console.log('déjà lancé'); process.exit(0); }
   throw erreur;
 });
-serveur.listen(PORT, '127.0.0.1', () => console.log(`soutiens du live : http://127.0.0.1:${PORT}`));
+// OBS relance ce script à chaque chargement de collection : seule la copie qui obtient le port travaille, les autres
+// s'arrêtent sans toucher à la liste.
+serveur.listen(PORT, '127.0.0.1', () => {
+  console.log(`soutiens du live : http://127.0.0.1:${PORT}`);
+  journal('service démarré');
+  if (Date.now() - Date.parse(session.debut) > SESSION_PERIMEE_MS) remettreAZero('dernière session de plus de 6 h');
+  else publier();
+  brancherTikFinity();
+  suivreObs();
+  setInterval(() => { if (obsBranche) lireAlertes(obsBranche); }, RELECTURE_ALERTES_MS);
+});
 
 // TikTok, par TikFinity : follow, abonnement, cadeau (compté à la fin d'une rafale).
 function soutienTikTok(evenement) {
@@ -186,33 +293,80 @@ function soutienTikTok(evenement) {
     default: return null;
   }
 }
+let tikfinityBranche = false;
 function brancherTikFinity() {
   let ws;
   try { ws = new WebSocket(TIKFINITY); } catch { setTimeout(brancherTikFinity, RECONNEXION_MS); return; }
+  ws.onopen = () => { if (!tikfinityBranche) journal('TikFinity branché'); tikfinityBranche = true; };
   ws.onmessage = (ev) => {
     let evenement;
     try { evenement = JSON.parse(ev.data); } catch { return; }
     const s = soutienTikTok(evenement);
-    if (s && ajouter(s)) publier();
+    if (s && ajouter(s)) { noterSoutien(s, 'TikFinity'); publier(); }
   };
-  ws.onclose = () => setTimeout(brancherTikFinity, RECONNEXION_MS);
+  ws.onclose = () => {
+    if (tikfinityBranche) journal('TikFinity débranché');
+    tikfinityBranche = false;
+    setTimeout(brancherTikFinity, RECONNEXION_MS);
+  };
   ws.onerror = () => { /* TikFinity fermé : on réessaie à la fermeture */ };
 }
-brancherTikFinity();
 
-// OBS : remise à zéro au démarrage du live ; arrêt du service quand OBS est fermé depuis 2 minutes.
+// Overlays d'alertes de la collection ouverte : leurs chaînes StreamElements sont celles du live. Relus au branchement,
+// à chaque changement de collection et chaque minute (un changement manqué pendant le chargement d'OBS se rattrape) ;
+// seule la lecture la plus récente compte, et une lecture ratée ne change rien à ce qui est suivi.
+let lecture = 0;
+let erreurAlertes = null;
+async function lireAlertes(obs) {
+  const numero = ++lecture;
+  try {
+    const cles = await clesDansObs(obs);
+    if (numero !== lecture) return;
+    erreurAlertes = null;
+    streamElements.suivre(cles);
+  } catch (erreur) {
+    if (numero !== lecture || erreurAlertes === erreur.message) return;
+    erreurAlertes = erreur.message;
+    journal(`sources d'alertes illisibles : ${erreur.message}`);
+  }
+}
+
+// État du live au branchement : un live déjà en cours (service relancé) garde sa liste ; un live marqué en cours alors
+// qu'OBS ne diffuse plus (OBS planté ou fermé en plein live) est arrêté à cette heure-ci, pour la reprise.
+async function accorderLive(obs) {
+  try {
+    const { outputActive } = (await obs.req('GetStreamStatus')).responseData ?? {};
+    if (outputActive === true && session.enLive !== true) {
+      session.enLive = true;
+      delete session.fin;
+      publier();
+      journal(`live déjà en cours : liste de ${session.liste.length} soutien(s) gardée`);
+    } else if (outputActive === false && session.enLive === true) liveArrete('OBS ne diffuse plus');
+  } catch { /* état illisible : les événements suivront */ }
+}
+
+// OBS : remise à zéro au démarrage du live ; chaînes suivies selon la collection ; arrêt du service quand OBS est fermé
+// depuis 2 minutes.
 let obsVuLe = Date.now();
+let obsBranche = null;
 async function suivreObs() {
   const obs = await connecterObs(3000, {
-    evenements: ABONNEMENT_SORTIES,
+    evenements: ABONNEMENT_SORTIES | ABONNEMENT_CONFIG,
     surEvenement: (type, donnees) => {
-      if (type === 'StreamStateChanged' && donnees?.outputState === 'OBS_WEBSOCKET_OUTPUT_STARTED') remettreAZero('le live démarre');
+      if (type === 'StreamStateChanged' && donnees?.outputState === 'OBS_WEBSOCKET_OUTPUT_STARTED') liveDemarre();
+      if (type === 'StreamStateChanged' && donnees?.outputState === 'OBS_WEBSOCKET_OUTPUT_STOPPED') liveArrete('fin du live');
+      if (type === 'CurrentSceneCollectionChanged' && obsBranche) lireAlertes(obsBranche);
     },
     // Les 2 minutes partent de la perte de la connexion, pas de la première connexion (corrigé le 2026-11-09).
-    surFermeture: () => { obsVuLe = Date.now(); journal('connexion à OBS perdue'); setTimeout(suivreObs, RECONNEXION_MS); },
+    surFermeture: () => {
+      obsBranche = null;
+      obsVuLe = Date.now();
+      journal('connexion à OBS perdue');
+      if (session.enLive === true) liveArrete('OBS perdu en plein live');
+      setTimeout(suivreObs, RECONNEXION_MS);
+    },
   });
-  if (obs) { obsVuLe = Date.now(); return; }
-  if (Date.now() - obsVuLe > OBS_ABSENT_MAX_MS) { console.log('OBS est fermé : arrêt du service'); process.exit(0); }
+  if (obs) { obsBranche = obs; obsVuLe = Date.now(); journal('OBS branché'); accorderLive(obs); lireAlertes(obs); return; }
+  if (Date.now() - obsVuLe > OBS_ABSENT_MAX_MS) { journal('OBS fermé depuis 2 minutes : arrêt du service'); process.exit(0); }
   setTimeout(suivreObs, RECONNEXION_MS);
 }
-suivreObs();

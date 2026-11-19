@@ -68,6 +68,15 @@ points de chaîne, sondages, hype train, objectifs. Non vérifié faute de compt
 StreamElements pour un Super Chat dans une autre devise que celle du compte, et la présence de `channel.provider`
 (d'où le réglage explicite de la plateforme à l'étape 5).
 
+## Soutiens du live
+
+Le widget envoie aussi chaque follow, abonnement ou don au service local des soutiens (`obs\soutiens.mjs`,
+`http://127.0.0.1:21310`). **Depuis OBS 33, ce relais est refusé** par le navigateur d'OBS (« Local Network Access » : une
+page en ligne n'a plus le droit d'appeler 127.0.0.1). Le service lit donc lui-même le fil d'activité de chaque chaîne chez
+StreamElements (`obs\streamelements.mjs`, 2026-11-20) et ignore le relais dès qu'il suit une chaîne. Il n'y a rien à changer
+dans les widgets en ligne : l'erreur « blocked by CORS policy … `loopback` address space » qui reste dans le journal d'OBS
+est sans effet.
+
 ## Sécurité des messages
 
 Tout texte venu des spectateurs (pseudo, message de don, Super Chat, bits) est écrit avec `textContent`, jamais
