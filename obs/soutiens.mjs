@@ -23,7 +23,7 @@ import http from 'node:http';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { connecterObs } from './obs-websocket.mjs';
-import { activitesDepuis, chaineDe, clesDansObs, clesDesCollections, essayerDirect, soutienDeActivite, suivreStreamElements } from './streamelements.mjs';
+import { activitesDepuis, chaineDe, clesDansObs, clesDesCollections, essayerDirect, rechargerOverlays, soutienDeActivite, suivreStreamElements } from './streamelements.mjs';
 
 const ICI = path.dirname(fileURLToPath(import.meta.url));
 const SESSION = path.join(ICI, 'soutiens-session.json');
@@ -331,6 +331,17 @@ async function lireAlertes(obs) {
   }
 }
 
+// Début du live : chaque source d'alertes est rechargée (défaut d'OBS, son sans image : voir rechargerOverlays).
+async function rechargerAlertes(obs) {
+  try {
+    const { rechargees, echecs } = await rechargerOverlays(obs);
+    if (rechargees.length) journal(`alertes rechargées : ${rechargees.join(', ')}`);
+    for (const { source, erreur } of echecs) journal(`alertes : ${source} non rechargée (${erreur})`);
+  } catch (erreur) {
+    journal(`alertes non rechargées : ${erreur.message}`);
+  }
+}
+
 // État du live au branchement : un live déjà en cours (service relancé) garde sa liste ; un live marqué en cours alors
 // qu'OBS ne diffuse plus (OBS planté ou fermé en plein live) est arrêté à cette heure-ci, pour la reprise.
 async function accorderLive(obs) {
@@ -353,7 +364,10 @@ async function suivreObs() {
   const obs = await connecterObs(3000, {
     evenements: ABONNEMENT_SORTIES | ABONNEMENT_CONFIG,
     surEvenement: (type, donnees) => {
-      if (type === 'StreamStateChanged' && donnees?.outputState === 'OBS_WEBSOCKET_OUTPUT_STARTED') liveDemarre();
+      if (type === 'StreamStateChanged' && donnees?.outputState === 'OBS_WEBSOCKET_OUTPUT_STARTED') {
+        liveDemarre();
+        if (obsBranche) rechargerAlertes(obsBranche);
+      }
       if (type === 'StreamStateChanged' && donnees?.outputState === 'OBS_WEBSOCKET_OUTPUT_STOPPED') liveArrete('fin du live');
       if (type === 'CurrentSceneCollectionChanged' && obsBranche) lireAlertes(obsBranche);
     },

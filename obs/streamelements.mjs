@@ -101,16 +101,42 @@ async function demander(obs, type, donnees, delaiMs = 5000) {
   } finally { clearTimeout(minuterie); }
 }
 
-/** Clés des overlays d'alertes de la collection ouverte dans OBS (obs-websocket) : Map clé → nom de la source. Lève une erreur si OBS ne répond pas. */
-export async function clesDansObs(obs) {
-  const cles = new Map();
+/** Sources navigateur de la collection ouverte dans OBS qui affichent un overlay StreamElements : [{ source, cle }]. Lève une erreur si OBS ne répond pas. */
+export async function overlaysDansObs(obs) {
+  const overlays = [];
   const { inputs = [] } = await demander(obs, 'GetInputList', { inputKind: 'browser_source' });
   for (const { inputName } of inputs) {
     const { inputSettings } = await demander(obs, 'GetInputSettings', { inputName });
     const cle = cleDOverlay(inputSettings?.url);
-    if (cle && !cles.has(cle)) cles.set(cle, inputName);
+    if (cle) overlays.push({ source: inputName, cle });
   }
+  return overlays;
+}
+
+/** Clés des overlays d'alertes de la collection ouverte dans OBS (obs-websocket) : Map clé → nom de la source. Lève une erreur si OBS ne répond pas. */
+export async function clesDansObs(obs) {
+  const cles = new Map();
+  for (const { source, cle } of await overlaysDansObs(obs)) if (!cles.has(cle)) cles.set(cle, source);
   return cles;
+}
+
+// Défaut d'OBS (obs-studio n° 6111), vu en live le 2026-11-20 : la source « Alertes », chargée à l'ouverture d'OBS, a
+// joué le son d'un follow sans en afficher l'image ; rechargée, elle a de nouveau tout affiché. Le service recharge donc
+// chaque overlay au début du live (bouton « Actualiser le cache de la page » de la source : transparente entre deux
+// alertes, rien ne se voit à l'écran).
+/** Recharge chaque source d'overlay StreamElements : { rechargees: [source], echecs: [{ source, erreur }] }. Lève une erreur si OBS ne liste pas ses sources. */
+export async function rechargerOverlays(obs) {
+  const rechargees = [];
+  const echecs = [];
+  for (const { source } of await overlaysDansObs(obs)) {
+    try {
+      await demander(obs, 'PressInputPropertiesButton', { inputName: source, propertyName: 'refreshnocache' });
+      rechargees.push(source);
+    } catch (erreur) {
+      echecs.push({ source, erreur: erreur.message });
+    }
+  }
+  return { rechargees, echecs };
 }
 
 async function api(cle, chemin) {

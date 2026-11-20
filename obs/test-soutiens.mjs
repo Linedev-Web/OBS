@@ -1,7 +1,7 @@
 // Test sans réseau de la lecture du fil StreamElements par le service des soutiens : node obs/test-soutiens.mjs
 // Traduction d'une activité en soutien (mêmes règles que le relais des widgets) et lecture de la clé d'un overlay.
 import assert from 'node:assert/strict';
-import { cleDOverlay, idsDeActivite, soutienDeActivite } from './streamelements.mjs';
+import { cleDOverlay, clesDansObs, idsDeActivite, rechargerOverlays, soutienDeActivite } from './streamelements.mjs';
 
 const activite = (type, provider, data, createdAt = '2026-11-19T12:52:13.078Z') => ({ _id: 'a1', type, provider, channel: 'c1', data, createdAt });
 
@@ -70,4 +70,34 @@ const activite = (type, provider, data, createdAt = '2026-11-19T12:52:13.078Z') 
   assert.deepEqual(idsDeActivite({ type: 'tip' }, soutienDeActivite(don)), []);
 }
 
-console.log('soutiens (StreamElements) : 7 scénarios OK');
+// 8. Sources d'alertes d'OBS : celles qui affichent un overlay StreamElements (une clé par chaîne pour le suivi), toutes
+//    rechargées au début du live (son sans image, obs-studio n° 6111) ; une source qui refuse n'arrête pas les autres.
+{
+  const adresses = {
+    Alertes: 'https://streamelements.com/overlay/o1/cle-twitch',
+    Habillage: 'file:///D:/Stream/OBS/overlays/latshow/jeu.html',
+    'Alertes YouTube': 'https://streamelements.com/overlay/o2/cle-youtube',
+    'Alertes copie': 'https://streamelements.com/overlay/o1/cle-twitch',
+  };
+  const pressees = [];
+  const obs = (refus) => ({
+    async req(type, d) {
+      if (type === 'GetInputList') return { requestStatus: { result: true }, responseData: { inputs: Object.keys(adresses).map((inputName) => ({ inputName })) } };
+      if (type === 'GetInputSettings') return { requestStatus: { result: true }, responseData: { inputSettings: { url: adresses[d.inputName] } } };
+      if (type === 'PressInputPropertiesButton') {
+        pressees.push(`${d.inputName}:${d.propertyName}`);
+        return { requestStatus: { result: d.inputName !== refus, comment: 'refusé' } };
+      }
+      return { requestStatus: { result: false } };
+    },
+  });
+  assert.deepEqual([...(await clesDansObs(obs())).entries()], [['cle-twitch', 'Alertes'], ['cle-youtube', 'Alertes YouTube']]);
+  const bilan = await rechargerOverlays(obs('Alertes YouTube'));
+  assert.deepEqual(bilan.rechargees, ['Alertes', 'Alertes copie']);
+  assert.deepEqual(bilan.echecs.map((e) => e.source), ['Alertes YouTube']);
+  assert.deepEqual(pressees, ['Alertes:refreshnocache', 'Alertes YouTube:refreshnocache', 'Alertes copie:refreshnocache']);
+  const muet = { req: async () => ({ requestStatus: { result: false, comment: 'OBS is not ready' } }) };
+  await assert.rejects(rechargerOverlays(muet), /GetInputList/);
+}
+
+console.log('soutiens (StreamElements) : 8 scénarios OK');

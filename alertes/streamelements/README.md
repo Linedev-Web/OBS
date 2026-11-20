@@ -77,6 +77,21 @@ StreamElements (`obs\streamelements.mjs`, 2026-11-20) et ignore le relais dès q
 dans les widgets en ligne : l'erreur « blocked by CORS policy … `loopback` address space » qui reste dans le journal d'OBS
 est sans effet.
 
+## Son sans image
+
+Le 2026-11-20 en live, le follow de 12 h 46 a joué son son sans que l'alerte apparaisse à l'écran (l'enregistrement le
+montre). Le widget avait bien démarré, sans erreur. La source « Alertes » était visible, en tête de la scène Jeu, et
+chargée depuis l'ouverture d'OBS. C'est un défaut connu d'OBS (obs-studio n° 6111) : une source d'alertes chargée à
+l'ouverture peut ne plus afficher d'image. Rechargée à 12 h 55, elle a tout affiché au follow suivant (13 h 23).
+
+Depuis, le service des soutiens recharge chaque source d'overlay StreamElements au début de chaque live
+(`rechargerOverlays`, `obs\streamelements.mjs`), et le note dans `obs\soutiens.log`.
+
+Si l'image manque malgré tout :
+- en plein live, clic droit sur la source « Alertes » → **Actualiser** ;
+- si ça revient, couper l'accélération matérielle des sources navigateur (Paramètres → Avancé → Sources), puis relancer
+  OBS. C'est le client qui relance, jamais une session.
+
 ## Sécurité des messages
 
 Tout texte venu des spectateurs (pseudo, message de don, Super Chat, bits) est écrit avec `textContent`, jamais
