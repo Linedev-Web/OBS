@@ -89,3 +89,5 @@
   --j-police:'Barlow Condensed';--j-graisse:700;--j-espace:.06em;--j-chiffres:'Barlow Condensed';--j-graisse-chiffres:700}
 [data-jeu="arc-raiders"]{--j-fond:#16130F;--j-fond-2:#2B2219;--j-accent:#E8572A;--j-moi:#F2C14E;--j-adv:#E8572A;--j-texte:#F1E9DC;
   --j-police:'Chakra Petch';--j-graisse:700;--j-espace:.1em;--j-chiffres:'Chakra Petch';--j-graisse-chiffres:700}
+[data-jeu="rob-run"]{--j-fond:#0B0C10;--j-fond-2:#1A1D26;--j-accent:#E8282E;--j-moi:#F4C430;--j-adv:#2F7BFF;--j-texte:#F5F5F0;
+  --j-police:'Anton';--j-graisse:400;--j-espace:.08em;--j-chiffres:'Anton';--j-graisse-chiffres:400}

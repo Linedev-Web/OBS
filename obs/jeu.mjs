@@ -41,6 +41,7 @@ export const JEUX = [
   { id: 'rocket-league', nom: 'Rocket League', motif: /rocket/i },
   { id: 'euro-truck', nom: 'Euro Truck Simulator 2', motif: /euro\s*truck|ets\s*2/i },
   { id: 'arc-raiders', nom: 'Arc Raiders', motif: /arc\s*raider/i },
+  { id: 'rob-run', nom: 'Rob Run', motif: /rob\s*-?\s*run/i },
 ];
 
 /** Le jeu reconnu dans un titre du cockpit, ou null (bannière générique au nom du titre). */
@@ -160,9 +161,13 @@ export function commander(chemin, params) {
       etat = { ...etat, choix: id, ...(id !== affiche.jeu ? { score: { moi: 0, adv: 0 }, scoreManuel: false, scoreVisible: false } : {}) };
       break;
     }
-    case '/jeu/suivant': {
+    case '/jeu/suivant':
+    case '/jeu/precedent': {
+      // Jeu hors liste (i = -1) : « suivant » part du premier, « précédent » du dernier.
       const i = JEUX.findIndex((j) => j.id === affiche.jeu);
-      etat = { ...etat, choix: JEUX[(i + 1) % JEUX.length].id, score: { moi: 0, adv: 0 }, scoreManuel: false, scoreVisible: false };
+      const pas = chemin === '/jeu/suivant' ? 1 : -1;
+      const depart = i === -1 && pas === -1 ? 0 : i;
+      etat = { ...etat, choix: JEUX[(depart + pas + JEUX.length) % JEUX.length].id, score: { moi: 0, adv: 0 }, scoreManuel: false, scoreVisible: false };
       break;
     }
     case '/jeu/cockpit':
