@@ -11,6 +11,7 @@
 //   node obs/regie.mjs sorties                   où le son de Windows peut être joué (casque, écran…), sans le câble
 //   node obs/regie.mjs sortie "<id>"             là où tu écoutes : la sortie de Windows (son, multimédia, communications)
 //   node obs/regie.mjs son-tiktok                envoie la piste TikTok d'OBS au câble VB-CABLE (OBS fermé)
+//                                                (fait tout seul par toute commande lancée OBS fermé, si le module l'a oublié)
 //   --json   une seule ligne { ok, message, etat, micros?, sorties? } : c'est ce que lit le cockpit
 //
 // Le câble VB-CABLE ne sert qu'au son d'OBS vers TikTok : jamais sortie de Windows (sinon Spotify, le navigateur…
@@ -263,7 +264,7 @@ async function basculerMultistream(obs, allumer) {
 
 async function listeMicros(obs) {
   const r = await obs.req('GetInputPropertiesListPropertyItems', { inputName: 'Micro', propertyName: 'device_id' });
-  return (r.responseData?.propertyItems ?? []).filter((p) => p.itemEnabled !== false && p.itemValue).map((p) => ({ id: p.itemValue, nom: p.itemName }));
+  return (r.responseData?.propertyItems ?? []).filter((p) => p.itemEnabled !== false && p.itemValue && !estCable({ nom: p.itemName })).map((p) => ({ id: p.itemValue, nom: p.itemName }));
 }
 
 /** Change le micro : tout de suite dans la collection ouverte, dans les fichiers des deux autres, et pour le générateur. */
@@ -271,6 +272,7 @@ async function changerMicro(obs, id) {
   const micros = obs ? await listeMicros(obs) : audioWindows().entrees;
   const choisi = micros.find((m) => m.id === id);
   if (!choisi) throw new Refus("Ce micro n'est pas branché (ou OBS ne le voit pas).");
+  if (estCable(choisi)) throw new Refus('« CABLE Output » est le son qu’OBS envoie à TikTok, pas un micro : choisis ton vrai micro.');
   const ouverte = obs ? (await obs.req('GetSceneCollectionList')).responseData?.currentSceneCollectionName : undefined;
   if (obs) await obs.req('SetInputSettings', { inputName: 'Micro', inputSettings: { device_id: id } });
   for (const seance of conf.seances) {
@@ -313,6 +315,27 @@ function brancherSonTikTok() {
   return cable;
 }
 
+/**
+ * Le module Audio Monitor oublie parfois le câble (constaté le 2026-11-27 : réglage vidé à la fermeture d'OBS, piste 6
+ * envoyée nulle part, TikTok sans son pendant le live, et plus de crédit Claude pour le réparer). Dès que la régie tourne
+ * OBS fermé (page Live du cockpit, Stream Deck, « Réparer le son TikTok.cmd »), elle le rebranche toute seule.
+ */
+function reparerSonTikTok() {
+  if (obsTourne()) return null;
+  const cable = cableVirtuel();
+  const { installe, branche } = etatAudioMonitor(cable);
+  if (!cable || !installe || branche) return null;
+  brancherSonTikTok();
+  return ` Son TikTok rebranché tout seul : le module Audio Monitor l'avait oublié (piste ${PISTE} vers ${cable.nom}).`;
+}
+
+/** Avertissement au lancement : OBS ouvert, la piste TikTok ne part pas dans le câble (réparable seulement OBS fermé). */
+function alerteSonTikTok() {
+  const cable = cableVirtuel();
+  if (etatAudioMonitor(cable).branche) return '';
+  return ` ATTENTION : TikTok n'aura pas de son (piste ${PISTE} d'OBS pas envoyée au câble${cable ? '' : ' VB-CABLE, introuvable'}). Pour réparer : ferme OBS, ouvre la page Live du cockpit (ou double-clic sur « Réparer le son TikTok » dans D:\Stream\OBS), puis rouvre OBS.`;
+}
+
 /** Le service des soutiens du live (obs/soutiens.mjs) : OBS le lance (obs/soutiens.lua) ; sinon, la régie le démarre. */
 async function assurerSoutiens() {
   try {
@@ -334,7 +357,7 @@ const COMMANDES = {
     await demarrerSortie(obs, 'StartRecord', 'GetRecordStatus', "L'enregistrement");
     await lancerTikTok(obs);
     const youtube = aFaire ? ` Attention :${aFaire}` : '';
-    return { message: `Live, enregistrement et image TikTok lancés. Passe en direct dans TikTok LIVE Studio.${youtube}${remise ? ` (Le son de Windows partait dans le câble : remis sur ${remise.nom}.)` : ''}` };
+    return { message: `Live, enregistrement et image TikTok lancés. Passe en direct dans TikTok LIVE Studio.${youtube}${remise ? ` (Le son de Windows partait dans le câble : remis sur ${remise.nom}.)` : ''}${alerteSonTikTok()}` };
   },
   async 'terminer-live'(obs) {
     const aFaire = await basculerMultistream(obs, false);
@@ -410,8 +433,9 @@ try {
   if (!COMMANDES[commande]) throw new Refus(`Commande inconnue : ${commande}. Commandes : ${Object.keys(COMMANDES).join(', ')}.`);
   obs = commande === 'son-tiktok' ? undefined : await connecterObs(2500);
   if (!obs && !SANS_OBS.has(commande)) throw new Refus("OBS est fermé (ou obs-websocket ne répond pas) : ouvre OBS d'abord.");
+  const reparation = !obs && commande !== 'son-tiktok' ? reparerSonTikTok() : null;
   const fait = await COMMANDES[commande](obs, argument);
-  resultat = { ok: true, ...fait, etat: await lireEtat(obs) };
+  resultat = { ok: true, ...fait, message: `${fait.message}${reparation ?? ''}`, etat: await lireEtat(obs) };
 } catch (erreur) {
   const message = erreur instanceof Refus ? erreur.message : `Erreur : ${erreur instanceof Error ? erreur.message : String(erreur)}`;
   let etat;
